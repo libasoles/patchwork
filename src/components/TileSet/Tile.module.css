@@ -1,0 +1,13 @@
+.overlap {
+  grid-area: 1/1;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.tile:hover {
+  border: 1px solid gray
+}
+
+.selected {
+  opacity: 100%;
+}

@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: blocks;
+  src: url("/BIT BLOCKS TTF BRK.ttf");
+}
+
+:root {
+  
+}
+
+html, body {
+  height: 100%;
+}
+
+.tile {
+  font-family: blocks;
+}

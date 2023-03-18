@@ -1,0 +1,45 @@
+/** @type {import('tailwindcss').Config} */
+
+module.exports = {
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+  safelist: [
+    // TODO: import array dynamically
+    "bg-gray-800",
+    "bg-yellow-400",
+    "bg-pink-500",
+    "bg-red-400",
+    "bg-orange-400",
+    "bg-rose-600",
+    "bg-blue-400",
+    "bg-sky-600",
+    "bg-indigo-500",
+    "bg-cyan-600",
+    "bg-teal-400",
+    "bg-green-400",
+    "bg-emerald-400",
+    "bg-fuchsia-500",
+    "bg-purple-600",
+    "bg-violet-500",
+
+    "text-gray-800",
+    "text-yellow-400",
+    "text-pink-500",
+    "text-red-400",
+    "text-orange-400",
+    "text-rose-600",
+    "text-blue-400",
+    "text-sky-600",
+    "text-indigo-500",
+    "text-cyan-600",
+    "text-teal-400",
+    "text-green-400",
+    "text-emerald-400",
+    "text-fuchsia-500",
+    "text-purple-600",
+    "text-violet-500",
+  ],
+};
