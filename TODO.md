@@ -41,5 +41,6 @@ UX
 
 BUGS
 
+- all grid is rerendering though Cell is exported with React.memo
 - a veces se queda pintando despues de mouse up
 - la altura del panel de active tiles no se auto ajusta (quizas es bueno para no distraer, no se)

@@ -10,10 +10,12 @@ type Props = {
 };
 
 function Cell({ size, tile, index, onMouseDown, onMouseEnter }: Props) {
+
     return (
         <button className={`bg-gray-700 border-slate-600 border-[.5px]`} style={{
             width: size + "px",
             height: size + "px",
+            transform: `rotate(${90 * tile.orientation}deg)`,
             // TODO: find a workaround
             // @ts-ignore
             containerType: "inline-size"

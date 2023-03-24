@@ -37,14 +37,26 @@ function useDraw(grid: Grid, updateGrid: (tiles: Grid) => void) {
 
     const currentTile = selected || createTile(emptyTile)
 
-    // TODO: see if this can be otimized with useCallback, so we don't create methods each time?
+    // TODO: see if this can be optimized with useCallback, so we don't create methods each time?
     const onMouseDown = (index: number) => {
-        // TODO: improve this code, and implement an enum for actions
+        // TODO: improve this code
         if (activeAction === Action.Draw) {
-            grid[index] = {
-                ...currentTile,
+            const updatedTile = {
+                ...grid[index],
+                id: currentTile.id,
+                symbol: currentTile.symbol,
                 color
-            };
+            }
+
+            const shouldRotate = grid[index].looksLike(updatedTile)
+
+            if (shouldRotate) {
+                updatedTile.rotate()
+            } else {
+                updatedTile.resetOrientation()
+            }
+
+            grid[index] = updatedTile;
         } else if (activeAction === Action.Paint) {
             grid[index] = {
                 ...grid[index],
