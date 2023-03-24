@@ -4,7 +4,7 @@ import { actionAtom, activeTilesAtom, colorAtom, mouseDownAtom, selectedTileAtom
 import { emptyTile } from '../../config';
 import Cell from './Cell';
 import { Action, Tile } from '@/types';
-import { createTile } from '@/pages/App';
+import { createTile } from "@/factory";
 
 const cellSize = 40
 const minCellSize = 4
