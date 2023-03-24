@@ -41,7 +41,7 @@ export default function Blocks() {
 
                 <li>
                     <span>39</span>
-                    <span className="tile">'</span>
+                    <span className="tile">&apos;</span>
                 </li>
 
                 <li>
