@@ -1,10 +1,10 @@
 import Grid from './Patchwork/Grid';
 import Zoom from './Zoom';
-import TileSet from './TileSet/TileSet';
+import TileSet from './TilesPanel/TileSet';
 import Colors from './Colors';
 import ToolBar from '@/components/ToolBar';
-import ActiveTiles from '@/components/TileSet/ActiveTiles';
-import TilesPanels from './TileSet/TilesPanels';
+import ActiveTiles from '@/components/TilesPanel/ActiveTiles';
+import TilesPanels from './TilesPanel/TilesPanels';
 import { gridDimension, tilesMap } from '@/config';
 import { createTile } from '../factory';
 

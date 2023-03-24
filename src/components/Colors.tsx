@@ -26,14 +26,14 @@ export default function Colors() {
     );
 }
 
-type Props = {
+type ColorCircleProps = {
     color: string;
     onSelect: (e: SyntheticEvent) => void;
 };
 
-function ColorCircle({ color, onSelect }: Props) {
+function ColorCircle({ color, onSelect }: ColorCircleProps) {
     return (
-        // TODO: there's a thing with the external circle height whe the window height is shorter
+        // TODO: there's a thing with the external circle height when the window height is shorter
         <div className='rounded-full flex w-9 h-9 justify-center items-center bg-slate-400 my-1.5'>
             <button
                 className={`rounded-full bg-${color} w-8 h-8 cursor-pointer`}

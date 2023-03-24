@@ -16,9 +16,8 @@ export default function Tile({ tile, isSelected, onSelect }: Props) {
 
     return (
         <label
-            className={`tile ${styles.tile}
-             ${isSelected ? styles.selected : ""} 
-             w-12 h-12 cursor-pointer grid items-center hover:opacity-70`}
+            className={`tile w-12 h-12 cursor-pointer grid items-center hover:opacity-70
+                ${isSelected ? styles.selected : ""}`}
             style={{
                 // TODO: find a workaround
                 // @ts-ignore

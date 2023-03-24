@@ -9,7 +9,6 @@ type Props = {
     onMouseEnter: (index: number) => void;
 };
 
-// TODO: abstract common code from Tile
 function Cell({ size, tile, index, onMouseDown, onMouseEnter }: Props) {
     return (
         <button className={`bg-gray-700 border-slate-600 border-[.5px]`} style={{
@@ -19,12 +18,12 @@ function Cell({ size, tile, index, onMouseDown, onMouseEnter }: Props) {
             // @ts-ignore
             containerType: "inline-size"
         }} onMouseEnter={() => onMouseEnter(index)} onMouseDown={() => { onMouseDown(index) }}>
-            <label className={`tile w-full h-full grid items-center text-${tile.color}`}>
-                <span className="overlap w-full h-full" style={{
+            <div className={`tile w-full h-full grid items-center text-${tile.color}`}>
+                <span className="w-full h-full" style={{
                     lineHeight: .7,
                     fontSize: "143cqw"
                 }}>{tile.symbol}</span>
-            </label>
+            </div>
         </button>
     );
 }

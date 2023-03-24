@@ -86,11 +86,8 @@ function useActiveTiles(grid: Grid) {
 
 export default function Grid({ dimension }: Props) {
     const [grid, updateGrid] = useState(emptyGrid(dimension));
-
     const { setMouseDown, onMouseDown, onMouseEnter } = useDraw(grid, updateGrid)
-
     const gridScale = useZoom()
-
     useActiveTiles(grid)
 
     return (
