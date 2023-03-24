@@ -1,4 +1,5 @@
 import { actionAtom } from "@/store";
+import { Action } from "@/types";
 import { useAtom } from "jotai";
 import { ReactElement } from "react";
 
@@ -10,6 +11,6 @@ export default function TilesPanels({ children }: Props) {
     const [action] = useAtom(actionAtom);
 
     return (
-        <div className={`h-screen flex flex-col ${action === "paint" ? "hidden" : ""}`}>{children}</div>
+        <div className={`h-screen flex flex-col ${action === Action.Paint ? "hidden" : ""}`}>{children}</div>
     );
 }

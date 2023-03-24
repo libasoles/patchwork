@@ -9,6 +9,8 @@ export default function TileSet({ tiles }: { tiles: TileType[] }) {
     const [selected, setSelected] = useAtom(selectedTileAtom);
 
     function onSelect(e: SyntheticEvent) {
+        // TODO: find a workaround
+        // @ts-ignore
         const aTile = tiles.find(tile => tile.symbol === e.target.value)
         setSelected(aTile);
     }

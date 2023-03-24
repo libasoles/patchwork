@@ -4,6 +4,7 @@ import React, { SyntheticEvent } from 'react';
 import Panel from './Panel';
 import Tile from './Tile';
 
+// TODO: abstract common code from TileSet component
 export default function ActiveTiles() {
     const [activeTiles] = useAtom(activeTilesAtom);
     const sortedList = activeTiles.sort((a, b) => a.id - b.id)
@@ -11,6 +12,8 @@ export default function ActiveTiles() {
     const [selected, setSelected] = useAtom(selectedTileAtom);
 
     function onSelect(e: SyntheticEvent) {
+        // TODO: find a workaround
+        // @ts-ignore
         const aTile = activeTiles.find(tile => tile.symbol === e.target.value)
         setSelected(aTile);
     }

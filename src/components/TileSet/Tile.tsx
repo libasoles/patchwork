@@ -20,6 +20,8 @@ export default function Tile({ tile, isSelected, onSelect }: Props) {
              ${isSelected ? styles.selected : ""} 
              w-12 h-12 cursor-pointer grid items-center hover:opacity-70`}
             style={{
+                // TODO: find a workaround
+                // @ts-ignore
                 containerType: "inline-size",
             }}
         >

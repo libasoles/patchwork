@@ -9,11 +9,14 @@ type Props = {
     onMouseEnter: (index: number) => void;
 };
 
+// TODO: abstract common code from Tile
 function Cell({ size, tile, index, onMouseDown, onMouseEnter }: Props) {
     return (
         <button className={`bg-gray-700 border-slate-600 border-[.5px]`} style={{
             width: size + "px",
             height: size + "px",
+            // TODO: find a workaround
+            // @ts-ignore
             containerType: "inline-size"
         }} onMouseEnter={() => onMouseEnter(index)} onMouseDown={() => { onMouseDown(index) }}>
             <label className={`tile w-full h-full grid items-center text-${tile.color}`}>
