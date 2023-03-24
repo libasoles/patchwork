@@ -6,6 +6,8 @@ It's a collaborative drawing app.
 
 ## Demo
 
+![Demo](https://github.com/libasoles/patchwork/blob/main/public/Screenshot.png)
+
 ## Try it out
 
 Run the development server:
