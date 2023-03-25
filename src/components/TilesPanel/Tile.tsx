@@ -16,12 +16,12 @@ export default function Tile({ tile, isSelected, onSelect }: Props) {
 
     return (
         <label
-            className={`tile w-12 h-12 cursor-pointer grid items-center hover:opacity-70
-                ${isSelected ? styles.selected : ""}`}
+            className={`tile w-12 h-12 cursor-pointer grid items-center hover:opacity-70 ${isSelected ? "scale-90" : ""}`}
             style={{
                 // TODO: find a workaround
                 // @ts-ignore
                 containerType: "inline-size",
+
             }}
         >
             <input
@@ -30,10 +30,11 @@ export default function Tile({ tile, isSelected, onSelect }: Props) {
                 value={tile.symbol}
                 onClick={onSelect}
                 className={styles.overlap} />
-            <span className={`${styles.overlap} bg-gray-500 text-${isSelected ? color : defaultColor} `} style={{
-                lineHeight: .7,
-                fontSize: "143cqw",
-            }}>{tile.symbol}</span>
-        </label>
+            <span className={`${styles.overlap} bg-gray-500 text-${isSelected ? color : defaultColor} ${isSelected ? styles.selected : ""}`}
+                style={{
+                    lineHeight: .7,
+                    fontSize: "143cqw",
+                }}>{tile.symbol}</span>
+        </label >
     );
 }

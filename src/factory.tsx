@@ -22,7 +22,7 @@ export function createTile({ id, symbol, color = defaultColor, ...rest }: Params
         looksLike(anotherTile?: Tile) {
             const hasSameSymbol = this.symbol === anotherTile?.symbol
             const hasSameColor = this.color === anotherTile?.color
-            // const hasSameOrientation = this.orientation === anotherTile?.orientation
+
             return hasSameSymbol && hasSameColor;
         },
         rotate() {
