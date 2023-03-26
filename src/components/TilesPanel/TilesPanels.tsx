@@ -11,7 +11,7 @@ type Props = {
 export default function TilesPanels({ tiles }: Props) {
     const [action] = useAtom(actionAtom);
 
-    const shouldDisablePanel = action === Action.Paint
+    const shouldDisablePanel = action !== Action.Draw
 
     return (
         <div className={`h-screen flex flex-col ${shouldDisablePanel ? "opacity-50" : ""} select-none`}>

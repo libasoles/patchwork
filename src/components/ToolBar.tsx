@@ -2,8 +2,9 @@ import { actionAtom, colorBarVisibilityAtom } from "@/store";
 import { Action } from "@/types";
 import { useAtom } from "jotai";
 import { ReactElement, useMemo } from "react";
-import { DrawIcon } from "../icons/DrawIcon";
-import { PaintIcon } from "../icons/PaintIcon";
+import DrawIcon from "../icons/DrawIcon";
+import PaintIcon from "../icons/PaintIcon";
+import HandIcon from "../icons/HandIcon";
 
 
 const ToolBar = () => {
@@ -24,7 +25,11 @@ const ToolBar = () => {
                     <PaintIcon />
                 </ActionButton>
 
-                <div className="text-slate-300 pr-[1.2em] font-mono">{Action[selected]}</div>
+                <ActionButton name={Action.Move} selected={selected} onClick={setSelected}>
+                    <HandIcon />
+                </ActionButton>
+
+                <div className="text-slate-300 pr-[1.2em] font-mono">| {Action[selected]}</div>
             </div>
         </div>
     );

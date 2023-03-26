@@ -1,19 +1,19 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useAtom } from 'jotai'
-import { actionAtom, activeTilesAtom, colorAtom, mouseDownAtom, selectedTileAtom, zoomLevelAtom } from '../../store';
+import { useState } from 'react';
 import { emptyTile } from '../../config';
 import Cell from './Cell';
-import { Action, Tile } from '@/types';
+import { Tile } from '@/types';
 import { createTile } from "@/factory";
+import { useMoveBehavior } from './useMoveBehavior';
+import { useActiveTiles } from './useActiveTiles';
+import { useDraw } from './useDraw';
+import { useZoom } from './useZoom';
 
 const cellSize = 40
-const minCellSize = 4
-
-type Grid = Tile[]
+export type GridType = Tile[]
 
 type Dimension = { x: number; y: number; }
 
-function emptyGrid(dimension: Dimension): Grid {
+function emptyGrid(dimension: Dimension): GridType {
     return Array(dimension.x * dimension.y).fill(createTile(emptyTile));
 }
 
@@ -21,94 +21,17 @@ type Props = {
     dimension: Dimension;
 };
 
-function useZoom() {
-    const [zoomLevel] = useAtom(zoomLevelAtom)
-    const gridScale = useMemo(() => (minCellSize + zoomLevel) / 10, [zoomLevel]);
-
-    return gridScale
-}
-
-function useDraw(grid: Grid, updateGrid: (tiles: Grid) => void) {
-    const [activeAction] = useAtom(actionAtom);
-    const [selected] = useAtom(selectedTileAtom);
-
-    const [color] = useAtom(colorAtom)
-    const [isMouseDown, setMouseDown] = useAtom(mouseDownAtom)
-
-    const currentTile = selected || createTile(emptyTile)
-
-    // TODO: see if this can be optimized with useCallback, so we don't create methods each time?
-    const onMouseDown = (index: number) => {
-        // TODO: improve this code
-        if (activeAction === Action.Draw) {
-            const updatedTile = {
-                ...grid[index],
-                id: currentTile.id,
-                symbol: currentTile.symbol,
-                color
-            }
-
-            const shouldRotate = grid[index].looksLike(updatedTile)
-
-            if (shouldRotate) {
-                updatedTile.rotate()
-            } else {
-                updatedTile.resetOrientation()
-            }
-
-            grid[index] = updatedTile;
-        } else if (activeAction === Action.Paint) {
-            grid[index] = {
-                ...grid[index],
-                color
-            };
-        }
-        updateGrid([...grid]);
-    }
-
-    // TODO: reuse code from MouseDown
-    const onMouseEnter = (index: number) => {
-        if (!isMouseDown) return
-
-        grid[index] = {
-            ...grid[index],
-            id: currentTile.id,
-            symbol: currentTile.symbol,
-            color
-        }
-
-        updateGrid([...grid]);
-    }
-
-    return { setMouseDown, onMouseDown, onMouseEnter }
-}
-
-function useActiveTiles(grid: Grid) {
-    // TODO: maybe use zustand so the reducer logic is outside this component 
-    const [_, setActiveTiles] = useAtom(activeTilesAtom);
-
-    const filterActiveTiles = useCallback((grid: Grid) => {
-        const comparableTiles = grid.map(tile => {
-            return JSON.stringify(createTile({
-                id: tile.id,
-                symbol: tile.symbol
-            }))
-        })
-        const serializedTileSet = new Set(comparableTiles)
-
-        const activeTileSet = Array.from(serializedTileSet, tile => createTile(JSON.parse(tile)))
-        setActiveTiles(activeTileSet)
-    }, [setActiveTiles])
-
-    useEffect(() => {
-        filterActiveTiles(grid)
-    }, [grid, filterActiveTiles])
-}
-
 export default function Grid({ dimension }: Props) {
     const [grid, updateGrid] = useState(emptyGrid(dimension));
     const { setMouseDown, onMouseDown, onMouseEnter } = useDraw(grid, updateGrid)
     const gridScale = useZoom()
+
+    const onMove = (from: number, to: number) => {
+        grid[to] = grid[from]
+        grid[from] = createTile(emptyTile)
+        updateGrid([...grid])
+    }
+    const moveBehavior = useMoveBehavior(onMove)
     useActiveTiles(grid)
 
     return (
@@ -130,7 +53,9 @@ export default function Grid({ dimension }: Props) {
                             onMouseDown={onMouseDown}
                             onMouseEnter={onMouseEnter}
                             size={cellSize}
-                            tile={tile} />
+                            tile={tile}
+                            moveBehavior={moveBehavior}
+                        />
                     );
                 })
             }

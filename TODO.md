@@ -9,6 +9,7 @@ v - extract hooks from Grid
 v - rotate when click (create rotatable groups of tiles)
 v - improve colors harmony
 v - deploy to netlify and profit
+v - move
 
 - check performance in grid rerenders
 - improve zoom responsiveness
@@ -21,7 +22,7 @@ Functionality
 
 - undo (requires history)
 - export to png
-- move
+- rotate action?
 - select area to create pattern
 - hide grid
 - share
