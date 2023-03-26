@@ -5,7 +5,7 @@ import { SyntheticEvent, useState } from "react";
 
 export default function Colors() {
     const [color, setColor] = useAtom(colorAtom)
-    const [visible, setVisible] = useState(false)
+    const [visible, setVisible] = useState(true)
 
     return (
         <div className='w-9 fixed top-3 right-3 z-10 h-full'>
