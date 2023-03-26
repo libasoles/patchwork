@@ -21,7 +21,6 @@ export default function Tile({ tile, isSelected, onSelect }: Props) {
                 // TODO: find a workaround
                 // @ts-ignore
                 containerType: "inline-size",
-
             }}
         >
             <input

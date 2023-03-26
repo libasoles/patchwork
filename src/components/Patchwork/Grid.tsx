@@ -66,9 +66,18 @@ function useDraw(grid: Grid, updateGrid: (tiles: Grid) => void) {
         updateGrid([...grid]);
     }
 
+    // TODO: reuse code from MouseDown
     const onMouseEnter = (index: number) => {
         if (!isMouseDown) return
-        onMouseDown(index)
+
+        grid[index] = {
+            ...grid[index],
+            id: currentTile.id,
+            symbol: currentTile.symbol,
+            color
+        }
+
+        updateGrid([...grid]);
     }
 
     return { setMouseDown, onMouseDown, onMouseEnter }
