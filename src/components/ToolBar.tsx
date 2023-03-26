@@ -1,4 +1,4 @@
-import { actionAtom } from "@/store";
+import { actionAtom, colorBarVisibilityAtom } from "@/store";
 import { Action } from "@/types";
 import { useAtom } from "jotai";
 import { ReactElement, useMemo } from "react";
@@ -8,17 +8,23 @@ import { PaintIcon } from "../icons/PaintIcon";
 
 const ToolBar = () => {
     const [selected, setSelected] = useAtom(actionAtom);
+    const [_, setColorBarVisible] = useAtom(colorBarVisibilityAtom)
 
     return (
         <div className="flex justify-center items-center fixed  top-3 z-10">
-            <div className="flex items-center space-x-4 bg-gray-800 rounded-full p-1">
-                <ActionButton name={Action.Draw} selected={selected} setSelected={setSelected}>
+            <div className="flex items-center space-x-3 bg-gray-800 rounded-full p-1">
+                <ActionButton name={Action.Draw} selected={selected} onClick={setSelected}>
                     <DrawIcon />
                 </ActionButton>
 
-                <ActionButton name={Action.Paint} selected={selected} setSelected={setSelected}>
+                <ActionButton name={Action.Paint} selected={selected} onClick={(actionName) => {
+                    setSelected(actionName)
+                    setColorBarVisible(true)
+                }}>
                     <PaintIcon />
                 </ActionButton>
+
+                <div className="text-slate-300 pr-[1.2em] font-mono">{Action[selected]}</div>
             </div>
         </div>
     );
@@ -28,11 +34,11 @@ const ToolBar = () => {
 type ActionButtonProps = {
     name: Action;
     selected: Action;
-    setSelected: (action: Action) => void;
+    onClick: (action: Action) => void;
     children: ReactElement
 }
 
-function ActionButton({ name, selected, setSelected, children }: ActionButtonProps) {
+function ActionButton({ name, selected, onClick, children }: ActionButtonProps) {
     const highlight = useMemo(() => {
         return (expected: Action) => selected === expected ? 'bg-blue-500 text-white' : 'bg-white text-gray-800'
     }, [selected]);
@@ -40,8 +46,8 @@ function ActionButton({ name, selected, setSelected, children }: ActionButtonPro
     return (
         <button
             type="button"
-            className={`p-2 rounded-full ${highlight(name)}`}
-            onClick={() => setSelected(name)}
+            className={`p-2 w-[2.5em] rounded-full ${highlight(name)}`}
+            onClick={() => onClick(name)}
             title={Action[name]}
         >
             {children}

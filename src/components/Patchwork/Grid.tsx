@@ -112,7 +112,7 @@ export default function Grid({ dimension }: Props) {
     useActiveTiles(grid)
 
     return (
-        <div className="grid justify-center gap-0"
+        <div className="grid justify-center gap-0 select-none"
             style={{
                 gridTemplateColumns: `repeat(${dimension.x}, ${cellSize}px)`,
                 gridTemplateRows: `repeat(${dimension.y}, ${cellSize}px)`,

@@ -8,10 +8,11 @@ import type { Tile as TileType } from "@/types";
 type Props = {
     tile: TileType;
     isSelected: boolean;
+    isDisabled: boolean;
     onSelect?: (e: SyntheticEvent) => void;
 };
 
-export default function Tile({ tile, isSelected, onSelect }: Props) {
+export default function Tile({ tile, isSelected, isDisabled, onSelect }: Props) {
     const [color] = useAtom(colorAtom)
 
     return (
@@ -28,7 +29,9 @@ export default function Tile({ tile, isSelected, onSelect }: Props) {
                 name="tile"
                 value={tile.symbol}
                 onClick={onSelect}
-                className={styles.overlap} />
+                className={styles.overlap}
+                disabled={isDisabled}
+            />
             <span className={`${styles.overlap} bg-gray-500 text-${isSelected ? color : defaultColor} ${isSelected ? styles.selected : ""}`}
                 style={{
                     lineHeight: .7,

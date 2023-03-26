@@ -1,16 +1,22 @@
 import { actionAtom } from "@/store";
-import { Action } from "@/types";
+import { Action, Tile } from "@/types";
 import { useAtom } from "jotai";
-import { ReactElement } from "react";
+import TileSet from './TileSet';
+import ActiveTiles from './ActiveTiles';
 
 type Props = {
-    children: ReactElement[]
+    tiles: Tile[]
 }
 
-export default function TilesPanels({ children }: Props) {
+export default function TilesPanels({ tiles }: Props) {
     const [action] = useAtom(actionAtom);
 
+    const shouldDisablePanel = action === Action.Paint
+
     return (
-        <div className={`h-screen flex flex-col ${action === Action.Paint ? "opacity-50" : ""}`}>{children}</div>
+        <div className={`h-screen flex flex-col ${shouldDisablePanel ? "opacity-50" : ""} select-none`}>
+            <ActiveTiles isDisabled={shouldDisablePanel} />
+            <TileSet tiles={tiles} isDisabled={shouldDisablePanel} />
+        </div>
     );
 }

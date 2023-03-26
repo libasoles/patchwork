@@ -8,14 +8,14 @@ v - panel of used tiles
 v - extract hooks from Grid
 v - rotate when click (create rotatable groups of tiles)
 v - improve colors harmony
+v - deploy to netlify and profit
 
-- deploy to netlify and profit
-- add multiuser experience
-- layers?
 - check performance in grid rerenders
 - improve zoom responsiveness
 - improve draw performance
 - tests coverage
+- add multiuser experience
+- layers?
 
 Functionality
 
@@ -29,6 +29,7 @@ Functionality
 
 UX
 
+- provide feedback on active tools (don't rely on icons only)
 - try out scroll bar in other OS and browser
   - make evident that panels scroll
 - support mobile size
