@@ -47,15 +47,23 @@ export function useDraw(grid: GridType, updateGrid: (tiles: GridType) => void) {
     const onMouseEnter = (index: number) => {
         if (!isMouseDown)
             return;
-        if (activeAction !== Action.Draw)
-            return;
 
-        grid[index] = {
-            ...grid[index],
-            id: currentTile.id,
-            symbol: currentTile.symbol,
-            color
-        };
+        if (activeAction === Action.Paint) {
+            grid[index] = {
+                ...grid[index],
+                color
+            };
+        }
+        else if (activeAction === Action.Draw) {
+            grid[index] = {
+                ...grid[index],
+                id: currentTile.id,
+                symbol: currentTile.symbol,
+                color
+            };
+        } else {
+            return
+        }
 
         updateGrid([...grid]);
     };
