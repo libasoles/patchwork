@@ -1,7 +1,7 @@
 import { defaultColor } from "@/config";
 import { colorAtom } from "@/store";
 import { useAtom } from "jotai";
-import { SyntheticEvent } from "react";
+import { ReactNode, SyntheticEvent } from "react";
 import styles from "./Tile.module.css"
 import type { Tile as TileType } from "@/types";
 
@@ -10,9 +10,10 @@ type Props = {
     isSelected: boolean;
     isDisabled: boolean;
     onSelect?: (e: SyntheticEvent) => void;
+    children?: ReactNode
 };
 
-export default function Tile({ tile, isSelected, isDisabled, onSelect }: Props) {
+export default function Tile({ tile, isSelected, isDisabled, onSelect, children }: Props) {
     const [color] = useAtom(colorAtom)
 
     return (
@@ -37,6 +38,9 @@ export default function Tile({ tile, isSelected, isDisabled, onSelect }: Props) 
                     lineHeight: .7,
                     fontSize: "143cqw",
                 }}>{tile.symbol}</span>
+
+            {children}
+
         </label >
     );
 }
