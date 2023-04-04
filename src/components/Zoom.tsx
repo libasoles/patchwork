@@ -5,7 +5,7 @@ export default function Zoom() {
     const [zoomLevel, setZoomLevel] = useAtom(zoomLevelAtom);
 
     return (
-        <div className='fixed bottom-3 '>
+        <div data-testid='zoom' className='fixed bottom-3 '>
             <input
                 min="1"
                 max="50"

@@ -16,7 +16,7 @@ export default function ActiveTiles({ isDisabled }: Props) {
     const { selected, onSelect } = useHighlighting(activeTiles)
 
     return (
-        <Panel title="Active Tiles" className='max-h-40'>
+        <Panel data-testid='active-tiles-panel' title="Active Tiles" className='max-h-40'>
             {sortedList.map(tile => {
                 const isSelected = tile.equals(selected);
                 return <Tile

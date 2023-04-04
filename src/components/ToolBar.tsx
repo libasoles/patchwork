@@ -12,7 +12,7 @@ const ToolBar = () => {
     const [_, setColorBarVisible] = useAtom(colorBarVisibilityAtom)
 
     return (
-        <div className="flex justify-center items-center fixed  top-3 z-10">
+        <div data-testid='toolbar' className="flex justify-center items-center fixed  top-3 z-10">
             <div className="flex items-center space-x-3 bg-gray-800 rounded-full p-1">
                 <ActionButton name={Action.Draw} selected={selected} onClick={setSelected}>
                     <DrawIcon />

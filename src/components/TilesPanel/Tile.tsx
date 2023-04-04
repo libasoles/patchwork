@@ -18,6 +18,7 @@ export default function Tile({ tile, isSelected, isDisabled, onSelect, children 
 
     return (
         <label
+            data-testid="tile"
             className={`tile w-12 h-12 cursor-pointer grid items-center hover:opacity-70 ${isSelected ? "scale-90" : ""}`}
             style={{
                 // TODO: find a workaround
@@ -29,9 +30,10 @@ export default function Tile({ tile, isSelected, isDisabled, onSelect, children 
                 type="radio"
                 name="tile"
                 value={tile.symbol}
-                onClick={onSelect}
+                onChange={onSelect}
                 className={styles.overlap}
                 disabled={isDisabled}
+                checked={isSelected}
             />
             <span className={`${styles.overlap} bg-gray-500 text-${isSelected ? color : defaultColor} ${isSelected ? styles.selected : ""}`}
                 style={{
@@ -40,7 +42,6 @@ export default function Tile({ tile, isSelected, isDisabled, onSelect, children 
                 }}>{tile.symbol}</span>
 
             {children}
-
         </label >
     );
 }

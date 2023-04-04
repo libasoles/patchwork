@@ -8,7 +8,7 @@ export default function Colors() {
     const [visible, setVisible] = useAtom(colorBarVisibilityAtom)
 
     return (
-        <div className='w-9 fixed top-3 right-3 z-10 h-full'>
+        <div data-testid='color-panel' className='w-9 fixed top-3 right-3 z-10 h-full'>
             <ColorCircle color={color} onSelect={() => { setVisible((visible) => !visible) }} />
             {
                 visible &&
