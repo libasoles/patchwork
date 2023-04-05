@@ -3,7 +3,7 @@ import Cell from './Cell';
 import { Tile } from '@/types';
 import { createTile } from "@/factory";
 import { useAtom } from 'jotai';
-import { gridAtom } from '@/store';
+import { gridAtom, gridVisibilityAtom } from '@/store';
 import { useEffect } from 'react';
 import { useDraw } from './hooks/useDraw';
 import { useMoveBehavior } from './hooks/useMoveBehavior';
@@ -39,6 +39,8 @@ export default function Grid({ dimension }: Props) {
     const { isDraggable, onDragStart, onDragEnter, onDrop, onDragOver } = useMoveBehavior(onMove)
     const { setMouseDown, onMouseDown, onMouseEnter } = useDraw(grid, updateGrid)
 
+    const [isGridVisible] = useAtom(gridVisibilityAtom);
+
     return (
         <div
             data-testid='grid'
@@ -63,6 +65,7 @@ export default function Grid({ dimension }: Props) {
                             <Cell
                                 key={index}
                                 index={index}
+                                borderless={!isGridVisible}
                                 onMouseDown={onMouseDown}
                                 onMouseEnter={onMouseEnter}
                                 size={cellSize}

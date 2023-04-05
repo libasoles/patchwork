@@ -1,7 +1,7 @@
 import { colors } from "@/config";
 import { colorAtom, colorBarVisibilityAtom } from "@/store";
 import { useAtom } from "jotai";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent } from "react";
 
 export default function Colors() {
     const [color, setColor] = useAtom(colorAtom)

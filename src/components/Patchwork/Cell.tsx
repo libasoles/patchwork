@@ -5,13 +5,14 @@ type Props = {
     size: number;
     tile: TileType;
     index: number;
+    borderless: boolean;
     onMouseDown: (index: number) => void;
     onMouseEnter: (index: number) => void;
 };
 
-function Cell({ size, tile, index, onMouseDown, onMouseEnter }: Props) {
+function Cell({ size, tile, index, borderless, onMouseDown, onMouseEnter }: Props) {
     return (
-        <button className={`cursor-[inherit] bg-gray-700 border-slate-600 border-[.5px]`} style={{
+        <button className={`cursor-[inherit] bg-gray-700 border-slate-600 ${borderless ? '' : 'border-[.5px]'} hover:bg-gray-600 `} style={{
             width: size + "px",
             height: size + "px",
             transform: `rotate(${90 * tile.orientation}deg)`,

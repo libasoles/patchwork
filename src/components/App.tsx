@@ -1,12 +1,13 @@
 import Grid from './Patchwork/Grid';
-import Zoom from './Zoom';
-import Colors from './Colors';
-import ToolBar from '@/components/ToolBar';
+import Zoom from '@/components/Tools/Zoom';
+import Colors from './Tools/Colors';
+import ToolBar from '@/components/Tools/ToolBar';
 import TilePanels from './TilesPanel/TilePanels';
-import ExportButton from './ExportButton';
+import ExportButton from '@/components/Tools/ExportButton';
 import { gridDimension, tilesMap } from '@/config';
 import { createTile } from '../factory';
 import { Tile } from '@/types';
+import ToggleGrid from './Tools/ToggleGrid';
 
 const tiles = tilesMap.map((tile) => createTile(tile));
 
@@ -25,6 +26,7 @@ export default function App({ tileSet = tiles, dimension = gridDimension }: Prop
                 <Colors />
                 <Grid dimension={dimension} />
                 <Zoom />
+                <ToggleGrid />
             </main>
         </div>
     );

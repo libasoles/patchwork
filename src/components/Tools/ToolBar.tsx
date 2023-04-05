@@ -1,10 +1,10 @@
 import { actionAtom, colorBarVisibilityAtom } from "@/store";
 import { Action } from "@/types";
 import { useAtom } from "jotai";
-import DrawIcon from "../icons/DrawIcon";
-import PaintIcon from "../icons/PaintIcon";
-import HandIcon from "../icons/HandIcon";
-import { ActionButton } from "./ActionButton";
+import DrawIcon from "@/icons/DrawIcon";
+import PaintIcon from "@/icons/PaintIcon";
+import HandIcon from "@/icons/HandIcon";
+import ActionButton from "./ActionButton";
 
 const ToolBar = () => {
     const [selected, setSelected] = useAtom(actionAtom);

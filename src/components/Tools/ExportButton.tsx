@@ -23,7 +23,7 @@ export default function ExportButton() {
     return <div className="w-9 fixed top-3 right-16 z-10">
         <button
             type="button"
-            className={`p-2 w-[2.2em] rounded-full cursor-pointer bg-white text-gray-800`}
+            className={`p-2 w-[2.2em] rounded-full cursor-pointer bg-slate-300 border-slate-500 border-[2px] text-gray-800`}
             onClick={handleExportClick}
             title='Export as PNG'
         >

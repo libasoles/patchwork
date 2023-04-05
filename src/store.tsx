@@ -1,5 +1,5 @@
 import { atom } from 'jotai'
-import { initialZoomLevel, defaultColor } from "./config"
+import { initialZoomLevel, defaultColor, gridIsInitiallyVisible } from "./config"
 import { Action, Tile } from "./types"
 import { GridType } from './components/Patchwork/Grid'
 
@@ -8,6 +8,8 @@ const activeTilesAtom = atom<Tile[]>([])
 const selectedTileAtom = atom<Tile | undefined>(undefined)
 
 const zoomLevelAtom = atom(initialZoomLevel)
+
+const gridVisibilityAtom = atom(gridIsInitiallyVisible)
 
 const colorAtom = atom(defaultColor)
 
@@ -27,6 +29,7 @@ export {
     colorAtom,
     colorBarVisibilityAtom,
     gridAtom,
+    gridVisibilityAtom,
     mouseDownAtom,
     selectedTileAtom,
     zoomLevelAtom,

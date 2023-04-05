@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import { zoomLevelAtom } from '../store';
+import { zoomLevelAtom } from '@/store';
 
 export default function Zoom() {
     const [zoomLevel, setZoomLevel] = useAtom(zoomLevelAtom);

@@ -8,7 +8,7 @@ export type ActionButtonProps = {
     children: ReactElement
 }
 
-export function ActionButton({ name, selected, onClick, children }: ActionButtonProps) {
+export default function ActionButton({ name, selected, onClick, children }: ActionButtonProps) {
     const highlight = useMemo(() => {
         return (expected: Action) => selected === expected ? 'bg-blue-500 text-white' : 'bg-white text-gray-800';
     }, [selected]);

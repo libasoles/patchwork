@@ -2,6 +2,8 @@ export const gridDimension = { x: 100, y: 50 }
 
 export const initialZoomLevel = 20
 
+export const gridIsInitiallyVisible = true
+
 export const defaultColor = "gray-800"
 
 // TODO: there's a whitelist of colors in tailwind.config.js
