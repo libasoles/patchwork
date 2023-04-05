@@ -11,6 +11,10 @@ export function useMoveBehavior(onMove: (from: number, to: number) => void) {
     const dragOverItem = useRef<number | null>(null);
 
     const onDragStart = (e: SyntheticEvent, position: number) => {
+        const event = e as unknown as DragEvent
+        if (event.dataTransfer)
+            event.dataTransfer.effectAllowed = 'move'; // browsers will set move icon instead of copy icon
+
         dragItem.current = position;
     };
 

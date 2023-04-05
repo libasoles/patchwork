@@ -9,7 +9,7 @@ export default function Colors() {
 
     return (
         <div data-testid='color-panel' className='w-9 fixed top-3 right-3 z-10 h-full'>
-            <ColorCircle color={color} onSelect={() => { setVisible((visible) => !visible) }} />
+            <ColorCircle color={color} onSelect={() => { setVisible((visible) => !visible) }} className='mt-0' />
             {
                 visible &&
                 <>
@@ -28,13 +28,14 @@ export default function Colors() {
 
 type ColorCircleProps = {
     color: string;
+    className?: string;
     onSelect: (e: SyntheticEvent) => void;
 };
 
-function ColorCircle({ color, onSelect }: ColorCircleProps) {
+function ColorCircle({ color, onSelect, className }: ColorCircleProps) {
     return (
         // TODO: there's a thing with the external circle height when the window height is shorter
-        <div className='rounded-full flex w-9 h-9 justify-center items-center bg-slate-400 my-1.5'>
+        <div className={`rounded-full flex w-9 h-9 justify-center items-center bg-slate-400 my-1.5 ${className}`}>
             <button
                 className={`rounded-full bg-${color} w-8 h-8 cursor-pointer`}
                 onClick={onSelect}

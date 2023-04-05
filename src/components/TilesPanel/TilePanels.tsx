@@ -15,7 +15,7 @@ export default function TilePanels({ tiles }: Props) {
 
     return (
         <div data-testid='tiles-panel'
-            className={`h-screen flex flex-col ${shouldDisablePanel ? "opacity-50" : ""} select-none`}>
+            className={`h-screen flex flex-col ${shouldDisablePanel ? "opacity-50 cursor-not-allowed" : ""} select-none`}>
             <ActiveTiles isDisabled={shouldDisablePanel} />
             <TileSet tiles={tiles} isDisabled={shouldDisablePanel} />
         </div>

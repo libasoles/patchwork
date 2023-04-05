@@ -23,7 +23,6 @@ type Props = {
 
 export default function Grid({ dimension }: Props) {
     const [grid, updateGrid] = useState(emptyGrid(dimension));
-    const { setMouseDown, onMouseDown, onMouseEnter } = useDraw(grid, updateGrid)
     const gridScale = useZoom()
 
     const onMove = (from: number, to: number) => {
@@ -31,13 +30,15 @@ export default function Grid({ dimension }: Props) {
         grid[from] = createTile(emptyTile)
         updateGrid([...grid])
     }
-    const moveBehavior = useMoveBehavior(onMove)
+    const { isDraggable, onDragStart, onDragEnter, onDrop, onDragOver } = useMoveBehavior(onMove)
+    const { setMouseDown, onMouseDown, onMouseEnter } = useDraw(grid, updateGrid)
+
     useActiveTiles(grid)
 
     return (
         <div
             data-testid='grid'
-            className="grid justify-center gap-0 select-none"
+            className={`grid justify-center gap-0 select-none ${isDraggable ? 'cursor-pointer' : 'cursor-crosshair'}`}
             style={{
                 gridTemplateColumns: `repeat(${dimension.x}, ${cellSize}px)`,
                 gridTemplateRows: `repeat(${dimension.y}, ${cellSize}px)`,
@@ -49,15 +50,21 @@ export default function Grid({ dimension }: Props) {
             {
                 grid.map((tile, index) => {
                     return (
-                        <Cell
-                            key={index}
-                            index={index}
-                            onMouseDown={onMouseDown}
-                            onMouseEnter={onMouseEnter}
-                            size={cellSize}
-                            tile={tile}
-                            moveBehavior={moveBehavior}
-                        />
+                        <div key={index}
+                            draggable={isDraggable}
+                            onDragStart={(e) => onDragStart(e, index)}
+                            onDragEnter={(e) => onDragEnter(e, index)}
+                            onDragEnd={onDrop}
+                            onDragOver={onDragOver}>
+                            <Cell
+                                key={index}
+                                index={index}
+                                onMouseDown={onMouseDown}
+                                onMouseEnter={onMouseEnter}
+                                size={cellSize}
+                                tile={tile}
+                            />
+                        </div>
                     );
                 })
             }

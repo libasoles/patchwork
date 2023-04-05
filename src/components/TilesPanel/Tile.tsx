@@ -19,7 +19,7 @@ export default function Tile({ tile, isSelected, isDisabled, onSelect, children 
     return (
         <label
             data-testid="tile"
-            className={`tile w-12 h-12 cursor-pointer grid items-center hover:opacity-70 ${isSelected ? "scale-90" : ""}`}
+            className={`tile w-12 h-12 ${isDisabled ? 'cursor-not-allowed' : 'cursor-pointer hover:opacity-70'} grid items-center ${isSelected ? "scale-90" : ""}`}
             style={{
                 // TODO: find a workaround
                 // @ts-ignore

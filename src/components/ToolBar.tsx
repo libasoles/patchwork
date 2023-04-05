@@ -51,7 +51,7 @@ function ActionButton({ name, selected, onClick, children }: ActionButtonProps) 
     return (
         <button
             type="button"
-            className={`p-2 w-[2.5em] rounded-full ${highlight(name)}`}
+            className={`p-2 w-[2.5em] rounded-full cursor-pointer ${highlight(name)}`}
             onClick={() => onClick(name)}
             title={Action[name]}
         >
