@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useAtom } from 'jotai';
-import { zoomLevelAtom } from '../../store';
+import { zoomLevelAtom } from '@/store';
 
 const minCellSize = 4
 

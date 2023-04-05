@@ -1,12 +1,13 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
-import { activeTilesAtom } from '../../store';
+import { activeTilesAtom, gridAtom } from '@/store';
 import { createTile } from "@/factory";
-import { GridType } from './Grid';
+import { GridType } from '../../Patchwork/Grid';
 
-export function useActiveTiles(grid: GridType) {
-    // TODO: maybe use zustand so the reducer logic is outside this component 
-    const [_, setActiveTiles] = useAtom(activeTilesAtom);
+export function useActiveTiles() {
+    const [grid] = useAtom(gridAtom);
+
+    const [activeTiles, setActiveTiles] = useAtom(activeTilesAtom);
 
     const filterActiveTiles = useCallback((grid: GridType) => {
         const comparableTiles = grid.map(tile => {
@@ -24,4 +25,6 @@ export function useActiveTiles(grid: GridType) {
     useEffect(() => {
         filterActiveTiles(grid);
     }, [grid, filterActiveTiles]);
+
+    return activeTiles
 }

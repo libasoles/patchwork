@@ -1,6 +1,6 @@
 import { SyntheticEvent, useRef } from 'react';
 import { useAtom } from 'jotai';
-import { actionAtom } from '../../store';
+import { actionAtom } from '@/store';
 import { Action } from '@/types';
 
 export function useMoveBehavior(onMove: (from: number, to: number) => void) {

@@ -1,7 +1,7 @@
 import Tile from './Tile';
 import Panel from './Panel';
 import type { Tile as TileType } from "@/types";
-import { useHighlighting } from './useHighlighting';
+import { useHighlighting } from './hooks/useHighlighting';
 import TrashIcon from '@/icons/TrashIcon';
 import styles from "./Tile.module.css"
 

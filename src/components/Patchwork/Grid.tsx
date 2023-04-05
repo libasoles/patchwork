@@ -1,12 +1,13 @@
-import { useState } from 'react';
 import { emptyTile } from '../../config';
 import Cell from './Cell';
 import { Tile } from '@/types';
 import { createTile } from "@/factory";
-import { useMoveBehavior } from './useMoveBehavior';
-import { useActiveTiles } from './useActiveTiles';
-import { useDraw } from './useDraw';
-import { useZoom } from './useZoom';
+import { useAtom } from 'jotai';
+import { gridAtom } from '@/store';
+import { useEffect } from 'react';
+import { useDraw } from './hooks/useDraw';
+import { useMoveBehavior } from './hooks/useMoveBehavior';
+import { useZoom } from './hooks/useZoom';
 
 const cellSize = 40
 export type GridType = Tile[]
@@ -22,7 +23,12 @@ type Props = {
 };
 
 export default function Grid({ dimension }: Props) {
-    const [grid, updateGrid] = useState(emptyGrid(dimension));
+    const [grid, updateGrid] = useAtom(gridAtom);
+
+    useEffect(() => {
+        updateGrid(emptyGrid(dimension))
+    }, [dimension, updateGrid])
+
     const gridScale = useZoom()
 
     const onMove = (from: number, to: number) => {
@@ -32,8 +38,6 @@ export default function Grid({ dimension }: Props) {
     }
     const { isDraggable, onDragStart, onDragEnter, onDrop, onDragOver } = useMoveBehavior(onMove)
     const { setMouseDown, onMouseDown, onMouseEnter } = useDraw(grid, updateGrid)
-
-    useActiveTiles(grid)
 
     return (
         <div

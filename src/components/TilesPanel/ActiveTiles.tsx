@@ -1,17 +1,16 @@
 import React from 'react';
-import { activeTilesAtom } from '@/store';
-import { useAtom } from 'jotai';
 import Panel from './Panel';
 import Tile from './Tile';
-import { useHighlighting } from './useHighlighting';
+import { useHighlighting } from './hooks/useHighlighting';
+import { useActiveTiles } from './hooks/useActiveTiles';
 
 type Props = {
     isDisabled: boolean
 }
 
 export default function ActiveTiles({ isDisabled }: Props) {
-    const [activeTiles] = useAtom(activeTilesAtom);
-    const sortedList = activeTiles.sort((a, b) => a.id - b.id)
+    const activeTiles = useActiveTiles()
+    const sortedList = activeTiles.sort((a, b) => a.id - b.id) // if we don't sort, order is rendom each time
 
     const { selected, onSelect } = useHighlighting(activeTiles)
 

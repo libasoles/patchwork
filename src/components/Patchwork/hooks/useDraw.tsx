@@ -1,9 +1,9 @@
 import { useAtom } from 'jotai';
-import { actionAtom, colorAtom, mouseDownAtom, selectedTileAtom } from '../../store';
-import { emptyTile } from '../../config';
+import { actionAtom, colorAtom, mouseDownAtom, selectedTileAtom } from '@/store';
+import { emptyTile } from '@/config';
 import { Action } from '@/types';
 import { createTile } from "@/factory";
-import { GridType } from './Grid';
+import { GridType } from '../Grid';
 
 export function useDraw(grid: GridType, updateGrid: (tiles: GridType) => void) {
     const [activeAction] = useAtom(actionAtom);

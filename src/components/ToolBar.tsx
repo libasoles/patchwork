@@ -1,11 +1,10 @@
 import { actionAtom, colorBarVisibilityAtom } from "@/store";
 import { Action } from "@/types";
 import { useAtom } from "jotai";
-import { ReactElement, useMemo } from "react";
 import DrawIcon from "../icons/DrawIcon";
 import PaintIcon from "../icons/PaintIcon";
 import HandIcon from "../icons/HandIcon";
-
+import { ActionButton } from "./ActionButton";
 
 const ToolBar = () => {
     const [selected, setSelected] = useAtom(actionAtom);
@@ -34,31 +33,5 @@ const ToolBar = () => {
         </div>
     );
 };
-
-
-type ActionButtonProps = {
-    name: Action;
-    selected: Action;
-    onClick: (action: Action) => void;
-    children: ReactElement
-}
-
-function ActionButton({ name, selected, onClick, children }: ActionButtonProps) {
-    const highlight = useMemo(() => {
-        return (expected: Action) => selected === expected ? 'bg-blue-500 text-white' : 'bg-white text-gray-800'
-    }, [selected]);
-
-    return (
-        <button
-            type="button"
-            className={`p-2 w-[2.5em] rounded-full cursor-pointer ${highlight(name)}`}
-            onClick={() => onClick(name)}
-            title={Action[name]}
-        >
-            {children}
-        </button>
-    )
-}
-
 
 export default ToolBar

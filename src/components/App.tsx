@@ -2,8 +2,8 @@ import Grid from './Patchwork/Grid';
 import Zoom from './Zoom';
 import Colors from './Colors';
 import ToolBar from '@/components/ToolBar';
-
 import TilePanels from './TilesPanel/TilePanels';
+import ExportButton from './ExportButton';
 import { gridDimension, tilesMap } from '@/config';
 import { createTile } from '../factory';
 import { Tile } from '@/types';
@@ -21,6 +21,7 @@ export default function App({ tileSet = tiles, dimension = gridDimension }: Prop
             </aside>
             <main className="bg-gray-700 w-full h-screen overflow-scroll relative flex items-center justify-center padding-100">
                 <ToolBar />
+                <ExportButton />
                 <Colors />
                 <Grid dimension={dimension} />
                 <Zoom />
