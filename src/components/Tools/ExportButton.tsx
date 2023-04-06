@@ -1,17 +1,17 @@
 import DownloadIcon from "@/icons/DownloadIcon";
 import { RefObject, useRef } from "react";
 import { exportComponentAsPNG } from '@/utils';
-import { gridAtom } from "@/store";
+import { canvasAtom } from "@/store";
 import { useAtom } from "jotai";
 import { Tile } from "@/types";
 
 // TODO: improve performance. It's taking ages
 export default function ExportButton() {
-    const gridRef = useRef<HTMLDivElement>(null);
+    const canvasRef = useRef<HTMLDivElement>(null);
 
     const handleExportClick = async () => {
-        if (gridRef && gridRef.current) {
-            const tmpUrl = await exportComponentAsPNG(gridRef.current);
+        if (canvasRef && canvasRef.current) {
+            const tmpUrl = await exportComponentAsPNG(canvasRef.current);
 
             const link = document.createElement('a');
             link.download = 'image.png';
@@ -23,19 +23,19 @@ export default function ExportButton() {
     return <div className="w-9 fixed top-3 right-16 z-10">
         <button
             type="button"
-            className={`p-2 w-[2.2em] rounded-full cursor-pointer bg-slate-300 border-slate-500 border-[2px] text-gray-800`}
+            className={`p-2 w-[2.4em] rounded-full cursor-pointer bg-slate-300 border-slate-500 border-[2px] text-gray-800`}
             onClick={handleExportClick}
             title='Export as PNG'
         >
             <DownloadIcon />
         </button>
 
-        <Canvas gridRef={gridRef} />
+        <Canvas canvasRef={canvasRef} />
     </div>
 }
 
-function Canvas({ gridRef }: { gridRef: RefObject<HTMLDivElement> }) {
-    const [grid] = useAtom(gridAtom)
+function Canvas({ canvasRef: canvasRef }: { canvasRef: RefObject<HTMLDivElement> }) {
+    const [canvas] = useAtom(canvasAtom)
 
     const cellSize = 40
 
@@ -43,7 +43,7 @@ function Canvas({ gridRef }: { gridRef: RefObject<HTMLDivElement> }) {
     const dimension = { x: 100, y: 50 }
 
     return (
-        <div ref={gridRef} style={{ position: 'absolute', top: -100000 }}>
+        <div ref={canvasRef} style={{ position: 'absolute', top: -100000 }}>
             <div
                 className={`grid justify-center gap-0 select-none`}
                 style={{
@@ -51,7 +51,7 @@ function Canvas({ gridRef }: { gridRef: RefObject<HTMLDivElement> }) {
                     gridTemplateRows: `repeat(${dimension.y}, ${cellSize}px)`,
                 }}
             >
-                {grid.map((tile, index) => <Cell key={index} size={cellSize} tile={tile} />)}
+                {canvas.map((tile, index) => <Cell key={index} size={cellSize} tile={tile} />)}
             </div>
         </div>
     )

@@ -1,6 +1,6 @@
-export const gridDimension = { x: 100, y: 50 }
+export const canvasDimension = { x: 50, y: 50 }
 
-export const initialZoomLevel = 20
+export const initialZoomLevel = 15
 
 export const gridIsInitiallyVisible = true
 

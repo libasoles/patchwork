@@ -6,7 +6,7 @@ const minCellSize = 4
 
 export function useZoom() {
     const [zoomLevel] = useAtom(zoomLevelAtom);
-    const gridScale = useMemo(() => (minCellSize + zoomLevel) / 10, [zoomLevel]);
+    const canvasScale = useMemo(() => (minCellSize + zoomLevel) / 10, [zoomLevel]);
 
-    return gridScale;
+    return canvasScale;
 }

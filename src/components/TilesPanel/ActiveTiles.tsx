@@ -1,6 +1,6 @@
 import React from 'react';
-import Panel from './Panel';
-import Tile from './Tile';
+import Panel from './components/Panel';
+import Tile from './components/Tile';
 import { useHighlighting } from './hooks/useHighlighting';
 import { useActiveTiles } from './hooks/useActiveTiles';
 
@@ -15,7 +15,7 @@ export default function ActiveTiles({ isDisabled }: Props) {
     const { selected, onSelect } = useHighlighting(activeTiles)
 
     return (
-        <Panel data-testid='active-tiles-panel' title="Active Tiles" className='max-h-40'>
+        <Panel data-testid='active-tiles-panel' title="Active Tiles">
             {sortedList.map(tile => {
                 const isSelected = tile.equals(selected);
                 return <Tile

@@ -1,7 +1,7 @@
 import Tile from './Tile';
 import Panel from './Panel';
 import type { Tile as TileType } from "@/types";
-import { useHighlighting } from './hooks/useHighlighting';
+import { useHighlighting } from '../hooks/useHighlighting';
 import TrashIcon from '@/icons/TrashIcon';
 import styles from "./Tile.module.css"
 
@@ -14,7 +14,7 @@ export default function TileSet({ tiles, isDisabled }: Props) {
     const { selected, onSelect } = useHighlighting(tiles)
 
     return (
-        <Panel data-testid='all-tiles-panel' title="All Tiles">
+        <Panel data-testid='all-tiles-panel' title="All Tiles" className='overflow-y-hidden'>
             {tiles.map(tile => {
                 const isSelected = tile.equals(selected);
                 const isEmptyTile = (tile.symbol === " ")

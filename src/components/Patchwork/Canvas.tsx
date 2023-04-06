@@ -1,20 +1,20 @@
 import { emptyTile } from '../../config';
-import Cell from './Cell';
+import Cell from './components/Cell';
 import { Tile } from '@/types';
 import { createTile } from "@/factory";
 import { useAtom } from 'jotai';
-import { gridAtom, gridVisibilityAtom } from '@/store';
+import { canvasAtom, gridVisibilityAtom } from '@/store';
 import { useEffect } from 'react';
 import { useDraw } from './hooks/useDraw';
 import { useMoveBehavior } from './hooks/useMoveBehavior';
 import { useZoom } from './hooks/useZoom';
 
 const cellSize = 40
-export type GridType = Tile[]
+export type CanvasType = Tile[]
 
 type Dimension = { x: number; y: number; }
 
-function emptyGrid(dimension: Dimension): GridType {
+function emptyCanvas(dimension: Dimension): CanvasType {
     return Array(dimension.x * dimension.y).fill(createTile(emptyTile));
 }
 
@@ -22,39 +22,39 @@ type Props = {
     dimension: Dimension;
 };
 
-export default function Grid({ dimension }: Props) {
-    const [grid, updateGrid] = useAtom(gridAtom);
+export default function Canvas({ dimension }: Props) {
+    const [canvas, updateCanvas] = useAtom(canvasAtom);
 
     useEffect(() => {
-        updateGrid(emptyGrid(dimension))
-    }, [dimension, updateGrid])
+        updateCanvas(emptyCanvas(dimension))
+    }, [dimension, updateCanvas])
 
-    const gridScale = useZoom()
+    const canvasScale = useZoom()
 
     const onMove = (from: number, to: number) => {
-        grid[to] = grid[from]
-        grid[from] = createTile(emptyTile)
-        updateGrid([...grid])
+        canvas[to] = canvas[from]
+        canvas[from] = createTile(emptyTile)
+        updateCanvas([...canvas])
     }
     const { isDraggable, onDragStart, onDragEnter, onDrop, onDragOver } = useMoveBehavior(onMove)
-    const { setMouseDown, onMouseDown, onMouseEnter } = useDraw(grid, updateGrid)
+    const { setMouseDown, onMouseDown, onMouseEnter } = useDraw(canvas, updateCanvas)
 
     const [isGridVisible] = useAtom(gridVisibilityAtom);
 
     return (
         <div
-            data-testid='grid'
+            data-testid='canvas'
             className={`grid justify-center gap-0 select-none ${isDraggable ? 'cursor-pointer' : 'cursor-crosshair'}`}
             style={{
                 gridTemplateColumns: `repeat(${dimension.x}, ${cellSize}px)`,
                 gridTemplateRows: `repeat(${dimension.y}, ${cellSize}px)`,
-                transform: `scale(${gridScale})`,
+                transform: `scale(${canvasScale})`,
             }}
             onMouseDown={() => { setMouseDown(true) }}
             onMouseUp={() => { setMouseDown(false) }}
         >
             {
-                grid.map((tile, index) => {
+                canvas.map((tile, index) => {
                     return (
                         <div key={index}
                             draggable={isDraggable}

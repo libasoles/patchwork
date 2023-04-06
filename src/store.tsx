@@ -1,7 +1,7 @@
 import { atom } from 'jotai'
 import { initialZoomLevel, defaultColor, gridIsInitiallyVisible } from "./config"
 import { Action, Tile } from "./types"
-import { GridType } from './components/Patchwork/Grid'
+import { CanvasType } from './components/Patchwork/Canvas'
 
 const activeTilesAtom = atom<Tile[]>([])
 
@@ -17,7 +17,7 @@ const mouseDownAtom = atom(false)
 
 const colorBarVisibilityAtom = atom(true)
 
-const gridAtom = atom<GridType>([])
+const canvasAtom = atom<CanvasType>([])
 
 
 // TODO: create action enum
@@ -26,9 +26,9 @@ const actionAtom = atom(Action.Draw)
 export {
     actionAtom,
     activeTilesAtom,
+    canvasAtom,
     colorAtom,
     colorBarVisibilityAtom,
-    gridAtom,
     gridVisibilityAtom,
     mouseDownAtom,
     selectedTileAtom,

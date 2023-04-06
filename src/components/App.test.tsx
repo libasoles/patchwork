@@ -22,8 +22,8 @@ describe('App', () => {
         const allTilesPanel = screen.getByTestId('all-tiles-panel')
         expect(allTilesPanel).toBeInTheDocument()
 
-        const grid = screen.getByTestId('grid')
-        expect(grid).toBeInTheDocument()
+        const canvas = screen.getByTestId('canvas')
+        expect(canvas).toBeInTheDocument()
 
         const colorPanel = screen.getByTestId('color-panel')
         expect(colorPanel).toBeInTheDocument()
@@ -37,7 +37,7 @@ describe('App', () => {
         expect(zoom).toBeInTheDocument()
     })
 
-    it('should be able to draw the selected tile in the grid', async () => {
+    it('should be able to draw the selected tile in the canvas', async () => {
         const allTilesPanel = screen.getByTestId('all-tiles-panel')
         const aTile = within(allTilesPanel).getAllByRole('radio')[1] as HTMLInputElement
 
@@ -47,8 +47,8 @@ describe('App', () => {
             expect(aTile).toBeChecked()
         })
 
-        const grid = screen.getByTestId('grid')
-        const aCell = within(grid).getAllByRole('button')[1]
+        const canvas = screen.getByTestId('canvas')
+        const aCell = within(canvas).getAllByRole('button')[1]
 
         act(() => { userEvent.click(aCell) })
 
@@ -72,8 +72,8 @@ describe('App', () => {
             expect(aTile).toBeChecked()
         })
 
-        const grid = screen.getByTestId('grid')
-        const aCell = within(grid).getAllByRole('button')[1]
+        const canvas = screen.getByTestId('canvas')
+        const aCell = within(canvas).getAllByRole('button')[1]
 
         act(() => { userEvent.click(aCell) })
 

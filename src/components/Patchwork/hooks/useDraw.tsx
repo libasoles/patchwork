@@ -3,9 +3,9 @@ import { actionAtom, colorAtom, mouseDownAtom, selectedTileAtom } from '@/store'
 import { emptyTile } from '@/config';
 import { Action } from '@/types';
 import { createTile } from "@/factory";
-import { GridType } from '../Grid';
+import { CanvasType } from '../Canvas';
 
-export function useDraw(grid: GridType, updateGrid: (tiles: GridType) => void) {
+export function useDraw(canvas: CanvasType, updateCanvas: (tiles: CanvasType) => void) {
     const [activeAction] = useAtom(actionAtom);
     const [selected] = useAtom(selectedTileAtom);
 
@@ -19,13 +19,13 @@ export function useDraw(grid: GridType, updateGrid: (tiles: GridType) => void) {
         // TODO: improve this code
         if (activeAction === Action.Draw) {
             const updatedTile = {
-                ...grid[index],
+                ...canvas[index],
                 id: currentTile.id,
                 symbol: currentTile.symbol,
                 color
             };
 
-            const shouldRotate = grid[index].looksLike(updatedTile);
+            const shouldRotate = canvas[index].looksLike(updatedTile);
 
             if (shouldRotate) {
                 updatedTile.rotate();
@@ -33,14 +33,14 @@ export function useDraw(grid: GridType, updateGrid: (tiles: GridType) => void) {
                 updatedTile.resetOrientation();
             }
 
-            grid[index] = updatedTile;
+            canvas[index] = updatedTile;
         } else if (activeAction === Action.Paint) {
-            grid[index] = {
-                ...grid[index],
+            canvas[index] = {
+                ...canvas[index],
                 color
             };
         }
-        updateGrid([...grid]);
+        updateCanvas([...canvas]);
     };
 
     // TODO: reuse code from MouseDown
@@ -49,14 +49,14 @@ export function useDraw(grid: GridType, updateGrid: (tiles: GridType) => void) {
             return;
 
         if (activeAction === Action.Paint) {
-            grid[index] = {
-                ...grid[index],
+            canvas[index] = {
+                ...canvas[index],
                 color
             };
         }
         else if (activeAction === Action.Draw) {
-            grid[index] = {
-                ...grid[index],
+            canvas[index] = {
+                ...canvas[index],
                 id: currentTile.id,
                 symbol: currentTile.symbol,
                 color
@@ -65,7 +65,7 @@ export function useDraw(grid: GridType, updateGrid: (tiles: GridType) => void) {
             return
         }
 
-        updateGrid([...grid]);
+        updateCanvas([...canvas]);
     };
 
     return { setMouseDown, onMouseDown, onMouseEnter };

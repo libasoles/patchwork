@@ -1,10 +1,10 @@
-import Grid from './Patchwork/Grid';
+import Canvas from './Patchwork/Canvas';
 import Zoom from '@/components/Tools/Zoom';
 import Colors from './Tools/Colors';
 import ToolBar from '@/components/Tools/ToolBar';
 import TilePanels from './TilesPanel/TilePanels';
 import ExportButton from '@/components/Tools/ExportButton';
-import { gridDimension, tilesMap } from '@/config';
+import { canvasDimension, tilesMap } from '@/config';
 import { createTile } from '../factory';
 import { Tile } from '@/types';
 import ToggleGrid from './Tools/ToggleGrid';
@@ -14,7 +14,7 @@ const tiles = tilesMap.map((tile) => createTile(tile));
 type Dimension = { x: number, y: number }
 type Props = { tileSet?: Tile[], dimension?: Dimension }
 
-export default function App({ tileSet = tiles, dimension = gridDimension }: Props) {
+export default function App({ tileSet = tiles, dimension = canvasDimension }: Props) {
     return (
         <div className="flex">
             <aside>
@@ -24,7 +24,7 @@ export default function App({ tileSet = tiles, dimension = gridDimension }: Prop
                 <ToolBar />
                 <ExportButton />
                 <Colors />
-                <Grid dimension={dimension} />
+                <Canvas dimension={dimension} />
                 <Zoom />
                 <ToggleGrid />
             </main>

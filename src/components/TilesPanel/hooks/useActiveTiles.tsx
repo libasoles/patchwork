@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
-import { activeTilesAtom, gridAtom } from '@/store';
+import { activeTilesAtom, canvasAtom } from '@/store';
 import { createTile } from "@/factory";
-import { GridType } from '../../Patchwork/Grid';
+import { CanvasType } from '../../Patchwork/Canvas';
 
 export function useActiveTiles() {
-    const [grid] = useAtom(gridAtom);
+    const [canvas] = useAtom(canvasAtom);
 
     const [activeTiles, setActiveTiles] = useAtom(activeTilesAtom);
 
-    const filterActiveTiles = useCallback((grid: GridType) => {
-        const comparableTiles = grid.map(tile => {
+    const filterActiveTiles = useCallback((canvas: CanvasType) => {
+        const comparableTiles = canvas.map(tile => {
             return JSON.stringify(createTile({
                 id: tile.id,
                 symbol: tile.symbol
@@ -23,8 +23,8 @@ export function useActiveTiles() {
     }, [setActiveTiles]);
 
     useEffect(() => {
-        filterActiveTiles(grid);
-    }, [grid, filterActiveTiles]);
+        filterActiveTiles(canvas);
+    }, [canvas, filterActiveTiles]);
 
     return activeTiles
 }

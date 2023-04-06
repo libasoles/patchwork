@@ -4,7 +4,7 @@ import { useAtom } from "jotai";
 import DrawIcon from "@/icons/DrawIcon";
 import PaintIcon from "@/icons/PaintIcon";
 import HandIcon from "@/icons/HandIcon";
-import ActionButton from "./ActionButton";
+import ActionButton from "./components/ActionButton";
 
 const ToolBar = () => {
     const [selected, setSelected] = useAtom(actionAtom);
