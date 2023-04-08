@@ -5,6 +5,7 @@ import DrawIcon from "@/icons/DrawIcon";
 import PaintIcon from "@/icons/PaintIcon";
 import HandIcon from "@/icons/HandIcon";
 import ActionButton from "./components/ActionButton";
+import RotateIcon from "@/icons/RotateIcon";
 
 const ToolBar = () => {
     const [selected, setSelected] = useAtom(actionAtom);
@@ -26,6 +27,10 @@ const ToolBar = () => {
 
                 <ActionButton name={Action.Move} selected={selected} onClick={setSelected}>
                     <HandIcon />
+                </ActionButton>
+
+                <ActionButton name={Action.Rotate} selected={selected} onClick={setSelected}>
+                    <RotateIcon />
                 </ActionButton>
 
                 <div className="text-slate-300 pr-[1.2em] font-mono">| {Action[selected]}</div>

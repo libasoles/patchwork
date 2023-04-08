@@ -39,6 +39,8 @@ export function useDraw(canvas: CanvasType, updateCanvas: (tiles: CanvasType) =>
                 ...canvas[index],
                 color
             };
+        } else if (activeAction === Action.Rotate) {
+            canvas[index].rotate()
         }
         updateCanvas([...canvas]);
     };

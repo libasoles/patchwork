@@ -13,5 +13,6 @@ export type Tile = {
 export enum Action {
     Draw,
     Paint,
-    Move
+    Move,
+    Rotate,
 }

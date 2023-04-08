@@ -1,9 +1,9 @@
 import { emptyTile } from '../../config';
 import Cell from './components/Cell';
-import { Tile } from '@/types';
+import { Action, Tile } from '@/types';
 import { createTile } from "@/factory";
 import { useAtom } from 'jotai';
-import { canvasAtom, gridVisibilityAtom } from '@/store';
+import { actionAtom, canvasAtom, gridVisibilityAtom } from '@/store';
 import { useEffect } from 'react';
 import { useDraw } from './hooks/useDraw';
 import { useMoveBehavior } from './hooks/useMoveBehavior';
@@ -23,6 +23,7 @@ type Props = {
 };
 
 export default function Canvas({ dimension }: Props) {
+    const [activeAction] = useAtom(actionAtom);
     const [canvas, updateCanvas] = useAtom(canvasAtom);
 
     useEffect(() => {
@@ -44,7 +45,7 @@ export default function Canvas({ dimension }: Props) {
     return (
         <div
             data-testid='canvas'
-            className={`grid justify-center gap-0 select-none ${isDraggable ? 'cursor-pointer' : 'cursor-crosshair'}`}
+            className={`grid justify-center gap-0 select-none ${getMouseIcon(activeAction)}`}
             style={{
                 gridTemplateColumns: `repeat(${dimension.x}, ${cellSize}px)`,
                 gridTemplateRows: `repeat(${dimension.y}, ${cellSize}px)`,
@@ -79,3 +80,13 @@ export default function Canvas({ dimension }: Props) {
     );
 }
 
+function getMouseIcon(action: Action): string {
+    switch (action) {
+        case Action.Move:
+            return 'cursor-grab';
+        case Action.Rotate:
+            return 'cursor-sw-resize';
+        default:
+            return 'cursor-crosshair';
+    }
+}
