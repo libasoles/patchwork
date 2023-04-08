@@ -394,6 +394,42 @@ export default function Blocks() {
                 <li><span>253</span><span className="tile">&#xFD;</span></li>
                 <li><span>254</span><span className="tile">&#xFE;</span></li>
                 <li><span>255</span><span className="tile">&#xFF;</span></li>
+
+                <li><span>256</span><span className="tile">&#x100;</span></li>
+                <li><span>257</span><span className="tile">&#x101;</span></li>
+                <li><span>258</span><span className="tile">&#x102;</span></li>
+                <li><span>259</span><span className="tile">&#x103;</span></li>
+                <li><span>260</span><span className="tile">&#x104;</span></li>
+                <li><span>261</span><span className="tile">&#x105;</span></li>
+                <li><span>262</span><span className="tile">&#x106;</span></li>
+                <li><span>263</span><span className="tile">&#x107;</span></li>
+                <li><span>264</span><span className="tile">&#x108;</span></li>
+                <li><span>265</span><span className="tile">&#x109;</span></li>
+                <li><span>266</span><span className="tile">&#x10A;</span></li>
+                <li><span>267</span><span className="tile">&#x10B;</span></li>
+                <li><span>268</span><span className="tile">&#x10C;</span></li>
+                <li><span>269</span><span className="tile">&#x10D;</span></li>
+                <li><span>270</span><span className="tile">&#x10E;</span></li>
+                <li><span>271</span><span className="tile">&#x10F;</span></li>
+                <li><span>272</span><span className="tile">&#x110;</span></li>
+                <li><span>273</span><span className="tile">&#x111;</span></li>
+                <li><span>274</span><span className="tile">&#x112;</span></li>
+                <li><span>275</span><span className="tile">&#x113;</span></li>
+                <li><span>276</span><span className="tile">&#x114;</span></li>
+                <li><span>277</span><span className="tile">&#x115;</span></li>
+                <li><span>278</span><span className="tile">&#x116;</span></li>
+                <li><span>279</span><span className="tile">&#x117;</span></li>
+                <li><span>280</span><span className="tile">&#x118;</span></li>
+                <li><span>281</span><span className="tile">&#x119;</span></li>
+                <li><span>282</span><span className="tile">&#x11A;</span></li>
+                <li><span>283</span><span className="tile">&#x11B;</span></li>
+                <li><span>284</span><span className="tile">&#x11C;</span></li>
+                <li><span>285</span><span className="tile">&#x11D;</span></li>
+                <li><span>286</span><span className="tile">&#x11E;</span></li>
+                <li><span>287</span><span className="tile">&#x11F;</span></li>
+                <li><span>288</span><span className="tile">&#x120;</span></li>
+
+
             </ul>
         </div>
     )
