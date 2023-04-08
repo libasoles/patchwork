@@ -24,12 +24,13 @@ export default function Tile({ tile, isSelected, isDisabled = false, onSelect, c
                 // TODO: find a workaround
                 // @ts-ignore
                 containerType: "inline-size",
+                transform: `rotate(${90 * tile.orientation}deg)`,
             }}
         >
             <input
                 type="radio"
                 name="tile"
-                value={tile.symbol}
+                value={tile.id}
                 onChange={onSelect}
                 className={styles.overlap}
                 disabled={isDisabled}

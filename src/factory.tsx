@@ -7,14 +7,15 @@ type Params = {
     symbol: string;
     color?: string;
     group?: string;
+    orientation?: number;
 };
 
-export function createTile({ id, symbol, color = defaultColor, ...rest }: Params): Tile {
+export function createTile({ id, symbol, color = defaultColor, orientation, ...rest }: Params): Tile {
     return {
         id,
         symbol,
         color,
-        orientation: 0,
+        orientation: orientation ?? 0,
         ...rest,
         equals(anotherTile?: Tile) {
             return this.id === anotherTile?.id;

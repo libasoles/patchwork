@@ -9,7 +9,7 @@ export function useHighlighting(tiles: TileType[]) {
     function onSelect(e: SyntheticEvent) {
         // TODO: find a workaround
         // @ts-ignore
-        const tile = tiles.find(tile => tile.symbol === e.target.value);
+        const tile = tiles.find(tile => tile.id === Number(e.target.value));
         setSelected(tile);
     }
 
