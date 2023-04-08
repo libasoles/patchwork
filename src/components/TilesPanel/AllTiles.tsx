@@ -1,16 +1,19 @@
-import Tile from './Tile';
-import Panel from './Panel';
+import Tile from './components/Tile';
+import Panel from './components/Panel';
 import type { Tile as TileType } from "@/types";
-import { useHighlighting } from '../hooks/useHighlighting';
+import { useHighlighting } from './hooks/useHighlighting';
 import TrashIcon from '@/icons/TrashIcon';
-import styles from "./Tile.module.css"
+import styles from "./components/Tile.module.css"
+import { SyntheticEvent } from 'react';
+import { useCurrectAction } from './hooks/useCurrectAction';
 
 type Props = {
     tiles: TileType[],
-    isDisabled: boolean
+    isDisabled?: boolean
 }
 
 export default function TileSet({ tiles, isDisabled }: Props) {
+    const onTileSelect = useCurrectAction()
     const { selected, onSelect } = useHighlighting(tiles)
 
     return (
@@ -22,7 +25,10 @@ export default function TileSet({ tiles, isDisabled }: Props) {
                 return <Tile
                     key={tile.id}
                     tile={tile}
-                    onSelect={onSelect}
+                    onSelect={(e: SyntheticEvent) => {
+                        onSelect(e)
+                        onTileSelect()
+                    }}
                     isSelected={isSelected}
                     isDisabled={isDisabled}
                 >{isEmptyTile && <DeleteIcon />}</Tile>;

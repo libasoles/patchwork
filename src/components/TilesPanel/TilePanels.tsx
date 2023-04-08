@@ -1,7 +1,5 @@
-import { actionAtom } from "@/store";
-import { Action, Tile } from "@/types";
-import { useAtom } from "jotai";
-import TileSet from './components/TileSet';
+import { Tile } from "@/types";
+import TileSet from './AllTiles';
 import ActiveTiles from './ActiveTiles';
 
 type Props = {
@@ -9,15 +7,11 @@ type Props = {
 }
 
 export default function TilePanels({ tiles }: Props) {
-    const [action] = useAtom(actionAtom);
-
-    const shouldDisablePanel = action !== Action.Draw
-
     return (
         <div data-testid='tiles-panel h-full'
-            className={`h-screen flex flex-col ${shouldDisablePanel ? "opacity-50 cursor-not-allowed" : ""} select-none`}>
-            <ActiveTiles isDisabled={shouldDisablePanel} />
-            <TileSet tiles={tiles} isDisabled={shouldDisablePanel} />
+            className={`h-screen flex flex-col select-none`}>
+            <ActiveTiles />
+            <TileSet tiles={tiles} />
         </div>
     );
 }

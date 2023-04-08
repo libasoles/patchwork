@@ -61,7 +61,7 @@ export default function Canvas({ dimension }: Props) {
                             draggable={isDraggable}
                             onDragStart={(e) => onDragStart(e, index)}
                             onDragEnter={(e) => onDragEnter(e, index)}
-                            onDragEnd={onDrop}
+                            onDragEnd={(e) => { setMouseDown(false); onDrop(e) }}
                             onDragOver={onDragOver}>
                             <Cell
                                 key={index}

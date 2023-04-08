@@ -8,12 +8,12 @@ import type { Tile as TileType } from "@/types";
 type Props = {
     tile: TileType;
     isSelected: boolean;
-    isDisabled: boolean;
+    isDisabled?: boolean;
     onSelect?: (e: SyntheticEvent) => void;
     children?: ReactNode
 };
 
-export default function Tile({ tile, isSelected, isDisabled, onSelect, children }: Props) {
+export default function Tile({ tile, isSelected, isDisabled = false, onSelect, children }: Props) {
     const [color] = useAtom(colorAtom)
 
     return (
