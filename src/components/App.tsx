@@ -8,6 +8,7 @@ import { canvasDimension, tilesMap } from '@/config';
 import { createTile } from '../factory';
 import { Tile } from '@/types';
 import ToggleGrid from './Tools/ToggleGrid';
+import DrawingLayers from './Tools/Layers';
 
 const tiles = tilesMap.map((tile) => createTile(tile));
 
@@ -22,11 +23,12 @@ export default function App({ tileSet = tiles, dimension = canvasDimension }: Pr
             </aside>
             <main className="bg-gray-700 w-full h-screen overflow-scroll relative flex items-center justify-center padding-100">
                 <ToolBar />
-                <ExportButton />
-                <Colors />
-                <Canvas dimension={dimension} />
-                <Zoom />
                 <ToggleGrid />
+                <ExportButton />
+                <Canvas dimension={dimension} />
+                <Colors />
+                <DrawingLayers />
+                <Zoom />
             </main>
         </div>
     );
