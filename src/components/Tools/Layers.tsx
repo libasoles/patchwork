@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Layer, useLayersStore } from '@/store';
 
 const DrawingLayers = () => {
-    const { layers, add, update, remove } = useLayersStore((state) => state)
+    const { layers, selected, add, update, remove, select } = useLayersStore()
     const layersList = Array.from(layers).map(([, layer]) => layer)
     const defaultLayerId = layersList[0].id
 
-    const [selectedLayerId, setSelectedLayerId] = useState(defaultLayerId); // TODO: remove the magic number
+    // const [selectedLayerId, setSelectedLayerId] = useState(defaultLayerId); // TODO: remove the magic number
 
     const handleLayerClick = (layer: Layer) => {
-        setSelectedLayerId(layer.id);
+        select(layer.id);
     };
 
     const handleToggleLayer = (layer: Layer) => {
@@ -19,15 +19,15 @@ const DrawingLayers = () => {
     const handleAddLayer = () => {
         const newLayerId = Math.random().toString(36).substr(2, 10);
         add(newLayerId);
-        setSelectedLayerId(newLayerId);
+        select(newLayerId);
     };
 
     const handleRemoveLayer = (layerId: string) => {
         remove(layerId);
-        if (selectedLayerId === layerId) {
+        if (selected.id === layerId) {
             const layerIndex = layersList.findIndex((l) => l.id === layerId);
             const newSelectedLayer = layersList[layerIndex - 1]
-            setSelectedLayerId(newSelectedLayer.id);
+            select(newSelectedLayer.id);
         }
     };
 
@@ -41,7 +41,7 @@ const DrawingLayers = () => {
                     return (
                         <div
                             key={layer.id}
-                            className={`flex items-center justify-between px-2 py-1 rounded-md cursor-pointer ${selectedLayerId === layer.id ? 'bg-blue-100' : 'bg-slate-400'}`}
+                            className={`flex items-center justify-between px-2 py-1 rounded-md cursor-pointer ${selected.id === layer.id ? 'bg-blue-100' : 'bg-slate-400'}`}
                             onClick={() => handleLayerClick(layer)}
                         >
                             <div className='flex items-center space-x-2'>

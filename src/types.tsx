@@ -1,3 +1,6 @@
+export type Dimension = { x: number, y: number }
+
+export type Canvas = Tile[]
 
 export type Tile = {
     id: number;

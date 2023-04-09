@@ -6,21 +6,21 @@ type Props = {
     tile: TileType;
     index: number;
     borderless: boolean;
-    onMouseDown: (index: number) => void;
-    onMouseEnter: (index: number) => void;
+    onMouseDown?: (index: number) => void;
+    onMouseEnter?: (index: number) => void;
 };
 
 function Cell({ size, tile, index, borderless, onMouseDown, onMouseEnter }: Props) {
     return (
-        <button className={`cursor-[inherit] bg-gray-700 border-slate-600 ${borderless ? '' : 'border-[.5px]'} hover:bg-gray-600 `} style={{
+        <button className={`cursor-[inherit]  border-slate-600 ${borderless ? '' : 'border-[.5px]'} hover:border-slate-500 `} style={{
             width: size + "px",
             height: size + "px",
             transform: `rotate(${90 * tile.orientation}deg)`,
             // TODO: find a workaround
             // @ts-ignore
             containerType: "inline-size"
-        }} onMouseEnter={() => onMouseEnter(index)}
-            onMouseDown={() => onMouseDown(index)}
+        }} onMouseEnter={() => onMouseEnter && onMouseEnter(index)}
+            onMouseDown={() => onMouseDown && onMouseDown(index)}
         >
             <div className={`tile w-full h-full grid items-center text-${tile.color}`}>
                 <span className="w-full h-full" style={{

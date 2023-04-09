@@ -1,8 +1,7 @@
 import DownloadIcon from "@/icons/DownloadIcon";
 import { RefObject, useRef } from "react";
 import { exportComponentAsPNG } from '@/utils';
-import { canvasAtom } from "@/store";
-import { useAtom } from "jotai";
+import { useLayersStore } from "@/store";
 import { Tile } from "@/types";
 
 // TODO: improve performance. It's taking ages
@@ -30,12 +29,13 @@ export default function ExportButton() {
             <DownloadIcon />
         </button>
 
-        <Canvas canvasRef={canvasRef} />
+        <TemporalCanvas canvasRef={canvasRef} />
     </div>
 }
 
-function Canvas({ canvasRef: canvasRef }: { canvasRef: RefObject<HTMLDivElement> }) {
-    const [canvas] = useAtom(canvasAtom)
+function TemporalCanvas({ canvasRef: canvasRef }: { canvasRef: RefObject<HTMLDivElement> }) {
+    const { selected } = useLayersStore()
+    const { cells } = selected.canvas
 
     const cellSize = 40
 
@@ -51,13 +51,13 @@ function Canvas({ canvasRef: canvasRef }: { canvasRef: RefObject<HTMLDivElement>
                     gridTemplateRows: `repeat(${dimension.y}, ${cellSize}px)`,
                 }}
             >
-                {canvas.map((tile, index) => <Cell key={index} size={cellSize} tile={tile} />)}
+                {cells.map((tile, index) => <TemporalCell key={index} size={cellSize} tile={tile} />)}
             </div>
         </div>
     )
 }
 
-function Cell({ size, tile }: { size: number, tile: Tile }) {
+function TemporalCell({ size, tile }: { size: number, tile: Tile }) {
     return (
         <div className={`cursor-[inherit] bg-transparent border-none`} style={{
             width: size + "px",

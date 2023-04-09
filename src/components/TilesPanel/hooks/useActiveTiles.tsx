@@ -1,15 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
-import { activeTilesAtom, canvasAtom } from '@/store';
+import { activeTilesAtom, useLayersStore } from '@/store';
 import { createTile } from "@/factory";
-import { CanvasType } from '../../Patchwork/Canvas';
+import { Canvas } from '@/types';
 
 export function useActiveTiles() {
-    const [canvas] = useAtom(canvasAtom);
+    const { selected } = useLayersStore()
+    const { cells } = selected.canvas
 
     const [activeTiles, setActiveTiles] = useAtom(activeTilesAtom);
 
-    const filterActiveTiles = useCallback((canvas: CanvasType) => {
+    const filterActiveTiles = useCallback((canvas: Canvas) => {
         const comparableTiles = canvas.map(tile => {
             return JSON.stringify(createTile({
                 id: tile.id,
@@ -23,8 +24,8 @@ export function useActiveTiles() {
     }, [setActiveTiles]);
 
     useEffect(() => {
-        filterActiveTiles(canvas);
-    }, [canvas, filterActiveTiles]);
+        filterActiveTiles(cells);
+    }, [cells, filterActiveTiles]);
 
     return activeTiles
 }

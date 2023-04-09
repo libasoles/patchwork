@@ -1,11 +1,10 @@
 import { useAtom } from 'jotai';
 import { actionAtom, colorAtom, mouseDownAtom, selectedTileAtom } from '@/store';
 import { emptyTile } from '@/config';
-import { Action } from '@/types';
+import { Action, Canvas } from '@/types';
 import { createTile } from "@/factory";
-import { CanvasType } from '../Canvas';
 
-export function useDraw(canvas: CanvasType, updateCanvas: (tiles: CanvasType) => void) {
+export function useDraw(canvas: Canvas, updateCanvas: (tiles: Canvas) => void) {
     const [activeAction] = useAtom(actionAtom);
     const [selected] = useAtom(selectedTileAtom);
 
@@ -16,16 +15,17 @@ export function useDraw(canvas: CanvasType, updateCanvas: (tiles: CanvasType) =>
 
     // TODO: see if this can be optimized with useCallback, so we don't create methods each time?
     const onMouseDown = (index: number) => {
+        const newCanvas = [...canvas]
         // TODO: improve this code
         if (activeAction === Action.Draw) {
             const updatedTile = {
-                ...canvas[index],
+                ...newCanvas[index],
                 id: currentTile.id,
                 symbol: currentTile.symbol,
                 color
             };
 
-            const shouldRotate = canvas[index].looksLike(updatedTile);
+            const shouldRotate = newCanvas[index].looksLike(updatedTile);
 
             if (shouldRotate) {
                 updatedTile.rotate();
@@ -33,16 +33,17 @@ export function useDraw(canvas: CanvasType, updateCanvas: (tiles: CanvasType) =>
                 updatedTile.resetOrientation();
             }
 
-            canvas[index] = updatedTile;
+            newCanvas[index] = updatedTile;
         } else if (activeAction === Action.Paint) {
-            canvas[index] = {
-                ...canvas[index],
+            newCanvas[index] = {
+                ...newCanvas[index],
                 color
             };
         } else if (activeAction === Action.Rotate) {
-            canvas[index].rotate()
+            newCanvas[index].rotate()
         }
-        updateCanvas([...canvas]);
+
+        updateCanvas(newCanvas);
     };
 
     // TODO: reuse code from MouseDown
@@ -50,15 +51,17 @@ export function useDraw(canvas: CanvasType, updateCanvas: (tiles: CanvasType) =>
         if (!isMouseDown)
             return;
 
+        const newCanvas = [...canvas]
+
         if (activeAction === Action.Paint) {
-            canvas[index] = {
-                ...canvas[index],
+            newCanvas[index] = {
+                ...newCanvas[index],
                 color
             };
         }
         else if (activeAction === Action.Draw) {
-            canvas[index] = {
-                ...canvas[index],
+            newCanvas[index] = {
+                ...newCanvas[index],
                 id: currentTile.id,
                 symbol: currentTile.symbol,
                 color
@@ -67,7 +70,7 @@ export function useDraw(canvas: CanvasType, updateCanvas: (tiles: CanvasType) =>
             return
         }
 
-        updateCanvas([...canvas]);
+        updateCanvas(newCanvas);
     };
 
     return { setMouseDown, onMouseDown, onMouseEnter };
