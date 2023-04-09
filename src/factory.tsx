@@ -17,8 +17,8 @@ export function createTile({ id, symbol, color = defaultColor, orientation, ...r
         color,
         orientation: orientation ?? 0,
         ...rest,
-        clone() {
-            return { ...this }
+        clone({ ...overrides }) {
+            return { ...this, ...overrides }
         },
         equals(anotherTile?: Tile) {
             return this.id === anotherTile?.id;

@@ -13,10 +13,10 @@ const useTransformers = () => {
     const currentTile = selectedTile || createTile(emptyTile); // TODO: maybe select a default tile on page load
 
     return useMemo(() => ({
-        [Action.Draw]: (tile: Tile) => currentTile.clone().paint(color),
+        [Action.Draw]: (tile: Tile) => currentTile.clone({ orientation: tile.orientation }).paint(color),
         [Action.Paint]: (tile: Tile) => tile.paint(color),
         [Action.Rotate]: (tile: Tile) => tile.rotate(),
-        [Action.Move]: (tile: Tile) => tile
+        [Action.Move]: (tile: Tile) => tile // TODO: get rid of this one?
     }), [currentTile, color])
 }
 
@@ -41,6 +41,7 @@ export function useDraw(updateCell: (index: number, tile: Tile) => void) {
     }, [activeAction, transformers, getCell, updateCell]);
 
     const onMouseEnter = useCallback((index: number) => {
+        // TODO: all canvas is rerendering because of this single dependency in isMouseDown
         if (!isMouseDown) return;
         const tile = getCell(index)
 

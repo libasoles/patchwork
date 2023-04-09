@@ -43,12 +43,13 @@ type Layers = Map<string, Layer>
 
 interface LayersState {
     layers: Layers
-    selected: Layer
+    selected: string
     list: () => Layer[]
     add: (id: string) => void
     update: (layer: Layer) => void
     remove: (id: string) => void
     select: (id: string) => void
+    getCurrentLayer: () => Layer
     getCurrentCanvas: () => Canvas
     getCell: (index: number) => Tile
     updateCell: (index: number, tile: Tile) => void
@@ -69,14 +70,11 @@ const useLayersStore = create<LayersState>()(
         // persist(
         (set, get) => ({
             layers: new Map([[initialLayer.id, initialLayer]]),
-            selected: initialLayer, // TODO: thing with this is it's not a reference to current layer object
+            selected: initialLayer.id,
             list: () => Array.from(get().layers).map(([, layer]) => layer),
             add: (id: string) => set(
                 produce((state) => {
-                    const newLayer = {
-                        ...initialLayer, // TODO: check if this returns an empty canvas
-                        id
-                    }
+                    const newLayer = { ...initialLayer, id }
                     state.layers.set(id, newLayer);
                 })),
             update: (layer: Layer) => set(
@@ -89,16 +87,17 @@ const useLayersStore = create<LayersState>()(
                 })),
             select: (id: string) => set(
                 produce((state) => {
-                    const layer = state.layers.get(id);
-                    state.selected = layer
+                    state.selected = id
                 })),
-            getCurrentCanvas: () => get().layers.get(get().selected.id)!.canvas.cells,
+
+            getCurrentLayer: () => get().layers.get(get().selected)!,
+            getCurrentCanvas: () => get().getCurrentLayer().canvas.cells,
             getCell: (index: number) => get().getCurrentCanvas()[index],
+
             updateCell: (index: number, tile: Tile) => set(
                 produce((state) => {
-                    const layer = state.layers.get(state.selected.id);
+                    const layer = state.layers.get(state.selected);
                     layer!.canvas.cells[index] = tile
-                    state.selected.canvas[index] = tile
                 })),
         }),
         {

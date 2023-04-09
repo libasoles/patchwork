@@ -8,7 +8,7 @@ import ActiveLayer from './ActiveLayer';
 export const cellSize = 40
 
 export default function Canvas() {
-    const { list, selected, updateCell } = useLayersStore()
+    const { list, getCurrentLayer, updateCell } = useLayersStore()
     const layersList = list()
 
     const [activeAction] = useAtom(actionAtom);
@@ -24,7 +24,7 @@ export default function Canvas() {
             if (!layer.visible)
                 return null
 
-            const isSelected = layer.id === selected.id
+            const isSelected = layer.id === getCurrentLayer().id
             return isSelected
                 ? <ActiveLayer key={layer.id}
                     canvas={layer.canvas.cells}

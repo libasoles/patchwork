@@ -2,7 +2,7 @@ import React from 'react';
 import { Layer, useLayersStore } from '@/store';
 
 const DrawingLayers = () => {
-    const { list, selected, add, update, remove, select } = useLayersStore()
+    const { list, getCurrentLayer, add, update, remove, select } = useLayersStore()
     const layersList = list()
     const defaultLayerId = layersList[0].id
 
@@ -15,14 +15,14 @@ const DrawingLayers = () => {
     };
 
     const handleAddLayer = () => {
-        const newLayerId = Math.random().toString(36).substr(2, 10);
+        const newLayerId = Math.random().toString(36).substring(2, 10);
         add(newLayerId);
         select(newLayerId);
     };
 
     const handleRemoveLayer = (layerId: string) => {
         remove(layerId);
-        if (selected.id === layerId) {
+        if (getCurrentLayer().id === layerId) {
             const layerIndex = layersList.findIndex((l) => l.id === layerId);
             const newSelectedLayer = layersList[layerIndex - 1]
             select(newSelectedLayer.id);
@@ -39,7 +39,7 @@ const DrawingLayers = () => {
                     return (
                         <div
                             key={layer.id}
-                            className={`flex items-center justify-between px-2 py-1 rounded-md cursor-pointer ${selected.id === layer.id ? 'bg-blue-100' : 'bg-slate-400'}`}
+                            className={`flex items-center justify-between px-2 py-1 rounded-md cursor-pointer ${getCurrentLayer().id === layer.id ? 'bg-blue-100' : 'bg-slate-400'}`}
                             onClick={() => handleLayerClick(layer)}
                         >
                             <div className='flex items-center space-x-2'>

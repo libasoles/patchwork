@@ -7,7 +7,7 @@ export type Tile = {
     symbol: string;
     color: string;
     orientation: number;
-    clone: () => Tile;
+    clone: (overrides?: Partial<Tile>) => Tile;
     equals: (aTile?: Tile) => boolean;
     isEmpty: () => boolean;
     looksLike: (aTile?: Tile) => boolean;
