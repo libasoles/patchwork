@@ -23,21 +23,27 @@ export default function Canvas() {
     const cursor = getMouseIcon(activeAction)
 
     return <div className='bg-gray-700 relative h-full w-full'>
-        {layersList.map(layer => layer.id === selected.id
-            ? <ActiveLayer key={layer.id}
-                canvas={layer.canvas.cells}
-                dimension={layer.canvas.dimension}
-                cursor={cursor}
-                updateCanvas={updateCanvas}
-                canvasScale={canvasScale}
-                isGridVisible={isGridVisible}
-            />
-            : <Layer key={layer.id}
-                canvas={layer.canvas.cells}
-                dimension={layer.canvas.dimension}
-                cursor={cursor}
-                canvasScale={canvasScale}
-                isGridVisible={isGridVisible} />)}
+        {layersList.map(layer => {
+            if (!layer.visible)
+                return null
+
+            const isSelected = layer.id === selected.id
+            return isSelected
+                ? <ActiveLayer key={layer.id}
+                    canvas={layer.canvas.cells}
+                    dimension={layer.canvas.dimension}
+                    cursor={cursor}
+                    updateCanvas={updateCanvas}
+                    canvasScale={canvasScale}
+                    isGridVisible={isGridVisible}
+                />
+                : <Layer key={layer.id}
+                    canvas={layer.canvas.cells}
+                    dimension={layer.canvas.dimension}
+                    cursor={cursor}
+                    canvasScale={canvasScale}
+                    isGridVisible={isGridVisible} />
+        })}
     </div>
 }
 
