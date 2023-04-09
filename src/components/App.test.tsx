@@ -6,11 +6,19 @@ import { mockTiles } from '@/mocks/tiles';
 import { Provider } from 'jotai/react';
 import userEvent from '@testing-library/user-event';
 
+jest.doMock('../config', () => {
+    const originalConfig = jest.requireActual('../config');
+    return {
+        ...originalConfig,
+        dimension: { x: 3, y: 3 }
+    };
+});
+
 describe('App', () => {
     beforeEach(() => {
         render(
             <Provider>
-                <App tileSet={mockTiles} dimension={{ x: 3, y: 3 }} />
+                <App tileSet={mockTiles} />
             </Provider>
         )
     })

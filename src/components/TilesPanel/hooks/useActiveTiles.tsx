@@ -5,9 +5,8 @@ import { createTile } from "@/factory";
 import { Canvas } from '@/types';
 
 export function useActiveTiles() {
-    const { getCurrentCanvas } = useLayersStore()
-    // TODO: Get active tiles from every layer
-    const canvas = getCurrentCanvas()
+    const { list } = useLayersStore()
+    const combinedCanvas = list().reduce((all, layer) => all.concat(layer.canvas.cells), [] as Canvas)
 
     const [activeTiles, setActiveTiles] = useAtom(activeTilesAtom);
 
@@ -25,8 +24,8 @@ export function useActiveTiles() {
     }, [setActiveTiles]);
 
     useEffect(() => {
-        filterActiveTiles(canvas);
-    }, [canvas, filterActiveTiles]);
+        filterActiveTiles(combinedCanvas);
+    }, [combinedCanvas, filterActiveTiles]);
 
     return activeTiles
 }

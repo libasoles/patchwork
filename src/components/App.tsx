@@ -6,13 +6,13 @@ import TilePanels from './TilesPanel/TilePanels';
 import ExportButton from '@/components/Tools/ExportButton';
 import { tilesMap } from '@/config';
 import { createTile } from '../factory';
-import { Dimension, Tile } from '@/types';
+import { Tile } from '@/types';
 import ToggleGrid from './Tools/ToggleGrid';
 import DrawingLayers from './Tools/Layers';
 
 const tiles = tilesMap.map((tile) => createTile(tile));
 
-type Props = { tileSet?: Tile[], dimension?: Dimension }
+type Props = { tileSet?: Tile[] }
 
 export default function App({ tileSet = tiles }: Props) {
     return (
