@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAtom } from 'jotai';
 import { activeTilesAtom, useLayersStore } from '@/store';
 import { createTile } from "@/factory";
 import { Canvas } from '@/types';
 
 export function useActiveTiles() {
-    const { list } = useLayersStore()
-    const combinedCanvas = list().reduce((all, layer) => all.concat(layer.canvas.cells), [] as Canvas)
+    const { layers } = useLayersStore()
+    const combinedCanvas = useMemo(() => Array.from(layers).reduce((all, [, layer]) => all.concat(layer.canvas.cells), [] as Canvas), [layers])
 
     const [activeTiles, setActiveTiles] = useAtom(activeTilesAtom);
 
@@ -24,6 +24,7 @@ export function useActiveTiles() {
     }, [setActiveTiles]);
 
     useEffect(() => {
+
         filterActiveTiles(combinedCanvas);
     }, [combinedCanvas, filterActiveTiles]);
 
