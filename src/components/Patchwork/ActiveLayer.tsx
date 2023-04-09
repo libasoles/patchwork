@@ -4,25 +4,23 @@ import { useMoveBehavior } from './hooks/useMoveBehavior';
 import { createTile } from '@/factory';
 import { emptyTile } from '@/config';
 import { cellSize } from './Canvas';
-import { Canvas } from '@/types';
+import { Tile } from '@/types';
 import { LayerProps } from './Layer';
 
 type ActiveLayerProps = LayerProps & {
     cursor: (isCellEmpty: boolean) => string,
-    updateCanvas: (canvas: Canvas) => void
+    updateCell: (index: number, tile: Tile) => void
 }
 
-export default function ActiveLayer({ canvas, dimension, updateCanvas, cursor, canvasScale, isGridVisible }: ActiveLayerProps) {
+export default function ActiveLayer({ canvas, dimension, updateCell, cursor, canvasScale, isGridVisible }: ActiveLayerProps) {
 
-    const onMove = (from: number, to: number) => {
-        canvas[to] = canvas[from];
-        canvas[from] = createTile(emptyTile);
-
-        updateCanvas(canvas);
+    const onMove = (origin: number, target: number) => {
+        updateCell(target, canvas[origin]);
+        updateCell(origin, createTile(emptyTile));
     };
 
     const { isDraggable, onDragStart, onDragEnter, onDrop, onDragOver } = useMoveBehavior(onMove);
-    const { setMouseDown, onMouseDown, onMouseEnter } = useDraw(canvas, updateCanvas);
+    const { setMouseDown, onMouseDown, onMouseEnter } = useDraw(updateCell);
 
     return (
         <div

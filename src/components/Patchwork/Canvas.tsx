@@ -8,7 +8,7 @@ import ActiveLayer from './ActiveLayer';
 export const cellSize = 40
 
 export default function Canvas() {
-    const { list, selected, updateCanvas } = useLayersStore()
+    const { list, selected, updateCell } = useLayersStore()
     const layersList = list()
 
     const [activeAction] = useAtom(actionAtom);
@@ -27,10 +27,10 @@ export default function Canvas() {
             const isSelected = layer.id === selected.id
             return isSelected
                 ? <ActiveLayer key={layer.id}
-                    canvas={[...layer.canvas.cells]}
+                    canvas={layer.canvas.cells}
                     dimension={layer.canvas.dimension}
                     cursor={cursor}
-                    updateCanvas={updateCanvas}
+                    updateCell={updateCell}
                     canvasScale={canvasScale}
                     isGridVisible={isGridVisible}
                 />

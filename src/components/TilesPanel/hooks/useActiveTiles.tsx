@@ -24,7 +24,6 @@ export function useActiveTiles() {
     }, [setActiveTiles]);
 
     useEffect(() => {
-
         filterActiveTiles(combinedCanvas);
     }, [combinedCanvas, filterActiveTiles]);
 

@@ -50,7 +50,8 @@ interface LayersState {
     remove: (id: string) => void
     select: (id: string) => void
     getCurrentCanvas: () => Canvas
-    updateCanvas: (canvas: Canvas) => void
+    getCell: (index: number) => Tile
+    updateCell: (index: number, tile: Tile) => void
 }
 
 const initialLayer = {
@@ -91,12 +92,13 @@ const useLayersStore = create<LayersState>()(
                     const layer = state.layers.get(id);
                     state.selected = layer
                 })),
-            getCurrentCanvas: () => get().selected.canvas.cells,
-            updateCanvas: (canvas: Canvas) => set(
+            getCurrentCanvas: () => get().layers.get(get().selected.id)!.canvas.cells,
+            getCell: (index: number) => get().getCurrentCanvas()[index],
+            updateCell: (index: number, tile: Tile) => set(
                 produce((state) => {
                     const layer = state.layers.get(state.selected.id);
-                    layer!.canvas.cells = canvas
-                    state.selected.canvas.cells = canvas
+                    layer!.canvas.cells[index] = tile
+                    state.selected.canvas[index] = tile
                 })),
         }),
         {

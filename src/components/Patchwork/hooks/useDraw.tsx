@@ -1,71 +1,53 @@
 import { useAtom } from 'jotai';
-import { actionAtom, colorAtom, mouseDownAtom, selectedTileAtom } from '@/store';
+import { actionAtom, colorAtom, mouseDownAtom, selectedTileAtom, useLayersStore } from '@/store';
 import { emptyTile } from '@/config';
-import { Action, Canvas } from '@/types';
+import { Action, Tile } from '@/types';
 import { createTile } from "@/factory";
+import { useCallback, useMemo } from 'react';
 
-export function useDraw(canvas: Canvas, updateCanvas: (tiles: Canvas) => void) {
-    const [activeAction] = useAtom(actionAtom);
-    const [selected] = useAtom(selectedTileAtom);
+type Transformers = Record<Action, (tile: Tile) => Tile>
+const useTransformers = () => {
+    const [selectedTile] = useAtom(selectedTileAtom);
 
     const [color] = useAtom(colorAtom);
+    const currentTile = selectedTile || createTile(emptyTile); // TODO: maybe select a default tile on page load
+
+    return useMemo(() => ({
+        [Action.Draw]: (tile: Tile) => currentTile.clone().paint(color),
+        [Action.Paint]: (tile: Tile) => tile.paint(color),
+        [Action.Rotate]: (tile: Tile) => tile.rotate(),
+        [Action.Move]: (tile: Tile) => tile
+    }), [currentTile, color])
+}
+
+export function useDraw(updateCell: (index: number, tile: Tile) => void) {
+    const { getCell } = useLayersStore()
+    const [activeAction] = useAtom(actionAtom);
     const [isMouseDown, setMouseDown] = useAtom(mouseDownAtom);
+    const transformers: Transformers = useTransformers()
 
-    const currentTile = selected || createTile(emptyTile);
+    const onMouseDown = useCallback((index: number) => {
+        const tile = getCell(index)
 
-    // TODO: see if this can be optimized with useCallback, so we don't create methods each time?
-    const onMouseDown = (index: number) => {
-        const newCanvas = [...canvas]
-        // TODO: improve this code
-        if (activeAction === Action.Draw) {
-            const updatedTile = {
-                ...newCanvas[index],
-                id: currentTile.id,
-                symbol: currentTile.symbol,
-                color
-            };
+        let updatedTile = transformers[activeAction](tile)
 
-            const shouldRotate = newCanvas[index].looksLike(updatedTile);
+        const shouldRotate = activeAction === Action.Draw && tile.looksLike(updatedTile)
 
-            newCanvas[index] = shouldRotate ? updatedTile.rotate() : updatedTile.resetOrientation();
-        } else if (activeAction === Action.Paint) {
-            newCanvas[index] = {
-                ...newCanvas[index],
-                color
-            };
-        } else if (activeAction === Action.Rotate) {
-            newCanvas[index] = newCanvas[index].rotate()
+        if (shouldRotate) {
+            updatedTile = updatedTile.rotate();
         }
 
-        updateCanvas(newCanvas);
-    };
+        updateCell(index, updatedTile);
+    }, [activeAction, transformers, getCell, updateCell]);
 
-    // TODO: reuse code from MouseDown
-    const onMouseEnter = (index: number) => {
-        if (!isMouseDown)
-            return;
+    const onMouseEnter = useCallback((index: number) => {
+        if (!isMouseDown) return;
+        const tile = getCell(index)
 
-        const newCanvas = [...canvas]
+        let updatedTile = transformers[activeAction](tile)
 
-        if (activeAction === Action.Paint) {
-            newCanvas[index] = {
-                ...newCanvas[index],
-                color
-            };
-        }
-        else if (activeAction === Action.Draw) {
-            newCanvas[index] = {
-                ...newCanvas[index],
-                id: currentTile.id,
-                symbol: currentTile.symbol,
-                color
-            };
-        } else {
-            return
-        }
-
-        updateCanvas(newCanvas);
-    };
+        updateCell(index, updatedTile);
+    }, [activeAction, transformers, isMouseDown, getCell, updateCell]);
 
     return { setMouseDown, onMouseDown, onMouseEnter };
 }

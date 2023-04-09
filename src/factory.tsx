@@ -17,6 +17,9 @@ export function createTile({ id, symbol, color = defaultColor, orientation, ...r
         color,
         orientation: orientation ?? 0,
         ...rest,
+        clone() {
+            return { ...this }
+        },
         equals(anotherTile?: Tile) {
             return this.id === anotherTile?.id;
         },
@@ -29,11 +32,14 @@ export function createTile({ id, symbol, color = defaultColor, orientation, ...r
 
             return hasSameSymbol && hasSameColor;
         },
+        paint(color: string) {
+            return produce(this, (tile: Tile) => { tile.color = color })
+        },
         rotate() {
-            return produce(this, (obj: Tile) => { obj.orientation = (obj.orientation + 1) % 4 })
+            return produce(this, (tile: Tile) => { tile.orientation = (tile.orientation + 1) % 4 })
         },
         resetOrientation() {
-            return produce(this, (obj: Tile) => { obj.orientation = 0 })
+            return produce(this, (tile: Tile) => { tile.orientation = 0 })
         }
     };
 }
