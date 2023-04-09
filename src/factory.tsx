@@ -1,7 +1,6 @@
-import { defaultColor } from '@/config';
+import { defaultColor, emptyTile } from '@/config';
 import { Tile } from './types';
 import produce from 'immer';
-
 
 type Params = {
     id: number;
@@ -20,6 +19,9 @@ export function createTile({ id, symbol, color = defaultColor, orientation, ...r
         ...rest,
         equals(anotherTile?: Tile) {
             return this.id === anotherTile?.id;
+        },
+        isEmpty() {
+            return this.symbol === emptyTile.symbol
         },
         looksLike(anotherTile?: Tile) {
             const hasSameSymbol = this.symbol === anotherTile?.symbol

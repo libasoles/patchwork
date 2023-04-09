@@ -8,6 +8,7 @@ export type Tile = {
     color: string;
     orientation: number;
     equals: (aTile?: Tile) => boolean;
+    isEmpty: () => boolean;
     looksLike: (aTile?: Tile) => boolean;
     rotate: () => Tile;
     resetOrientation: () => Tile;
