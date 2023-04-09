@@ -191,6 +191,6 @@ export const tilesMap = [
   { id: 184, symbol: "¸", group: "x" },
 ]
 
-
+export const defaultSelectedTile = tilesMap[1];
 
 

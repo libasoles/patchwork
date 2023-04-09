@@ -2,7 +2,7 @@ import { atom } from 'jotai'
 import { Action, Dimension, Tile, Canvas } from "./types"
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
-import { initialZoomLevel, defaultColor, gridIsInitiallyVisible, canvasDimension, emptyTile } from '@/config';
+import { initialZoomLevel, defaultColor, gridIsInitiallyVisible, canvasDimension, emptyTile, defaultSelectedTile } from '@/config';
 import { createTile } from "@/factory";
 import produce, { enableMapSet } from 'immer'
 
@@ -10,7 +10,7 @@ enableMapSet()
 
 const activeTilesAtom = atom<Tile[]>([])
 
-const selectedTileAtom = atom<Tile | undefined>(undefined)
+const selectedTileAtom = atom<Tile>(createTile(defaultSelectedTile))
 
 const zoomLevelAtom = atom(initialZoomLevel)
 
