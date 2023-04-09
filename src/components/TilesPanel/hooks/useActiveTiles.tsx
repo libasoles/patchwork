@@ -6,6 +6,7 @@ import { Canvas } from '@/types';
 
 export function useActiveTiles() {
     const { getCurrentCanvas } = useLayersStore()
+    // TODO: Get active tiles from every layer
     const canvas = getCurrentCanvas()
 
     const [activeTiles, setActiveTiles] = useAtom(activeTilesAtom);

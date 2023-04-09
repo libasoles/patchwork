@@ -9,8 +9,8 @@ export type Tile = {
     orientation: number;
     equals: (aTile?: Tile) => boolean;
     looksLike: (aTile?: Tile) => boolean;
-    rotate: () => void;
-    resetOrientation: () => void;
+    rotate: () => Tile;
+    resetOrientation: () => Tile;
 };
 
 export enum Action {

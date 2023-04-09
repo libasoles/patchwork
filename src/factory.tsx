@@ -1,5 +1,6 @@
 import { defaultColor } from '@/config';
 import { Tile } from './types';
+import produce from 'immer';
 
 
 type Params = {
@@ -27,10 +28,10 @@ export function createTile({ id, symbol, color = defaultColor, orientation, ...r
             return hasSameSymbol && hasSameColor;
         },
         rotate() {
-            this.orientation = (this.orientation + 1) % 4
+            return produce(this, (obj: Tile) => { obj.orientation = (obj.orientation + 1) % 4 })
         },
         resetOrientation() {
-            this.orientation = 0
+            return produce(this, (obj: Tile) => { obj.orientation = 0 })
         }
     };
 }

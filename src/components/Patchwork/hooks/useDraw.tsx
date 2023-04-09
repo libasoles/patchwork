@@ -27,20 +27,14 @@ export function useDraw(canvas: Canvas, updateCanvas: (tiles: Canvas) => void) {
 
             const shouldRotate = newCanvas[index].looksLike(updatedTile);
 
-            if (shouldRotate) {
-                updatedTile.rotate();
-            } else {
-                updatedTile.resetOrientation();
-            }
-
-            newCanvas[index] = updatedTile;
+            newCanvas[index] = shouldRotate ? updatedTile.rotate() : updatedTile.resetOrientation();
         } else if (activeAction === Action.Paint) {
             newCanvas[index] = {
                 ...newCanvas[index],
                 color
             };
         } else if (activeAction === Action.Rotate) {
-            newCanvas[index].rotate()
+            newCanvas[index] = newCanvas[index].rotate()
         }
 
         updateCanvas(newCanvas);

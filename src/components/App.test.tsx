@@ -22,7 +22,7 @@ describe('App', () => {
         const allTilesPanel = screen.getByTestId('all-tiles-panel')
         expect(allTilesPanel).toBeInTheDocument()
 
-        const canvas = screen.getByTestId('canvas')
+        const canvas = screen.getByTestId('selected-canvas')
         expect(canvas).toBeInTheDocument()
 
         const colorPanel = screen.getByTestId('color-panel')
@@ -47,17 +47,17 @@ describe('App', () => {
             expect(aTile).toBeChecked()
         })
 
-        const canvas = screen.getByTestId('canvas')
+        const canvas = screen.getByTestId('selected-canvas')
         const aCell = within(canvas).getAllByRole('button')[1]
 
         act(() => { userEvent.click(aCell) })
 
         await waitFor(() => {
-            expect(aCell).toHaveTextContent(aTile.value)
+            expect(aCell).toHaveTextContent(aTile.textContent!)
         })
     })
 
-    it('should update the active tiles panel when using a new one', async () => {
+    it('should update the active tiles panel when drawing with a new tile', async () => {
         const activeTilesPanel = screen.getByTestId('active-tiles-panel')
         const content = within(activeTilesPanel).getByTestId('panel-content')
 
@@ -72,14 +72,14 @@ describe('App', () => {
             expect(aTile).toBeChecked()
         })
 
-        const canvas = screen.getByTestId('canvas')
+        const canvas = screen.getByTestId('selected-canvas')
         const aCell = within(canvas).getAllByRole('button')[1]
 
         act(() => { userEvent.click(aCell) })
 
         await waitFor(() => {
-            const content2 = within(activeTilesPanel).getByTestId('panel-content')
-            expect(content2.childElementCount).toBe(2)
+            const updatedContent = within(activeTilesPanel).getByTestId('panel-content')
+            expect(updatedContent.childElementCount).toBe(2)
         })
     })
 })

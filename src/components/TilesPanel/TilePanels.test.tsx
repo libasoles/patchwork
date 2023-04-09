@@ -10,7 +10,7 @@ describe('Tile panels', () => {
     })
 
     describe('active tiles', () => {
-        it('should display the title and no active tiles', async () => {
+        it('should display the title and a single active tiles', async () => {
             const activeTilesPanel = screen.getByTestId('active-tiles-panel')
             const title = within(activeTilesPanel).getByRole('heading')
             expect(title).toHaveTextContent('Active Tiles')
@@ -18,7 +18,7 @@ describe('Tile panels', () => {
             await waitFor(() => {
                 const content = within(activeTilesPanel).getByTestId('panel-content')
 
-                expect(content.childElementCount).toBe(0)
+                expect(content.childElementCount).toBe(1)
             })
         })
     })

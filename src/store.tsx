@@ -1,9 +1,8 @@
 import { atom } from 'jotai'
-import { initialZoomLevel, defaultColor, gridIsInitiallyVisible } from "./config"
 import { Action, Dimension, Tile, Canvas } from "./types"
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
-import { canvasDimension, emptyTile } from '@/config';
+import { initialZoomLevel, defaultColor, gridIsInitiallyVisible, canvasDimension, emptyTile } from '@/config';
 import { createTile } from "@/factory";
 import produce, { enableMapSet } from 'immer'
 
@@ -69,7 +68,7 @@ const useLayersStore = create<LayersState>()(
         // persist(
         (set, get) => ({
             layers: new Map([[initialLayer.id, initialLayer]]),
-            selected: initialLayer,
+            selected: initialLayer, // TODO: thing with this is it's not a reference to current layer object
             list: () => Array.from(get().layers).map(([, layer]) => layer),
             add: (id: string) => set(
                 produce((state) => {
@@ -97,6 +96,7 @@ const useLayersStore = create<LayersState>()(
                 produce((state) => {
                     const layer = state.layers.get(state.selected.id);
                     layer!.canvas.cells = canvas
+                    state.selected.canvas.cells = canvas
                 })),
         }),
         {

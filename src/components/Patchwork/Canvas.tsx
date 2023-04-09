@@ -30,7 +30,7 @@ export default function Canvas() {
             const isSelected = layer.id === selected.id
             return isSelected
                 ? <ActiveLayer key={layer.id}
-                    canvas={layer.canvas.cells}
+                    canvas={[...layer.canvas.cells]}
                     dimension={layer.canvas.dimension}
                     cursor={cursor}
                     updateCanvas={updateCanvas}

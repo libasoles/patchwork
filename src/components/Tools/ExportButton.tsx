@@ -29,7 +29,8 @@ export default function ExportButton() {
             <DownloadIcon />
         </button>
 
-        <TemporalCanvas canvasRef={canvasRef} />
+        {/* TODO: only render this when up to export */}
+        {/* <TemporalCanvas canvasRef={canvasRef} /> */}
     </div>
 }
 

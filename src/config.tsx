@@ -26,7 +26,7 @@ export const colors = [
   "violet-500",
 ]
 
-export const emptyTile = { symbol: " ", id: 32, group: "hole figures" };
+export const emptyTile = { symbol: " ", id: 32, group: "eraser" };
 
 // TODO: missing, middle lines, and a cross. Also negatives of double rounded corners (Smith tiles)
 export const tilesMap = [
