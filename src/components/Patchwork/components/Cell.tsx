@@ -1,13 +1,14 @@
 import React from 'react';
 import type { Tile as TileType } from "@/types";
+import { OnMouseDown, onMouseEnter } from '../hooks/usePressBehavior';
 
 type Props = {
     size: number;
     tile: TileType;
     index: number;
     borderless: boolean;
-    onMouseDown?: (index: number) => void;
-    onMouseEnter?: (index: number) => void;
+    onMouseDown?: OnMouseDown;
+    onMouseEnter?: onMouseEnter;
 };
 
 function Cell({ size, tile, index, borderless, onMouseDown, onMouseEnter }: Props) {
@@ -19,8 +20,9 @@ function Cell({ size, tile, index, borderless, onMouseDown, onMouseEnter }: Prop
             // TODO: find a workaround
             // @ts-ignore
             containerType: "inline-size"
-        }} onMouseEnter={() => onMouseEnter && onMouseEnter(index)}
+        }}
             onMouseDown={() => onMouseDown && onMouseDown(index)}
+            onMouseEnter={(e) => onMouseEnter && onMouseEnter(e, index)}
         >
             <div className={`tile w-full h-full grid items-center text-${tile.color}`}>
                 <span className="w-full h-full" style={{

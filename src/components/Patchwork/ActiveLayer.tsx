@@ -1,5 +1,5 @@
 import Cell from './components/Cell';
-import { useDraw } from './hooks/useDraw';
+import { usePressBehavior } from './hooks/usePressBehavior';
 import { useMoveBehavior } from './hooks/useMoveBehavior';
 import { createTile } from '@/factory';
 import { emptyTile } from '@/config';
@@ -13,14 +13,13 @@ type ActiveLayerProps = LayerProps & {
 }
 
 export default function ActiveLayer({ canvas, dimension, updateCell, cursor, canvasScale, isGridVisible }: ActiveLayerProps) {
-
     const onMove = (origin: number, target: number) => {
         updateCell(target, canvas[origin]);
         updateCell(origin, createTile(emptyTile));
     };
 
     const { isDraggable, onDragStart, onDragEnter, onDrop, onDragOver } = useMoveBehavior(onMove);
-    const { setMouseDown, onMouseDown, onMouseEnter } = useDraw(updateCell);
+    const { onMouseDown, onMouseEnter } = usePressBehavior(updateCell);
 
     return (
         <div
@@ -31,28 +30,29 @@ export default function ActiveLayer({ canvas, dimension, updateCell, cursor, can
                 gridTemplateRows: `repeat(${dimension.y}, ${cellSize}px)`,
                 transform: `scale(${canvasScale})`,
             }}
-            onMouseDown={() => { setMouseDown(true); }}
-            onMouseUp={() => { setMouseDown(false); }}
         >
-            {canvas.map((tile, index) => {
-                return (
-                    <div key={index}
-                        className={`${cursor(tile.isEmpty())}`}
-                        draggable={isDraggable}
-                        onDragStart={(e) => onDragStart(e, index)}
-                        onDragEnter={(e) => onDragEnter(e, index)}
-                        onDragEnd={(e) => { setMouseDown(false); onDrop(e); }}
-                        onDragOver={onDragOver}>
-                        <Cell
-                            index={index}
-                            borderless={!isGridVisible}
-                            onMouseDown={onMouseDown}
-                            onMouseEnter={onMouseEnter}
-                            size={cellSize}
-                            tile={tile} />
-                    </div>
-                );
-            })}
+            {
+                canvas.map((tile, index) => {
+                    return (
+                        <div
+                            key={index}
+                            className={`${cursor(tile.isEmpty())}`}
+                            draggable={isDraggable}
+                            onDragStart={(e) => onDragStart(e, index)}
+                            onDragEnter={(e) => onDragEnter(e, index)}
+                            onDragEnd={onDrop}
+                            onDragOver={onDragOver}>
+                            <Cell
+                                index={index}
+                                borderless={!isGridVisible}
+                                onMouseDown={onMouseDown}
+                                onMouseEnter={onMouseEnter}
+                                size={cellSize}
+                                tile={tile} />
+                        </div>
+                    );
+                })
+            }
         </div>
-    );
+    )
 }

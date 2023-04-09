@@ -3,7 +3,7 @@ import { actionAtom, colorAtom, mouseDownAtom, selectedTileAtom, useLayersStore 
 import { emptyTile } from '@/config';
 import { Action, Tile } from '@/types';
 import { createTile } from "@/factory";
-import { useCallback, useMemo } from 'react';
+import { SyntheticEvent, useCallback, useMemo, useState } from 'react';
 
 type Transformers = Record<Action, (tile: Tile) => Tile>
 const useTransformers = () => {
@@ -20,13 +20,12 @@ const useTransformers = () => {
     }), [currentTile, color])
 }
 
-export function useDraw(updateCell: (index: number, tile: Tile) => void) {
+export function usePressBehavior(updateCell: (index: number, tile: Tile) => void) {
     const { getCell } = useLayersStore()
     const [activeAction] = useAtom(actionAtom);
-    const [isMouseDown, setMouseDown] = useAtom(mouseDownAtom);
     const transformers: Transformers = useTransformers()
 
-    const onMouseDown = useCallback((index: number) => {
+    const onMouseDown: OnMouseDown = useCallback((index: number) => {
         const tile = getCell(index)
 
         let updatedTile = transformers[activeAction](tile)
@@ -40,15 +39,22 @@ export function useDraw(updateCell: (index: number, tile: Tile) => void) {
         updateCell(index, updatedTile);
     }, [activeAction, transformers, getCell, updateCell]);
 
-    const onMouseEnter = useCallback((index: number) => {
-        // TODO: all canvas is rerendering because of this single dependency in isMouseDown
-        if (!isMouseDown) return;
+    const onMouseEnter: onMouseEnter = useCallback((event, index) => {
+        const isLeftButtonDown = event.buttons === leftButton
+        if (!isLeftButtonDown)
+            return;
+
         const tile = getCell(index)
 
         let updatedTile = transformers[activeAction](tile)
 
         updateCell(index, updatedTile);
-    }, [activeAction, transformers, isMouseDown, getCell, updateCell]);
+    }, [activeAction, transformers, getCell, updateCell]);
 
-    return { setMouseDown, onMouseDown, onMouseEnter };
+    return { onMouseDown, onMouseEnter };
 }
+
+const leftButton = 1
+
+export type OnMouseDown = (index: number) => void
+export type onMouseEnter = (e: React.MouseEvent<HTMLButtonElement>, index: number) => void
