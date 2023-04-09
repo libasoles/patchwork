@@ -5,8 +5,8 @@ import { createTile } from "@/factory";
 import { Canvas } from '@/types';
 
 export function useActiveTiles() {
-    const { selected } = useLayersStore()
-    const { cells } = selected.canvas
+    const { getCurrentCanvas } = useLayersStore()
+    const canvas = getCurrentCanvas()
 
     const [activeTiles, setActiveTiles] = useAtom(activeTilesAtom);
 
@@ -24,8 +24,8 @@ export function useActiveTiles() {
     }, [setActiveTiles]);
 
     useEffect(() => {
-        filterActiveTiles(cells);
-    }, [cells, filterActiveTiles]);
+        filterActiveTiles(canvas);
+    }, [canvas, filterActiveTiles]);
 
     return activeTiles
 }

@@ -34,8 +34,8 @@ export default function ExportButton() {
 }
 
 function TemporalCanvas({ canvasRef: canvasRef }: { canvasRef: RefObject<HTMLDivElement> }) {
-    const { selected } = useLayersStore()
-    const { cells } = selected.canvas
+    const { getCurrentCanvas } = useLayersStore()
+    const canvas = getCurrentCanvas()
 
     const cellSize = 40
 
@@ -51,7 +51,7 @@ function TemporalCanvas({ canvasRef: canvasRef }: { canvasRef: RefObject<HTMLDiv
                     gridTemplateRows: `repeat(${dimension.y}, ${cellSize}px)`,
                 }}
             >
-                {cells.map((tile, index) => <TemporalCell key={index} size={cellSize} tile={tile} />)}
+                {canvas.map((tile, index) => <TemporalCell key={index} size={cellSize} tile={tile} />)}
             </div>
         </div>
     )

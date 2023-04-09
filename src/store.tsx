@@ -45,10 +45,12 @@ type Layers = Map<string, Layer>
 interface LayersState {
     layers: Layers
     selected: Layer
+    list: () => Layer[]
     add: (id: string) => void
     update: (layer: Layer) => void
     remove: (id: string) => void
     select: (id: string) => void
+    getCurrentCanvas: () => Canvas
     updateCanvas: (canvas: Canvas) => void
 }
 
@@ -65,9 +67,10 @@ const initialLayer = {
 const useLayersStore = create<LayersState>()(
     devtools(
         // persist(
-        (set) => ({
+        (set, get) => ({
             layers: new Map([[initialLayer.id, initialLayer]]),
-            selected: initialLayer, // TODO: expose getCurrentCanvas()
+            selected: initialLayer,
+            list: () => Array.from(get().layers).map(([, layer]) => layer),
             add: (id: string) => set(
                 produce((state) => {
                     const newLayer = {
@@ -89,9 +92,10 @@ const useLayersStore = create<LayersState>()(
                     const layer = state.layers.get(id);
                     state.selected = layer
                 })),
+            getCurrentCanvas: () => get().selected.canvas.cells,
             updateCanvas: (canvas: Canvas) => set(
                 produce((state) => {
-                    const layer = state.layers.get(state.selected.id); // TODO: maybe just state.selected
+                    const layer = state.layers.get(state.selected.id);
                     layer!.canvas.cells = canvas
                 })),
         }),

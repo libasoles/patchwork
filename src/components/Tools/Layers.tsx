@@ -2,11 +2,9 @@ import React from 'react';
 import { Layer, useLayersStore } from '@/store';
 
 const DrawingLayers = () => {
-    const { layers, selected, add, update, remove, select } = useLayersStore()
-    const layersList = Array.from(layers).map(([, layer]) => layer)
+    const { list, selected, add, update, remove, select } = useLayersStore()
+    const layersList = list()
     const defaultLayerId = layersList[0].id
-
-    // const [selectedLayerId, setSelectedLayerId] = useState(defaultLayerId); // TODO: remove the magic number
 
     const handleLayerClick = (layer: Layer) => {
         select(layer.id);
