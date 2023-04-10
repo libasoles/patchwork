@@ -50,13 +50,14 @@ const icons: { [action: string]: string } = {
     [Action.Paint]: 'cursor-sw-resize',
     [Action.Move]: 'cursor-grab',
     [Action.Rotate]: 'cursor-sw-resize',
+    [Action.Delete]: 'cursor-crosshair',
 };
 
 type GetMouseIcon = (isCellEmpty: boolean) => string
 function getMouseIcon(action: Action): GetMouseIcon {
     return (isCellEmpty: boolean) => {
-        if (action === Action.Draw)
-            return icons[Action.Draw];
+        if ([Action.Draw, Action.Delete].includes(action))
+            return icons[action];
 
         return isCellEmpty ? 'cursor-not-allowed' : icons[action];
     }

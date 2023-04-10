@@ -14,6 +14,7 @@ export type Tile = {
     paint: (color: string) => Tile;
     rotate: () => Tile;
     resetOrientation: () => Tile;
+    reset: () => Tile;
 };
 
 export enum Action {
@@ -21,4 +22,5 @@ export enum Action {
     Paint,
     Move,
     Rotate,
+    Delete,
 }

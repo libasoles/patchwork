@@ -16,7 +16,8 @@ const useTransformers = () => {
         [Action.Draw]: (tile: Tile) => currentTile.clone({ orientation: tile.orientation }).paint(color),
         [Action.Paint]: (tile: Tile) => tile.paint(color),
         [Action.Rotate]: (tile: Tile) => tile.rotate(),
-        [Action.Move]: (tile: Tile) => tile // TODO: get rid of this one?
+        [Action.Move]: (tile: Tile) => tile, // TODO: get rid of this one?
+        [Action.Delete]: (tile: Tile) => tile.reset()
     }), [currentTile, color])
 }
 
