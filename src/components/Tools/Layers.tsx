@@ -21,12 +21,13 @@ const DrawingLayers = () => {
     };
 
     const handleRemoveLayer = (layerId: string) => {
-        remove(layerId);
         if (getCurrentLayer().id === layerId) {
             const layerIndex = layersList.findIndex((l) => l.id === layerId);
             const newSelectedLayer = layersList[layerIndex - 1]
             select(newSelectedLayer.id);
         }
+
+        remove(layerId);
     };
 
     return (
