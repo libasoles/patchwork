@@ -31,11 +31,11 @@ export type Tile = {
 };
 
 export enum Action {
-    Draw,
-    Paint,
-    Move,
-    Rotate,
-    Delete,
+    Draw = 'Draw',
+    Paint = 'Paint',
+    Move = 'Move',
+    Rotate = 'Rotate',
+    Delete = 'Delete',
 }
 
 export type EventCallback = (e: SyntheticEvent) => void

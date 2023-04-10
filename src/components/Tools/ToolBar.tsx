@@ -52,7 +52,8 @@ const ToolBar = () => {
                 }}>
                     <TrashIcon />
                 </ActionButton>
-                <div className="text-slate-300 pr-[1.2em] font-mono">| {Action[selectedAction]}</div>
+
+                <div data-testid='tool-name' className="text-slate-300 pr-[1.2em] font-mono">| {Action[selectedAction]}</div>
             </div>
         </div>
     );

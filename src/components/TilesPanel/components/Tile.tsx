@@ -21,7 +21,6 @@ export default function Tile({ tile, isSelected, isDisabled = false, onSelect, c
             data-testid="tile"
             className={`tile w-12 h-12 ${isDisabled ? 'cursor-not-allowed' : 'cursor-pointer hover:opacity-70'} grid items-center ${isSelected ? "scale-90" : ""}`}
             style={{
-                // TODO: find a workaround
                 // @ts-ignore
                 containerType: "inline-size",
                 transform: `rotate(${90 * tile.orientation}deg)`,

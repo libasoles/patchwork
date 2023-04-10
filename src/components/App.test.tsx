@@ -1,5 +1,5 @@
 
-import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
+import { act, render, screen, waitFor, within } from '@testing-library/react'
 import '@testing-library/jest-dom';
 import App from './App';
 import { mockTiles } from '@/mocks/tiles';
@@ -49,7 +49,7 @@ describe('App', () => {
         const allTilesPanel = screen.getByTestId('all-tiles-panel')
         const aTile = within(allTilesPanel).getAllByRole('radio')[1] as HTMLInputElement
 
-        act(() => { fireEvent.click(aTile) })
+        act(() => { userEvent.click(aTile) })
 
         await waitFor(() => {
             expect(aTile).toBeChecked()
@@ -74,7 +74,7 @@ describe('App', () => {
 
         expect(content.childElementCount).toBe(1) // has empty tile only
 
-        act(() => { fireEvent.click(aTile) })
+        act(() => { userEvent.click(aTile) })
 
         await waitFor(() => {
             expect(aTile).toBeChecked()

@@ -1,5 +1,6 @@
 import { Action } from "@/types";
 import { ReactElement, useMemo } from "react";
+import styles from "./ActionButton.module.css"
 
 export type ActionButtonProps = {
     name: Action;
@@ -14,13 +15,27 @@ export default function ActionButton({ name, selected, onClick, children }: Acti
     }, [selected]);
 
     return (
-        <button
-            type="button"
-            className={`p-2 w-[2.5em] rounded-full cursor-pointer ${highlight(name)}`}
+        <div
+            data-testid={`${name.toLowerCase()}-icon`}
+            className={`p-2 w-[2.5em] rounded-full cursor-pointer ${highlight(name)} grid items-center`}
             onClick={() => onClick(name)}
             title={Action[name]}
+            style={{
+                // @ts-ignore
+                containerType: "inline-size",
+            }}
         >
-            {children}
-        </button>
+            <input
+                type="radio"
+                name="tile"
+                value={name}
+                onChange={() => onClick(name)}
+                className={styles.overlap}
+                checked={selected === name}
+            />
+            <div className={`${styles.overlap} ${highlight(name)}`}>
+                {children}
+            </div>
+        </div>
     );
 }
