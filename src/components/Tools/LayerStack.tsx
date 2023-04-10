@@ -1,5 +1,6 @@
 import React from 'react';
-import { Layer, useLayersStore } from '@/store';
+import { useLayersStore } from '@/store';
+import { Layer } from '@/types';
 
 const LayerStack = () => {
     const { list, getCurrentLayer, add, update, remove, select } = useLayersStore()
