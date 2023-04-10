@@ -1,9 +1,9 @@
 import React from 'react';
-import { useStore } from '@/store';
+import { useLayersApi } from '@/store';
 import { Layer } from '@/types';
 
 const LayerStack = () => {
-    const { list, getCurrentLayer, add, update, remove, select } = useStore(((state) => state))
+    const { list, current, add, update, remove, select } = useLayersApi()
     const layersList = list()
     const defaultLayerId = layersList[0].id
 
@@ -26,7 +26,7 @@ const LayerStack = () => {
     };
 
     const handleRemoveLayer = (layerId: string) => {
-        if (getCurrentLayer().id === layerId) {
+        if (current().id === layerId) {
             const layerIndex = layersList.findIndex((l) => l.id === layerId);
             const newSelectedLayer = layersList[layerIndex - 1]
             select(newSelectedLayer.id);
@@ -45,7 +45,7 @@ const LayerStack = () => {
                     return (
                         <div
                             key={layer.id}
-                            className={`flex items-center justify-between px-2 py-1 rounded-md cursor-pointer ${getCurrentLayer().id === layer.id ? 'bg-blue-100' : 'bg-slate-400'}`}
+                            className={`flex items-center justify-between px-2 py-1 rounded-md cursor-pointer ${current().id === layer.id ? 'bg-blue-100' : 'bg-slate-400'}`}
                             onClick={() => handleLayerClick(layer)}
                         >
                             <div className='flex items-center space-x-2'>

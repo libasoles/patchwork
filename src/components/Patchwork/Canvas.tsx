@@ -1,20 +1,22 @@
 import { Action } from '@/types';
 import { useAtom } from 'jotai';
-import { actionAtom, gridVisibilityAtom, useStore } from '@/store';
+import { actionAtom, gridVisibilityAtom, useLayersApi, useCanvasApi } from '@/store';
 import Layer from './components/Layer';
 import ActiveLayer from './components/ActiveLayer';
 import { useCanvasScale } from './hooks/useCanvasScale';
 import { useZoomOnWheel } from './hooks/useZoomOnWheel';
-import { emptyTile } from '@/config';
-import { createTile } from '@/factory';
+import { canvasDimension, emptyTile } from '@/config';
+import { createTile, emptyCanvas } from '@/factory';
 
 export const cellSize = 40
 
 const GridLayer = Layer
 const emptyCell = createTile(emptyTile)
+const gridCanvas = emptyCanvas(canvasDimension)
 
 export default function Canvas() {
-    const { list, getCurrentLayer, updateCell } = useStore(((state) => state))
+    const { list, current: getCurrentLayer } = useLayersApi()
+    const { updateCell } = useCanvasApi()
     const layersList = list()
 
     const [activeAction] = useAtom(actionAtom);
@@ -29,7 +31,7 @@ export default function Canvas() {
 
     return <div className='bg-gray-700 h-full w-full' ref={zoomableRef}>
         <GridLayer
-            canvas={layersList[0].canvas.cells.map(_ => emptyCell)}
+            canvas={gridCanvas}
             dimension={layersList[0].canvas.dimension}
             canvasScale={canvasScale}
             isGridVisible={isGridVisible}
