@@ -1,16 +1,20 @@
 import { defaultColor, emptyTile } from '@/config';
-import { Tile } from './types';
+import { Canvas, Dimension, Tile } from './types';
 import produce from 'immer';
 
-type Params = {
+
+export function emptyCanvas(dimension: Dimension): Canvas {
+    return Array(dimension.x * dimension.y).fill(createTile(emptyTile));
+}
+
+type CreateTileParams = {
     id: number;
     symbol: string;
     color?: string;
     group?: string;
     orientation?: number;
 };
-
-export function createTile({ id, symbol, color = defaultColor, orientation, ...rest }: Params): Tile {
+export function createTile({ id, symbol, color = defaultColor, orientation, ...rest }: CreateTileParams): Tile {
     return {
         id,
         symbol,

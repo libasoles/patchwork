@@ -1,9 +1,9 @@
 import React from 'react';
-import { useLayersStore } from '@/store';
+import { useStore } from '@/store';
 import { Layer } from '@/types';
 
 const LayerStack = () => {
-    const { list, getCurrentLayer, add, update, remove, select } = useLayersStore()
+    const { list, getCurrentLayer, add, update, remove, select } = useStore(((state) => state))
     const layersList = list()
     const defaultLayerId = layersList[0].id
 

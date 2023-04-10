@@ -1,6 +1,6 @@
 import { Action } from '@/types';
 import { useAtom } from 'jotai';
-import { actionAtom, gridVisibilityAtom, useLayersStore } from '@/store';
+import { actionAtom, gridVisibilityAtom, useStore } from '@/store';
 import Layer from './components/Layer';
 import ActiveLayer from './components/ActiveLayer';
 import { useCanvasScale } from './hooks/useCanvasScale';
@@ -14,7 +14,7 @@ const GridLayer = Layer
 const emptyCell = createTile(emptyTile)
 
 export default function Canvas() {
-    const { list, getCurrentLayer, updateCell } = useLayersStore()
+    const { list, getCurrentLayer, updateCell } = useStore(((state) => state))
     const layersList = list()
 
     const [activeAction] = useAtom(actionAtom);

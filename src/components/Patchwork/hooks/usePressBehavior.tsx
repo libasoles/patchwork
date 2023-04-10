@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import { actionAtom, colorAtom, selectedTileAtom, useLayersStore } from '@/store';
+import { actionAtom, colorAtom, selectedTileAtom, useStore } from '@/store';
 import { Action, Tile } from '@/types';
 import { useCallback, useMemo } from 'react';
 
@@ -19,7 +19,7 @@ const useTransformers = () => {
 }
 
 export function usePressBehavior(updateCell: (index: number, tile: Tile) => void) {
-    const { getCell } = useLayersStore()
+    const { getCell } = useStore(((state) => state))
     const [activeAction] = useAtom(actionAtom);
     const transformers: Transformers = useTransformers()
 

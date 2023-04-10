@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useAtom } from 'jotai';
-import { activeTilesAtom, useLayersStore } from '@/store';
+import { activeTilesAtom, useStore } from '@/store';
 import { createTile } from "@/factory";
 import { Canvas } from '@/types';
 
 export function useActiveTiles() {
-    const { layers } = useLayersStore()
+    const layers = useStore(((state) => state.layers))
     const combinedCanvas = useMemo(() => Array.from(layers).reduce((all, [, layer]) => all.concat(layer.canvas.cells), [] as Canvas), [layers])
 
     const [activeTiles, setActiveTiles] = useAtom(activeTilesAtom);

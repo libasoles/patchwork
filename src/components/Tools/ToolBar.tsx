@@ -1,4 +1,4 @@
-import { actionAtom, colorBarVisibilityAtom, useLayersStore } from "@/store";
+import { actionAtom, colorBarVisibilityAtom, useStore } from "@/store";
 import { Action } from "@/types";
 import { useAtom } from "jotai";
 import DrawIcon from "@/icons/DrawIcon";
@@ -20,7 +20,7 @@ const ToolBar = () => {
     useHotkeys('4', () => setSelected(Action.Rotate))
     useHotkeys('5', () => setSelected(Action.Delete))
 
-    const { list, selected: selectedLayer, disable } = useLayersStore()
+    const { list, selected: selectedLayer, disable } = useStore(((state) => state))
 
     const disableLayers = useCallback(
         () => list().filter(layer => layer.id !== selectedLayer).map(layer => disable(layer))

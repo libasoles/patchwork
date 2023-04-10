@@ -1,7 +1,7 @@
 import DownloadIcon from "@/icons/DownloadIcon";
 import { RefObject, useRef } from "react";
 import { exportComponentAsPNG } from '@/utils';
-import { useLayersStore } from "@/store";
+import { useStore } from "@/store";
 import { Tile } from "@/types";
 
 // TODO: improve performance. It's taking ages
@@ -35,7 +35,7 @@ export default function ExportButton() {
 }
 
 function TemporalCanvas({ canvasRef: canvasRef }: { canvasRef: RefObject<HTMLDivElement> }) {
-    const { getCurrentCanvas } = useLayersStore()
+    const { getCurrentCanvas } = useStore(((state) => state))
     const canvas = getCurrentCanvas()
 
     const cellSize = 40
