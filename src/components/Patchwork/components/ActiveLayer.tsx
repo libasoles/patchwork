@@ -1,9 +1,9 @@
-import Cell from './components/Cell';
-import { usePressBehavior } from './hooks/usePressBehavior';
-import { useMoveBehavior } from './hooks/useMoveBehavior';
+import Cell from './Cell';
+import { usePressBehavior } from '../hooks/usePressBehavior';
+import { useMoveBehavior } from '../hooks/useMoveBehavior';
 import { createTile } from '@/factory';
 import { emptyTile } from '@/config';
-import { cellSize } from './Canvas';
+import { cellSize } from '../Canvas';
 import { Tile } from '@/types';
 import { LayerProps } from './Layer';
 
@@ -24,7 +24,7 @@ export default function ActiveLayer({ canvas, dimension, updateCell, cursor, can
     return (
         <div
             data-testid='selected-canvas'
-            className={`grid justify-center gap-0 select-none h-full w-full absolute top-0 bottom-0 left-0 right-0`}
+            className={`grid justify-center content-center gap-0 select-none h-full w-full absolute top-0 bottom-0 left-0 right-0`}
             style={{
                 gridTemplateColumns: `repeat(${dimension.x}, ${cellSize}px)`,
                 gridTemplateRows: `repeat(${dimension.y}, ${cellSize}px)`,

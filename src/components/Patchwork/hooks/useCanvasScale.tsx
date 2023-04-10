@@ -4,7 +4,7 @@ import { zoomLevelAtom } from '@/store';
 
 const minCellSize = 4
 
-export function useZoom() {
+export function useCanvasScale() {
     const [zoomLevel] = useAtom(zoomLevelAtom);
     const canvasScale = useMemo(() => (minCellSize + zoomLevel) / 10, [zoomLevel]);
 

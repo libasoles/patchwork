@@ -10,6 +10,7 @@
     "test": "jest --watch"
   },
   "dependencies": {
+    "@use-gesture/react": "^10.2.26",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
     "html2canvas": "^1.4.1",

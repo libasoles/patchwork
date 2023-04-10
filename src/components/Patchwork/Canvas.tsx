@@ -1,9 +1,10 @@
 import { Action } from '@/types';
 import { useAtom } from 'jotai';
 import { actionAtom, gridVisibilityAtom, useLayersStore } from '@/store';
-import { useZoom } from './hooks/useZoom';
-import Layer from './Layer';
-import ActiveLayer from './ActiveLayer';
+import Layer from './components/Layer';
+import ActiveLayer from './components/ActiveLayer';
+import { useCanvasScale } from './hooks/useCanvasScale';
+import { useZoomOnWheel } from './hooks/useZoomOnWheel';
 
 export const cellSize = 40
 
@@ -13,13 +14,15 @@ export default function Canvas() {
 
     const [activeAction] = useAtom(actionAtom);
 
-    const canvasScale = useZoom()
+    const canvasScale = useCanvasScale()
 
     const [isGridVisible] = useAtom(gridVisibilityAtom);
 
     const cursor = getMouseIcon(activeAction)
 
-    return <div className='bg-gray-700 relative h-full w-full'>
+    const zoomableRef = useZoomOnWheel()
+
+    return <div className='bg-gray-700 h-full w-full' ref={zoomableRef}>
         {layersList.map(layer => {
             if (!layer.visible)
                 return null
