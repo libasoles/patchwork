@@ -1,6 +1,6 @@
-import { actionAtom, selectedTileAtom } from '@/store';
+import { actionAtom } from '@/store';
 import { useAtom } from 'jotai';
-import { Action, Tile as TileType } from "@/types";
+import { Action } from "@/types";
 
 export function useCurrectAction() {
     const [, setCurrentAction] = useAtom(actionAtom);

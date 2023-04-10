@@ -1,7 +1,7 @@
 import { colors } from "@/config";
 import { colorAtom, colorBarVisibilityAtom } from "@/store";
+import { EventCallback } from "@/types";
 import { useAtom } from "jotai";
-import { SyntheticEvent } from "react";
 
 export default function Colors() {
     const [color, setColor] = useAtom(colorAtom)
@@ -29,7 +29,7 @@ export default function Colors() {
 type ColorCircleProps = {
     color: string;
     className?: string;
-    onSelect: (e: SyntheticEvent) => void;
+    onSelect: EventCallback;
 };
 
 function ColorCircle({ color, onSelect, className }: ColorCircleProps) {

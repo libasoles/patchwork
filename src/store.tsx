@@ -1,5 +1,5 @@
 import { atom } from 'jotai'
-import { Action, Dimension, Tile, Canvas } from "./types"
+import { Action, Dimension, Tile, Canvas, Layer } from "./types"
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { initialZoomLevel, defaultColor, gridIsInitiallyVisible, canvasDimension, emptyTile, defaultSelectedTile } from '@/config';
@@ -27,17 +27,6 @@ const actionAtom = atom(Action.Draw)
 
 function emptyCanvas(dimension: Dimension): Canvas {
     return Array(dimension.x * dimension.y).fill(createTile(emptyTile));
-}
-
-export type Layer = {
-    id: string;
-    name: string;
-    visible: boolean;
-    enabled: boolean;
-    canvas: {
-        cells: Canvas,
-        dimension: Dimension
-    }
 }
 
 type Layers = Map<string, Layer>

@@ -1,6 +1,19 @@
+import { SyntheticEvent } from "react";
+
 export type Dimension = { x: number, y: number }
 
 export type Canvas = Tile[]
+
+export type Layer = {
+    id: string;
+    name: string;
+    visible: boolean;
+    enabled: boolean;
+    canvas: {
+        cells: Canvas,
+        dimension: Dimension
+    }
+}
 
 export type Tile = {
     id: number;
@@ -24,3 +37,5 @@ export enum Action {
     Rotate,
     Delete,
 }
+
+export type EventCallback = (e: SyntheticEvent) => void

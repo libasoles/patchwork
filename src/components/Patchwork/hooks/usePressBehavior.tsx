@@ -1,24 +1,21 @@
 import { useAtom } from 'jotai';
-import { actionAtom, colorAtom, mouseDownAtom, selectedTileAtom, useLayersStore } from '@/store';
-import { emptyTile } from '@/config';
+import { actionAtom, colorAtom, selectedTileAtom, useLayersStore } from '@/store';
 import { Action, Tile } from '@/types';
-import { createTile } from "@/factory";
-import { SyntheticEvent, useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 
 type Transformers = Record<Action, (tile: Tile) => Tile>
 const useTransformers = () => {
     const [selectedTile] = useAtom(selectedTileAtom);
 
     const [color] = useAtom(colorAtom);
-    const currentTile = selectedTile || createTile(emptyTile); // TODO: maybe select a default tile on page load
 
     return useMemo(() => ({
-        [Action.Draw]: (tile: Tile) => currentTile.clone({ orientation: tile.orientation }).paint(color),
+        [Action.Draw]: (tile: Tile) => selectedTile.clone({ orientation: tile.orientation }).paint(color),
         [Action.Paint]: (tile: Tile) => tile.paint(color),
         [Action.Rotate]: (tile: Tile) => tile.rotate(),
         [Action.Move]: (tile: Tile) => tile, // TODO: get rid of this one?
         [Action.Delete]: (tile: Tile) => tile.reset()
-    }), [currentTile, color])
+    }), [selectedTile, color])
 }
 
 export function usePressBehavior(updateCell: (index: number, tile: Tile) => void) {

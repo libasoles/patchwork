@@ -1,15 +1,15 @@
 import { defaultColor } from "@/config";
 import { colorAtom } from "@/store";
 import { useAtom } from "jotai";
-import { ReactNode, SyntheticEvent } from "react";
+import { ReactNode } from "react";
 import styles from "./Tile.module.css"
-import type { Tile as TileType } from "@/types";
+import type { EventCallback, Tile as TileType } from "@/types";
 
 type Props = {
     tile: TileType;
     isSelected: boolean;
     isDisabled?: boolean;
-    onSelect?: (e: SyntheticEvent) => void;
+    onSelect?: EventCallback;
     children?: ReactNode
 };
 
