@@ -1,4 +1,4 @@
-import { screen, render, within, act, waitFor } from '@testing-library/react'
+import { screen, render, within, waitFor } from '@testing-library/react'
 import ToolBar from './ToolBar'
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
@@ -51,6 +51,23 @@ describe('Toolbar', () => {
 
         await waitFor(() => {
             expect(toolName).toHaveTextContent('Paint')
+        })
+    })
+
+    it('should select a tool on keypress', async () => {
+        const toolbar = screen.getByTestId('toolbar')
+
+        const radioElements = within(toolbar).getAllByRole('radio')
+        const moveIcon = radioElements[2] as HTMLInputElement
+        const toolName = within(toolbar).getByTestId('tool-name')
+
+        expect(moveIcon).not.toBeChecked()
+
+        userEvent.keyboard('3')
+
+        await waitFor(() => {
+            expect(moveIcon).toBeChecked()
+            expect(toolName).toHaveTextContent('Move')
         })
     })
 })

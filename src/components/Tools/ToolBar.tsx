@@ -7,51 +7,48 @@ import HandIcon from "@/icons/HandIcon";
 import ActionButton from "./components/ActionButton";
 import RotateIcon from "@/icons/RotateIcon";
 import TrashIcon from "@/icons/TrashIcon";
+import { useHotkeys } from "react-hotkeys-hook";
+import { useCallback } from "react";
 
 const ToolBar = () => {
+    const [, setColorBarVisible] = useAtom(colorBarVisibilityAtom)
     const [selectedAction, setSelected] = useAtom(actionAtom);
-    const [_, setColorBarVisible] = useAtom(colorBarVisibilityAtom)
+
+    useHotkeys('1', () => setSelected(Action.Draw))
+    useHotkeys('2', () => setSelected(Action.Paint))
+    useHotkeys('3', () => setSelected(Action.Move))
+    useHotkeys('4', () => setSelected(Action.Rotate))
+    useHotkeys('5', () => setSelected(Action.Delete))
 
     const { list, selected: selectedLayer, disable } = useLayersStore()
 
-    const disableLayers = () => list().filter(layer => layer.id !== selectedLayer).map(layer => disable(layer))
+    const disableLayers = useCallback(
+        () => list().filter(layer => layer.id !== selectedLayer).map(layer => disable(layer))
+        , [list, selectedLayer, disable])
+
+    const selectActionAndDisplayColors = useCallback((action: Action) => {
+        setSelected(action)
+        setColorBarVisible(true)
+    }, [setSelected, setColorBarVisible])
+
+    const selectActionAndDisableLayers = useCallback((action: Action) => {
+        setSelected(action)
+        disableLayers()
+    }, [setSelected, disableLayers])
+
+    const actions = [
+        { name: Action.Draw, icon: <DrawIcon />, onClick: setSelected, shortcut: '1' },
+        { name: Action.Paint, icon: <PaintIcon />, onClick: selectActionAndDisplayColors, shortcut: '2' },
+        { name: Action.Move, icon: <HandIcon />, onClick: selectActionAndDisableLayers, shortcut: '3' },
+        { name: Action.Rotate, icon: <RotateIcon />, onClick: selectActionAndDisableLayers, shortcut: '4' },
+        { name: Action.Delete, icon: <TrashIcon />, onClick: selectActionAndDisableLayers, shortcut: '5' }
+    ]
 
     return (
         <div data-testid='toolbar' className="flex justify-center items-center fixed  top-3 z-10">
             <div className="flex items-center space-x-3 bg-gray-800 rounded-full p-1">
-                {/* TODO: maybe generalize actions and map them? They have all the same props */}
 
-                <ActionButton name={Action.Draw} selected={selectedAction} onClick={setSelected}>
-                    <DrawIcon />
-                </ActionButton>
-
-                <ActionButton name={Action.Paint} selected={selectedAction} onClick={(actionName) => {
-                    setSelected(actionName)
-                    setColorBarVisible(true)
-                }}>
-                    <PaintIcon />
-                </ActionButton>
-
-                <ActionButton name={Action.Move} selected={selectedAction} onClick={(actionName) => {
-                    setSelected(actionName)
-                    disableLayers()
-                }}>
-                    <HandIcon />
-                </ActionButton>
-
-                <ActionButton name={Action.Rotate} selected={selectedAction} onClick={(actionName) => {
-                    setSelected(actionName)
-                    disableLayers()
-                }}>
-                    <RotateIcon />
-                </ActionButton>
-
-                <ActionButton name={Action.Delete} selected={selectedAction} onClick={(actionName) => {
-                    setSelected(actionName)
-                    disableLayers()
-                }}>
-                    <TrashIcon />
-                </ActionButton>
+                {actions.map((action) => <ActionButton key={action.name} selected={selectedAction} {...action} />)}
 
                 <div data-testid='tool-name' className="text-slate-300 pr-[1.2em] font-mono">| {Action[selectedAction]}</div>
             </div>
