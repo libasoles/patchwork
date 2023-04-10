@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layer, useLayersStore } from '@/store';
 
-const DrawingLayers = () => {
+const LayerStack = () => {
     const { list, getCurrentLayer, add, update, remove, select } = useLayersStore()
     const layersList = list()
     const defaultLayerId = layersList[0].id
@@ -12,6 +12,10 @@ const DrawingLayers = () => {
 
     const handleToggleLayer = (layer: Layer) => {
         update({ ...layer, visible: !layer.visible });
+    };
+
+    const handleDisableLayer = (layer: Layer) => {
+        update({ ...layer, enabled: !layer.enabled });
     };
 
     const handleAddLayer = () => {
@@ -44,13 +48,24 @@ const DrawingLayers = () => {
                             onClick={() => handleLayerClick(layer)}
                         >
                             <div className='flex items-center space-x-2'>
-                                <div
-                                    className={`w-4 h-4 rounded-full ${layer.visible ? 'bg-green-500' : 'bg-red-300'}`}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleToggleLayer(layer);
-                                    }}
-                                ></div>
+                                <div className='flex items-center justify-between space-x-1'>
+                                    <div
+                                        title={layer.visible ? 'Hide' : 'Show'}
+                                        className={`w-4 h-4 rounded-full border border-gray-500 ${layer.visible ? 'bg-green-500' : 'bg-red-300'}`}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleToggleLayer(layer);
+                                        }}
+                                    ></div>
+                                    <div
+                                        title={layer.enabled ? 'Gray out' : 'Highlight'}
+                                        className={`w-4 h-4 rounded-full border border-gray-500 ${layer.enabled ? 'bg-slate-800' : 'bg-slate-300'}`}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleDisableLayer(layer);
+                                        }}
+                                    ></div>
+                                </div>
                                 <span>{layer.name} {number}</span>
                             </div>
                             {isRemovable && <button
@@ -73,4 +88,4 @@ const DrawingLayers = () => {
     );
 };
 
-export default DrawingLayers;
+export default LayerStack;

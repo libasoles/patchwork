@@ -36,13 +36,14 @@ export default function Canvas() {
                     updateCell={updateCell}
                     canvasScale={canvasScale}
                     isGridVisible={isGridVisible}
+                    isDisabled={!layer.enabled}
                 />
                 : <Layer key={layer.id}
                     canvas={layer.canvas.cells}
                     dimension={layer.canvas.dimension}
                     canvasScale={canvasScale}
                     isGridVisible={isGridVisible}
-                    isDisabled={[Action.Paint, Action.Move, Action.Rotate].includes(activeAction)}
+                    isDisabled={!layer.enabled}
                 />
         })}
     </div>

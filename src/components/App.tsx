@@ -8,7 +8,7 @@ import { tilesMap } from '@/config';
 import { createTile } from '../factory';
 import { Tile } from '@/types';
 import ToggleGrid from './Tools/ToggleGrid';
-import DrawingLayers from './Tools/Layers';
+import LayerStack from './Tools/LayerStack';
 
 const tiles = tilesMap.map((tile) => createTile(tile));
 
@@ -26,7 +26,7 @@ export default function App({ tileSet = tiles }: Props) {
                 <ExportButton />
                 <Canvas />
                 <Colors />
-                <DrawingLayers />
+                <LayerStack />
                 <Zoom />
             </main>
         </div>

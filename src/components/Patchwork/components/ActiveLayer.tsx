@@ -12,7 +12,7 @@ type ActiveLayerProps = LayerProps & {
     updateCell: (index: number, tile: Tile) => void
 }
 
-export default function ActiveLayer({ canvas, dimension, updateCell, cursor, canvasScale, isGridVisible }: ActiveLayerProps) {
+export default function ActiveLayer({ canvas, dimension, updateCell, cursor, canvasScale, isGridVisible, isDisabled = false }: ActiveLayerProps) {
     const onMove = (origin: number, target: number) => {
         updateCell(target, canvas[origin]);
         updateCell(origin, createTile(emptyTile));
@@ -24,7 +24,7 @@ export default function ActiveLayer({ canvas, dimension, updateCell, cursor, can
     return (
         <div
             data-testid='selected-canvas'
-            className={`grid justify-center content-center gap-0 select-none h-full w-full absolute top-0 bottom-0 left-0 right-0`}
+            className={`grid justify-center content-center gap-0 select-none ${isDisabled && 'opacity-20'} h-full w-full absolute top-0 bottom-0 left-0 right-0`}
             style={{
                 gridTemplateColumns: `repeat(${dimension.x}, ${cellSize}px)`,
                 gridTemplateRows: `repeat(${dimension.y}, ${cellSize}px)`,

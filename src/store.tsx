@@ -33,6 +33,7 @@ export type Layer = {
     id: string;
     name: string;
     visible: boolean;
+    enabled: boolean;
     canvas: {
         cells: Canvas,
         dimension: Dimension
@@ -49,6 +50,7 @@ interface LayersState {
     update: (layer: Layer) => void
     remove: (id: string) => void
     select: (id: string) => void
+    disable: (layer: Layer) => void
     getCurrentLayer: () => Layer
     getCurrentCanvas: () => Canvas
     getCell: (index: number) => Tile
@@ -59,6 +61,7 @@ const initialLayer = {
     id: "xxx1xxx",
     name: 'Layer',
     visible: true,
+    enabled: true,
     canvas: {
         cells: emptyCanvas(canvasDimension),
         dimension: canvasDimension
@@ -88,6 +91,11 @@ const useLayersStore = create<LayersState>()(
             select: (id: string) => set(
                 produce((state) => {
                     state.selected = id
+                })),
+            disable: (layer: Layer) => set(
+                produce((state) => {
+                    const updatedLayer = { ...layer, enabled: false }
+                    state.layers.set(layer.id, updatedLayer);
                 })),
 
             getCurrentLayer: () => get().layers.get(get().selected)!,
