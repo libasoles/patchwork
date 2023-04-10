@@ -4,7 +4,7 @@
 
 It's a collaborative drawing app.
 
-**This is in a very early**. Not intended to be reviewed by recruiters 🙏
+**This is in a very early stage**. Not intended to be reviewed by recruiters 🙏
 
 ## Demo
 
@@ -12,7 +12,15 @@ https://alpha-patchwork.netlify.app/
 
 ![Demo](https://github.com/libasoles/patchwork/blob/main/public/Screenshot.png)
 
-## Try it out
+## Develop
+
+Install dependencies:
+
+```bash
+npm install
+# or
+yarn
+```
 
 Run the development server:
 
