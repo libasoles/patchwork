@@ -7,9 +7,8 @@ export function useHighlighting(tiles: TileType[]) {
     const [selected, setSelected] = useAtom(selectedTileAtom);
 
     function onSelect(e: SyntheticEvent) {
-        // TODO: find a workaround
-        // @ts-ignore
-        const tile = tiles.find(tile => tile.id === Number(e.target.value));
+
+        const tile = tiles.find(tile => tile.id === Number((e.target as HTMLButtonElement).value))!;
         setSelected(tile);
     }
 
