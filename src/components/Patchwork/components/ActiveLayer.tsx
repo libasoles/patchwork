@@ -12,7 +12,14 @@ type ActiveLayerProps = LayerProps & {
     updateCell: (index: number, tile: Tile) => void
 }
 
-export default function ActiveLayer({ canvas, dimension, updateCell, cursor, canvasScale, isGridVisible, isDisabled = false }: ActiveLayerProps) {
+export default function ActiveLayer({
+    canvas,
+    dimension,
+    updateCell,
+    cursor,
+    canvasScale,
+    isDisabled = false
+}: ActiveLayerProps) {
     const onMove = (origin: number, target: number) => {
         updateCell(target, canvas[origin]);
         updateCell(origin, createTile(emptyTile));
@@ -44,7 +51,7 @@ export default function ActiveLayer({ canvas, dimension, updateCell, cursor, can
                             onDragOver={onDragOver}>
                             <Cell
                                 index={index}
-                                borderless={!isGridVisible}
+                                borderless
                                 onMouseDown={onMouseDown}
                                 onMouseEnter={onMouseEnter}
                                 size={cellSize}

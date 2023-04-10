@@ -9,7 +9,7 @@ export default function Colors() {
 
     return (
         <div data-testid='color-panel' className='w-9 fixed top-3 right-3 z-10 h-full'>
-            <ColorCircle color={color} onSelect={() => { setVisible((visible) => !visible) }} className='mt-[.1rem]' />
+            <ColorCircle color={color} onSelect={() => { setVisible((visible) => !visible) }} className='mt-[.1rem] mb-3' />
             {
                 visible &&
                 <>

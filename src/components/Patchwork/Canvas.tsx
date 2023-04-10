@@ -5,8 +5,13 @@ import Layer from './components/Layer';
 import ActiveLayer from './components/ActiveLayer';
 import { useCanvasScale } from './hooks/useCanvasScale';
 import { useZoomOnWheel } from './hooks/useZoomOnWheel';
+import { emptyTile } from '@/config';
+import { createTile } from '@/factory';
 
 export const cellSize = 40
+
+const GridLayer = Layer
+const emptyCell = createTile(emptyTile)
 
 export default function Canvas() {
     const { list, getCurrentLayer, updateCell } = useLayersStore()
@@ -23,6 +28,13 @@ export default function Canvas() {
     const zoomableRef = useZoomOnWheel()
 
     return <div className='bg-gray-700 h-full w-full' ref={zoomableRef}>
+        <GridLayer
+            canvas={layersList[0].canvas.cells.map(_ => emptyCell)}
+            dimension={layersList[0].canvas.dimension}
+            canvasScale={canvasScale}
+            isGridVisible={isGridVisible}
+        />
+
         {layersList.map(layer => {
             if (!layer.visible)
                 return null
@@ -35,14 +47,12 @@ export default function Canvas() {
                     cursor={cursor}
                     updateCell={updateCell}
                     canvasScale={canvasScale}
-                    isGridVisible={isGridVisible}
                     isDisabled={!layer.enabled}
                 />
                 : <Layer key={layer.id}
                     canvas={layer.canvas.cells}
                     dimension={layer.canvas.dimension}
                     canvasScale={canvasScale}
-                    isGridVisible={isGridVisible}
                     isDisabled={!layer.enabled}
                 />
         })}

@@ -7,11 +7,11 @@ export type LayerProps = {
     canvas: Canvas,
     dimension: Dimension,
     canvasScale: number,
-    isGridVisible: boolean,
+    isGridVisible?: boolean,
     isDisabled?: boolean
 }
 
-function Layer({ canvas, dimension, canvasScale, isGridVisible, isDisabled = false }: LayerProps) {
+function Layer({ canvas, dimension, canvasScale, isGridVisible = false, isDisabled = false }: LayerProps) {
     return (
         <div
             data-testid='canvas'

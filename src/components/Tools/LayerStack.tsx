@@ -66,7 +66,7 @@ const LayerStack = () => {
                                         }}
                                     ></div>
                                 </div>
-                                <span>{layer.name} {number}</span>
+                                <span className='text-gray-800'>{layer.name} {number}</span>
                             </div>
                             {isRemovable && <button
                                 className="text-slate-700 font-bold"
