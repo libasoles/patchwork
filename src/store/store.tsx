@@ -149,26 +149,11 @@ export const useStore = create<Store>()(
     )
 )
 
-export const useLayersApi = () => useStore(store => ({
-    list: store.layerApi.list,
-    add: store.layerApi.add,
-    update: store.layerApi.update,
-    remove: store.layerApi.remove,
-    select: store.layerApi.select,
-    disable: store.layerApi.disable,
-    current: store.layerApi.current,
-}))
+export const useLayersApi = () => useStore(store => ({ ...store.layerApi }))
 
 export const useLayers = () => useStore(store => store.layers)
 export const useSelectedLayer = () => useStore(store => store.selected)
 
-export const useCanvasApi = () => useStore(store => ({
-    getCurrentCanvas: store.canvasApi.currentCanvas,
-    getCell: store.canvasApi.getCell,
-    updateCell: store.canvasApi.updateCell,
-}))
+export const useCanvasApi = () => useStore(store => ({ ...store.canvasApi }))
 
-export const useHistoryApi = () => useStore(store => ({
-    push: store.historyApi.push,
-    pop: store.historyApi.pop,
-}))
+export const useHistoryApi = () => useStore(store => ({ ...store.historyApi }))
