@@ -24,21 +24,21 @@ describe('App', () => {
     })
 
     it('should render all panels on page load', () => {
-        const activeTilesPanel = screen.getByTestId('active-tiles-panel')
+        const activeTilesPanel = getActiveTilesPanel()
         expect(activeTilesPanel).toBeInTheDocument()
 
-        const allTilesPanel = screen.getByTestId('all-tiles-panel')
+        const allTilesPanel = getAllTilesPanel()
         expect(allTilesPanel).toBeInTheDocument()
 
-        const canvas = screen.getByTestId('selected-canvas')
+        const canvas = getCurrentCanvas()
         expect(canvas).toBeInTheDocument()
 
-        const colorPanel = screen.getByTestId('color-panel')
+        const colorPanel = getColorPanel()
         expect(colorPanel).toBeInTheDocument()
     })
 
     it('should render all tools on page load', () => {
-        const toolbar = screen.getByTestId('toolbar')
+        const toolbar = getToolBar()
         expect(toolbar).toBeInTheDocument()
 
         const zoom = screen.getByTestId('zoom')
@@ -46,19 +46,13 @@ describe('App', () => {
     })
 
     it('should be able to draw the selected tile in the canvas', async () => {
-        const allTilesPanel = screen.getByTestId('all-tiles-panel')
-        const aTile = within(allTilesPanel).getAllByRole('radio')[1] as HTMLInputElement
-
-        act(() => { userEvent.click(aTile) })
+        const aTile = selectTile(2);
 
         await waitFor(() => {
             expect(aTile).toBeChecked()
         })
 
-        const canvas = screen.getByTestId('selected-canvas')
-        const aCell = within(canvas).getAllByRole('button')[1]
-
-        act(() => { userEvent.click(aCell) })
+        const aCell = clickCanvasCell(1)
 
         await waitFor(() => {
             expect(aCell).toHaveTextContent(aTile.textContent!)
@@ -66,28 +60,112 @@ describe('App', () => {
     })
 
     it('should update the active tiles panel when drawing with a new tile', async () => {
-        const activeTilesPanel = screen.getByTestId('active-tiles-panel')
-        const content = within(activeTilesPanel).getByTestId('panel-content')
+        assertNumberOfActiveTilesIs(1);
 
-        const allTilesPanel = screen.getByTestId('all-tiles-panel')
-        const aTile = within(allTilesPanel).getAllByRole('radio')[1]
-
-        expect(content.childElementCount).toBe(1) // has empty tile only
-
-        act(() => { userEvent.click(aTile) })
+        const aTile = selectTile(2);
 
         await waitFor(() => {
             expect(aTile).toBeChecked()
         })
 
-        const canvas = screen.getByTestId('selected-canvas')
-        const aCell = within(canvas).getAllByRole('button')[1]
-
-        act(() => { userEvent.click(aCell) })
+        clickCanvasCell(7);
 
         await waitFor(() => {
+            const activeTilesPanel = getActiveTilesPanel();
             const updatedContent = within(activeTilesPanel).getByTestId('panel-content')
             expect(updatedContent.childElementCount).toBe(2)
         })
+
+    })
+
+    it('should paint select the tile color in the tileset when a color is selected', async () => {
+        const defaultColor = selectColor(0);
+        const selectedTile = await findSelectedTile()
+
+        expect(selectedTile).toHaveAttribute('color', defaultColor.getAttribute('color'))
+
+        const aColor = selectColor(3);
+
+        expect(selectedTile).toHaveAttribute('color', aColor.getAttribute('color'))
+    })
+
+    it('should draw a tile with the selected color', async () => {
+        const aColor = selectColor(3);
+        const selectedTile = await findSelectedTile()
+
+        expect(selectedTile).toHaveAttribute('color', aColor.getAttribute('color'))
+
+        const aCell = clickCanvasCell(1)
+
+        await waitFor(() => {
+            expect(aCell).toHaveTextContent(selectedTile.textContent!)
+            expect(aCell).toHaveAttribute('color', aColor.getAttribute('color'))
+        })
     })
 })
+
+
+function selectColor(index: number) {
+    const colorPanel = getColorPanel();
+    const aColor = within(colorPanel).getAllByRole('radio')[index];
+
+    userEvent.click(aColor);
+
+    return aColor
+}
+
+function clickCanvasCell(index: number = 0) {
+    const canvas = getCurrentCanvas();
+    const aCell = within(canvas).getAllByRole('button')[index];
+
+    userEvent.click(aCell);
+
+    return aCell
+}
+
+function selectTile(index: number = 1) {
+    const aTile = getTile(index);
+
+    userEvent.click(aTile);
+
+    return aTile;
+}
+
+function getTile(index: number) {
+    const allTilesPanel = getAllTilesPanel();
+
+    return within(allTilesPanel).getAllByRole('radio')[index];
+}
+
+async function findSelectedTile() {
+    const allTilesPanel = getAllTilesPanel();
+
+    return within(allTilesPanel).findByRole('radio', { checked: true });
+}
+
+function assertNumberOfActiveTilesIs(expectedNumber: number) {
+    const activeTilesPanel = getActiveTilesPanel();
+    const content = within(activeTilesPanel).getByTestId('panel-content');
+
+    expect(content.childElementCount).toBe(expectedNumber);
+}
+
+function getToolBar() {
+    return screen.getByTestId('toolbar');
+}
+
+function getColorPanel() {
+    return screen.getByTestId('color-panel');
+}
+
+function getCurrentCanvas() {
+    return screen.getByTestId('selected-canvas');
+}
+
+function getAllTilesPanel() {
+    return screen.getByTestId('all-tiles-panel');
+}
+
+function getActiveTilesPanel() {
+    return screen.getByTestId('active-tiles-panel');
+}

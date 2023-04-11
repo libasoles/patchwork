@@ -24,7 +24,7 @@ describe('Tile panels', () => {
     })
 
     describe('all tiles', () => {
-        it('should display the title and active tiles', async () => {
+        it('should display the title and all selectable tiles', async () => {
             const activeTilesPanel = screen.getByTestId('all-tiles-panel')
             const title = within(activeTilesPanel).getByRole('heading')
             expect(title).toHaveTextContent('All Tiles')
@@ -32,13 +32,13 @@ describe('Tile panels', () => {
             const content = within(activeTilesPanel).getByTestId('panel-content')
 
             await waitFor(() => {
-                expect(content.children[0]).toHaveTextContent(mockTiles[0].symbol)
+                const noneWhitespace = /\S/; // no other symbol that " " whitespace
+                expect(content.children[0]).not.toContainHTML(noneWhitespace.toString());
                 expect(content.children[1]).toHaveTextContent(mockTiles[1].symbol)
                 expect(content.children[2]).toHaveTextContent(mockTiles[2].symbol)
+                expect(content.children[3]).toHaveTextContent(mockTiles[3].symbol)
             })
         })
-
-        // TODO: it('should have the trash icon on first tile', () => {})
 
         it('should highlight a tile when clicked', async () => {
             const allTilesPanel = screen.getByTestId('all-tiles-panel')
