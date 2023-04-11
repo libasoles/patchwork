@@ -8,13 +8,37 @@
 }
 
 :root {
-  
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
 .tile {
   font-family: blocks;
+}
+
+@media screen and (max-width: 768px) {
+  aside {
+    max-width: 105px;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
+  }
+
+  aside > div {
+    max-height: calc(100vh - 75px);
+  }
+
+  .panel-content {
+    max-width: 105px;
+  }
+
+  .toolbar {
+    top: auto;
+    bottom: 10px;
+    left: 30px;
+  }
 }

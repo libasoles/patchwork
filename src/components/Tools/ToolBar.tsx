@@ -46,7 +46,7 @@ const ToolBar = () => {
     ]
 
     return (
-        <div data-testid='toolbar' className="flex justify-center items-center fixed  top-3 z-10">
+        <div data-testid='toolbar' className="toolbar flex justify-center items-center fixed top-3 z-10">
             <div className="flex items-center space-x-3 bg-gray-800 rounded-full p-1">
 
                 {actions.map((action) => <ActionButton key={action.name} selected={selectedAction} {...action} />)}

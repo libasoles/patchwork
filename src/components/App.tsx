@@ -9,12 +9,15 @@ import { createTile } from '../factory';
 import { Tile } from '@/types';
 import ToggleGrid from './Tools/ToggleGrid';
 import LayerStack from './Tools/LayerStack';
+import useIsMobile from '@/hooks/isMobile';
 
 const tiles = tilesMap.map((tile) => createTile(tile));
 
 type Props = { tileSet?: Tile[] }
 
 export default function App({ tileSet = tiles }: Props) {
+    const { isMobile } = useIsMobile()
+
     return (
         <div className="flex">
             <aside>
@@ -26,7 +29,7 @@ export default function App({ tileSet = tiles }: Props) {
                 <ExportButton />
                 <Canvas />
                 <Colors />
-                <LayerStack />
+                {!isMobile && <LayerStack />}
                 <Zoom />
             </main>
         </div>
