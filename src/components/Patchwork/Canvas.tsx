@@ -1,17 +1,17 @@
 import { Action } from '@/types';
 import { useAtom } from 'jotai';
-import { actionAtom, gridVisibilityAtom, useLayersApi, useCanvasApi } from '@/store';
+import { actionAtom, gridVisibilityAtom, useLayersApi, useCanvasApi, useHistoryApi } from '@/store';
 import Layer from './components/Layer';
 import ActiveLayer from './components/ActiveLayer';
 import { useCanvasScale } from './hooks/useCanvasScale';
 import { useZoomOnWheel } from './hooks/useZoomOnWheel';
-import { canvasDimension, emptyTile } from '@/config';
-import { createTile, emptyCanvas } from '@/factory';
+import { canvasDimension } from '@/config';
+import { emptyCanvas } from '@/factory';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 export const cellSize = 40
 
 const GridLayer = Layer
-const emptyCell = createTile(emptyTile)
 const gridCanvas = emptyCanvas(canvasDimension)
 
 export default function Canvas() {
@@ -28,6 +28,12 @@ export default function Canvas() {
     const cursor = getMouseIcon(activeAction)
 
     const zoomableRef = useZoomOnWheel()
+
+    const { pop } = useHistoryApi()
+
+    useHotkeys('ctrl+z', () => {
+        pop()
+    })
 
     return <div className='bg-gray-700 h-full w-full' ref={zoomableRef}>
         <GridLayer
