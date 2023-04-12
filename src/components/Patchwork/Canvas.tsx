@@ -27,7 +27,7 @@ export default function Canvas() {
 
     const cursor = getMouseIcon(activeAction)
 
-    const zoomableRef = useZoomOnWheel()
+    const { offset, targetRef } = useZoomOnWheel()
 
     const { pop } = useHistoryApi()
 
@@ -35,35 +35,45 @@ export default function Canvas() {
         pop()
     })
 
-    return <div className='bg-gray-700 h-full w-full' ref={zoomableRef}>
-        <GridLayer
-            canvas={gridCanvas}
-            dimension={layersList[0].canvas.dimension}
-            canvasScale={canvasScale}
-            isGridVisible={isGridVisible}
-        />
+    return <div className='relative bg-gray-700 h-full w-full overflow-hidden'>
+        <div
+            ref={targetRef}
+            className={`absolute touch-none border w-full h-full`}
+            // style={{ transform: `translate(${offset.x}px, ${offset.y}px)` }}
+            style={{
+                top: offset.y + 'px',
+                left: offset.x + 'px',
+                transform: `scale(${canvasScale})`,
+                width: '2000px',
+                height: '2000px',
+            }}
+        >
+            <GridLayer
+                canvas={gridCanvas}
+                dimension={layersList[0].canvas.dimension}
+                isGridVisible={isGridVisible}
+            />
 
-        {layersList.map(layer => {
-            if (!layer.visible)
-                return null
+            {layersList.map(layer => {
+                if (!layer.visible)
+                    return null
 
-            const isSelected = layer.id === getCurrentLayer().id
-            return isSelected
-                ? <ActiveLayer key={layer.id}
-                    canvas={layer.canvas.cells}
-                    dimension={layer.canvas.dimension}
-                    cursor={cursor}
-                    updateCell={updateCell}
-                    canvasScale={canvasScale}
-                    isDisabled={!layer.enabled}
-                />
-                : <Layer key={layer.id}
-                    canvas={layer.canvas.cells}
-                    dimension={layer.canvas.dimension}
-                    canvasScale={canvasScale}
-                    isDisabled={!layer.enabled}
-                />
-        })}
+                const isSelected = layer.id === getCurrentLayer().id
+                return isSelected
+                    ? <ActiveLayer key={layer.id}
+                        canvas={layer.canvas.cells}
+                        dimension={layer.canvas.dimension}
+                        cursor={cursor}
+                        updateCell={updateCell}
+                        isDisabled={!layer.enabled}
+                    />
+                    : <Layer key={layer.id}
+                        canvas={layer.canvas.cells}
+                        dimension={layer.canvas.dimension}
+                        isDisabled={!layer.enabled}
+                    />
+            })}
+        </div>
     </div>
 }
 

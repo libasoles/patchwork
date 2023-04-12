@@ -17,7 +17,6 @@ export default function ActiveLayer({
     dimension,
     updateCell,
     cursor,
-    canvasScale,
     isDisabled = false
 }: ActiveLayerProps) {
     const onMove = (origin: number, target: number) => {
@@ -31,11 +30,10 @@ export default function ActiveLayer({
     return (
         <div
             data-testid='selected-canvas'
-            className={`grid justify-center content-center gap-0 select-none ${isDisabled && 'opacity-20'} h-full w-full absolute top-0 bottom-0 left-0 right-0`}
+            className={`grid justify-center content-center select-none ${isDisabled && 'opacity-20'} absolute top-0 bottom-0 left-0 right-0`}
             style={{
-                gridTemplateColumns: `repeat(${dimension.x}, ${cellSize}px)`,
-                gridTemplateRows: `repeat(${dimension.y}, ${cellSize}px)`,
-                transform: `scale(${canvasScale})`,
+                gridTemplateColumns: `repeat(${dimension.x}, 40px)`,
+                gridTemplateRows: `repeat(${dimension.y}, 40px)`,
             }}
         >
             {

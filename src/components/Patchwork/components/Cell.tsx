@@ -13,22 +13,29 @@ type Props = {
 
 function Cell({ size, tile, index, borderless, onMouseDown, onMouseEnter }: Props) {
     return (
-        <button className={`cursor-[inherit]  border-slate-600 ${borderless ? '' : 'border-[.5px]'} hover:border-slate-500 `} style={{
-            width: size + "px",
-            height: size + "px",
+        <button className={`cursor-[inherit] w-full h-full origin-center`} style={{
             transform: `rotate(${90 * tile.orientation}deg)`,
-            // TODO: find a workaround
             // @ts-ignore
-            containerType: "inline-size"
+            containerType: "inline-size",
         }}
             onMouseDown={() => onMouseDown && onMouseDown(index)}
             onMouseEnter={(e) => onMouseEnter && onMouseEnter(e, index)}
         >
-            <div className={`tile w-full h-full grid items-center text-${tile.color}`}>
-                <span className="w-full h-full" style={{
-                    lineHeight: .7,
-                    fontSize: "143cqw"
-                }}>{tile.symbol}</span>
+            <div className={`flex justify-center items-center tile text-${tile.color} overflow-hidden
+             border-slate-600 ${borderless ? '' : 'border-[0.5px]'} hover:border-slate-500
+            `}
+                style={{
+                    height: '100%',
+                    fontSize: '1px'
+                }}
+            >
+                <span className={`flex justify-center items-center content-box
+                    `}
+                    style={{
+                        fontSize: '57px',
+                        width: '40px',
+                        height: '40px',
+                    }}>{tile.symbol}</span>
             </div>
         </button>
     );
