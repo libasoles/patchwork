@@ -3,8 +3,9 @@ import { canvasOffsetAtom, zoomLevelAtom } from '@/store';
 import { useRef } from 'react';
 import { useGesture } from '@use-gesture/react';
 import { useCanvasScale } from './useCanvasScale';
+import { clamp } from '@/utils';
 
-export function useZoomOnWheel() {
+export function useGestures() {
     const [, setZoomLevel] = useAtom(zoomLevelAtom);
     const [canvasOffset, setOffset] = useAtom(canvasOffsetAtom);
 
@@ -39,8 +40,4 @@ export function useZoomOnWheel() {
     );
 
     return { targetRef, offset: canvasOffset };
-}
-
-export function clamp(value: number, min: number, max: number) {
-    return Math.min(Math.max(value, min), max);
 }

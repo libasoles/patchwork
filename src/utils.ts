@@ -5,3 +5,7 @@ export async function exportComponentAsPNG(
 ): Promise<string> {
   return html2canvas(componentRef).then((canvas) => canvas.toDataURL());
 }
+
+export function clamp(value: number, min: number, max: number) {
+  return Math.min(Math.max(value, min), max);
+}

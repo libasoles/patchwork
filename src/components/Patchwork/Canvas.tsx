@@ -4,7 +4,7 @@ import { actionAtom, gridVisibilityAtom, useLayersApi, useCanvasApi, useHistoryA
 import Layer from './components/Layer';
 import ActiveLayer from './components/ActiveLayer';
 import { useCanvasScale } from './hooks/useCanvasScale';
-import { useZoomOnWheel } from './hooks/useZoomOnWheel';
+import { useGestures } from './hooks/useGestures';
 import { canvasDimension } from '@/config';
 import { emptyCanvas } from '@/factory';
 import { useHotkeys } from 'react-hotkeys-hook';
@@ -27,13 +27,11 @@ export default function Canvas() {
 
     const cursor = getMouseIcon(activeAction)
 
-    const { offset, targetRef } = useZoomOnWheel()
+    const { offset, targetRef } = useGestures()
 
     const { pop } = useHistoryApi()
 
-    useHotkeys('ctrl+z', () => {
-        pop()
-    })
+    useHotkeys('ctrl+z', () => { pop() })
 
     return <div className='relative bg-gray-700 h-full w-full overflow-hidden'>
         <div
