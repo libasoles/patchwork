@@ -13,18 +13,16 @@ export function usePressBehavior() {
     const onMouseDown: OnMouseDown = useCallback((event, index: number) => {
         event.preventDefault()
 
-        if (isHotkeyPressed('ctrl'))
-            return
-
         const tile = getCell(index)
 
-        let updatedTile = transformers[activeAction](tile)
-
-        const shouldRotate = activeAction === Action.Draw && tile.looksLike(updatedTile)
-
+        const shouldRotate = activeAction === Action.Draw && isHotkeyPressed('ctrl')
         if (shouldRotate) {
-            updatedTile = updatedTile.rotate();
+            const updatedTile = tile.rotate();
+            updateCell(index, updatedTile);
+            return
         }
+
+        let updatedTile = transformers[activeAction](tile)
 
         updateCell(index, updatedTile);
     }, [activeAction, transformers, getCell, updateCell]);

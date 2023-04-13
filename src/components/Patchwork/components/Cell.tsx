@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Tile } from "@/types";
-import { OnMouseDown, OnMouseEnter } from '../hooks/usePressBehavior';
+import { OnMouseDown } from '../hooks/usePressBehavior';
 
 type Props = {
     size: number;
