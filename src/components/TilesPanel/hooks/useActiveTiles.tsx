@@ -24,6 +24,7 @@ export function useActiveTiles() {
     }, [setActiveTiles]);
 
     useEffect(() => {
+        // TODO: this is triggering every time while a burst updates the canvas
         filterActiveTiles(combinedCanvas);
     }, [combinedCanvas, filterActiveTiles]);
 

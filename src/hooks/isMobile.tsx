@@ -6,7 +6,7 @@ const useIsMobile = () => {
 
     useEffect(() => {
         setIsMobile(isMobile)
-    }, [])
+    }, []) // TODO: listen to window width changes
 
     return { isMobile: mobile }
 }

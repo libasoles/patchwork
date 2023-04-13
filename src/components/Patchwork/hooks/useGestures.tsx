@@ -1,14 +1,22 @@
 import { useAtom } from 'jotai';
-import { canvasOffsetAtom, zoomLevelAtom } from '@/store';
+import { actionAtom, canvasOffsetAtom, useCanvasApi, zoomLevelAtom } from '@/store';
 import { useEffect, useRef } from 'react';
 import { useGesture } from '@use-gesture/react';
 import { useCanvasScale } from './useCanvasScale';
 import { clamp } from '@/utils';
 import { isHotkeyPressed } from 'react-hotkeys-hook';
+import useTransformers, { Transformers } from './useTransformers';
+import { Action } from '@/types';
 
 export function useGestures() {
     const [zoomLevel, setZoomLevel] = useAtom(zoomLevelAtom);
     const [canvasOffset, setOffset] = useAtom(canvasOffsetAtom);
+
+    const { getCell, updateCell } = useCanvasApi()
+
+    const [activeAction] = useAtom(actionAtom);
+
+    const transformers: Transformers = useTransformers()
 
     const canvasScale = useCanvasScale()
 
@@ -31,7 +39,7 @@ export function useGestures() {
         const sidebarWidth = 200
         const colorBarWidth = 60
 
-        const speed = 40
+        const speed = 35
 
         const topBoundary = innerRect.y * canvasScale
         const leftBoundary = (innerRect.x - sidebarWidth) * canvasScale
@@ -61,19 +69,41 @@ export function useGestures() {
         {
             onWheel: ({ event, offset: [, y], direction: [, dy] }) => {
                 event.preventDefault();
-                if (dy) {
+                if (dy)
                     setZoomLevel((level) => clamp(level + dy, 1, 50));
-                }
+
             },
             onDrag: ({ direction }) => {
-                if (!isHotkeyPressed('ctrl'))
+                if (isHotkeyPressed('ctrl')) {
+                    moveCanvas(direction)
                     return
+                }
 
-                moveCanvas(direction)
+                const burstAllowed = [Action.Draw, Action.Paint, Action.Delete].includes(activeAction)
+                if (!burstAllowed) return
+
+                const index = getHoveredCell()
+                if (!index) return
+
+                const tile = getCell(index)
+                let updatedTile = transformers[activeAction](tile)
+
+                updateCell(index, updatedTile);
             },
         },
         config
     );
 
     return { targetRef, offset: canvasOffset };
+}
+
+function getHoveredCell() {
+    const coordinates = (event instanceof TouchEvent) ? event.changedTouches[0] : event as MouseEvent | PointerEvent
+    const hoveredElement = document
+        .elementsFromPoint(coordinates.clientX, coordinates.clientY)
+        .find(element => element.tagName === "BUTTON");
+
+    if (!hoveredElement) return
+
+    return Number(hoveredElement.getAttribute('data-index')!)
 }

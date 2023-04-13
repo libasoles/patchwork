@@ -1,6 +1,6 @@
 import { Action } from '@/types';
 import { useAtom } from 'jotai';
-import { actionAtom, gridVisibilityAtom, useLayersApi, useCanvasApi, useHistoryApi } from '@/store';
+import { actionAtom, gridVisibilityAtom, useLayersApi, useHistoryApi } from '@/store';
 import Layer from './components/Layer';
 import ActiveLayer from './components/ActiveLayer';
 import { useCanvasScale } from './hooks/useCanvasScale';
@@ -16,7 +16,6 @@ const gridCanvas = emptyCanvas(canvasDimension)
 
 export default function Canvas() {
     const { list, current: getCurrentLayer } = useLayersApi()
-    const { updateCell } = useCanvasApi()
     const layersList = list()
 
     const [activeAction] = useAtom(actionAtom);
@@ -61,7 +60,6 @@ export default function Canvas() {
                         canvas={layer.canvas.cells}
                         dimension={layer.canvas.dimension}
                         cursor={cursor}
-                        updateCell={updateCell}
                         isDisabled={!layer.enabled}
                     />
                     : <Layer key={layer.id}

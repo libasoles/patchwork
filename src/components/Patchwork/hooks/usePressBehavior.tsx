@@ -1,26 +1,12 @@
 import { useAtom } from 'jotai';
-import { actionAtom, colorAtom, selectedTileAtom, useCanvasApi } from '@/store';
-import { Action, Tile } from '@/types';
-import { useCallback, useMemo } from 'react';
+import { actionAtom, useCanvasApi } from '@/store';
+import { Action } from '@/types';
+import { useCallback } from 'react';
 import { isHotkeyPressed } from 'react-hotkeys-hook'
+import useTransformers, { Transformers } from './useTransformers';
 
-type Transformers = Record<Action, (tile: Tile) => Tile>
-const useTransformers = () => {
-    const [selectedTile] = useAtom(selectedTileAtom);
-
-    const [color] = useAtom(colorAtom);
-
-    return useMemo(() => ({
-        [Action.Draw]: (tile: Tile) => selectedTile.clone({ orientation: tile.orientation }).paint(color),
-        [Action.Paint]: (tile: Tile) => tile.paint(color),
-        [Action.Rotate]: (tile: Tile) => tile.rotate(),
-        [Action.Move]: (tile: Tile) => tile, // TODO: get rid of this one?
-        [Action.Delete]: (tile: Tile) => tile.reset()
-    }), [selectedTile, color])
-}
-
-export function usePressBehavior(updateCell: (index: number, tile: Tile) => void) {
-    const { getCell } = useCanvasApi()
+export function usePressBehavior() {
+    const { getCell, updateCell } = useCanvasApi()
     const [activeAction] = useAtom(actionAtom);
     const transformers: Transformers = useTransformers()
 
@@ -43,31 +29,13 @@ export function usePressBehavior(updateCell: (index: number, tile: Tile) => void
         updateCell(index, updatedTile);
     }, [activeAction, transformers, getCell, updateCell]);
 
-    const onMouseEnter: OnMouseEnter = useCallback((event, index) => {
-        if (isHotkeyPressed('ctrl'))
-            return
-
-        const isLeftButtonDown = event.buttons === leftButton
-        if (!isLeftButtonDown)
-            return;
-
-        const tile = getCell(index)
-
-        let updatedTile = transformers[activeAction](tile)
-
-        updateCell(index, updatedTile);
-    }, [activeAction, transformers, getCell, updateCell]);
-
     const onContextMenu: OnContextMenu = useCallback((event) => {
         event.preventDefault()
-        console.log("context menu")
+        // TODO: move canvas?
     }, [])
 
-    return { onMouseDown, onMouseEnter, onContextMenu };
+    return { onMouseDown, onContextMenu };
 }
 
-const leftButton = 1
-
 export type OnMouseDown = (e: React.MouseEvent<HTMLButtonElement>, index: number) => void
-export type OnMouseEnter = (e: React.MouseEvent<HTMLButtonElement>, index: number) => void
 export type OnContextMenu = (e: React.MouseEvent<HTMLButtonElement>) => void

@@ -4,28 +4,28 @@ import { useMoveBehavior } from '../hooks/useMoveBehavior';
 import { createTile } from '@/factory';
 import { emptyTile } from '@/config';
 import { cellSize } from '../Canvas';
-import { Tile } from '@/types';
 import { LayerProps } from './Layer';
+import { useCanvasApi } from '@/store';
 
 type ActiveLayerProps = LayerProps & {
     cursor: (isCellEmpty: boolean) => string,
-    updateCell: (index: number, tile: Tile) => void
 }
 
 export default function ActiveLayer({
     canvas,
     dimension,
-    updateCell,
     cursor,
     isDisabled = false
 }: ActiveLayerProps) {
+    const { updateCell } = useCanvasApi()
+
     const onMove = (origin: number, target: number) => {
         updateCell(target, canvas[origin]);
         updateCell(origin, createTile(emptyTile));
     };
 
     const { isDraggable, onDragStart, onDragEnter, onDrop, onDragOver } = useMoveBehavior(onMove);
-    const { onMouseDown, onMouseEnter, onContextMenu } = usePressBehavior(updateCell);
+    const { onMouseDown, onContextMenu } = usePressBehavior();
 
     return (
         <div
@@ -51,7 +51,6 @@ export default function ActiveLayer({
                                 index={index}
                                 borderless
                                 onMouseDown={onMouseDown}
-                                onMouseEnter={onMouseEnter}
                                 onContextMenu={onContextMenu}
                                 size={cellSize}
                                 tile={tile} />

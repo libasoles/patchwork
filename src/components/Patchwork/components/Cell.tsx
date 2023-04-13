@@ -8,11 +8,10 @@ type Props = {
     index: number;
     borderless: boolean;
     onMouseDown?: OnMouseDown;
-    onMouseEnter?: OnMouseEnter;
     onContextMenu?: OnMouseDown;
 };
 
-function Cell({ size, tile, index, borderless, onMouseDown, onMouseEnter, onContextMenu }: Props) {
+function Cell({ size, tile, index, borderless, onMouseDown, onContextMenu }: Props) {
     return (
         <button className={`cursor-[inherit] w-full h-full origin-center`} style={{
             transform: `rotate(${90 * tile.orientation}deg)`,
@@ -20,8 +19,8 @@ function Cell({ size, tile, index, borderless, onMouseDown, onMouseEnter, onCont
             containerType: "inline-size",
         }}
             onMouseDown={(e) => onMouseDown && onMouseDown(e, index)}
-            onMouseEnter={(e) => onMouseEnter && onMouseEnter(e, index)}
             onContextMenu={(e) => onContextMenu && onContextMenu(e, index)}
+            data-index={index}
         >
             <div className={`flex justify-center items-center tile text-${tile.color} overflow-hidden
              border-slate-600 ${borderless ? '' : 'border-[0.5px]'} hover:border-slate-500
