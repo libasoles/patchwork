@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Tile } from "@/types";
-import { OnMouseDown, onMouseEnter } from '../hooks/usePressBehavior';
+import { OnMouseDown, OnMouseEnter } from '../hooks/usePressBehavior';
 
 type Props = {
     size: number;
@@ -8,7 +8,7 @@ type Props = {
     index: number;
     borderless: boolean;
     onMouseDown?: OnMouseDown;
-    onMouseEnter?: onMouseEnter;
+    onMouseEnter?: OnMouseEnter;
     onContextMenu?: OnMouseDown;
 };
 

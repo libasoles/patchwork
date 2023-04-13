@@ -43,7 +43,7 @@ export function usePressBehavior(updateCell: (index: number, tile: Tile) => void
         updateCell(index, updatedTile);
     }, [activeAction, transformers, getCell, updateCell]);
 
-    const onMouseEnter: onMouseEnter = useCallback((event, index) => {
+    const onMouseEnter: OnMouseEnter = useCallback((event, index) => {
         if (isHotkeyPressed('ctrl'))
             return
 
@@ -69,5 +69,5 @@ export function usePressBehavior(updateCell: (index: number, tile: Tile) => void
 const leftButton = 1
 
 export type OnMouseDown = (e: React.MouseEvent<HTMLButtonElement>, index: number) => void
-export type onMouseEnter = (e: React.MouseEvent<HTMLButtonElement>, index: number) => void
+export type OnMouseEnter = (e: React.MouseEvent<HTMLButtonElement>, index: number) => void
 export type OnContextMenu = (e: React.MouseEvent<HTMLButtonElement>) => void

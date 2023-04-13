@@ -1,12 +1,25 @@
+import { SyntheticEvent } from "react";
 import { colors } from "@/config";
-import { colorAtom, colorBarVisibilityAtom } from "@/store";
-import { EventCallback } from "@/types";
+import { actionAtom, colorAtom, colorBarVisibilityAtom } from "@/store";
+import { Action, EventCallback } from "@/types";
 import { useAtom } from "jotai";
+import { isHotkeyPressed } from "react-hotkeys-hook";
 import styles from "@/styles/utils.module.css"
 
 export default function Colors() {
     const [color, setColor] = useAtom(colorAtom)
     const [visible, setVisible] = useAtom(colorBarVisibilityAtom)
+    const [action, setActiveAction] = useAtom(actionAtom);
+
+    const onSelect = (e: SyntheticEvent, aColor: string) => {
+        e.preventDefault()
+
+        if (isHotkeyPressed('ctrl') && action !== Action.Paint) {
+            setActiveAction(Action.Paint)
+        }
+
+        setColor(aColor)
+    }
 
     return (
         <div data-testid='color-panel' className='w-9 fixed top-3 right-3 z-10 h-full'>
@@ -24,7 +37,12 @@ export default function Colors() {
                                         key={aColor}
                                         color={aColor}
                                         isSelected={isSelected}
-                                        onSelect={(e) => { setColor(aColor) }} />
+                                        onSelect={() => { setColor(aColor) }}
+                                        onControlClick={(e: SyntheticEvent) => {
+                                            e.preventDefault();
+                                            onSelect(e, aColor)
+                                        }}
+                                    />
                                 })
                         }
                     </div>
@@ -39,9 +57,10 @@ type ColorCircleProps = {
     className?: string;
     isSelected?: boolean;
     onSelect: EventCallback;
+    onControlClick?: (e: SyntheticEvent) => void;
 };
 
-function ColorCircle({ color, isSelected = false, onSelect, className }: ColorCircleProps) {
+function ColorCircle({ color, isSelected = false, onSelect, onControlClick, className }: ColorCircleProps) {
     return (
         // TODO: there's a thing with the external circle height when the window height is shorter
         <label className={`grid items-center rounded-full w-9 h-9 bg-slate-400 my-1.5 ${className}`}
@@ -54,11 +73,12 @@ function ColorCircle({ color, isSelected = false, onSelect, className }: ColorCi
                 name="color"
                 value={color}
                 onChange={onSelect}
-                className={styles.overlap}
+                onContextMenu={onControlClick}
+                className={`${styles.overlap} cursor-pointer`}
                 checked={isSelected}
                 role="radio"
             />
-            <span className={`rounded-full bg-${color} w-8 h-8 cursor-pointer ${styles.overlap}`}></span>
+            <span className={`rounded-full bg-${color} w-8 h-8 ${styles.overlap} pointer-events-none`}></span>
         </label>
     );
 }
