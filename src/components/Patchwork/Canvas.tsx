@@ -4,10 +4,10 @@ import { actionAtom, gridVisibilityAtom, useLayersApi, useHistoryApi } from '@/s
 import Layer from './components/Layer';
 import ActiveLayer from './components/ActiveLayer';
 import { useCanvasScale } from './hooks/useCanvasScale';
-import { useGestures } from './hooks/useGestures';
 import { canvasDimension } from '@/config';
 import { emptyCanvas } from '@/factory';
 import { useHotkeys } from 'react-hotkeys-hook';
+import useMoveCanvas from './hooks/useMoveCanvas';
 
 export const cellSize = 40
 
@@ -26,14 +26,14 @@ export default function Canvas() {
 
     const cursor = getMouseIcon(activeAction)
 
-    const { offset, targetRef } = useGestures()
+    const { offset, canvasRef } = useMoveCanvas()
 
     const { pop } = useHistoryApi()
     useHotkeys('ctrl+z', () => { pop() })
 
     return <div className='relative bg-gray-700 h-full w-full overflow-hidden'>
         <div
-            ref={targetRef}
+            ref={canvasRef}
             className={`absolute touch-none border w-full h-full`}
             // style={{ transform: `translate(${offset.x}px, ${offset.y}px)` }}
             style={{

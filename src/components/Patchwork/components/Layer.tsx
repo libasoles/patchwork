@@ -1,5 +1,4 @@
 import Cell from './Cell';
-import { cellSize } from '../Canvas';
 import { memo } from 'react';
 import { Dimension, Canvas } from '@/types';
 
@@ -25,9 +24,7 @@ function Layer({ canvas, dimension, isGridVisible = false, isDisabled = false }:
                     return (
                         <div key={index}>
                             <Cell
-                                index={index}
                                 borderless={!isGridVisible}
-                                size={cellSize}
                                 tile={tile}
                             />
                         </div>

@@ -1,11 +1,6 @@
-import Cell from './Cell';
+import MovableCell from './MovableCell';
 import { usePressBehavior } from '../hooks/usePressBehavior';
-import { useMoveBehavior } from '../hooks/useMoveBehavior';
-import { createTile } from '@/factory';
-import { emptyTile } from '@/config';
-import { cellSize } from '../Canvas';
 import { LayerProps } from './Layer';
-import { useCanvasApi } from '@/store';
 
 type ActiveLayerProps = LayerProps & {
     cursor: (isCellEmpty: boolean) => string,
@@ -15,16 +10,8 @@ export default function ActiveLayer({
     canvas,
     dimension,
     cursor,
-    isDisabled = false
+    isDisabled = false,
 }: ActiveLayerProps) {
-    const { updateCell } = useCanvasApi()
-
-    const onMove = (origin: number, target: number) => {
-        updateCell(target, canvas[origin]);
-        updateCell(origin, createTile(emptyTile));
-    };
-
-    const { isDraggable, onDragStart, onDragEnter, onDrop, onDragOver } = useMoveBehavior(onMove);
     const { onMouseDown, onContextMenu } = usePressBehavior();
 
     return (
@@ -42,18 +29,14 @@ export default function ActiveLayer({
                         <div
                             key={index}
                             className={`${cursor(tile.isEmpty())}`}
-                            draggable={isDraggable}
-                            onDragStart={(e) => onDragStart(e, index)}
-                            onDragEnter={(e) => onDragEnter(e, index)}
-                            onDragEnd={onDrop}
-                            onDragOver={onDragOver}>
-                            <Cell
+                        >
+                            <MovableCell
                                 index={index}
                                 borderless
                                 onMouseDown={onMouseDown}
                                 onContextMenu={onContextMenu}
-                                size={cellSize}
-                                tile={tile} />
+                                tile={tile}
+                            />
                         </div>
                     );
                 })
