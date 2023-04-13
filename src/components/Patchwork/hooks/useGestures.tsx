@@ -74,6 +74,9 @@ export function useGestures() {
 
             },
             onDrag: ({ direction }) => {
+                // TODO: onDrag shouldn't be called on click at all
+                if (isHotkeyPressed('shift')) return
+
                 if (isHotkeyPressed('ctrl')) {
                     moveCanvas(direction)
                     return

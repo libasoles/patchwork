@@ -22,6 +22,13 @@ export function usePressBehavior() {
             return
         }
 
+        const shouldDelete = isHotkeyPressed('shift')
+        if (shouldDelete) {
+            let updatedTile = transformers[Action.Delete](tile)
+            updateCell(index, updatedTile);
+            return
+        }
+
         let updatedTile = transformers[activeAction](tile)
 
         updateCell(index, updatedTile);

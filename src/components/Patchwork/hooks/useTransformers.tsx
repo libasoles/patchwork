@@ -14,7 +14,7 @@ const useTransformers = () => {
         [Action.Draw]: (tile: Tile) => selectedTile.clone({ orientation: tile.orientation }).paint(color),
         [Action.Paint]: (tile: Tile) => tile.paint(color),
         [Action.Rotate]: (tile: Tile) => tile.rotate(),
-        [Action.Move]: (tile: Tile) => tile,
+        [Action.Move]: (tile: Tile) => tile, // TODO: remove this one? It's handled by grab callback
         [Action.Delete]: (tile: Tile) => tile.reset()
     }), [selectedTile, color])
 }
