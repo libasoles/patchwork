@@ -2,6 +2,7 @@ import { useAtom } from 'jotai';
 import { actionAtom, colorAtom, selectedTileAtom, useCanvasApi } from '@/store';
 import { Action, Tile } from '@/types';
 import { useCallback, useMemo } from 'react';
+import { isHotkeyPressed } from 'react-hotkeys-hook'
 
 type Transformers = Record<Action, (tile: Tile) => Tile>
 const useTransformers = () => {
@@ -23,7 +24,12 @@ export function usePressBehavior(updateCell: (index: number, tile: Tile) => void
     const [activeAction] = useAtom(actionAtom);
     const transformers: Transformers = useTransformers()
 
-    const onMouseDown: OnMouseDown = useCallback((index: number) => {
+    const onMouseDown: OnMouseDown = useCallback((event, index: number) => {
+        event.preventDefault()
+
+        if (isHotkeyPressed('ctrl'))
+            return
+
         const tile = getCell(index)
 
         let updatedTile = transformers[activeAction](tile)
@@ -38,6 +44,9 @@ export function usePressBehavior(updateCell: (index: number, tile: Tile) => void
     }, [activeAction, transformers, getCell, updateCell]);
 
     const onMouseEnter: onMouseEnter = useCallback((event, index) => {
+        if (isHotkeyPressed('ctrl'))
+            return
+
         const isLeftButtonDown = event.buttons === leftButton
         if (!isLeftButtonDown)
             return;
@@ -49,10 +58,16 @@ export function usePressBehavior(updateCell: (index: number, tile: Tile) => void
         updateCell(index, updatedTile);
     }, [activeAction, transformers, getCell, updateCell]);
 
-    return { onMouseDown, onMouseEnter };
+    const onContextMenu: OnContextMenu = useCallback((event) => {
+        event.preventDefault()
+        console.log("context menu")
+    }, [])
+
+    return { onMouseDown, onMouseEnter, onContextMenu };
 }
 
 const leftButton = 1
 
-export type OnMouseDown = (index: number) => void
+export type OnMouseDown = (e: React.MouseEvent<HTMLButtonElement>, index: number) => void
 export type onMouseEnter = (e: React.MouseEvent<HTMLButtonElement>, index: number) => void
+export type OnContextMenu = (e: React.MouseEvent<HTMLButtonElement>) => void

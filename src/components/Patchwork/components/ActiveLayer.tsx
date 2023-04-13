@@ -25,7 +25,7 @@ export default function ActiveLayer({
     };
 
     const { isDraggable, onDragStart, onDragEnter, onDrop, onDragOver } = useMoveBehavior(onMove);
-    const { onMouseDown, onMouseEnter } = usePressBehavior(updateCell);
+    const { onMouseDown, onMouseEnter, onContextMenu } = usePressBehavior(updateCell);
 
     return (
         <div
@@ -52,6 +52,7 @@ export default function ActiveLayer({
                                 borderless
                                 onMouseDown={onMouseDown}
                                 onMouseEnter={onMouseEnter}
+                                onContextMenu={onContextMenu}
                                 size={cellSize}
                                 tile={tile} />
                         </div>

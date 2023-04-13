@@ -30,7 +30,6 @@ export default function Canvas() {
     const { offset, targetRef } = useGestures()
 
     const { pop } = useHistoryApi()
-
     useHotkeys('ctrl+z', () => { pop() })
 
     return <div className='relative bg-gray-700 h-full w-full overflow-hidden'>
