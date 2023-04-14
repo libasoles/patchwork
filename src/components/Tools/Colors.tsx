@@ -4,6 +4,7 @@ import { actionAtom, colorAtom, colorBarVisibilityAtom } from "@/store";
 import { Action, EventCallback } from "@/types";
 import { useAtom } from "jotai";
 import { isHotkeyPressed } from "react-hotkeys-hook";
+import { Scrollbars } from 'react-custom-scrollbars-2';
 import styles from "@/styles/utils.module.css"
 
 export default function Colors() {
@@ -28,24 +29,26 @@ export default function Colors() {
                 visible &&
                 <>
                     <hr className="border-2 mb-1.5" />
-                    <div className="flex flex-col overflow-scroll h-full pr-12">
-                        {
-                            colors.map(
-                                aColor => {
-                                    const isSelected = aColor === color
-                                    return <ColorCircle
-                                        key={aColor}
-                                        color={aColor}
-                                        isSelected={isSelected}
-                                        onSelect={() => { setColor(aColor) }}
-                                        onControlClick={(e: SyntheticEvent) => {
-                                            e.preventDefault();
-                                            onSelect(e, aColor)
-                                        }}
-                                    />
-                                })
-                        }
-                    </div>
+                    <Scrollbars style={{ width: 200, height: '100%' }} autoHide universal>
+                        <div className="flex flex-col overflow-hidden h-auto pr-12">
+                            {
+                                colors.map(
+                                    aColor => {
+                                        const isSelected = aColor === color
+                                        return <ColorCircle
+                                            key={aColor}
+                                            color={aColor}
+                                            isSelected={isSelected}
+                                            onSelect={() => { setColor(aColor) }}
+                                            onControlClick={(e: SyntheticEvent) => {
+                                                e.preventDefault();
+                                                onSelect(e, aColor)
+                                            }}
+                                        />
+                                    })
+                            }
+                        </div>
+                    </Scrollbars>
                 </>
             }
         </div>
@@ -63,7 +66,7 @@ type ColorCircleProps = {
 function ColorCircle({ color, isSelected = false, onSelect, onControlClick, className }: ColorCircleProps) {
     return (
         // TODO: there's a thing with the external circle height when the window height is shorter
-        <label className={`grid items-center rounded-full w-9 h-9 bg-slate-400 my-1.5 ${className}`}
+        <label className={`grid items-center rounded-full w-[30px] h-[30px] bg-slate-400 my-1.5 ${className}`}
             style={{
                 // @ts-ignore
                 containerType: "inline-size",
@@ -78,7 +81,7 @@ function ColorCircle({ color, isSelected = false, onSelect, onControlClick, clas
                 checked={isSelected}
                 role="radio"
             />
-            <span className={`rounded-full bg-${color} w-8 h-8 ${styles.overlap} pointer-events-none`}></span>
+            <span className={`rounded-full bg-${color} w-[30px] h-[30px_!important] ${styles.overlap} pointer-events-none`}></span>
         </label>
     );
 }

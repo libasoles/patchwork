@@ -15,7 +15,7 @@ export default function TileSet({ tiles, isDisabled }: Props) {
     const { selected, onSelect } = useHighlighting(tiles)
 
     return (
-        <Panel data-testid='all-tiles-panel' title="All Tiles" className='overflow-y-hidden'>
+        <Panel data-testid='all-tiles-panel' title="All Tiles" className='h-auto grow'>
             {tiles.map(tile => {
                 const isSelected = tile.equals(selected);
 

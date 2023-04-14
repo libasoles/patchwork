@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+import { Scrollbars } from 'react-custom-scrollbars-2';
 
 type Props = {
     title: string;
@@ -8,10 +9,12 @@ type Props = {
 
 export default function Panel({ title, className, children, ...rest }: Props) {
     return (
-        <div {...rest} className={`${className} flex flex-col p-[0.1rem] border-slate-400 border-x-border-[6px] bg-gray-200 `}>
+        <div {...rest} className={`${className} flex flex-col p-[0.1rem] border-slate-400 border-x-border-[6px] bg-gray-200`}>
             <h2 className='text-gray-800'>{title}</h2>
-            <div data-testid='panel-content' className="panel-content flex flex-wrap gap-0.5 overflow-y-scroll w-[12.5em] p-px text-gray-800">
-                {children}
-            </div>
+            <Scrollbars style={{ width: 200 }} autoHide universal>
+                <div data-testid='panel-content' className="panel-content flex flex-wrap content-baseline gap-0.5 p-px text-gray-800 h-auto">
+                    {children}
+                </div>
+            </Scrollbars>
         </div>);
 }

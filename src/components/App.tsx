@@ -19,11 +19,11 @@ export default function App({ tileSet = tiles }: Props) {
     const { isMobile } = useIsMobile()
 
     return (
-        <div className="flex">
+        <div className="flex overflow-hidden">
             <aside>
                 <TilePanels tiles={tileSet} />
             </aside>
-            <main className="bg-gray-700 w-full h-screen overflow-scroll relative flex items-center justify-center padding-100">
+            <main className="bg-gray-700 w-full h-screen overflow-hidden relative flex items-center justify-center padding-100">
                 <ToolBar />
                 <ToggleGrid />
                 <ExportButton />

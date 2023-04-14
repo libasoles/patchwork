@@ -18,9 +18,11 @@ export default function ActiveTiles({ isDisabled }: Props) {
     const { selected, onSelect } = useHighlighting(activeTiles)
 
     return (
-        <Panel data-testid='active-tiles-panel' title="Active Tiles" className='max-h-[50%]'>
+        // TODO: adjust height to grow incrementally
+        <Panel data-testid='active-tiles-panel' title="Active Tiles" className='h-auto grow max-h-[50%]'>
             {sortedList.map(tile => {
                 const isSelected = tile.equals(selected);
+
                 return <Tile
                     key={tile.id}
                     tile={tile}
