@@ -12,7 +12,7 @@ export default function ActiveLayer({
     cursor,
     isDisabled = false,
 }: ActiveLayerProps) {
-    const { onMouseDown, onContextMenu } = usePressBehavior();
+    const { onMouseDown, onMouseEnter, onContextMenu, onMouseUp } = usePressBehavior();
 
     return (
         <div
@@ -34,6 +34,8 @@ export default function ActiveLayer({
                                 index={index}
                                 borderless
                                 onMouseDown={onMouseDown}
+                                onMouseEnter={onMouseEnter}
+                                onMouseUp={onMouseUp}
                                 onContextMenu={onContextMenu}
                                 tile={tile}
                             />

@@ -26,19 +26,19 @@ export default function Canvas() {
 
     const cursor = getMouseIcon(activeAction)
 
-    const { offset, canvasRef } = useMoveCanvas()
+    // const { offset, canvasRef } = useMoveCanvas()
 
     const { pop } = useHistoryApi()
     useHotkeys('ctrl+z', () => { pop() })
 
     return <div className='relative bg-gray-700 h-full w-full overflow-hidden'>
         <div
-            ref={canvasRef}
+            // ref={canvasRef}
             className={`absolute touch-none border w-full h-full`}
             // style={{ transform: `translate(${offset.x}px, ${offset.y}px)` }}
             style={{
-                top: offset.y + 'px',
-                left: offset.x + 'px',
+                // top: offset.y + 'px',
+                // left: offset.x + 'px',
                 transform: `scale(${canvasScale})`,
                 width: '2000px',
                 height: '2000px',

@@ -1,40 +1,42 @@
 import React from 'react';
 import type { Tile } from "@/types";
-import { OnMouseDown } from '../hooks/usePressBehavior';
-import { useGestures } from '../hooks/useGestures';
-import { useMoveBehavior } from '../hooks/useMoveBehavior';
+import { OnContextMenu, OnMouseDown, OnMouseUp, onMouseEnter } from '../hooks/usePressBehavior';
 import Cell from './Cell';
+import { useAtom } from 'jotai';
+import { actionAtom } from '@/store';
+import { Action } from '@/types';
 
 type MovableCellProps = {
     tile: Tile;
     index: number;
     borderless: boolean;
     onMouseDown?: OnMouseDown;
-    onContextMenu?: OnMouseDown;
+    onMouseUp?: OnMouseUp;
+    onMouseEnter?: onMouseEnter;
+    onContextMenu?: OnContextMenu;
 };
 
-// TODO: all canvas is being rerendered when a single cell is moved, or painted
-function MovableCell({ tile, index, borderless, onMouseDown, onContextMenu }: MovableCellProps) {
-    const { bind, animated, position } = useGestures()
-    const { isDraggable } = useMoveBehavior();
+function MovableCell({ tile, index, borderless, onMouseDown, onMouseUp, onMouseEnter, onContextMenu }: MovableCellProps) {
+    const [activeAction] = useAtom(actionAtom);
+    const isDraggable = activeAction === Action.Move;
 
     return (
-        <animated.button
+        <button
             className={`touch-none cursor-[inherit] w-full h-full origin-center`}
             style={{
                 transform: `rotate(${90 * tile.orientation}deg)`,
                 // @ts-ignore
                 containerType: "inline-size",
-                ...position
             }}
             onMouseDown={(e) => onMouseDown && onMouseDown(e, index)}
+            onMouseEnter={(e) => onMouseEnter && onMouseEnter(e, index)}
+            onMouseUp={(e) => onMouseUp && onMouseUp(e, index)}
             onContextMenu={(e) => onContextMenu && onContextMenu(e, index)}
             draggable={isDraggable}
             data-index={index}
-            {...bind()}
         >
             <Cell tile={tile} borderless={borderless} />
-        </animated.button>
+        </button>
     )
 }
 

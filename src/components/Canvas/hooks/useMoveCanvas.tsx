@@ -66,14 +66,14 @@ export default function useMoveCanvas() {
 
                 setZoomLevel((level) => clamp(level + dy, 1, 50));
             },
-            onDrag: ({ direction }) => {
-                // TODO: onDrag shouldn't be called on click at all
-                if (isHotkeyPressed('shift')) return
+            // onDrag: ({ direction }) => {
+            //     // TODO: onDrag shouldn't be called on click at all
+            //     if (isHotkeyPressed('shift')) return
 
-                if (!isHotkeyPressed('ctrl')) return
+            //     if (!isHotkeyPressed('ctrl')) return
 
-                moveCanvas(direction)
-            }
+            //     moveCanvas(direction)
+            // }
         },
         config
     );
