@@ -23,7 +23,7 @@ export default function Colors() {
     }
 
     return (
-        <div data-testid='color-panel' className='w-9 fixed top-3 right-3 z-10 h-full'>
+        <div data-testid='color-panel' className='w-9 mx-1 h-full'>
             <ColorCircle color={color} onSelect={() => { setVisible((visible) => !visible) }} className='mt-[.1rem] mb-3' />
             {
                 visible &&
@@ -66,7 +66,7 @@ type ColorCircleProps = {
 function ColorCircle({ color, isSelected = false, onSelect, onControlClick, className }: ColorCircleProps) {
     return (
         // TODO: there's a thing with the external circle height when the window height is shorter
-        <label className={`grid items-center rounded-full w-[30px] h-[30px] bg-slate-400 my-1.5 ${className}`}
+        <label className={`grid items-center rounded-full w-[38px] h-[38px_!important] border-2 border-slate-400 bg-slate-400 my-1.5 overflow-hidden ${className}`}
             style={{
                 // @ts-ignore
                 containerType: "inline-size",
@@ -81,7 +81,7 @@ function ColorCircle({ color, isSelected = false, onSelect, onControlClick, clas
                 checked={isSelected}
                 role="radio"
             />
-            <span className={`rounded-full bg-${color} w-[30px] h-[30px_!important] ${styles.overlap} pointer-events-none`}></span>
+            <span className={`rounded-full bg-${color} w-[38px] h-[38px_!important] ${styles.overlap} pointer-events-none`}></span>
         </label>
     );
 }

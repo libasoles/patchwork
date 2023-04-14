@@ -25,10 +25,12 @@ export default function App({ tileSet = tiles }: Props) {
             </aside>
             <main className="bg-gray-700 w-full h-screen overflow-hidden relative flex items-center justify-center padding-100">
                 <ToolBar />
-                <ToggleGrid />
-                <ExportButton />
                 <Canvas />
-                <Colors />
+                <div className="w-auto fixed top-3 right-[16px] z-10 flex gap-3 h-full justify-start">
+                    <ToggleGrid />
+                    {/* <ExportButton /> */}
+                    <Colors />
+                </div>
                 {!isMobile && <LayerStack />}
                 <Zoom />
             </main>

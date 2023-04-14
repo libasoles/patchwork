@@ -19,7 +19,7 @@ export default function ExportButton() {
         }
     };
 
-    return <div className="w-9 fixed top-3 right-16 z-10">
+    return <div className="w-9">
         <button
             type="button"
             className={`p-2 w-[2.4em] rounded-full cursor-pointer bg-slate-300 border-slate-500 border-[2px] text-gray-800`}
@@ -35,8 +35,8 @@ export default function ExportButton() {
 }
 
 function TemporalCanvas({ canvasRef: canvasRef }: { canvasRef: RefObject<HTMLDivElement> }) {
-    const { getCurrentCanvas } = useCanvasApi()
-    const canvas = getCurrentCanvas()
+    const { currentCanvas } = useCanvasApi()
+    const canvas = currentCanvas()
 
     const cellSize = 40
 
