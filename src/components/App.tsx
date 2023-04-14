@@ -1,4 +1,4 @@
-import Canvas from './Patchwork/Canvas';
+import Canvas from './Canvas/Canvas';
 import Zoom from '@/components/Tools/Zoom';
 import Colors from './Tools/Colors';
 import ToolBar from '@/components/Tools/ToolBar';
