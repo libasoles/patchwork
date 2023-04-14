@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react';
 import { useGesture } from '@use-gesture/react';
 import { useCanvasScale } from './useCanvasScale';
 import { clamp } from '@/utils';
-import { isHotkeyPressed } from 'react-hotkeys-hook';
 
 export default function useMoveCanvas() {
     const [zoomLevel, setZoomLevel] = useAtom(zoomLevelAtom);

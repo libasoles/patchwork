@@ -1,6 +1,6 @@
 import { useAtom } from 'jotai';
 import { actionAtom, useCanvasApi } from '@/store';
-import { Action } from '@/types';
+import { Action, Tile } from '@/types';
 import { useCallback, useRef } from 'react';
 import { isHotkeyPressed } from 'react-hotkeys-hook'
 import useTransformers, { Transformers } from './useTransformers';
@@ -8,6 +8,9 @@ import { emptyTile } from '@/config';
 import { createTile } from '@/factory';
 
 const leftButton = 1
+
+let moveOrigin: { index: number; cell: Tile; } | null = null
+let rollbackCell: { index: number; cell: Tile; } | null = null
 
 export function usePressBehavior() {
     const { getCell, updateCell } = useCanvasApi()
@@ -54,9 +57,29 @@ export function usePressBehavior() {
         if (activeAction === Action.Move) {
             dragOverItem.current = index
 
-            const e = event as unknown as DragEvent
-            if (e.dataTransfer) {
-                e.dataTransfer.effectAllowed = 'move'; // this instructs browsers to display the move icon instead ofthe copy icon
+            if (dragOverItem.current === null)
+                return;
+
+            const target = dragOverItem.current
+            const targetCell = currentCanvas()[target]
+
+            if (moveOrigin === null) {
+                const origin = dragItem.current!
+
+                const originCell = currentCanvas()[origin]
+                moveOrigin = { index: origin, cell: originCell }
+                rollbackCell = { index, cell: targetCell }
+
+                updateCell(target, originCell);
+                updateCell(origin, createTile(emptyTile));
+
+                return
+            } else {
+                updateCell(rollbackCell!.index, rollbackCell!.cell);
+
+                rollbackCell = { index, cell: targetCell }
+
+                updateCell(target, moveOrigin.cell);
             }
 
             return
@@ -68,24 +91,17 @@ export function usePressBehavior() {
         const tile = getCell(index)
         let updatedTile = transformers[activeAction](tile)
         updateCell(index, updatedTile);
-    }, [activeAction, transformers, getCell, updateCell]);
+    }, [activeAction, transformers, getCell, updateCell, currentCanvas]);
 
     const onMouseUp: OnMouseUp = useCallback(() => {
         if (activeAction !== Action.Move)
             return
 
-        if (dragItem.current === null || dragOverItem.current === null)
-            return;
-
-        const origin = dragItem.current
-        const target = dragOverItem.current
-
-        updateCell(target, currentCanvas()[origin]);
-        updateCell(origin, createTile(emptyTile));
-
         dragItem.current = null;
         dragOverItem.current = null;
-    }, [activeAction, updateCell, currentCanvas]);
+        rollbackCell = null;
+        moveOrigin = null;
+    }, [activeAction]);
 
     const onContextMenu: OnContextMenu = useCallback((event) => {
         event.preventDefault()
