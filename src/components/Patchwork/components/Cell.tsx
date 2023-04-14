@@ -8,6 +8,7 @@ type Props = {
 };
 
 function Cell({ tile, borderless }: Props) {
+
     return (
         <>
             <div className={`flex justify-center items-center tile text-${tile.color} overflow-hidden h-full

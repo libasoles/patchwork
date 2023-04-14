@@ -31,7 +31,7 @@ function MovableCell({ tile, index, borderless, onMouseDown, onContextMenu }: Mo
             onContextMenu={(e) => onContextMenu && onContextMenu(e, index)}
             draggable={isDraggable}
             data-index={index}
-            {...bind}
+            {...bind()}
         >
             <Cell tile={tile} borderless={borderless} />
         </animated.button>
