@@ -141,10 +141,8 @@ export const createHistorySlice: Slice<HistorySlice> = (set, get) => ({
         },
         pop: () => set(
             (draft) => {
-                console.log(draft.history)
                 let lastEvent = draft.history.pop()
                 if (!lastEvent) return
-                console.log("rolled back lastEvent")
 
                 draft.canvasApi._updateCell(draft, lastEvent.cellIndex, lastEvent.tile, lastEvent.layerId)
 
@@ -154,7 +152,6 @@ export const createHistorySlice: Slice<HistorySlice> = (set, get) => ({
                         draft.canvasApi._updateCell(draft, event.cellIndex, event.tile, event.layerId)
                         lastEvent = draft.history.pop()
                     } else {
-                        console.log("rolled back burst")
                         break
                     }
                 }

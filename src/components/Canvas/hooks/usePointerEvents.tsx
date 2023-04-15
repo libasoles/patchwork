@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import { actionAtom, useCanvasApi } from '@/store';
 import { Action, Tile } from '@/types';
-import { useCallback, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { isHotkeyPressed } from 'react-hotkeys-hook'
 import useTransformers, { Transformers } from './useTransformers';
 import { emptyTile } from '@/config';
@@ -207,31 +207,44 @@ export function usePointerEvents() {
     const rotateBehavior = useRotateBehavior()
     const deleteBehavior = useDeleteBehavior()
 
-    return {
-        onMouseDown: (...args) => {
-            drawBehavior.onMouseDown(...args);
-            rotateBehavior.onMouseDown(...args);
-            deleteBehavior.onMouseDown(...args);
-            moveBehavior.onMouseDown(...args);
-        },
-        onMouseEnter: (...args) => {
-            drawBehavior.onMouseEnter(...args);
-            moveBehavior.onMouseEnter(...args);
-            rotateBehavior.onMouseEnter(...args);
-            deleteBehavior.onMouseEnter(...args);
-        },
-        onMouseUp: (...args) => {
-            moveBehavior.onMouseUp(...args);
-        },
-        onContextMenu: (...args) => {
-            drawBehavior.onContextMenu(...args);
-        }
-    } as {
-        onMouseDown: Callback,
-        onMouseEnter: Callback,
-        onMouseUp: Callback,
-        onContextMenu: Callback,
+    const onMouseDown: Callback = (...args) => {
+        drawBehavior.onMouseDown(...args);
+        rotateBehavior.onMouseDown(...args);
+        deleteBehavior.onMouseDown(...args);
+        moveBehavior.onMouseDown(...args);
     }
+
+    const onMouseEnter: Callback = (...args) => {
+        drawBehavior.onMouseEnter(...args);
+        rotateBehavior.onMouseEnter(...args);
+        deleteBehavior.onMouseEnter(...args);
+        moveBehavior.onMouseEnter(...args);
+    }
+
+    const onMouseUp: Callback = (...args) => {
+        moveBehavior.onMouseUp(...args);
+    }
+
+    const onContextMenu: Callback = (...args) => {
+        drawBehavior.onContextMenu(...args);
+    }
+
+    return useMemo(
+        () => ({
+            onMouseDown,
+            onMouseEnter,
+            onMouseUp,
+            onContextMenu
+        } as Api)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        , [])
+}
+
+type Api = {
+    onMouseDown: Callback,
+    onMouseEnter: Callback,
+    onMouseUp: Callback,
+    onContextMenu: Callback,
 }
 
 type Callback = (e: React.MouseEvent<HTMLButtonElement>, index: number) => void
