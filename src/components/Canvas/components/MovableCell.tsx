@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Tile } from "@/types";
-import { OnContextMenu, OnMouseDown, OnMouseUp, onMouseEnter } from '../hooks/usePressBehavior';
+import { OnContextMenu, OnMouseDown, OnMouseUp, onMouseEnter } from '../hooks/usePointerEvents';
 import Cell from './Cell';
 import { useAtom } from 'jotai';
 import { actionAtom } from '@/store';

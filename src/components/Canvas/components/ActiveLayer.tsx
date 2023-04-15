@@ -1,5 +1,5 @@
 import MovableCell from './MovableCell';
-import { usePressBehavior } from '../hooks/usePressBehavior';
+import { usePointerEvents } from '../hooks/usePointerEvents';
 import { LayerProps } from './Layer';
 
 type ActiveLayerProps = LayerProps & {
@@ -12,7 +12,7 @@ export default function ActiveLayer({
     cursor,
     isDisabled = false,
 }: ActiveLayerProps) {
-    const { onMouseDown, onMouseEnter, onContextMenu, onMouseUp } = usePressBehavior();
+    const { onMouseDown, onMouseEnter, onContextMenu, onMouseUp } = usePointerEvents();
 
     return (
         <div
