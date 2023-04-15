@@ -229,15 +229,12 @@ export function usePointerEvents() {
         drawBehavior.onContextMenu(...args);
     }
 
-    return useMemo(
-        () => ({
-            onMouseDown,
-            onMouseEnter,
-            onMouseUp,
-            onContextMenu
-        } as Api)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        , [])
+    return {
+        onMouseDown,
+        onMouseEnter,
+        onMouseUp,
+        onContextMenu
+    } as Api
 }
 
 type Api = {
