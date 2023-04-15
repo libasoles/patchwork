@@ -12,10 +12,13 @@ const leftButton = 1
 let moveOrigin: { index: number; cell: Tile; } | null = null
 let rollbackCell: { index: number; cell: Tile; } | null = null
 
+// TODO: see if keeping separated hooks with duplicated code is better that a sigle hook with mixed code
 const useDrawAndPaintBehavoirs = () => {
-    const { getCell, updateCell } = useCanvasApi()
+    const { getCell, updateCellInBurst } = useCanvasApi()
     const transformers: Transformers = useTransformers()
     const [activeAction] = useAtom(actionAtom);
+
+    const origin = useRef<number | null>(null);
 
     const onMouseDown: OnMouseDown = useCallback((event, index: number) => {
         if (![Action.Draw, Action.Paint].includes(activeAction))
@@ -24,8 +27,10 @@ const useDrawAndPaintBehavoirs = () => {
         const tile = getCell(index)
 
         const updatedTile = transformers[activeAction](tile)
-        updateCell(index, updatedTile);
-    }, [activeAction, transformers, getCell, updateCell]);
+        updateCellInBurst(index, updatedTile, index);
+
+        origin.current = index
+    }, [activeAction, transformers, getCell, updateCellInBurst]);
 
     const onMouseEnter: onMouseEnter = useCallback((event, index) => {
         // if (isHotkeyPressed('shift') || isHotkeyPressed('ctrl')) return
@@ -38,8 +43,8 @@ const useDrawAndPaintBehavoirs = () => {
 
         const tile = getCell(index)
         let updatedTile = transformers[activeAction](tile)
-        updateCell(index, updatedTile);
-    }, [activeAction, transformers, getCell, updateCell]);
+        updateCellInBurst(index, updatedTile, origin.current!);
+    }, [activeAction, transformers, getCell, updateCellInBurst]);
 
     const onContextMenu: OnContextMenu = useCallback((event) => {
         event.preventDefault()
@@ -118,9 +123,11 @@ const useMoveBehavior = () => {
 }
 
 const useRotateBehavior = () => {
-    const { getCell, updateCell } = useCanvasApi()
+    const { getCell, updateCellInBurst } = useCanvasApi()
     const transformers: Transformers = useTransformers()
     const [activeAction] = useAtom(actionAtom);
+
+    const origin = useRef<number | null>(null);
 
     const onMouseDown: OnMouseDown = useCallback((_, index: number) => {
         const shouldRotate = activeAction === Action.Rotate || isHotkeyPressed('ctrl')
@@ -129,8 +136,10 @@ const useRotateBehavior = () => {
 
         const tile = getCell(index)
         const updatedTile = transformers[Action.Rotate](tile)
-        updateCell(index, updatedTile);
-    }, [activeAction, transformers, getCell, updateCell]);
+        updateCellInBurst(index, updatedTile, index);
+
+        origin.current = index
+    }, [activeAction, transformers, getCell, updateCellInBurst]);
 
     const onMouseEnter: onMouseEnter = useCallback((event, index) => {
         const shouldRotate = activeAction === Action.Rotate || isHotkeyPressed('ctrl')
@@ -143,16 +152,18 @@ const useRotateBehavior = () => {
 
         const tile = getCell(index)
         let updatedTile = transformers[Action.Rotate](tile)
-        updateCell(index, updatedTile);
-    }, [activeAction, transformers, getCell, updateCell]);
+        updateCellInBurst(index, updatedTile, origin.current!);
+    }, [activeAction, transformers, getCell, updateCellInBurst]);
 
     return { onMouseDown, onMouseEnter }
 }
 
 const useDeleteBehavior = () => {
-    const { getCell, updateCell } = useCanvasApi()
+    const { getCell, updateCellInBurst } = useCanvasApi()
     const transformers: Transformers = useTransformers()
     const [activeAction] = useAtom(actionAtom);
+
+    const origin = useRef<number | null>(null);
 
     const onMouseDown: OnMouseDown = useCallback((_, index: number) => {
         const shouldDelete = activeAction === Action.Delete || isHotkeyPressed('shift')
@@ -165,8 +176,9 @@ const useDeleteBehavior = () => {
             return
 
         const updatedTile = transformers[Action.Delete](tile)
-        updateCell(index, updatedTile);
-    }, [activeAction, transformers, getCell, updateCell]);
+        updateCellInBurst(index, updatedTile, index);
+        origin.current = index
+    }, [activeAction, transformers, getCell, updateCellInBurst]);
 
     const onMouseEnter: onMouseEnter = useCallback((event, index) => {
         const shouldDelete = activeAction === Action.Delete || isHotkeyPressed('shift')
@@ -183,8 +195,8 @@ const useDeleteBehavior = () => {
             return
 
         let updatedTile = transformers[Action.Delete](tile)
-        updateCell(index, updatedTile);
-    }, [activeAction, transformers, getCell, updateCell]);
+        updateCellInBurst(index, updatedTile, origin.current!);
+    }, [activeAction, transformers, getCell, updateCellInBurst]);
 
     return { onMouseDown, onMouseEnter }
 }

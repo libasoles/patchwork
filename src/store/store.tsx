@@ -40,6 +40,7 @@ interface CanvasSlice {
     canvasApi: {
         currentCanvas: () => Canvas
         getCell: (index: number) => Tile
+        // TODO: see id keeping updateCell makes sense or all actions will support burst
         updateCell: (index: number, tile: Tile, callback?: onUpdateCellCallback) => void
         updateCellInBurst: (index: number, tile: Tile, burstId: number, callback?: onUpdateCellCallback) => void
         updateCellNotReversible: (index: number, tile: Tile, callback?: onUpdateCellCallback) => void
