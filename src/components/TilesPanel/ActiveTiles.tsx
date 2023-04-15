@@ -19,7 +19,7 @@ export default function ActiveTiles({ isDisabled }: Props) {
 
     return (
         // TODO: adjust height to grow incrementally
-        <Panel data-testid='active-tiles-panel' title="Active Tiles" className='h-auto grow max-h-[50%]'>
+        <Panel data-testid='active-tiles-panel' title="Active Tiles" className='h-auto grow max-h-[20%]'>
             {sortedList.map(tile => {
                 const isSelected = tile.equals(selected);
 
