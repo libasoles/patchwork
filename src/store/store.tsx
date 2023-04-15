@@ -40,8 +40,10 @@ interface CanvasSlice {
     canvasApi: {
         currentCanvas: () => Canvas
         getCell: (index: number) => Tile
-        updateCell: (index: number, tile: Tile) => void
-        _updateCell: (draft: WritableDraft<Store>, index: number, tile: Tile, layerId: string) => void
+        updateCell: (index: number, tile: Tile, callback?: onUpdateCellCallback) => void
+        updateCellInBurst: (index: number, tile: Tile, burstId: number, callback?: onUpdateCellCallback) => void
+        updateCellNotReversible: (index: number, tile: Tile, callback?: onUpdateCellCallback) => void
+        _updateCell: (draft: WritableDraft<Store>, index: number, tile: Tile, layerId?: string) => void // callable from other apis
     },
 }
 
@@ -49,12 +51,13 @@ interface CanvasEvent {
     layerId: string
     cellIndex: number
     tile: Tile
+    burstId?: number
 }
 
 interface HistorySlice {
     readonly history: CanvasEvent[]
     historyApi: {
-        _push: (draft: WritableDraft<Store>, event: CanvasEvent) => void
+        _push: (draft: WritableDraft<Store>, event: CanvasEvent) => void // callable from other apis
         pop: () => void
     },
 }
@@ -96,25 +99,42 @@ export const createLayerSlice: Slice<LayerSlice> = (set, get) => ({
     },
 })
 
+type onUpdateCellCallback = (draft: WritableDraft<Store>, { layerId, index, tile }: { layerId: string; index: number; tile: Tile; burstId?: number }) => void
+const onUpdateCell: onUpdateCellCallback = (draft, { layerId, index, tile, burstId }) => {
+    draft.historyApi._push(draft, {
+        layerId,
+        cellIndex: index,
+        tile, // store the previous tile
+        burstId
+    })
+}
+
 export const createCanvasSlice: Slice<CanvasSlice> = (set, get) => ({
     canvasApi: {
         currentCanvas: () => get().layerApi.current().canvas.cells,
         getCell: (index: number) => get().canvasApi.currentCanvas()[index],
-        updateCell: (index: number, tile: Tile) => set(
+        updateCell: (index: number, tile: Tile, callback = onUpdateCell) => set(
             (draft) => {
-                const layer = draft.layers.get(draft.selected);
+                const layer = draft.layers.get(draft.selected)!
                 const currentTile = layer!.canvas.cells[index]
 
                 layer!.canvas.cells[index] = tile
 
-                draft.historyApi._push(draft, {
-                    layerId: layer!.id,
-                    cellIndex: index,
-                    tile: currentTile, // store the previous tile
-                })
+                callback && callback(draft, { layerId: layer.id, index, tile: currentTile })
             }),
-        _updateCell: (draft: WritableDraft<Store>, index: number, tile: Tile, layerId: string) => {
-            const layer = draft.layers.get(layerId);
+        updateCellInBurst: (index: number, tile: Tile, burstId: number, callback = onUpdateCell) => set(
+            (draft) => {
+                const layer = draft.layers.get(draft.selected)!
+                const currentTile = layer!.canvas.cells[index]
+
+                layer!.canvas.cells[index] = tile
+
+                callback && callback(draft, { layerId: layer.id, index, tile: currentTile, burstId })
+            }),
+        updateCellNotReversible: (index: number, tile: Tile) => set(
+            (draft) => draft.canvasApi._updateCell(draft, index, tile)),
+        _updateCell: (draft: WritableDraft<Store>, index: number, tile: Tile, layerId?: string) => {
+            const layer = layerId ? draft.layers.get(layerId) : draft.layers.get(draft.layerApi.current().id);
             layer!.canvas.cells[index] = tile
         }
     }
@@ -129,9 +149,19 @@ export const createHistorySlice: Slice<HistorySlice> = (set, get) => ({
         },
         pop: () => set(
             (draft) => {
-                const lastEvent = draft.history.pop()
-                if (lastEvent) {
-                    draft.canvasApi._updateCell(draft, lastEvent.cellIndex, lastEvent.tile, lastEvent.layerId)
+                let lastEvent = draft.history.pop()
+                if (!lastEvent) return
+
+                draft.canvasApi._updateCell(draft, lastEvent.cellIndex, lastEvent.tile, lastEvent.layerId)
+
+                let event: CanvasEvent
+                while (event = draft.history[draft.history.length - 1]) {
+                    if (lastEvent?.burstId && event.burstId === lastEvent?.burstId) {
+                        draft.canvasApi._updateCell(draft, event.cellIndex, event.tile, event.layerId)
+                        lastEvent = draft.history.pop()
+                    } else {
+                        break
+                    }
                 }
             }),
     }

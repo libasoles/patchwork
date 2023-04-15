@@ -50,7 +50,7 @@ const useDrawAndPaintBehavoirs = () => {
 }
 
 const useMoveBehavior = () => {
-    const { updateCell } = useCanvasApi()
+    const { updateCellInBurst, updateCellNotReversible } = useCanvasApi()
     const [activeAction] = useAtom(actionAtom);
 
     const dragItem = useRef<number | null>(null);
@@ -86,28 +86,33 @@ const useMoveBehavior = () => {
             moveOrigin = { index: origin, cell: originCell }
             rollbackCell = { index, cell: targetCell }
 
-            updateCell(target, originCell);
-            updateCell(origin, createTile(emptyTile));
+            updateCellNotReversible(target, originCell);
+            updateCellInBurst(origin, createTile(emptyTile), origin);
 
             return
         } else {
-            updateCell(rollbackCell!.index, rollbackCell!.cell);
+            updateCellNotReversible(rollbackCell!.index, rollbackCell!.cell);
 
             rollbackCell = { index, cell: targetCell }
 
-            updateCell(target, moveOrigin.cell);
+            updateCellNotReversible(target, moveOrigin.cell);
         }
-    }, [activeAction, updateCell, currentCanvas]);
+    }, [activeAction, updateCellInBurst, updateCellNotReversible, currentCanvas]);
 
     const onMouseUp: OnMouseUp = useCallback(() => {
         if (activeAction !== Action.Move)
             return
 
+        const origin = moveOrigin!.cell
+        const target = dragOverItem.current!
+        updateCellNotReversible(target, createTile(emptyTile));
+        updateCellInBurst(target, origin, moveOrigin!.index);
+
         dragItem.current = null;
         dragOverItem.current = null;
         rollbackCell = null;
         moveOrigin = null;
-    }, [activeAction]);
+    }, [activeAction, updateCellNotReversible, updateCellInBurst]);
 
     return { onMouseDown, onMouseEnter, onMouseUp };
 }
