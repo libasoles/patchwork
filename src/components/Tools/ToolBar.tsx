@@ -3,7 +3,7 @@ import { Action } from "@/types";
 import { useAtom } from "jotai";
 import DrawIcon from "@/icons/DrawIcon";
 import PaintIcon from "@/icons/PaintIcon";
-import HandIcon from "@/icons/HandIcon";
+import MoveIcon from "@/icons/MoveIcon";
 import ActionButton from "./components/ActionButton";
 import RotateIcon from "@/icons/RotateIcon";
 import TrashIcon from "@/icons/TrashIcon";
@@ -40,7 +40,7 @@ const ToolBar = () => {
     const actions = [
         { name: Action.Draw, icon: <DrawIcon />, onClick: setSelected, shortcut: '1' },
         { name: Action.Paint, icon: <PaintIcon />, onClick: selectActionAndDisplayColors, shortcut: '2' },
-        { name: Action.Move, icon: <HandIcon />, onClick: selectActionAndDisableLayers, shortcut: '3' },
+        { name: Action.Move, icon: <MoveIcon />, onClick: selectActionAndDisableLayers, shortcut: '3' },
         { name: Action.Rotate, icon: <RotateIcon />, onClick: selectActionAndDisableLayers, shortcut: '4' },
         { name: Action.Delete, icon: <TrashIcon />, onClick: selectActionAndDisableLayers, shortcut: '5' }
     ]

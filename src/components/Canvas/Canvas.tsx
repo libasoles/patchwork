@@ -73,11 +73,11 @@ export default function Canvas() {
 }
 
 const icons: { [action: string]: string } = {
-    [Action.Draw]: 'cursor-crosshair',
-    [Action.Paint]: 'cursor-sw-resize',
-    [Action.Move]: 'cursor-grab',
-    [Action.Rotate]: 'cursor-sw-resize',
-    [Action.Delete]: 'cursor-crosshair',
+    [Action.Draw]: 'cursor-draw',
+    [Action.Paint]: 'cursor-paint',
+    [Action.Move]: 'cursor-move',
+    [Action.Rotate]: 'cursor-rotate',
+    [Action.Delete]: 'cursor-delete',
 };
 
 type GetMouseIcon = (isCellEmpty: boolean) => string
@@ -86,6 +86,6 @@ function getMouseIcon(action: Action): GetMouseIcon {
         if ([Action.Draw, Action.Delete].includes(action))
             return icons[action];
 
-        return isCellEmpty ? 'cursor-not-allowed' : icons[action];
+        return isCellEmpty ? 'cursor-forbiden' : icons[action];
     }
 }

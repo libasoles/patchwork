@@ -17,7 +17,7 @@ export default function Tile({ tile, isSelected, isDisabled = false, onSelect }:
     return (
         <label
             data-testid="tile"
-            className={`grid items-center tile w-12 h-12 ${isDisabled ? 'cursor-not-allowed' : 'cursor-pointer hover:opacity-70'} ${isSelected ? "scale-90" : ""}`}
+            className={`grid items-center tile w-12 h-12 ${isDisabled ? 'cursor-forbiden' : 'cursor-pointer hover:opacity-70'} ${isSelected ? "scale-90" : ""}`}
             style={{
                 // @ts-ignore
                 containerType: "inline-size",

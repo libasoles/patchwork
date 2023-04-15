@@ -16,13 +16,14 @@ export default function Zoom() {
     useHotkeys('ctrl+-', zoomOut)
 
     return (
-        <div data-testid='zoom' className='fixed bottom-3 '>
+        <div data-testid='zoom' className='fixed bottom-3'>
             <input
                 min={min}
                 max={max}
                 type="range"
                 name="zoomLevel"
                 value={zoomLevel}
+                className="hover:cursor-pointer"
                 onChange={e => setZoomLevel(Number(e.target.value))} />
         </div>
     );

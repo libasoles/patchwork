@@ -19,7 +19,7 @@ export default function App({ tileSet = tiles }: Props) {
     const { isMobile } = useIsMobile()
 
     return (
-        <div className="flex overflow-hidden">
+        <div className="flex overflow-hidden cursor-default">
             <aside>
                 <TilePanels tiles={tileSet} />
             </aside>

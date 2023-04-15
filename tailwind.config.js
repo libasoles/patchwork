@@ -3,7 +3,19 @@
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      cursor: {
+        auto: "url('/default.png') 0 0, auto",
+        default: "url('/default.png') 0 0, auto",
+        pointer: "url('/pointer.png') 16 0, auto",
+        draw: "url('/draw.png') 0 32, auto",
+        paint: "url('/paint.png') 16 6, auto",
+        move: "url('/move.png') 16 16, auto",
+        delete: "url('/delete.png') 16 16, auto",
+        rotate: "url('/rotate.png') 16 6, auto",
+        forbiden: "url('/forbiden.png') 16 16, auto",
+      },
+    },
   },
   plugins: [],
   safelist: [
