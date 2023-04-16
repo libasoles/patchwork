@@ -66,12 +66,13 @@ type ColorCircleProps = {
 function ColorCircle({ color, isSelected = false, onSelect, onControlClick, className }: ColorCircleProps) {
     return (
         // TODO: there's a thing with the external circle height when the window height is shorter
-        <label className={`grid items-center rounded-full w-[38px] h-[38px_!important] border-2 border-slate-400 bg-slate-400 my-1.5 overflow-hidden ${className}`}
+        <label data-testid='color-container' className={`grid items-center rounded-full w-[38px] h-[38px_!important] border-2 border-slate-400 bg-slate-400 my-1.5 overflow-hidden ${className}`}
             style={{
                 // @ts-ignore
                 containerType: "inline-size",
             }}>
             <input
+                data-testid='radio'
                 type="radio"
                 name="color"
                 value={color}
@@ -79,9 +80,9 @@ function ColorCircle({ color, isSelected = false, onSelect, onControlClick, clas
                 onContextMenu={onControlClick}
                 className={`${styles.overlap} cursor-pointer`}
                 checked={isSelected}
-                role="radio"
+            // role="radio"
             />
-            <span className={`rounded-full bg-${color} w-[38px] h-[38px_!important] ${styles.overlap} pointer-events-none`}></span>
+            <span data-testid='color-circle' className={`rounded-full bg-${color} w-[38px] h-[38px_!important] ${styles.overlap} pointer-events-none`}></span>
         </label>
     );
 }

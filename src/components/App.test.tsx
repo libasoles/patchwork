@@ -6,13 +6,15 @@ import { mockTiles } from '@/mocks/tiles';
 import { Provider } from 'jotai/react';
 import userEvent from '@testing-library/user-event';
 
-jest.doMock('../config', () => {
-    const originalConfig = jest.requireActual('../config');
+jest.mock('@/config', () => {
+    const originalConfig = jest.requireActual('@/config');
+
     return {
         ...originalConfig,
         dimension: { x: 3, y: 3 }
     };
 });
+
 
 describe('App', () => {
     beforeEach(() => {
@@ -78,28 +80,31 @@ describe('App', () => {
 
     })
 
-    it('should paint select the tile color in the tileset when a color is selected', async () => {
-        const defaultColor = selectColor(0);
-        const selectedTile = await findSelectedTile()
+    it('should paint the select tile color in the tileset when a color is selected', async () => {
+        selectColor(1);
 
-        expect(selectedTile).toHaveAttribute('color', defaultColor.getAttribute('color'))
+        const { symbolElement } = await findSelectedTile()
 
-        const aColor = selectColor(3);
+        expect(symbolElement).toHaveClass('text-gray-800')
 
-        expect(selectedTile).toHaveAttribute('color', aColor.getAttribute('color'))
+        selectColor(3);
+
+        await waitFor(() => {
+            expect(symbolElement).toHaveClass('text-pink-500')
+        })
     })
 
     it('should draw a tile with the selected color', async () => {
-        const aColor = selectColor(3);
-        const selectedTile = await findSelectedTile()
+        selectColor(3);
+        const { symbolElement } = await findSelectedTile()
 
-        expect(selectedTile).toHaveAttribute('color', aColor.getAttribute('color'))
+        expect(symbolElement).toHaveClass('text-pink-500')
 
         const aCell = clickCanvasCell(1)
 
         await waitFor(() => {
-            expect(aCell).toHaveTextContent(selectedTile.textContent!)
-            expect(aCell).toHaveAttribute('color', aColor.getAttribute('color'))
+            expect(aCell).toHaveTextContent(symbolElement.textContent!)
+            expect(symbolElement).toHaveClass('text-pink-500')
         })
     })
 })
@@ -107,11 +112,12 @@ describe('App', () => {
 
 function selectColor(index: number) {
     const colorPanel = getColorPanel();
-    const aColor = within(colorPanel).getAllByRole('radio')[index];
+    const element = within(colorPanel).getAllByTestId('color-container')[index];
+    const radio = within(element).getByTestId('radio');
 
-    userEvent.click(aColor);
+    userEvent.click(radio);
 
-    return aColor
+    return { element }
 }
 
 function clickCanvasCell(index: number = 0) {
@@ -134,13 +140,15 @@ function selectTile(index: number = 1) {
 function getTile(index: number) {
     const allTilesPanel = getAllTilesPanel();
 
-    return within(allTilesPanel).getAllByRole('radio')[index];
+    return within(allTilesPanel).getAllByTestId('radio')[index];
 }
 
 async function findSelectedTile() {
     const allTilesPanel = getAllTilesPanel();
+    const radioElement = await within(allTilesPanel).findByTestId('selected-radio');
+    const symbolElement = await within(allTilesPanel).findByTestId('selected-symbol');
 
-    return within(allTilesPanel).findByRole('radio', { checked: true });
+    return { radioElement, symbolElement }
 }
 
 function assertNumberOfActiveTilesIs(expectedNumber: number) {

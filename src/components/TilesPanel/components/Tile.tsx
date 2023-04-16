@@ -25,6 +25,7 @@ export default function Tile({ tile, isSelected, isDisabled = false, onSelect }:
             }}
         >
             <input
+                data-testid={`${isSelected ? "selected-radio" : "radio"}`}
                 type="radio"
                 name="tile"
                 value={tile.id}
@@ -32,9 +33,10 @@ export default function Tile({ tile, isSelected, isDisabled = false, onSelect }:
                 className={styles.overlap}
                 disabled={isDisabled}
                 checked={isSelected}
-                role="radio"
             />
-            <span className={`${styles.overlap} bg-gray-500 text-${isSelected ? color : defaultColor} ${isSelected ? styles.selected : ""}`}
+            <span
+                data-testid={`${isSelected ? "selected-symbol" : "symbol"}`}
+                className={`${styles.overlap} bg-gray-500 text-${isSelected ? color : defaultColor} ${isSelected ? styles.selected : ""}`}
                 style={{
                     lineHeight: .7,
                     fontSize: "143cqw",
