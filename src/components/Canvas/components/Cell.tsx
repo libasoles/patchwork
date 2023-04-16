@@ -13,7 +13,10 @@ function Cell({ tile, borderless }: Props) {
         <>
             <div className={`flex justify-center items-center tile text-${tile.color} overflow-hidden h-full
                 border-slate-600 ${borderless ? '' : 'border-[0.5px]'} hover:border-slate-500`}
-                style={{ fontSize: '1px' }}
+                style={{
+                    transform: `rotate(${90 * tile.orientation}deg)`,
+                    fontSize: '1px'
+                }}
             >
                 <span className={`flex justify-center items-center content-box`}
                     style={{

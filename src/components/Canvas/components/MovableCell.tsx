@@ -24,7 +24,6 @@ function MovableCell({ tile, index, borderless, onMouseDown, onMouseUp, onMouseE
         <button
             className={`touch-none cursor-[inherit] w-full h-full origin-center`}
             style={{
-                transform: `rotate(${90 * tile.orientation}deg)`,
                 // @ts-ignore
                 containerType: "inline-size",
             }}
