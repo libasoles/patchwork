@@ -33,6 +33,7 @@ export default function Tile({ tile, isSelected, isDisabled = false, onSelect }:
                 className={styles.overlap}
                 disabled={isDisabled}
                 checked={isSelected}
+                role="radio"
             />
             <span
                 data-testid={`${isSelected ? "selected-symbol" : "symbol"}`}

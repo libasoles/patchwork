@@ -24,13 +24,18 @@ export default function Colors() {
 
     return (
         <div data-testid='color-panel' className='w-9 mx-1 h-full'>
-            <ColorCircle color={color} onSelect={() => { setVisible((visible) => !visible) }} className='mt-[.1rem] mb-3' />
+            <ColorCircle
+                data-testid='selected-color'
+                color={color}
+                onSelect={() => { setVisible((visible) => !visible) }}
+                className='mt-[.1rem] mb-3'
+            />
             {
                 visible &&
                 <>
                     <hr className="border-2 mb-1.5" />
                     <Scrollbars style={{ width: 200, height: '100%' }} autoHide universal>
-                        <div className="flex flex-col overflow-hidden h-auto pr-12">
+                        <div data-testid='selectable-colors' className="flex flex-col overflow-hidden h-auto pr-12">
                             {
                                 colors.map(
                                     aColor => {
@@ -63,10 +68,11 @@ type ColorCircleProps = {
     onControlClick?: (e: SyntheticEvent) => void;
 };
 
-function ColorCircle({ color, isSelected = false, onSelect, onControlClick, className }: ColorCircleProps) {
+function ColorCircle({ color, isSelected = false, onSelect, onControlClick, className, ...rest }: ColorCircleProps) {
     return (
         // TODO: there's a thing with the external circle height when the window height is shorter
-        <label data-testid='color-container' className={`grid items-center rounded-full w-[38px] h-[38px_!important] border-2 border-slate-400 bg-slate-400 my-1.5 overflow-hidden ${className}`}
+        <label data-testid='color-container' {...rest}
+            className={`grid items-center rounded-full w-[38px] h-[38px_!important] border-2 border-slate-400 bg-slate-400 my-1.5 overflow-hidden ${className}`}
             style={{
                 // @ts-ignore
                 containerType: "inline-size",
@@ -80,7 +86,7 @@ function ColorCircle({ color, isSelected = false, onSelect, onControlClick, clas
                 onContextMenu={onControlClick}
                 className={`${styles.overlap} cursor-pointer`}
                 checked={isSelected}
-            // role="radio"
+                role="radio"
             />
             <span data-testid='color-circle' className={`rounded-full bg-${color} w-[38px] h-[38px_!important] ${styles.overlap} pointer-events-none`}></span>
         </label>

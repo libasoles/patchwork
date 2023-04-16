@@ -1,8 +1,9 @@
 
-import { fireEvent, render, screen, waitFor, within } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import '@testing-library/jest-dom';
 import TilePanels from './TilePanels';
 import { mockTiles } from '@/mocks/tiles';
+import userEvent from '@testing-library/user-event';
 
 describe('Tile panels', () => {
     beforeEach(() => {
@@ -41,22 +42,31 @@ describe('Tile panels', () => {
         })
 
         it('should highlight a tile when clicked', async () => {
-            const allTilesPanel = screen.getByTestId('all-tiles-panel')
-            const aTile = within(allTilesPanel).getAllByRole('radio')[1]
+            const { radioElement, symbolElement } = await getTile(1)
 
-            const selectedTile = getSelectedTile(allTilesPanel)
-            expect(selectedTile).toBeNull()
+            userEvent.click(radioElement)
 
-            fireEvent.click(aTile)
-
-            await waitFor(() => {
-                const selectedTile = getSelectedTile(allTilesPanel)
-                expect(selectedTile).not.toBeNull()
-            })
+            const { radioElement: selectedRadioElement, symbolElement: selectedSymbolElement } = await getSelectedTile()
+            expect(selectedSymbolElement).toHaveTextContent(symbolElement.textContent!)
+            expect(selectedRadioElement).not.toBeNull()
         })
     })
-})
 
-function getSelectedTile(activeTilesPanel: HTMLElement) {
-    return within(activeTilesPanel).queryByRole('radio', { checked: true });
-}
+    // TODO: move functions to test utils
+    async function getTile(index: number) {
+        const allTilesPanel = screen.getByTestId('all-tiles-panel')
+        const radioElement = (await within(allTilesPanel).findAllByTestId('radio'))[index];
+        const symbolElement = (await within(allTilesPanel).findAllByTestId('symbol'))[index];
+
+        return { radioElement, symbolElement }
+    }
+
+    async function getSelectedTile() {
+        // return within(activeTilesPanel).queryByRole('radio', { checked: true });
+        const allTilesPanel = await screen.findByTestId('all-tiles-panel')
+        const radioElement = await within(allTilesPanel).findByTestId('selected-radio');
+        const symbolElement = await within(allTilesPanel).findByTestId('selected-symbol');
+
+        return { radioElement, symbolElement }
+    }
+})

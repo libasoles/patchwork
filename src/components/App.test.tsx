@@ -77,17 +77,16 @@ describe('App', () => {
             const updatedContent = within(activeTilesPanel).getByTestId('panel-content')
             expect(updatedContent.childElementCount).toBe(2)
         })
-
     })
 
     it('should paint the select tile color in the tileset when a color is selected', async () => {
-        selectColor(1);
+        selectColor(0);
 
         const { symbolElement } = await findSelectedTile()
 
         expect(symbolElement).toHaveClass('text-gray-800')
 
-        selectColor(3);
+        selectColor(2);
 
         await waitFor(() => {
             expect(symbolElement).toHaveClass('text-pink-500')
@@ -95,7 +94,7 @@ describe('App', () => {
     })
 
     it('should draw a tile with the selected color', async () => {
-        selectColor(3);
+        selectColor(2);
         const { symbolElement } = await findSelectedTile()
 
         expect(symbolElement).toHaveClass('text-pink-500')
