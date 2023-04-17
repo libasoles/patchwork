@@ -21,6 +21,8 @@ const useDrawAndPaintBehavoirs = () => {
     const origin = useRef<number | null>(null);
 
     const onMouseDown: OnMouseDown = useCallback((event, index: number) => {
+        if (isHotkeyPressed('ctrl') || isHotkeyPressed('shift') || isHotkeyPressed('alt')) return
+
         if (![Action.Draw, Action.Paint].includes(activeAction))
             return
 
@@ -33,7 +35,8 @@ const useDrawAndPaintBehavoirs = () => {
     }, [activeAction, transformers, getCell, updateCellInBurst]);
 
     const onMouseEnter: onMouseEnter = useCallback((event, index) => {
-        // if (isHotkeyPressed('shift') || isHotkeyPressed('ctrl')) return
+        if (isHotkeyPressed('ctrl') || isHotkeyPressed('shift') || isHotkeyPressed('alt')) return
+
         const isLeftButtonDown = event.buttons === leftButton
         if (!isLeftButtonDown)
             return;
@@ -63,20 +66,28 @@ const useMoveBehavior = () => {
 
     const { currentCanvas } = useCanvasApi()
 
+    const cleanUp = useCallback(() => {
+        dragItem.current = null;
+        dragOverItem.current = null;
+        rollbackCell = null;
+        moveOrigin = null;
+    }, [])
+
     const onMouseDown: OnMouseDown = useCallback((event, index: number) => {
         event.preventDefault()
 
-        // const isRightButtonDown = event.buttons === leftButton
-        if (activeAction !== Action.Move)
+        const shouldMove = activeAction === Action.Move || isHotkeyPressed('shift')
+        if (!shouldMove)
             return
 
         dragItem.current = index
     }, [activeAction]);
 
     const onMouseEnter: onMouseEnter = useCallback((event, index) => {
-        if (isHotkeyPressed('shift') || isHotkeyPressed('ctrl')) return
+        if (isHotkeyPressed('alt') || isHotkeyPressed('ctrl')) return
 
-        if (activeAction !== Action.Move || dragItem.current === null)
+        const shouldMove = activeAction === Action.Move || isHotkeyPressed('shift') && dragItem.current !== null
+        if (!shouldMove)
             return
 
         dragOverItem.current = index
@@ -105,19 +116,19 @@ const useMoveBehavior = () => {
     }, [activeAction, updateCellInBurst, updateCellNotReversible, currentCanvas]);
 
     const onMouseUp: OnMouseUp = useCallback(() => {
-        if (activeAction !== Action.Move)
+        const shouldMove = activeAction === Action.Move || isHotkeyPressed('shift')
+        if (!shouldMove || !moveOrigin!!) {
+            cleanUp()
             return
+        }
 
         const origin = moveOrigin!.cell
         const target = dragOverItem.current!
         updateCellNotReversible(target, createTile(emptyTile));
         updateCellInBurst(target, origin, moveOrigin!.index);
 
-        dragItem.current = null;
-        dragOverItem.current = null;
-        rollbackCell = null;
-        moveOrigin = null;
-    }, [activeAction, updateCellNotReversible, updateCellInBurst]);
+        cleanUp()
+    }, [activeAction, updateCellNotReversible, updateCellInBurst, cleanUp]);
 
     return { onMouseDown, onMouseEnter, onMouseUp };
 }
@@ -166,7 +177,7 @@ const useDeleteBehavior = () => {
     const origin = useRef<number | null>(null);
 
     const onMouseDown: OnMouseDown = useCallback((_, index: number) => {
-        const shouldDelete = activeAction === Action.Delete || isHotkeyPressed('shift')
+        const shouldDelete = activeAction === Action.Delete || isHotkeyPressed('alt')
         if (!shouldDelete)
             return
 
@@ -181,7 +192,7 @@ const useDeleteBehavior = () => {
     }, [activeAction, transformers, getCell, updateCellInBurst]);
 
     const onMouseEnter: onMouseEnter = useCallback((event, index) => {
-        const shouldDelete = activeAction === Action.Delete || isHotkeyPressed('shift')
+        const shouldDelete = activeAction === Action.Delete || isHotkeyPressed('alt')
         if (!shouldDelete)
             return
 

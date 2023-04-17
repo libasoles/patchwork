@@ -1,13 +1,11 @@
-import { Action } from '@/types';
 import { useAtom } from 'jotai';
-import { actionAtom, gridVisibilityAtom, useLayersApi, useHistoryApi } from '@/store';
+import { gridVisibilityAtom, useLayersApi, useHistoryApi } from '@/store';
 import Layer from './components/Layer';
 import ActiveLayer from './components/ActiveLayer';
 import { useCanvasScale } from './hooks/useCanvasScale';
 import { canvasDimension } from '@/config';
 import { emptyCanvas } from '@/factory';
 import { useHotkeys } from 'react-hotkeys-hook';
-import useMoveCanvas from './hooks/useMoveCanvas';
 
 export const cellSize = 40
 
@@ -18,13 +16,9 @@ export default function Canvas() {
     const { list, current: getCurrentLayer } = useLayersApi()
     const layersList = list()
 
-    const [activeAction] = useAtom(actionAtom);
-
     const canvasScale = useCanvasScale()
 
     const [isGridVisible] = useAtom(gridVisibilityAtom);
-
-    const cursor = getMouseIcon(activeAction)
 
     // const { offset, canvasRef } = useMoveCanvas()
 
@@ -59,7 +53,6 @@ export default function Canvas() {
                     ? <ActiveLayer key={layer.id}
                         canvas={layer.canvas.cells}
                         dimension={layer.canvas.dimension}
-                        cursor={cursor}
                         isDisabled={!layer.enabled}
                     />
                     : <Layer key={layer.id}
@@ -70,22 +63,4 @@ export default function Canvas() {
             })}
         </div>
     </div>
-}
-
-const icons: { [action: string]: string } = {
-    [Action.Draw]: 'cursor-draw',
-    [Action.Paint]: 'cursor-paint',
-    [Action.Move]: 'cursor-move',
-    [Action.Rotate]: 'cursor-rotate',
-    [Action.Delete]: 'cursor-delete',
-};
-
-type GetMouseIcon = (isCellEmpty: boolean) => string
-function getMouseIcon(action: Action): GetMouseIcon {
-    return (isCellEmpty: boolean) => {
-        if ([Action.Draw, Action.Delete].includes(action))
-            return icons[action];
-
-        return isCellEmpty ? 'cursor-forbiden' : icons[action];
-    }
 }

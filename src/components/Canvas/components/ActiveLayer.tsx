@@ -1,18 +1,21 @@
 import MovableCell from './MovableCell';
 import { usePointerEvents } from '../hooks/usePointerEvents';
 import { LayerProps } from './Layer';
-
-type ActiveLayerProps = LayerProps & {
-    cursor: (isCellEmpty: boolean) => string,
-}
+import { actionAtom } from '@/store';
+import { Action } from '@/types';
+import { useAtom } from 'jotai';
+import { useCallback, useState } from 'react';
+import { useHotkeys, isHotkeyPressed } from 'react-hotkeys-hook';
 
 export default function ActiveLayer({
     canvas,
     dimension,
-    cursor,
     isDisabled = false,
-}: ActiveLayerProps) {
+}: LayerProps) {
     const { onMouseDown, onMouseEnter, onContextMenu, onMouseUp } = usePointerEvents();
+
+    const [activeAction] = useAtom(actionAtom)
+    let cursor = useMouseIcon(activeAction)
 
     return (
         <div
@@ -45,4 +48,41 @@ export default function ActiveLayer({
             }
         </div>
     )
+}
+
+const icons: { [action: string]: string } = {
+    [Action.Draw]: 'cursor-draw',
+    [Action.Paint]: 'cursor-paint',
+    [Action.Move]: 'cursor-move',
+    [Action.Rotate]: 'cursor-rotate',
+    [Action.Delete]: 'cursor-delete',
+};
+
+type UseMouseIcon = (isCellEmpty: boolean) => string
+function useMouseIcon(action: Action): UseMouseIcon {
+    const [cursor, setCursor] = useState<string | null>(null)
+
+    // TODO: cursor may not update after window blur
+    useHotkeys('shift, ctrl, alt', () => {
+        if (isHotkeyPressed('shift'))
+            setCursor(icons[Action.Move])
+        else if (isHotkeyPressed('ctrl'))
+            setCursor(icons[Action.Rotate])
+        else if (isHotkeyPressed('alt'))
+            setCursor(icons[Action.Delete])
+        else
+            setCursor(null)
+    }, {
+        keyup: true,
+        keydown: true,
+    })
+
+    return useCallback((isCellEmpty: boolean) => {
+        if (cursor) return cursor
+
+        const isActionWithoutForbidenAreas = [Action.Draw, Action.Delete].includes(action)
+        if (isActionWithoutForbidenAreas) return icons[action];
+
+        return isCellEmpty ? 'cursor-forbiden' : icons[action];
+    }, [action, cursor])
 }
