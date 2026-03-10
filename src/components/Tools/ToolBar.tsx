@@ -1,8 +1,8 @@
+import CrossIcon from "@/icons/CrossIcon";
 import DrawIcon from "@/icons/DrawIcon";
 import MoveIcon from "@/icons/MoveIcon";
 import PaintIcon from "@/icons/PaintIcon";
 import RotateIcon from "@/icons/RotateIcon";
-import TrashIcon from "@/icons/TrashIcon";
 import {
   actionAtom,
   colorBarVisibilityAtom,
@@ -82,7 +82,7 @@ const ToolBar = () => {
     },
     {
       name: Action.Delete,
-      icon: <TrashIcon />,
+      icon: <CrossIcon />,
       onClick: selectActionAndDisableLayers,
       shortcut: "5",
     },

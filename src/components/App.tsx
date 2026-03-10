@@ -51,7 +51,7 @@ export default function App({ tileSet = tiles }: Props) {
       >
         <ToolBar />
         <Canvas />
-        <div className="w-auto fixed top-3 right-[16px] z-10 flex gap-3 h-full justify-start">
+        <div className="w-auto fixed top-3 right-[16px] z-10 flex gap-3 h-full justify-start pointer-events-none">
           <ToggleGrid />
           <NewCanvasButton />
           <ExportButton />

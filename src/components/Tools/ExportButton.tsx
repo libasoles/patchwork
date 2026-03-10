@@ -107,7 +107,7 @@ export default function ExportButton() {
   };
 
   return (
-    <div className="w-9">
+    <div className="w-9 pointer-events-auto">
       <Tooltip>
         <TooltipTrigger asChild>
           <button

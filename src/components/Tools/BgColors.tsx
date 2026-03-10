@@ -1,10 +1,14 @@
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { bgColors } from "@/config";
 import { bgColorAtom, bgColorBarVisibilityAtom } from "@/store";
 import styles from "@/styles/utils.module.css";
 import { useAtom } from "jotai";
-import { Scrollbars } from "react-custom-scrollbars-2";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useTranslations } from "next-intl";
+import { Scrollbars } from "react-custom-scrollbars-2";
 
 export default function BgColors() {
   const t = useTranslations("tooltips");
@@ -12,7 +16,7 @@ export default function BgColors() {
   const [visible, setVisible] = useAtom(bgColorBarVisibilityAtom);
 
   return (
-    <div className="w-9 h-full">
+    <div className={`w-9 pointer-events-auto ${visible ? "h-full" : ""}`}>
       <Tooltip>
         <TooltipTrigger asChild>
           <div

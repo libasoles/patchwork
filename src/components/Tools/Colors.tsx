@@ -8,10 +8,10 @@ import { actionAtom, colorAtom, colorBarVisibilityAtom } from "@/store";
 import styles from "@/styles/utils.module.css";
 import { Action, EventCallback } from "@/types";
 import { useAtom } from "jotai";
+import { useTranslations } from "next-intl";
 import { SyntheticEvent } from "react";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { isHotkeyPressed } from "react-hotkeys-hook";
-import { useTranslations } from "next-intl";
 
 export default function Colors() {
   const t = useTranslations("tooltips");
@@ -30,7 +30,10 @@ export default function Colors() {
   };
 
   return (
-    <div data-testid="color-panel" className="w-9 h-full">
+    <div
+      data-testid="color-panel"
+      className={`w-9 pointer-events-auto ${visible ? "h-full" : ""}`}
+    >
       <Tooltip>
         <TooltipTrigger asChild>
           <div>
