@@ -45,29 +45,53 @@ export default function Canvas() {
 
         const handleWheel = (e: WheelEvent) => {
             e.preventDefault();
-            // Normalize deltaY: lines mode (~3/notch) → pixels equivalent (~100/notch)
-            const delta = e.deltaMode === WheelEvent.DOM_DELTA_LINE ? e.deltaY * 15 : e.deltaY;
 
-            const oldZoom = zoomRef.current;
-            const newZoom = clamp(oldZoom - delta * 0.05, zoomMin, zoomMax);
-            const oldScale = (4 + oldZoom) / 10;
-            const newScale = (4 + newZoom) / 10;
+            if (e.ctrlKey) {
+                // Pinch-to-zoom gesture (or Ctrl+scroll): zoom toward cursor
+                // Normalize deltaY: lines mode (~3/notch) → pixels equivalent (~100/notch)
+                const delta = e.deltaMode === WheelEvent.DOM_DELTA_LINE ? e.deltaY * 15 : e.deltaY;
 
-            const rect = el.getBoundingClientRect();
-            const mx = e.clientX - rect.left;
-            const my = e.clientY - rect.top;
-            const { x: ox, y: oy } = offsetRef.current;
+                const oldZoom = zoomRef.current;
+                const newZoom = clamp(oldZoom - delta * 0.05, zoomMin, zoomMax);
+                const oldScale = (4 + oldZoom) / 10;
+                const newScale = (4 + newZoom) / 10;
 
-            // Keep the canvas point under the cursor fixed after zoom
-            const newOx = mx - rect.width / 2 - (mx - rect.width / 2 - ox) * newScale / oldScale;
-            const newOy = my - rect.height / 2 - (my - rect.height / 2 - oy) * newScale / oldScale;
+                const rect = el.getBoundingClientRect();
+                const mx = e.clientX - rect.left;
+                const my = e.clientY - rect.top;
+                const { x: ox, y: oy } = offsetRef.current;
 
-            const newOffset = { x: newOx, y: newOy };
-            offsetRef.current = newOffset;
-            zoomRef.current = newZoom;
+                // Keep the canvas point under the cursor fixed after zoom
+                const newOx = mx - rect.width / 2 - (mx - rect.width / 2 - ox) * newScale / oldScale;
+                const newOy = my - rect.height / 2 - (my - rect.height / 2 - oy) * newScale / oldScale;
 
-            setZoomLevel(newZoom);
-            setOffset(newOffset);
+                const newOffset = { x: newOx, y: newOy };
+                offsetRef.current = newOffset;
+                zoomRef.current = newZoom;
+
+                setZoomLevel(newZoom);
+                setOffset(newOffset);
+            } else {
+                // Two-finger scroll gesture: pan the canvas
+                const rect = el.getBoundingClientRect();
+                const scale = (4 + zoomRef.current) / 10;
+                const overflow = 50; // px past viewport edge allowed
+                // Canvas half-size in screen px at current scale
+                const halfCanvas = 1000 * scale;
+
+                // Canvas must always cover the viewport: allow only `overflow` px
+                // past each edge. When canvas < viewport, keep it within viewport.
+                const rangeX = Math.max(halfCanvas - rect.width / 2, 0) + overflow;
+                const rangeY = Math.max(halfCanvas - rect.height / 2, 0) + overflow;
+
+                const { x: ox, y: oy } = offsetRef.current;
+                const newOffset = {
+                    x: clamp(ox - e.deltaX, -rangeX, rangeX),
+                    y: clamp(oy - e.deltaY, -rangeY, rangeY),
+                };
+                offsetRef.current = newOffset;
+                setOffset(newOffset);
+            }
         };
 
         el.addEventListener('wheel', handleWheel, { passive: false });
