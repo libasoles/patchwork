@@ -1,5 +1,5 @@
-import { useAtom } from 'jotai';
-import { bgColorAtom, gridVisibilityAtom, useLayersApi, useHistoryApi } from '@/store';
+import { useAtom, useSetAtom } from 'jotai';
+import { bgColorAtom, gridVisibilityAtom, useLayersApi, useHistoryApi, zoomLevelAtom } from '@/store';
 import Layer from './components/Layer';
 import ActiveLayer from './components/ActiveLayer';
 import { useCanvasScale } from './hooks/useCanvasScale';
@@ -7,6 +7,11 @@ import { canvasDimension } from '@/config';
 import { emptyCanvas } from '@/factory';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { toastOnce } from '@/lib/toastOnce';
+import { useEffect, useRef } from 'react';
+import { clamp } from '@/utils';
+
+const zoomMin = 1
+const zoomMax = 50
 
 export const cellSize = 40
 
@@ -23,13 +28,31 @@ export default function Canvas() {
 
     const [isGridVisible] = useAtom(gridVisibilityAtom);
     const [bgColor] = useAtom(bgColorAtom);
+    const setZoomLevel = useSetAtom(zoomLevelAtom);
+
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const el = containerRef.current;
+        if (!el) return;
+
+        const handleWheel = (e: WheelEvent) => {
+            e.preventDefault();
+            // Normalize deltaY: lines mode (~3/notch) → pixels equivalent (~100/notch)
+            const delta = e.deltaMode === WheelEvent.DOM_DELTA_LINE ? e.deltaY * 15 : e.deltaY;
+            setZoomLevel(v => clamp(v - delta * 0.05, zoomMin, zoomMax));
+        };
+
+        el.addEventListener('wheel', handleWheel, { passive: false });
+        return () => el.removeEventListener('wheel', handleWheel);
+    }, [setZoomLevel]);
 
     // const { offset, canvasRef } = useMoveCanvas()
 
     const { pop } = useHistoryApi()
     useHotkeys('ctrl+z', () => { pop() })
 
-    return <div className={`relative bg-${bgColor} h-full w-full overflow-hidden`}>
+    return <div ref={containerRef} className={`relative bg-${bgColor} h-full w-full overflow-hidden`}>
         <div
             // ref={canvasRef}
             className={`absolute touch-none border`}
