@@ -86,7 +86,7 @@ const useMoveBehavior = () => {
     const onMouseEnter: onMouseEnter = useCallback((event, index) => {
         if (isHotkeyPressed('alt') || isHotkeyPressed('ctrl')) return
 
-        const shouldMove = activeAction === Action.Move || isHotkeyPressed('shift') && dragItem.current !== null
+        const shouldMove = (activeAction === Action.Move || isHotkeyPressed('shift')) && dragItem.current !== null
         if (!shouldMove)
             return
 
