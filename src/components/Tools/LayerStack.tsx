@@ -73,7 +73,7 @@ const LayerStack = () => {
                       <TooltipTrigger asChild>
                         <button
                           className={`w-5 h-5 rounded-full border border-gray-500 ${
-                            layer.visible ? "bg-green-500" : "bg-red-300"
+                            layer.visible ? "bg-green-500" : "bg-slate-300"
                           }`}
                           onClick={(e) => {
                             e.stopPropagation();

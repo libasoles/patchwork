@@ -23,7 +23,7 @@
     "hideLayer": "Ocultar",
     "showLayer": "Mostrar",
     "grayOutLayer": "Atenuar",
-    "highlightLayer": "Destacar",
+    "highlightLayer": "Restablecer",
     "removeLayer": "Eliminar capa"
   },
   "newCanvas": {
