@@ -36,7 +36,7 @@ export const emptyTile = { symbol: " ", id: 32, group: "eraser" };
 
 // TODO: missing, middle lines, and a cross. Also negatives of double rounded corners (Smith tiles)
 export const tilesMap = [
-  emptyTile,
+  // emptyTile,
   { symbol: "š", id: 353, group: "hole figures" },
   { symbol: "í", id: 237, group: "hole figures" },
   { symbol: "ë", id: 235, group: "hole figures" },
@@ -197,4 +197,4 @@ export const tilesMap = [
   { id: 184, symbol: "¸", group: "x" },
 ];
 
-export const defaultSelectedTile = tilesMap[1];
+export const defaultSelectedTile = tilesMap[0];

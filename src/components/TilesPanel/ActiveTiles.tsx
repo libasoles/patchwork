@@ -1,5 +1,5 @@
-import { SyntheticEvent } from "react";
 import { useTranslations } from "next-intl";
+import { SyntheticEvent } from "react";
 import Panel from "./components/Panel";
 import Tile from "./components/Tile";
 import { useActiveTiles } from "./hooks/useActiveTiles";
@@ -25,6 +25,8 @@ export default function ActiveTiles({ isDisabled }: Props) {
       data-testid="active-tiles-panel"
       title={t("usedTiles")}
       className="h-auto grow max-h-[20%]"
+      collapsible={true}
+      defaultOpen={false}
     >
       {sortedList.map((tile) => {
         const isSelected = tile.equals(selected);
