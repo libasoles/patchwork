@@ -6,6 +6,7 @@ import { isHotkeyPressed } from 'react-hotkeys-hook'
 import useTransformers, { Transformers } from './useTransformers';
 import { emptyTile } from '@/config';
 import { createTile } from '@/factory';
+import { toastOnce } from '@/lib/toastOnce';
 
 const leftButton = 1
 
@@ -27,6 +28,11 @@ const useDrawAndPaintBehavoirs = () => {
             return
 
         const tile = getCell(index)
+
+        if (activeAction === Action.Paint && tile.isEmpty()) {
+            toastOnce('paint-empty', 'No puedes pintar una casilla vacía')
+            return
+        }
 
         const updatedTile = transformers[activeAction](tile)
         updateCellInBurst(index, updatedTile, index);
@@ -58,7 +64,7 @@ const useDrawAndPaintBehavoirs = () => {
 }
 
 const useMoveBehavior = () => {
-    const { updateCellInBurst, updateCellNotReversible } = useCanvasApi()
+    const { updateCellInBurst, updateCellNotReversible, getCell } = useCanvasApi()
     const [activeAction] = useAtom(actionAtom);
 
     const dragItem = useRef<number | null>(null);
@@ -80,8 +86,14 @@ const useMoveBehavior = () => {
         if (!shouldMove)
             return
 
+        const tile = getCell(index)
+        if (tile.isEmpty()) {
+            toastOnce('move-empty', 'No hay ningún elemento en esta casilla')
+            return
+        }
+
         dragItem.current = index
-    }, [activeAction]);
+    }, [activeAction, getCell]);
 
     const onMouseEnter: onMouseEnter = useCallback((event, index) => {
         if (isHotkeyPressed('alt') || isHotkeyPressed('ctrl')) return
@@ -146,6 +158,12 @@ const useRotateBehavior = () => {
             return
 
         const tile = getCell(index)
+
+        if (tile.isEmpty()) {
+            toastOnce('rotate-empty', 'No hay ningún elemento en esta casilla')
+            return
+        }
+
         const updatedTile = transformers[Action.Rotate](tile)
         updateCellInBurst(index, updatedTile, index);
 

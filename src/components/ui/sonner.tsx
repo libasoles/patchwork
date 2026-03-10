@@ -25,9 +25,9 @@ const Toaster = ({ ...props }: ToasterProps) => {
       toastOptions={{
         classNames: {
           toast:
-            "!bg-gray-800 !text-white !border-white/10 !rounded-2xl !shadow-xl !px-4 !py-3 !text-sm !font-medium",
-          title: "!text-white !font-medium",
-          description: "!text-slate-400 !text-xs",
+            "!bg-gray-800 !text-white !border-white/10 !rounded-2xl !shadow-xl !px-4 !py-3 !text-base !font-medium",
+          title: "!text-white !font-semibold !text-base",
+          description: "!text-slate-400 !text-sm",
           actionButton: "!bg-white/10 !text-white hover:!bg-white/20",
           cancelButton: "!bg-transparent !text-slate-400",
           closeButton:
