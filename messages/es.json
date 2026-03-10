@@ -3,8 +3,8 @@
     "paintEmpty": "No puedes pintar una casilla vacía",
     "moveEmpty": "No hay ningún elemento en esta casilla",
     "rotateEmpty": "No hay ningún elemento en esta casilla",
-    "hiddenLayer": "El layer está oculto. Hazlo visible para poder dibujar",
-    "disabledLayer": "Activa el layer para poder dibujar"
+    "hiddenLayer": "La capa está oculta. Hazla visible para poder dibujar",
+    "disabledLayer": "Activa la capa para poder dibujar"
   },
   "toolbar": {
     "Draw": "Dibujar",
@@ -24,11 +24,11 @@
     "showLayer": "Mostrar",
     "grayOutLayer": "Atenuar",
     "highlightLayer": "Destacar",
-    "removeLayer": "Eliminar layer"
+    "removeLayer": "Eliminar capa"
   },
   "newCanvas": {
     "title": "Nuevo lienzo",
-    "description": "Se borrarán todos los layers y sus mosaicos. Esta acción no se puede deshacer.",
+    "description": "Se borrarán todas las capas y sus mosaicos. Esta acción no se puede deshacer.",
     "cancel": "Cancelar",
     "confirm": "Continuar"
   },
@@ -37,8 +37,8 @@
     "allTiles": "Todos los mosaicos"
   },
   "layers": {
-    "addLayer": "Agregar layer",
-    "defaultName": "Layer"
+    "addLayer": "Agregar capa",
+    "defaultName": "Capa"
   },
   "meta": {
     "title": "Patchwork",
