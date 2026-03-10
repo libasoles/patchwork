@@ -2,6 +2,8 @@ import { useLayersApi } from "@/store";
 import { Layer } from "@/types";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/router";
+import { getLayerDefaultName } from "@/lib/i18n";
 
 const createRandomHash = () => Math.random().toString(36).substring(2, 10);
 
@@ -9,6 +11,8 @@ const LayerStack = () => {
   const t = useTranslations("layers");
   const tt = useTranslations("tooltips");
   const { list, current, add, update, remove, select } = useLayersApi();
+  const router = useRouter();
+  const locale = (router.query.locale as 'en' | 'es') || 'en';
   const layersList = list();
   const defaultLayerId = layersList[0].id;
 
@@ -26,7 +30,8 @@ const LayerStack = () => {
 
   const handleAddLayer = () => {
     const newLayerId = createRandomHash();
-    add(newLayerId);
+    const layerName = getLayerDefaultName(locale);
+    add(newLayerId, layerName);
     select(newLayerId);
   };
 

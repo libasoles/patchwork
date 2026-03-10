@@ -5,8 +5,12 @@ import Zoom from "@/components/Tools/Zoom";
 import { tilesMap } from "@/config";
 import useIsMobile from "@/hooks/isMobile";
 import { bgColorAtom } from "@/store";
+import { useStore } from "@/store/store";
 import { Tile } from "@/types";
 import { useAtom } from "jotai";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { getLayerDefaultName } from "@/lib/i18n";
 import { createTile } from "../factory";
 import Canvas from "./Canvas/Canvas";
 import TilePanels from "./TilesPanel/TilePanels";
@@ -22,6 +26,20 @@ type Props = { tileSet?: Tile[] };
 export default function App({ tileSet = tiles }: Props) {
   const { isMobile } = useIsMobile();
   const [bgColor] = useAtom(bgColorAtom);
+  const router = useRouter();
+  const locale = (router.query.locale as 'en' | 'es') || 'en';
+
+  useEffect(() => {
+    if (!router.isReady) return;
+
+    const layerName = getLayerDefaultName(locale);
+    useStore.setState((draft) => {
+      const initialLayer = draft.layers.get('xxx1xxx');
+      if (initialLayer) {
+        initialLayer.name = layerName;
+      }
+    });
+  }, [locale, router.isReady]);
 
   return (
     <div className="flex overflow-hidden cursor-default">

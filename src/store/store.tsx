@@ -2,16 +2,15 @@ import { Tile, Canvas, Layer } from "../types"
 import { StateCreator, create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { canvasDimension } from '@/config';
-import { enableMapSet } from 'immer'
+import { enableMapSet, type Draft } from 'immer'
 import { emptyCanvas } from "@/factory";
 import { immer } from "zustand/middleware/immer";
-import { WritableDraft } from "immer/dist/internal";
 
 enableMapSet()
 
 const initialLayer = {
     id: "xxx1xxx",
-    name: 'Layer',
+    name: '',
     visible: true,
     enabled: true,
     canvas: {
@@ -27,7 +26,7 @@ interface LayerSlice {
     readonly selected: string
     layerApi: {
         list: () => Layer[]
-        add: (id: string) => void
+        add: (id: string, name?: string) => void
         update: (layer: Layer) => void
         remove: (id: string) => void
         select: (id: string) => void
@@ -42,7 +41,7 @@ interface CanvasSlice {
         getCell: (index: number) => Tile
         updateCellInBurst: (index: number, tile: Tile, burstId: number, callback?: onUpdateCellCallback) => void
         updateCellNotReversible: (index: number, tile: Tile) => void
-        _updateCell: (draft: WritableDraft<Store>, index: number, tile: Tile, layerId?: string) => void // callable from other apis
+        _updateCell: (draft: Draft<Store>, index: number, tile: Tile, layerId?: string) => void // callable from other apis
     },
 }
 
@@ -56,7 +55,7 @@ interface CanvasEvent {
 interface HistorySlice {
     readonly history: CanvasEvent[]
     historyApi: {
-        _push: (draft: WritableDraft<Store>, event: CanvasEvent) => void // callable from other apis
+        _push: (draft: Draft<Store>, event: CanvasEvent) => void // callable from other apis
         pop: () => void
     },
 }
@@ -72,9 +71,9 @@ export const createLayerSlice: Slice<LayerSlice> = (set, get) => ({
     selected: initialLayer.id,
     layerApi: {
         list: () => Array.from(get().layers).map(([, layer]) => layer),
-        add: (id: string) => set(
+        add: (id: string, name?: string) => set(
             (draft) => {
-                const newLayer = { ...initialLayer, id }
+                const newLayer = { ...initialLayer, id, name: name || initialLayer.name }
                 draft.layers.set(id, newLayer);
             }),
         update: (layer: Layer) => set(
@@ -98,7 +97,7 @@ export const createLayerSlice: Slice<LayerSlice> = (set, get) => ({
     },
 })
 
-type onUpdateCellCallback = (draft: WritableDraft<Store>, { layerId, index, tile }: { layerId: string; index: number; tile: Tile; burstId?: number }) => void
+type onUpdateCellCallback = (draft: Draft<Store>, { layerId, index, tile }: { layerId: string; index: number; tile: Tile; burstId?: number }) => void
 const onUpdateCell: onUpdateCellCallback = (draft, { layerId, index, tile, burstId }) => {
     draft.historyApi._push(draft, {
         layerId,
@@ -125,7 +124,7 @@ export const createCanvasSlice: Slice<CanvasSlice> = (set, get) => ({
         updateCellNotReversible: (index: number, tile: Tile) => {
             set((draft) => draft.canvasApi._updateCell(draft, index, tile))
         },
-        _updateCell: (draft: WritableDraft<Store>, index: number, tile: Tile, layerId?: string) => {
+        _updateCell: (draft: Draft<Store>, index: number, tile: Tile, layerId?: string) => {
             const layer = layerId ? draft.layers.get(layerId) : draft.layers.get(draft.layerApi.current().id);
             layer!.canvas.cells[index] = tile
         }
@@ -136,7 +135,7 @@ export const createHistorySlice: Slice<HistorySlice> = (set, get) => ({
     history: [],
     historyApi: {
         // Receiving draft on purpose. Otherwise, zustand will only save the draft of the calling function and not the provided one by set()
-        _push: (draft: WritableDraft<Store>, event: CanvasEvent) => {
+        _push: (draft: Draft<Store>, event: CanvasEvent) => {
             draft.history.push(event)
         },
         pop: () => set(
