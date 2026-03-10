@@ -1,9 +1,13 @@
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { getLayerDefaultName } from "@/lib/i18n";
 import { useLayersApi } from "@/store";
 import { Layer } from "@/types";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
-import { getLayerDefaultName } from "@/lib/i18n";
 
 const createRandomHash = () => Math.random().toString(36).substring(2, 10);
 
@@ -12,7 +16,7 @@ const LayerStack = () => {
   const tt = useTranslations("tooltips");
   const { list, current, add, update, remove, select } = useLayersApi();
   const router = useRouter();
-  const locale = (router.query.locale as 'en' | 'es') || 'en';
+  const locale = (router.locale as "en" | "es") || "en";
   const layersList = list();
   const defaultLayerId = layersList[0].id;
 
@@ -77,7 +81,9 @@ const LayerStack = () => {
                           }}
                         />
                       </TooltipTrigger>
-                      <TooltipContent>{layer.visible ? tt("hideLayer") : tt("showLayer")}</TooltipContent>
+                      <TooltipContent>
+                        {layer.visible ? tt("hideLayer") : tt("showLayer")}
+                      </TooltipContent>
                     </Tooltip>
                     <Tooltip>
                       <TooltipTrigger asChild>
@@ -91,7 +97,11 @@ const LayerStack = () => {
                           }}
                         />
                       </TooltipTrigger>
-                      <TooltipContent>{layer.enabled ? tt("grayOutLayer") : tt("highlightLayer")}</TooltipContent>
+                      <TooltipContent>
+                        {layer.enabled
+                          ? tt("grayOutLayer")
+                          : tt("highlightLayer")}
+                      </TooltipContent>
                     </Tooltip>
                   </div>
                   <span className="text-gray-800">
