@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import { gridVisibilityAtom, useLayersApi, useHistoryApi } from '@/store';
+import { bgColorAtom, gridVisibilityAtom, useLayersApi, useHistoryApi } from '@/store';
 import Layer from './components/Layer';
 import ActiveLayer from './components/ActiveLayer';
 import { useCanvasScale } from './hooks/useCanvasScale';
@@ -22,13 +22,14 @@ export default function Canvas() {
     const canvasScale = useCanvasScale()
 
     const [isGridVisible] = useAtom(gridVisibilityAtom);
+    const [bgColor] = useAtom(bgColorAtom);
 
     // const { offset, canvasRef } = useMoveCanvas()
 
     const { pop } = useHistoryApi()
     useHotkeys('ctrl+z', () => { pop() })
 
-    return <div className='relative bg-gray-700 h-full w-full overflow-hidden'>
+    return <div className={`relative bg-${bgColor} h-full w-full overflow-hidden`}>
         <div
             // ref={canvasRef}
             className={`absolute touch-none border`}

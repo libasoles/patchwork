@@ -1,4 +1,5 @@
 import {
+  defaultBgColor,
   defaultColor,
   defaultSelectedTile,
   gridIsInitiallyVisible,
@@ -20,15 +21,21 @@ const gridVisibilityAtom = atom(gridIsInitiallyVisible);
 
 const colorAtom = atom(defaultColor);
 
+const bgColorAtom = atom(defaultBgColor);
+
 const mouseDownAtom = atom(false);
 
 const colorBarVisibilityAtom = atom(true);
+
+const bgColorBarVisibilityAtom = atom(false);
 
 const actionAtom = atom(Action.Draw);
 
 export {
   actionAtom,
   activeTilesAtom,
+  bgColorAtom,
+  bgColorBarVisibilityAtom,
   canvasOffsetAtom,
   colorAtom,
   colorBarVisibilityAtom,

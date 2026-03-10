@@ -8,6 +8,10 @@ export const neutralColor = "gray-800";
 
 export const defaultColor = "teal-400";
 
+export const defaultBgColor = "slate-700";
+
+export const bgColors = ["slate-700", "slate-800", "zinc-900", "zinc-800"];
+
 // TODO: there's a whitelist of colors in tailwind.config.js
 export const colors = [
   "gray-800",
