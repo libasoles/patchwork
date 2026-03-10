@@ -1,4 +1,4 @@
-import { useAtom, useSetAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { bgColorAtom, gridVisibilityAtom, useLayersApi, useHistoryApi, zoomLevelAtom } from '@/store';
 import Layer from './components/Layer';
 import ActiveLayer from './components/ActiveLayer';
@@ -7,7 +7,7 @@ import { canvasDimension } from '@/config';
 import { emptyCanvas } from '@/factory';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { toastOnce } from '@/lib/toastOnce';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { clamp } from '@/utils';
 
 const zoomMin = 1
@@ -28,7 +28,14 @@ export default function Canvas() {
 
     const [isGridVisible] = useAtom(gridVisibilityAtom);
     const [bgColor] = useAtom(bgColorAtom);
-    const setZoomLevel = useSetAtom(zoomLevelAtom);
+    const [zoomLevel, setZoomLevel] = useAtom(zoomLevelAtom);
+
+    const [offset, setOffset] = useState({ x: 0, y: 0 });
+    // Refs for latest values inside the wheel handler (avoids stale closures)
+    const zoomRef = useRef(zoomLevel);
+    const offsetRef = useRef(offset);
+    zoomRef.current = zoomLevel;
+    offsetRef.current = offset;
 
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -40,7 +47,27 @@ export default function Canvas() {
             e.preventDefault();
             // Normalize deltaY: lines mode (~3/notch) → pixels equivalent (~100/notch)
             const delta = e.deltaMode === WheelEvent.DOM_DELTA_LINE ? e.deltaY * 15 : e.deltaY;
-            setZoomLevel(v => clamp(v - delta * 0.05, zoomMin, zoomMax));
+
+            const oldZoom = zoomRef.current;
+            const newZoom = clamp(oldZoom - delta * 0.05, zoomMin, zoomMax);
+            const oldScale = (4 + oldZoom) / 10;
+            const newScale = (4 + newZoom) / 10;
+
+            const rect = el.getBoundingClientRect();
+            const mx = e.clientX - rect.left;
+            const my = e.clientY - rect.top;
+            const { x: ox, y: oy } = offsetRef.current;
+
+            // Keep the canvas point under the cursor fixed after zoom
+            const newOx = mx - rect.width / 2 - (mx - rect.width / 2 - ox) * newScale / oldScale;
+            const newOy = my - rect.height / 2 - (my - rect.height / 2 - oy) * newScale / oldScale;
+
+            const newOffset = { x: newOx, y: newOy };
+            offsetRef.current = newOffset;
+            zoomRef.current = newZoom;
+
+            setZoomLevel(newZoom);
+            setOffset(newOffset);
         };
 
         el.addEventListener('wheel', handleWheel, { passive: false });
@@ -57,7 +84,7 @@ export default function Canvas() {
             // ref={canvasRef}
             className={`absolute touch-none border`}
             style={{
-                transform: `translate(-50%, -50%) scale(${canvasScale})`,
+                transform: `translate(calc(-50% + ${offset.x}px), calc(-50% + ${offset.y}px)) scale(${canvasScale})`,
                 width: '2000px',
                 height: '2000px',
                 top: '50%',
