@@ -1,78 +1,114 @@
 import DownloadIcon from "@/icons/DownloadIcon";
-import { RefObject, useRef } from "react";
-import { exportComponentAsPNG } from '@/utils';
-import { useCanvasApi } from "@/store";
-import { Tile } from "@/types";
+import { canvasDimension } from "@/config";
+import { bgColorAtom, useLayersApi } from "@/store";
+import { Layer } from "@/types";
+import { useAtom } from "jotai";
 
-// TODO: improve performance. It's taking ages
+const cellSize = 40;
+
+const tailwindColors: Record<string, string> = {
+  // Background colors
+  "gray-700": "#374151",
+  "gray-800": "#1f2937",
+  "gray-900": "#111827",
+  "slate-700": "#334155",
+  "slate-800": "#1e293b",
+  "slate-900": "#0f172a",
+  "zinc-700": "#3f3f46",
+  "zinc-800": "#27272a",
+  "zinc-900": "#18181b",
+  "neutral-800": "#262626",
+  "neutral-900": "#171717",
+  "stone-800": "#292524",
+  "stone-900": "#1c1917",
+  "indigo-950": "#1e1b4b",
+  "blue-950": "#172554",
+  "violet-950": "#2e1065",
+  // Tile colors
+  "yellow-400": "#facc15",
+  "pink-500": "#ec4899",
+  "red-400": "#f87171",
+  "orange-400": "#fb923c",
+  "rose-600": "#e11d48",
+  "indigo-500": "#6366f1",
+  "blue-400": "#60a5fa",
+  "sky-600": "#0284c7",
+  "cyan-600": "#0891b2",
+  "teal-400": "#2dd4bf",
+  "green-400": "#4ade80",
+  "emerald-400": "#34d399",
+  "fuchsia-500": "#d946ef",
+  "purple-600": "#9333ea",
+  "violet-500": "#8b5cf6",
+};
+
+function renderLayersToCanvas(
+  layers: Layer[],
+  bgColor: string,
+  dimension: { x: number; y: number }
+): HTMLCanvasElement {
+  const width = dimension.x * cellSize;
+  const height = dimension.y * cellSize;
+
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext("2d")!;
+
+  ctx.fillStyle = tailwindColors[bgColor] ?? "#374151";
+  ctx.fillRect(0, 0, width, height);
+
+  ctx.font = `57px blocks`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+
+  for (const layer of layers.filter((l) => l.visible)) {
+    for (let i = 0; i < layer.canvas.cells.length; i++) {
+      const tile = layer.canvas.cells[i];
+      if (tile.isEmpty()) continue;
+
+      const col = i % dimension.x;
+      const row = Math.floor(i / dimension.x);
+      const cx = col * cellSize + cellSize / 2;
+      const cy = row * cellSize + cellSize / 2;
+
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate((Math.PI / 2) * tile.orientation);
+      ctx.fillStyle = tailwindColors[tile.color] ?? "#ffffff";
+      ctx.fillText(tile.symbol, 0, 0);
+      ctx.restore();
+    }
+  }
+
+  return canvas;
+}
+
 export default function ExportButton() {
-    const canvasRef = useRef<HTMLDivElement>(null);
+  const { list } = useLayersApi();
+  const [bgColor] = useAtom(bgColorAtom);
 
-    const handleExportClick = async () => {
-        if (canvasRef && canvasRef.current) {
-            const tmpUrl = await exportComponentAsPNG(canvasRef.current);
+  const handleExportClick = async () => {
+    await document.fonts.load(`57px blocks`);
 
-            const link = document.createElement('a');
-            link.download = 'image.png';
-            link.href = tmpUrl;
-            link.click();
-        }
-    };
+    const canvas = renderLayersToCanvas(list(), bgColor, canvasDimension);
 
-    return <div className="w-9">
-        <button
-            type="button"
-            className={`p-2 w-[2.4em] rounded-full cursor-pointer bg-slate-300 border-slate-500 border-[2px] text-gray-800`}
-            onClick={handleExportClick}
-            title='Export as PNG'
-        >
-            <DownloadIcon />
-        </button>
+    const link = document.createElement("a");
+    link.download = "patchwork.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  };
 
-        {/* TODO: only render this when up to export */}
-        {/* <TemporalCanvas canvasRef={canvasRef} /> */}
+  return (
+    <div className="w-9">
+      <button
+        type="button"
+        className="p-2 w-[2.4em] rounded-full cursor-pointer bg-blue-500 border-slate-500 border-[2px] text-white"
+        onClick={handleExportClick}
+        title="Export as PNG"
+      >
+        <DownloadIcon />
+      </button>
     </div>
-}
-
-function TemporalCanvas({ canvasRef: canvasRef }: { canvasRef: RefObject<HTMLDivElement> }) {
-    const { currentCanvas } = useCanvasApi()
-    const canvas = currentCanvas()
-
-    const cellSize = 40
-
-    // TODO: grab dimension from jotai
-    const dimension = { x: 100, y: 50 }
-
-    return (
-        <div ref={canvasRef} style={{ position: 'absolute', top: -100000 }}>
-            <div
-                className={`grid justify-center gap-0 select-none`}
-                style={{
-                    gridTemplateColumns: `repeat(${dimension.x}, ${cellSize}px)`,
-                    gridTemplateRows: `repeat(${dimension.y}, ${cellSize}px)`,
-                }}
-            >
-                {canvas.map((tile, index) => <TemporalCell key={index} size={cellSize} tile={tile} />)}
-            </div>
-        </div>
-    )
-}
-
-function TemporalCell({ size, tile }: { size: number, tile: Tile }) {
-    return (
-        <div className={`cursor-[inherit] bg-transparent border-none`} style={{
-            width: size + "px",
-            height: size + "px",
-            transform: `rotate(${90 * tile.orientation}deg)`,
-            // @ts-ignore
-            containerType: "inline-size"
-        }}>
-            <div className={`tile w-full h-full grid items-center text-${tile.color}`}>
-                <span className="w-full h-full" style={{
-                    lineHeight: .7,
-                    fontSize: "143cqw"
-                }}>{tile.symbol}</span>
-            </div>
-        </div>
-    );
+  );
 }
