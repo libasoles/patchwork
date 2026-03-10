@@ -1,5 +1,5 @@
-import React from 'react'
 
+// Dictionary of blocks - internal use only
 export default function Blocks() {
     return (
         <div style={{ fontSize: "60px" }}>
