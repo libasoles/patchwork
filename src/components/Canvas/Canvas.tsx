@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import { bgColorAtom, gridVisibilityAtom, useLayersApi, useHistoryApi, zoomLevelAtom } from '@/store';
+import { bgColorAtom, canvasOffsetAtom, gridVisibilityAtom, useLayersApi, useHistoryApi, zoomLevelAtom } from '@/store';
 import Layer from './components/Layer';
 import ActiveLayer from './components/ActiveLayer';
 import { useCanvasScale } from './hooks/useCanvasScale';
@@ -7,7 +7,7 @@ import { canvasDimension } from '@/config';
 import { emptyCanvas } from '@/factory';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { toastOnce } from '@/lib/toastOnce';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { clamp } from '@/utils';
 
 const zoomMin = 1
@@ -29,8 +29,8 @@ export default function Canvas() {
     const [isGridVisible] = useAtom(gridVisibilityAtom);
     const [bgColor] = useAtom(bgColorAtom);
     const [zoomLevel, setZoomLevel] = useAtom(zoomLevelAtom);
+    const [offset, setOffset] = useAtom(canvasOffsetAtom);
 
-    const [offset, setOffset] = useState({ x: 0, y: 0 });
     // Refs for latest values inside the wheel handler (avoids stale closures)
     const zoomRef = useRef(zoomLevel);
     const offsetRef = useRef(offset);
@@ -96,7 +96,7 @@ export default function Canvas() {
 
         el.addEventListener('wheel', handleWheel, { passive: false });
         return () => el.removeEventListener('wheel', handleWheel);
-    }, [setZoomLevel]);
+    }, [setZoomLevel, setOffset]);
 
     // const { offset, canvasRef } = useMoveCanvas()
 

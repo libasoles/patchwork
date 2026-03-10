@@ -1,4 +1,5 @@
 import ExportButton from "@/components/Tools/ExportButton";
+import NewCanvasButton from "@/components/Tools/NewCanvasButton";
 import ToolBar from "@/components/Tools/ToolBar";
 import Zoom from "@/components/Tools/Zoom";
 import { tilesMap } from "@/config";
@@ -34,6 +35,7 @@ export default function App({ tileSet = tiles }: Props) {
         <Canvas />
         <div className="w-auto fixed top-3 right-[16px] z-10 flex gap-3 h-full justify-start">
           <ToggleGrid />
+          <NewCanvasButton />
           <ExportButton />
           <BgColors />
           <Colors />

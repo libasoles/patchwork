@@ -1,3 +1,8 @@
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { colors } from "@/config";
 import { actionAtom, colorAtom, colorBarVisibilityAtom } from "@/store";
 import styles from "@/styles/utils.module.css";
@@ -24,14 +29,19 @@ export default function Colors() {
 
   return (
     <div data-testid="color-panel" className="w-9 h-full">
-      <ColorCircle
-        data-testid="selected-color"
-        color={color}
-        onSelect={() => {
-          setVisible((visible) => !visible);
-        }}
-        className="mt-[.1rem] mb-3"
-      />
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div>
+            <ColorCircle
+              data-testid="selected-color"
+              color={color}
+              onSelect={() => setVisible((visible) => !visible)}
+              className="mt-[.1rem] mb-3"
+            />
+          </div>
+        </TooltipTrigger>
+        <TooltipContent side="bottom">Color del mosaico</TooltipContent>
+      </Tooltip>
       {visible && (
         <>
           <hr className="border-2 mb-1.5" />

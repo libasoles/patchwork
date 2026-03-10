@@ -1,5 +1,10 @@
-import DownloadIcon from "@/icons/DownloadIcon";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { canvasDimension } from "@/config";
+import DownloadIcon from "@/icons/DownloadIcon";
 import { bgColorAtom, useLayersApi } from "@/store";
 import { Layer } from "@/types";
 import { useAtom } from "jotai";
@@ -45,7 +50,7 @@ const tailwindColors: Record<string, string> = {
 function renderLayersToCanvas(
   layers: Layer[],
   bgColor: string,
-  dimension: { x: number; y: number }
+  dimension: { x: number; y: number },
 ): HTMLCanvasElement {
   const width = dimension.x * cellSize;
   const height = dimension.y * cellSize;
@@ -101,14 +106,18 @@ export default function ExportButton() {
 
   return (
     <div className="w-9">
-      <button
-        type="button"
-        className="p-2 w-[2.4em] rounded-full cursor-pointer bg-blue-500 border-slate-500 border-[2px] text-white"
-        onClick={handleExportClick}
-        title="Export as PNG"
-      >
-        <DownloadIcon />
-      </button>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            type="button"
+            className="p-2 w-[2.4em] rounded-full cursor-pointer bg-blue-500 border-slate-500 border-[2px] text-white"
+            onClick={handleExportClick}
+          >
+            <DownloadIcon />
+          </button>
+        </TooltipTrigger>
+        <TooltipContent side="bottom">Descargar Imagen</TooltipContent>
+      </Tooltip>
     </div>
   );
 }
