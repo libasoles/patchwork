@@ -31,14 +31,13 @@ export default function Canvas() {
     return <div className='relative bg-gray-700 h-full w-full overflow-hidden'>
         <div
             // ref={canvasRef}
-            className={`absolute touch-none border w-full h-full`}
-            // style={{ transform: `translate(${offset.x}px, ${offset.y}px)` }}
+            className={`absolute touch-none border`}
             style={{
-                // top: offset.y + 'px',
-                // left: offset.x + 'px',
-                transform: `scale(${canvasScale})`,
+                transform: `translate(-50%, -50%) scale(${canvasScale})`,
                 width: '2000px',
                 height: '2000px',
+                top: '50%',
+                left: '50%',
             }}
         >
             <GridLayer
