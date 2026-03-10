@@ -8,6 +8,7 @@ import { emptyCanvas } from '@/factory';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { toastOnce } from '@/lib/toastOnce';
 import { useEffect, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import { clamp } from '@/utils';
 
 const zoomMin = 1
@@ -19,6 +20,7 @@ const GridLayer = Layer
 const gridCanvas = emptyCanvas(canvasDimension)
 
 export default function Canvas() {
+    const t = useTranslations('toasts');
     const { list, current: getCurrentLayer } = useLayersApi()
     const layersList = list()
     const currentLayer = getCurrentLayer()
@@ -124,7 +126,7 @@ export default function Canvas() {
             {isCurrentLayerHidden && (
                 <div
                     className="absolute top-0 bottom-0 left-0 right-0 z-10"
-                    onMouseDown={() => toastOnce('hidden-layer', 'El layer está oculto. Hazlo visible para poder dibujar')}
+                    onMouseDown={() => toastOnce('hidden-layer', t('hiddenLayer'))}
                 />
             )}
 

@@ -2,6 +2,7 @@ import { Action } from "@/types";
 import { ReactElement, ReactNode, useMemo } from "react";
 import styles from "./ActionButton.module.css"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { useTranslations } from "next-intl";
 
 export type ActionButtonProps = {
     name: Action;
@@ -13,6 +14,7 @@ export type ActionButtonProps = {
 }
 
 export default function ActionButton({ name, selected, icon, onClick, shortcut, children }: ActionButtonProps) {
+    const t = useTranslations("toolbar");
     const highlight = useMemo(() => {
         return (expected: Action) => selected === expected ? 'bg-blue-500 text-white' : 'bg-white text-gray-800';
     }, [selected]);
@@ -43,7 +45,7 @@ export default function ActionButton({ name, selected, icon, onClick, shortcut, 
                 </div>
             </TooltipTrigger>
             <TooltipContent side="bottom">
-                {Action[name]} <kbd className="ml-1 rounded bg-white/25 px-1.5 py-0.5 font-mono text-sm">{shortcut}</kbd>
+                {t(name)} <kbd className="ml-1 rounded bg-white/25 px-1.5 py-0.5 font-mono text-sm">{shortcut}</kbd>
             </TooltipContent>
         </Tooltip>
     );

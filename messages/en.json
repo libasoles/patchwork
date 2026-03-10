@@ -1,0 +1,46 @@
+{
+  "toasts": {
+    "paintEmpty": "You can't paint an empty cell",
+    "moveEmpty": "There is no element in this cell",
+    "rotateEmpty": "There is no element in this cell",
+    "hiddenLayer": "The layer is hidden. Make it visible to draw",
+    "disabledLayer": "Enable the layer to draw"
+  },
+  "toolbar": {
+    "Draw": "Draw",
+    "Paint": "Paint",
+    "Move": "Move",
+    "Rotate": "Rotate",
+    "Delete": "Delete"
+  },
+  "tooltips": {
+    "newCanvas": "New Canvas",
+    "bgColor": "Background color",
+    "downloadImage": "Download Image",
+    "tileColor": "Tile color",
+    "hideGrid": "Hide Grid",
+    "showGrid": "Show Grid",
+    "hideLayer": "Hide",
+    "showLayer": "Show",
+    "grayOutLayer": "Gray out",
+    "highlightLayer": "Highlight",
+    "removeLayer": "Remove layer"
+  },
+  "newCanvas": {
+    "title": "New Canvas",
+    "description": "All layers and their tiles will be deleted. This action cannot be undone.",
+    "cancel": "Cancel",
+    "confirm": "Continue"
+  },
+  "panels": {
+    "usedTiles": "Used Tiles",
+    "allTiles": "All Tiles"
+  },
+  "layers": {
+    "addLayer": "Add Layer"
+  },
+  "meta": {
+    "title": "Patchwork",
+    "description": "Collaborative patchwork"
+  }
+}

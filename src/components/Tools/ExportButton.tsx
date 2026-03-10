@@ -8,6 +8,7 @@ import DownloadIcon from "@/icons/DownloadIcon";
 import { bgColorAtom, useLayersApi } from "@/store";
 import { Layer } from "@/types";
 import { useAtom } from "jotai";
+import { useTranslations } from "next-intl";
 
 const cellSize = 40;
 
@@ -90,6 +91,7 @@ function renderLayersToCanvas(
 }
 
 export default function ExportButton() {
+  const t = useTranslations("tooltips");
   const { list } = useLayersApi();
   const [bgColor] = useAtom(bgColorAtom);
 
@@ -116,7 +118,7 @@ export default function ExportButton() {
             <DownloadIcon />
           </button>
         </TooltipTrigger>
-        <TooltipContent side="bottom">Descargar Imagen</TooltipContent>
+        <TooltipContent side="bottom">{t("downloadImage")}</TooltipContent>
       </Tooltip>
     </div>
   );

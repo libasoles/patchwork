@@ -1,0 +1,46 @@
+{
+  "toasts": {
+    "paintEmpty": "No puedes pintar una casilla vacía",
+    "moveEmpty": "No hay ningún elemento en esta casilla",
+    "rotateEmpty": "No hay ningún elemento en esta casilla",
+    "hiddenLayer": "El layer está oculto. Hazlo visible para poder dibujar",
+    "disabledLayer": "Activa el layer para poder dibujar"
+  },
+  "toolbar": {
+    "Draw": "Dibujar",
+    "Paint": "Pintar",
+    "Move": "Mover",
+    "Rotate": "Rotar",
+    "Delete": "Eliminar"
+  },
+  "tooltips": {
+    "newCanvas": "Nuevo lienzo",
+    "bgColor": "Color de fondo",
+    "downloadImage": "Descargar imagen",
+    "tileColor": "Color del mosaico",
+    "hideGrid": "Ocultar grilla",
+    "showGrid": "Mostrar grilla",
+    "hideLayer": "Ocultar",
+    "showLayer": "Mostrar",
+    "grayOutLayer": "Atenuar",
+    "highlightLayer": "Destacar",
+    "removeLayer": "Eliminar layer"
+  },
+  "newCanvas": {
+    "title": "Nuevo lienzo",
+    "description": "Se borrarán todos los layers y sus mosaicos. Esta acción no se puede deshacer.",
+    "cancel": "Cancelar",
+    "confirm": "Continuar"
+  },
+  "panels": {
+    "usedTiles": "Mosaicos usados",
+    "allTiles": "Todos los mosaicos"
+  },
+  "layers": {
+    "addLayer": "Agregar layer"
+  },
+  "meta": {
+    "title": "Patchwork",
+    "description": "Patchwork colaborativo"
+  }
+}

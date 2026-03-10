@@ -1,4 +1,5 @@
 import { SyntheticEvent } from "react";
+import { useTranslations } from "next-intl";
 import Panel from "./components/Panel";
 import Tile from "./components/Tile";
 import { useActiveTiles } from "./hooks/useActiveTiles";
@@ -11,6 +12,7 @@ type Props = {
 };
 
 export default function ActiveTiles({ isDisabled }: Props) {
+  const t = useTranslations("panels");
   const activeTiles = useActiveTiles();
   const sortedList = activeTiles.sort((a, b) => a.id - b.id); // if we don't sort, order is rendom each time
 
@@ -21,7 +23,7 @@ export default function ActiveTiles({ isDisabled }: Props) {
     // TODO: adjust height to grow incrementally
     <Panel
       data-testid="active-tiles-panel"
-      title="Used Tiles"
+      title={t("usedTiles")}
       className="h-auto grow max-h-[20%]"
     >
       {sortedList.map((tile) => {

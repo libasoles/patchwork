@@ -6,8 +6,10 @@ import {
 import GridIcon from "@/icons/GridIcon";
 import { gridVisibilityAtom } from "@/store";
 import { useAtom } from "jotai";
+import { useTranslations } from "next-intl";
 
 export default function ToggleGrid() {
+  const t = useTranslations("tooltips");
   const [isVisible, setVisible] = useAtom(gridVisibilityAtom);
 
   return (
@@ -23,7 +25,7 @@ export default function ToggleGrid() {
           </button>
         </TooltipTrigger>
         <TooltipContent side="bottom">
-          {isVisible ? "Ocultar Grilla" : "Mostrar Grilla"}
+          {isVisible ? t("hideGrid") : t("showGrid")}
         </TooltipContent>
       </Tooltip>
     </div>

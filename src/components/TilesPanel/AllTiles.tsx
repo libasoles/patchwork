@@ -4,6 +4,7 @@ import type { Tile as TileType } from "@/types";
 import { useHighlighting } from './hooks/useHighlighting';
 import { SyntheticEvent } from 'react';
 import { useCurrectAction } from './hooks/useCurrectAction';
+import { useTranslations } from 'next-intl';
 
 type Props = {
     tiles: TileType[],
@@ -11,11 +12,12 @@ type Props = {
 }
 
 export default function TileSet({ tiles, isDisabled }: Props) {
+    const t = useTranslations('panels');
     const onTileSelect = useCurrectAction()
     const { selected, onSelect } = useHighlighting(tiles)
 
     return (
-        <Panel data-testid='all-tiles-panel' title="All Tiles" className='h-auto grow'>
+        <Panel data-testid='all-tiles-panel' title={t('allTiles')} className='h-auto grow'>
             {tiles.map(tile => {
                 const isSelected = tile.equals(selected);
 

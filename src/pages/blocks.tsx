@@ -1,3 +1,11 @@
+import { GetStaticProps } from "next";
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    locale: locale ?? "en",
+    messages: (await import(`../../messages/${locale ?? "en"}.json`)).default,
+  },
+});
 
 // Dictionary of blocks - internal use only
 export default function Blocks() {

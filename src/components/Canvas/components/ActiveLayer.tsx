@@ -7,12 +7,14 @@ import { useAtom } from 'jotai';
 import { useCallback, useState } from 'react';
 import { useHotkeys, isHotkeyPressed } from 'react-hotkeys-hook';
 import { toastOnce } from '@/lib/toastOnce';
+import { useTranslations } from 'next-intl';
 
 export default function ActiveLayer({
     canvas,
     dimension,
     isDisabled = false,
 }: LayerProps) {
+    const t = useTranslations('toasts');
     const { onMouseDown, onMouseEnter, onContextMenu, onMouseUp } = usePointerEvents();
 
     const [activeAction] = useAtom(actionAtom)
@@ -21,7 +23,7 @@ export default function ActiveLayer({
     return (
         <div
             data-testid='selected-canvas'
-            onMouseDown={isDisabled ? () => toastOnce('disabled-layer', 'Activa el layer para poder dibujar') : undefined}
+            onMouseDown={isDisabled ? () => toastOnce('disabled-layer', t('disabledLayer')) : undefined}
             className={`grid justify-center content-center select-none ${isDisabled && 'opacity-20'} absolute top-0 bottom-0 left-0 right-0`}
             style={{
                 gridTemplateColumns: `repeat(${dimension.x}, 40px)`,

@@ -4,8 +4,10 @@ import styles from "@/styles/utils.module.css";
 import { useAtom } from "jotai";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { useTranslations } from "next-intl";
 
 export default function BgColors() {
+  const t = useTranslations("tooltips");
   const [bgColor, setBgColor] = useAtom(bgColorAtom);
   const [visible, setVisible] = useAtom(bgColorBarVisibilityAtom);
 
@@ -25,7 +27,7 @@ export default function BgColors() {
             </span>
           </div>
         </TooltipTrigger>
-        <TooltipContent side="bottom">Color de fondo</TooltipContent>
+        <TooltipContent side="bottom">{t("bgColor")}</TooltipContent>
       </Tooltip>
       {visible && (
         <>

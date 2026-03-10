@@ -11,8 +11,10 @@ import { useAtom } from "jotai";
 import { SyntheticEvent } from "react";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { isHotkeyPressed } from "react-hotkeys-hook";
+import { useTranslations } from "next-intl";
 
 export default function Colors() {
+  const t = useTranslations("tooltips");
   const [color, setColor] = useAtom(colorAtom);
   const [visible, setVisible] = useAtom(colorBarVisibilityAtom);
   const [action, setActiveAction] = useAtom(actionAtom);
@@ -40,7 +42,7 @@ export default function Colors() {
             />
           </div>
         </TooltipTrigger>
-        <TooltipContent side="bottom">Color del mosaico</TooltipContent>
+        <TooltipContent side="bottom">{t("tileColor")}</TooltipContent>
       </Tooltip>
       {visible && (
         <>

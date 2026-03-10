@@ -7,6 +7,7 @@ import useTransformers, { Transformers } from './useTransformers';
 import { emptyTile } from '@/config';
 import { createTile } from '@/factory';
 import { toastOnce } from '@/lib/toastOnce';
+import { useTranslations } from 'next-intl';
 
 const leftButton = 1
 
@@ -15,6 +16,7 @@ let rollbackCell: { index: number; cell: Tile; } | null = null
 
 // TODO: see if keeping separated hooks with duplicated code is better that a sigle hook with mixed code
 const useDrawAndPaintBehavoirs = () => {
+    const t = useTranslations('toasts');
     const { getCell, updateCellInBurst } = useCanvasApi()
     const transformers: Transformers = useTransformers()
     const [activeAction] = useAtom(actionAtom);
@@ -30,7 +32,7 @@ const useDrawAndPaintBehavoirs = () => {
         const tile = getCell(index)
 
         if (activeAction === Action.Paint && tile.isEmpty()) {
-            toastOnce('paint-empty', 'No puedes pintar una casilla vacía')
+            toastOnce('paint-empty', t('paintEmpty'))
             return
         }
 
@@ -38,7 +40,7 @@ const useDrawAndPaintBehavoirs = () => {
         updateCellInBurst(index, updatedTile, index);
 
         origin.current = index
-    }, [activeAction, transformers, getCell, updateCellInBurst]);
+    }, [activeAction, transformers, getCell, updateCellInBurst, t]);
 
     const onMouseEnter: onMouseEnter = useCallback((event, index) => {
         if (isHotkeyPressed('ctrl') || isHotkeyPressed('shift') || isHotkeyPressed('alt')) return
@@ -64,6 +66,7 @@ const useDrawAndPaintBehavoirs = () => {
 }
 
 const useMoveBehavior = () => {
+    const t = useTranslations('toasts');
     const { updateCellInBurst, updateCellNotReversible, getCell } = useCanvasApi()
     const [activeAction] = useAtom(actionAtom);
 
@@ -88,12 +91,12 @@ const useMoveBehavior = () => {
 
         const tile = getCell(index)
         if (tile.isEmpty()) {
-            toastOnce('move-empty', 'No hay ningún elemento en esta casilla')
+            toastOnce('move-empty', t('moveEmpty'))
             return
         }
 
         dragItem.current = index
-    }, [activeAction, getCell]);
+    }, [activeAction, getCell, t]);
 
     const onMouseEnter: onMouseEnter = useCallback((event, index) => {
         if (isHotkeyPressed('alt') || isHotkeyPressed('ctrl')) return
@@ -146,6 +149,7 @@ const useMoveBehavior = () => {
 }
 
 const useRotateBehavior = () => {
+    const t = useTranslations('toasts');
     const { getCell, updateCellInBurst } = useCanvasApi()
     const transformers: Transformers = useTransformers()
     const [activeAction] = useAtom(actionAtom);
@@ -160,7 +164,7 @@ const useRotateBehavior = () => {
         const tile = getCell(index)
 
         if (tile.isEmpty()) {
-            toastOnce('rotate-empty', 'No hay ningún elemento en esta casilla')
+            toastOnce('rotate-empty', t('rotateEmpty'))
             return
         }
 
@@ -168,7 +172,7 @@ const useRotateBehavior = () => {
         updateCellInBurst(index, updatedTile, index);
 
         origin.current = index
-    }, [activeAction, transformers, getCell, updateCellInBurst]);
+    }, [activeAction, transformers, getCell, updateCellInBurst, t]);
 
     const onMouseEnter: onMouseEnter = useCallback((event, index) => {
         const shouldRotate = activeAction === Action.Rotate || isHotkeyPressed('ctrl')

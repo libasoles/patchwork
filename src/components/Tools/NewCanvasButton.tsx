@@ -20,6 +20,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useTranslations } from "next-intl";
 
 function NewIcon() {
   return (
@@ -39,6 +40,8 @@ function NewIcon() {
 }
 
 export default function NewCanvasButton() {
+  const t = useTranslations("newCanvas");
+  const tt = useTranslations("tooltips");
   const setZoom = useSetAtom(zoomLevelAtom);
   const setOffset = useSetAtom(canvasOffsetAtom);
 
@@ -84,21 +87,16 @@ export default function NewCanvasButton() {
           </TooltipTrigger>
           <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Nuevo lienzo</AlertDialogTitle>
-            <AlertDialogDescription>
-              Se borrarán todos los layers y sus mosaicos. Esta acción no se puede
-              deshacer.
-            </AlertDialogDescription>
+            <AlertDialogTitle>{t("title")}</AlertDialogTitle>
+            <AlertDialogDescription>{t("description")}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancelar</AlertDialogCancel>
-            <AlertDialogAction onClick={handleConfirm}>
-              Continuar
-            </AlertDialogAction>
+            <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirm}>{t("confirm")}</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
         </AlertDialog>
-        <TooltipContent side="bottom">Nuevo lienzo</TooltipContent>
+        <TooltipContent side="bottom">{tt("newCanvas")}</TooltipContent>
       </Tooltip>
     </div>
   );

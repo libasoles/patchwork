@@ -1,10 +1,13 @@
 import { useLayersApi } from "@/store";
 import { Layer } from "@/types";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { useTranslations } from "next-intl";
 
 const createRandomHash = () => Math.random().toString(36).substring(2, 10);
 
 const LayerStack = () => {
+  const t = useTranslations("layers");
+  const tt = useTranslations("tooltips");
   const { list, current, add, update, remove, select } = useLayersApi();
   const layersList = list();
   const defaultLayerId = layersList[0].id;
@@ -69,7 +72,7 @@ const LayerStack = () => {
                           }}
                         />
                       </TooltipTrigger>
-                      <TooltipContent>{layer.visible ? "Hide" : "Show"}</TooltipContent>
+                      <TooltipContent>{layer.visible ? tt("hideLayer") : tt("showLayer")}</TooltipContent>
                     </Tooltip>
                     <Tooltip>
                       <TooltipTrigger asChild>
@@ -83,7 +86,7 @@ const LayerStack = () => {
                           }}
                         />
                       </TooltipTrigger>
-                      <TooltipContent>{layer.enabled ? "Gray out" : "Highlight"}</TooltipContent>
+                      <TooltipContent>{layer.enabled ? tt("grayOutLayer") : tt("highlightLayer")}</TooltipContent>
                     </Tooltip>
                   </div>
                   <span className="text-gray-800">
@@ -103,7 +106,7 @@ const LayerStack = () => {
                         &times;
                       </button>
                     </TooltipTrigger>
-                    <TooltipContent>Remove layer</TooltipContent>
+                    <TooltipContent>{tt("removeLayer")}</TooltipContent>
                   </Tooltip>
                 )}
               </div>
@@ -114,7 +117,7 @@ const LayerStack = () => {
         className="w-full mt-2 px-4 py-2 text-white bg-blue-500 rounded-md"
         onClick={handleAddLayer}
       >
-        Add Layer
+        {t("addLayer")}
       </button>
     </div>
   );
