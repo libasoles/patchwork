@@ -1,5 +1,6 @@
 import { useLayersApi } from "@/store";
 import { Layer } from "@/types";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 const createRandomHash = () => Math.random().toString(36).substring(2, 10);
 
@@ -56,41 +57,54 @@ const LayerStack = () => {
               >
                 <div className="flex items-center space-x-2">
                   <div className="flex items-center justify-between space-x-1.5">
-                    <button
-                      title={layer.visible ? "Hide" : "Show"}
-                      className={`w-5 h-5 rounded-full border border-gray-500 ${
-                        layer.visible ? "bg-green-500" : "bg-red-300"
-                      }`}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleToggleLayer(layer);
-                      }}
-                    />
-                    <button
-                      title={layer.enabled ? "Gray out" : "Highlight"}
-                      className={`w-5 h-5 rounded-full border border-gray-500 ${
-                        layer.enabled ? "bg-slate-800" : "bg-slate-300"
-                      }`}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDisableLayer(layer);
-                      }}
-                    />
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button
+                          className={`w-5 h-5 rounded-full border border-gray-500 ${
+                            layer.visible ? "bg-green-500" : "bg-red-300"
+                          }`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleToggleLayer(layer);
+                          }}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>{layer.visible ? "Hide" : "Show"}</TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button
+                          className={`w-5 h-5 rounded-full border border-gray-500 ${
+                            layer.enabled ? "bg-slate-800" : "bg-slate-300"
+                          }`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDisableLayer(layer);
+                          }}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>{layer.enabled ? "Gray out" : "Highlight"}</TooltipContent>
+                    </Tooltip>
                   </div>
                   <span className="text-gray-800">
                     {layer.name} {number}
                   </span>
                 </div>
                 {isRemovable && (
-                  <button
-                    className="text-slate-700 font-bold px-1 py-0.5 text-base leading-none"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleRemoveLayer(layer.id);
-                    }}
-                  >
-                    &times;
-                  </button>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button
+                        className="text-slate-700 font-bold px-1 py-0.5 text-base leading-none"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleRemoveLayer(layer.id);
+                        }}
+                      >
+                        &times;
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent>Remove layer</TooltipContent>
+                  </Tooltip>
                 )}
               </div>
             );
