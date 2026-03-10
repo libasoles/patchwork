@@ -6,6 +6,7 @@ import { useCanvasScale } from './hooks/useCanvasScale';
 import { canvasDimension } from '@/config';
 import { emptyCanvas } from '@/factory';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { toastOnce } from '@/lib/toastOnce';
 
 export const cellSize = 40
 
@@ -15,6 +16,8 @@ const gridCanvas = emptyCanvas(canvasDimension)
 export default function Canvas() {
     const { list, current: getCurrentLayer } = useLayersApi()
     const layersList = list()
+    const currentLayer = getCurrentLayer()
+    const isCurrentLayerHidden = !currentLayer.visible
 
     const canvasScale = useCanvasScale()
 
@@ -43,6 +46,13 @@ export default function Canvas() {
                 dimension={layersList[0].canvas.dimension}
                 isGridVisible={isGridVisible}
             />
+
+            {isCurrentLayerHidden && (
+                <div
+                    className="absolute top-0 bottom-0 left-0 right-0 z-10"
+                    onMouseDown={() => toastOnce('hidden-layer', 'El layer está oculto. Hazlo visible para poder dibujar')}
+                />
+            )}
 
             {layersList.map(layer => {
                 if (!layer.visible)

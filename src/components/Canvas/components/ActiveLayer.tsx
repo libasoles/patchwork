@@ -6,6 +6,7 @@ import { Action } from '@/types';
 import { useAtom } from 'jotai';
 import { useCallback, useState } from 'react';
 import { useHotkeys, isHotkeyPressed } from 'react-hotkeys-hook';
+import { toastOnce } from '@/lib/toastOnce';
 
 export default function ActiveLayer({
     canvas,
@@ -20,6 +21,7 @@ export default function ActiveLayer({
     return (
         <div
             data-testid='selected-canvas'
+            onMouseDown={isDisabled ? () => toastOnce('disabled-layer', 'Activa el layer para poder dibujar') : undefined}
             className={`grid justify-center content-center select-none ${isDisabled && 'opacity-20'} absolute top-0 bottom-0 left-0 right-0`}
             style={{
                 gridTemplateColumns: `repeat(${dimension.x}, 40px)`,
