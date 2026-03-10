@@ -42,6 +42,7 @@ function NewIcon() {
 export default function NewCanvasButton() {
   const t = useTranslations("newCanvas");
   const tt = useTranslations("tooltips");
+  const tl = useTranslations("layers");
   const setZoom = useSetAtom(zoomLevelAtom);
   const setOffset = useSetAtom(canvasOffsetAtom);
 
@@ -53,7 +54,7 @@ export default function NewCanvasButton() {
           initialLayerId,
           {
             id: initialLayerId,
-            name: "Layer",
+            name: tl("defaultName"),
             visible: true,
             enabled: true,
             canvas: {
@@ -86,15 +87,19 @@ export default function NewCanvasButton() {
             </AlertDialogTrigger>
           </TooltipTrigger>
           <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>{t("title")}</AlertDialogTitle>
-            <AlertDialogDescription>{t("description")}</AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
-            <AlertDialogAction onClick={handleConfirm}>{t("confirm")}</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>{t("title")}</AlertDialogTitle>
+              <AlertDialogDescription>
+                {t("description")}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
+              <AlertDialogAction onClick={handleConfirm}>
+                {t("confirm")}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
         </AlertDialog>
         <TooltipContent side="bottom">{tt("newCanvas")}</TooltipContent>
       </Tooltip>

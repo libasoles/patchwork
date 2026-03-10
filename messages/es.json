@@ -37,7 +37,8 @@
     "allTiles": "Todos los mosaicos"
   },
   "layers": {
-    "addLayer": "Agregar layer"
+    "addLayer": "Agregar layer",
+    "defaultName": "Layer"
   },
   "meta": {
     "title": "Patchwork",

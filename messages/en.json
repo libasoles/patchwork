@@ -37,7 +37,8 @@
     "allTiles": "All Tiles"
   },
   "layers": {
-    "addLayer": "Add Layer"
+    "addLayer": "Add Layer",
+    "defaultName": "Layer"
   },
   "meta": {
     "title": "Patchwork",
