@@ -1,10 +1,12 @@
-export const canvasDimension = { x: 50, y: 50 }
+export const canvasDimension = { x: 50, y: 50 };
 
-export const initialZoomLevel = 15
+export const initialZoomLevel = 15;
 
-export const gridIsInitiallyVisible = true
+export const gridIsInitiallyVisible = true;
 
-export const defaultColor = "gray-800"
+export const neutralColor = "gray-800";
+
+export const defaultColor = "teal-400";
 
 // TODO: there's a whitelist of colors in tailwind.config.js
 export const colors = [
@@ -24,7 +26,7 @@ export const colors = [
   "fuchsia-500",
   "purple-600",
   "violet-500",
-]
+];
 
 export const emptyTile = { symbol: " ", id: 32, group: "eraser" };
 
@@ -189,8 +191,6 @@ export const tilesMap = [
   { id: 119, symbol: "w", group: "x" },
   { id: 183, symbol: "·", group: "x" },
   { id: 184, symbol: "¸", group: "x" },
-]
+];
 
 export const defaultSelectedTile = tilesMap[1];
-
-
