@@ -13,7 +13,9 @@ const activeTilesAtom = atom<Tile[]>([]);
 
 const selectedTileAtom = atom<Tile>(createTile(defaultSelectedTile));
 
-const zoomLevelAtom = atom(initialZoomLevel);
+const getInitialZoom = () => initialZoomLevel;
+
+const zoomLevelAtom = atom(getInitialZoom());
 
 const canvasOffsetAtom = atom({ x: 0, y: 0 });
 

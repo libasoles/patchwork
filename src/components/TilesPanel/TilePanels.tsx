@@ -14,7 +14,7 @@ export default function TilePanels({ tiles }: Props) {
   return (
     <div
       data-testid="tiles-panel h-full"
-      className={`h-screen flex flex-col select-none`}
+      className={`h-screen flex flex-col select-none ${isMobile ? 'w-28' : ''}`}
     >
       <Logo />
       {!isMobile && <ActiveTiles />}

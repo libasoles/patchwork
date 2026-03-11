@@ -1,12 +1,16 @@
-import { isMobile } from 'react-device-detect';
 import { useEffect, useState } from "react";
+
+const MOBILE_BREAKPOINT = 768;
 
 const useIsMobile = () => {
     const [mobile, setIsMobile] = useState(false);
 
     useEffect(() => {
-        setIsMobile(isMobile)
-    }, []) // TODO: listen to window width changes
+        const check = () => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+        check();
+        window.addEventListener('resize', check);
+        return () => window.removeEventListener('resize', check);
+    }, []);
 
     return { isMobile: mobile }
 }

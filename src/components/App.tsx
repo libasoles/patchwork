@@ -59,7 +59,7 @@ export default function App({ tileSet = tiles }: Props) {
           <Colors />
         </div>
         {!isMobile && <LayerStack />}
-        <Zoom />
+        {!isMobile && <Zoom />}
       </main>
     </div>
   );

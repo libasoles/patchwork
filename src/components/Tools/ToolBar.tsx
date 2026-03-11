@@ -93,7 +93,7 @@ const ToolBar = () => {
       data-testid="toolbar"
       className="toolbar flex justify-center items-center fixed top-3 z-10"
     >
-      <div className="flex items-center space-x-3 bg-gray-800 rounded-full p-1 min-w-[24em]">
+      <div className="flex items-center space-x-3 bg-gray-800 rounded-full p-1">
         {actions.map((action) => (
           <ActionButton
             key={action.name}
@@ -104,7 +104,7 @@ const ToolBar = () => {
 
         <div
           data-testid="tool-name"
-          className="text-slate-300 pr-[1.2em] font-mono"
+          className="text-slate-300 pr-[1.2em] font-mono hidden md:block min-w-[7em]"
         >
           | <TypewriterEffect text={t(Action[selectedAction])} speed={20} />
         </div>

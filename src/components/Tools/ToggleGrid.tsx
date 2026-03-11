@@ -13,7 +13,7 @@ export default function ToggleGrid() {
   const [isVisible, setVisible] = useAtom(gridVisibilityAtom);
 
   return (
-    <div className="w-9 pointer-events-auto">
+    <div className="w-9 pointer-events-auto sm:hidden md:block">
       <Tooltip>
         <TooltipTrigger asChild>
           <button
