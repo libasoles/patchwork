@@ -25,13 +25,17 @@ export default function Panel({
     return (
       <div
         {...rest}
-        className={`${className} flex flex-col p-[0.1rem] border-slate-400 border-x-border-[6px] bg-gray-200`}
+        className={`${className} flex flex-col px-2 py-2 border-b border-slate-700/60 bg-gray-800`}
       >
-        {title && <h2 className="text-gray-800">{title}</h2>}
+        {title && (
+          <h2 className="text-slate-100 text-xs font-semibold uppercase tracking-wider px-1 pb-2">
+            {title}
+          </h2>
+        )}
         <Scrollbars style={{ width: 200 }} autoHide universal>
           <div
             data-testid="panel-content"
-            className="panel-content flex flex-wrap content-baseline gap-0.5 p-px text-gray-800 h-auto"
+            className="panel-content flex flex-wrap content-baseline gap-0.5 p-px text-slate-200 h-auto"
           >
             {children}
           </div>
@@ -43,22 +47,22 @@ export default function Panel({
   return (
     <div
       {...rest}
-      className={`${isOpen ? className : ""} flex flex-col p-[0.1rem] border-slate-400 border-x-border-[6px] bg-gray-200`}
+      className={`${isOpen ? className : ""} flex flex-col px-2 py-2 border-b border-slate-700/60 bg-gray-800`}
     >
       <h2
-        className="text-gray-800 flex items-center justify-between cursor-pointer hover:text-gray-600"
+        className="text-slate-100 text-xs font-semibold uppercase tracking-wider px-1 pb-2 flex items-center justify-between cursor-pointer hover:text-slate-300"
         onClick={() => setIsOpen(!isOpen)}
       >
         {title}
         <ChevronDown
-          className={`h-5 w-5 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+          className={`h-4 w-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
         />
       </h2>
       {isOpen && (
         <Scrollbars style={{ width: 200 }} autoHide universal>
           <div
             data-testid="panel-content"
-            className="panel-content flex flex-wrap content-baseline gap-0.5 p-px text-gray-800 h-auto"
+            className="panel-content flex flex-wrap content-baseline gap-0.5 p-px text-slate-200 h-auto"
           >
             {children}
           </div>

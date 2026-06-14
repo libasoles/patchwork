@@ -49,7 +49,7 @@ export default function Colors() {
       </Tooltip>
       {visible && (
         <>
-          <hr className="border-2 mb-1.5" />
+          <hr className="border-t border-slate-700/60 mb-1.5" />
           <Scrollbars style={{ width: 200, height: "100%" }} autoHide universal>
             <div
               data-testid="selectable-colors"
@@ -101,7 +101,7 @@ function ColorCircle({
     <label
       data-testid="color-container"
       {...rest}
-      className={`grid items-center rounded-full w-[38px] h-[38px_!important] border-2 border-slate-400 bg-slate-400 my-1.5 overflow-hidden ${className}`}
+      className={`grid items-center rounded-full w-[38px] h-[38px_!important] border-2 border-slate-700/60 bg-gray-800 my-1.5 overflow-hidden shadow-md ${className}`}
       style={{
         // @ts-ignore
         containerType: "inline-size",

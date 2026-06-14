@@ -13,12 +13,12 @@ export default function ToggleGrid() {
   const [isVisible, setVisible] = useAtom(gridVisibilityAtom);
 
   return (
-    <div className="w-9 pointer-events-auto sm:hidden md:block">
+    <div className="pointer-events-auto sm:hidden md:block">
       <Tooltip>
         <TooltipTrigger asChild>
           <button
             type="button"
-            className={`p-2 w-[2.4em] rounded-full cursor-pointer border-slate-500 border-[2px] ${isVisible ? "bg-blue-500 text-white" : "bg-slate-300 text-gray-800"}`}
+            className={`p-2 w-[2.4em] rounded-full cursor-pointer transition-colors ${isVisible ? "bg-blue-500 text-white" : "bg-transparent text-slate-300 hover:bg-slate-700 hover:text-slate-100"}`}
             onClick={() => setVisible((isVisible) => !isVisible)}
           >
             <GridIcon />

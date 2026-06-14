@@ -107,12 +107,12 @@ export default function ExportButton() {
   };
 
   return (
-    <div className="w-9 pointer-events-auto">
+    <div className="pointer-events-auto">
       <Tooltip>
         <TooltipTrigger asChild>
           <button
             type="button"
-            className="p-2 w-[2.4em] rounded-full cursor-pointer bg-blue-500 border-slate-500 border-[2px] text-white"
+            className="p-2 w-[2.4em] rounded-full cursor-pointer bg-transparent text-slate-300 hover:bg-slate-700 hover:text-slate-100 transition-colors"
             onClick={handleExportClick}
           >
             <DownloadIcon />

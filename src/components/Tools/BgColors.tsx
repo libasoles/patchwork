@@ -20,7 +20,7 @@ export default function BgColors() {
       <Tooltip>
         <TooltipTrigger asChild>
           <div
-            className={`relative grid items-center rounded-full w-[38px] h-[38px_!important] border-2 border-slate-400 bg-slate-400 my-1 mt-[.1rem] mb-3 overflow-hidden cursor-pointer`}
+            className={`relative grid items-center rounded-full w-[38px] h-[38px_!important] border-2 border-slate-700/60 bg-gray-800 my-1 mt-[.1rem] mb-3 overflow-hidden cursor-pointer shadow-md`}
             onClick={() => setVisible((v) => !v)}
           >
             <span
@@ -35,7 +35,7 @@ export default function BgColors() {
       </Tooltip>
       {visible && (
         <>
-          <hr className="border-2 mb-1.5" />
+          <hr className="border-t border-slate-700/60 mb-1.5" />
           <Scrollbars style={{ width: 200, height: "100%" }} autoHide universal>
             <div className="flex flex-col overflow-hidden h-auto pr-12">
               {bgColors.map((aColor) => {
@@ -43,7 +43,7 @@ export default function BgColors() {
                 return (
                   <label
                     key={aColor}
-                    className={`grid items-center rounded-full w-[38px] h-[38px_!important] border-2 border-slate-400 bg-slate-400 my-1.5 overflow-hidden`}
+                    className={`grid items-center rounded-full w-[38px] h-[38px_!important] border-2 border-slate-700/60 bg-gray-800 my-1.5 overflow-hidden shadow-md`}
                     style={
                       { containerType: "inline-size" } as React.CSSProperties
                     }

@@ -1,4 +1,3 @@
-import { neutralColor } from "@/config";
 import { colorAtom } from "@/store";
 import type { EventCallback, Tile as TileType } from "@/types";
 import { useAtom } from "jotai";
@@ -42,7 +41,7 @@ export default function Tile({
       />
       <span
         data-testid={`${isSelected ? "selected-symbol" : "symbol"}`}
-        className={`${styles.overlap} bg-gray-500 text-${isSelected ? color : neutralColor} ${isSelected ? styles.selected : ""}`}
+        className={`${styles.overlap} bg-slate-700 text-${isSelected ? color : "slate-500"}`}
         style={{
           lineHeight: 0.7,
           fontSize: "143cqw",
