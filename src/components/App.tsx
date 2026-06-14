@@ -14,8 +14,7 @@ import { useEffect } from "react";
 import { createTile } from "../factory";
 import Canvas from "./Canvas/Canvas";
 import TilePanels from "./TilesPanel/TilePanels";
-import BgColors from "./Tools/BgColors";
-import Colors from "./Tools/Colors";
+import ColorMenu from "./Tools/ColorMenu";
 import LayerStack from "./Tools/LayerStack";
 import ToggleGrid from "./Tools/ToggleGrid";
 
@@ -57,8 +56,7 @@ export default function App({ tileSet = tiles }: Props) {
             <NewCanvasButton />
             <ExportButton />
           </div>
-          <BgColors />
-          <Colors />
+          <ColorMenu />
         </div>
         {!isMobile && <LayerStack />}
         {!isMobile && <Zoom />}

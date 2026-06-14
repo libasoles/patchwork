@@ -1,6 +1,6 @@
 import {
   actionAtom,
-  colorBarVisibilityAtom,
+  colorMenuTargetAtom,
   useLayersApi,
   useSelectedLayer,
 } from "@/store";
@@ -16,7 +16,7 @@ import TypewriterEffect from "./components/TypewriterEffect";
 const ICON_SIZE = 18;
 
 const ToolBar = () => {
-  const [, setColorBarVisible] = useAtom(colorBarVisibilityAtom);
+  const [, setColorMenuTarget] = useAtom(colorMenuTargetAtom);
   const [selectedAction, setSelected] = useAtom(actionAtom);
   const t = useTranslations("toolbar");
 
@@ -37,12 +37,12 @@ const ToolBar = () => {
     [list, selectedLayer, disable],
   );
 
-  const selectActionAndDisplayColors = useCallback(
+  const selectActionAndFocusTileColors = useCallback(
     (action: Action) => {
       setSelected(action);
-      setColorBarVisible(true);
+      setColorMenuTarget("tile");
     },
-    [setSelected, setColorBarVisible],
+    [setSelected, setColorMenuTarget],
   );
 
   const selectActionAndDisableLayers = useCallback(
@@ -63,7 +63,7 @@ const ToolBar = () => {
     {
       name: Action.Paint,
       icon: <Brush size={ICON_SIZE} />,
-      onClick: selectActionAndDisplayColors,
+      onClick: selectActionAndFocusTileColors,
       shortcut: "2",
     },
     {

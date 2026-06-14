@@ -7,7 +7,7 @@ import {
 } from "@/config";
 import { createTile } from "@/factory";
 import { atom } from "jotai";
-import { Action, GridMode, Tile } from "../types";
+import { Action, ColorTarget, GridMode, Tile } from "../types";
 
 const activeTilesAtom = atom<Tile[]>([]);
 
@@ -27,9 +27,7 @@ const bgColorAtom = atom(defaultBgColor);
 
 const mouseDownAtom = atom(false);
 
-const colorBarVisibilityAtom = atom(true);
-
-const bgColorBarVisibilityAtom = atom(false);
+const colorMenuTargetAtom = atom<ColorTarget>("tile");
 
 const actionAtom = atom(Action.Draw);
 
@@ -37,10 +35,9 @@ export {
   actionAtom,
   activeTilesAtom,
   bgColorAtom,
-  bgColorBarVisibilityAtom,
   canvasOffsetAtom,
   colorAtom,
-  colorBarVisibilityAtom,
+  colorMenuTargetAtom,
   gridVisibilityAtom,
   mouseDownAtom,
   selectedTileAtom,

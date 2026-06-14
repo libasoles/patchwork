@@ -41,3 +41,5 @@ export enum Action {
 export type EventCallback = (e: SyntheticEvent) => void
 
 export type GridMode = 'lines' | 'dots' | 'none'
+
+export type ColorTarget = 'tile' | 'bg'
