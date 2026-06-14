@@ -64,18 +64,18 @@ const LayerStack = () => {
 
   return (
     <div className="fixed bottom-3 left-[14em] z-10 w-[16em]">
-      <div className="rounded-2xl bg-gray-800 border border-slate-700/60 shadow-xl p-4 backdrop-blur">
+      <div className={`rounded-2xl bg-gray-800 border border-slate-700/60 shadow-xl backdrop-blur ${isExpanded ? "p-4" : "px-4 py-2"}`}>
         <button
-          className="flex items-center justify-between w-full mb-3"
+          className={`flex items-center justify-between w-full ${isExpanded ? "mb-3" : ""}`}
           onClick={() => setIsExpanded((v) => !v)}
         >
-          <h2 className="text-slate-100 text-lg font-bold tracking-tight">
+          <h2 className="text-slate-100 text-base font-bold tracking-tight">
             {t("title")}
           </h2>
           {isExpanded ? (
-            <ChevronUp size={18} className="text-slate-400" />
-          ) : (
             <ChevronDown size={18} className="text-slate-400" />
+          ) : (
+            <ChevronUp size={18} className="text-slate-400" />
           )}
         </button>
 
