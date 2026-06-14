@@ -2,7 +2,7 @@ export const canvasDimension = { x: 50, y: 50 };
 
 export const initialZoomLevel = 15;
 
-export const gridIsInitiallyVisible = true;
+export const defaultGridMode = 'dots';
 
 export const neutralColor = "gray-800";
 

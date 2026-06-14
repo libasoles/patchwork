@@ -28,7 +28,7 @@ export default function Canvas() {
 
     const canvasScale = useCanvasScale()
 
-    const [isGridVisible] = useAtom(gridVisibilityAtom);
+    const [gridMode] = useAtom(gridVisibilityAtom);
     const [bgColor] = useAtom(bgColorAtom);
     const [zoomLevel, setZoomLevel] = useAtom(zoomLevelAtom);
     const [offset, setOffset] = useAtom(canvasOffsetAtom);
@@ -120,7 +120,7 @@ export default function Canvas() {
             <GridLayer
                 canvas={gridCanvas}
                 dimension={layersList[0].canvas.dimension}
-                isGridVisible={isGridVisible}
+                gridMode={gridMode}
             />
 
             {isCurrentLayerHidden && (

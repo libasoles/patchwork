@@ -1,15 +1,15 @@
 import Cell from './Cell';
 import { memo } from 'react';
-import { Dimension, Canvas } from '@/types';
+import { Dimension, Canvas, GridMode } from '@/types';
 
 export type LayerProps = {
     canvas: Canvas,
     dimension: Dimension,
-    isGridVisible?: boolean,
+    gridMode?: GridMode,
     isDisabled?: boolean
 }
 
-function Layer({ canvas, dimension, isGridVisible = false, isDisabled = false }: LayerProps) {
+function Layer({ canvas, dimension, gridMode = 'none', isDisabled = false }: LayerProps) {
     return (
         <div
             data-testid='canvas'
@@ -24,7 +24,7 @@ function Layer({ canvas, dimension, isGridVisible = false, isDisabled = false }:
                     return (
                         <div key={index}>
                             <Cell
-                                borderless={!isGridVisible}
+                                gridMode={gridMode}
                                 tile={tile}
                             />
                         </div>

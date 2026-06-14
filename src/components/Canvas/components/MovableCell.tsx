@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Tile } from "@/types";
+import type { GridMode, Tile } from "@/types";
 import { OnContextMenu, OnMouseDown, OnMouseUp, onMouseEnter } from '../hooks/usePointerEvents';
 import Cell from './Cell';
 import { useAtom } from 'jotai';
@@ -9,14 +9,14 @@ import { Action } from '@/types';
 type MovableCellProps = {
     tile: Tile;
     index: number;
-    borderless: boolean;
+    gridMode: GridMode;
     onMouseDown?: OnMouseDown;
     onMouseUp?: OnMouseUp;
     onMouseEnter?: onMouseEnter;
     onContextMenu?: OnContextMenu;
 };
 
-function MovableCell({ tile, index, borderless, onMouseDown, onMouseUp, onMouseEnter, onContextMenu }: MovableCellProps) {
+function MovableCell({ tile, index, gridMode, onMouseDown, onMouseUp, onMouseEnter, onContextMenu }: MovableCellProps) {
     const [activeAction] = useAtom(actionAtom);
     const isDraggable = activeAction === Action.Move;
 
@@ -34,11 +34,9 @@ function MovableCell({ tile, index, borderless, onMouseDown, onMouseUp, onMouseE
             draggable={isDraggable}
             data-index={index}
         >
-            <Cell tile={tile} borderless={borderless} />
+            <Cell tile={tile} gridMode={gridMode} />
         </button>
     )
 }
 
 export default React.memo(MovableCell)
-
-

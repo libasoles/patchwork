@@ -39,7 +39,7 @@ export default function ActiveLayer({
                         >
                             <MovableCell
                                 index={index}
-                                borderless
+                                gridMode='none'
                                 onMouseDown={onMouseDown}
                                 onMouseEnter={onMouseEnter}
                                 onMouseUp={onMouseUp}

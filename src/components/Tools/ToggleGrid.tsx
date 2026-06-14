@@ -5,12 +5,25 @@ import {
 } from "@/components/ui/tooltip";
 import GridIcon from "@/icons/GridIcon";
 import { gridVisibilityAtom } from "@/store";
+import { GridMode } from "@/types";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 
+const nextMode: Record<GridMode, GridMode> = {
+  dots: 'lines',
+  lines: 'none',
+  none: 'dots',
+};
+
+const buttonStyle: Record<GridMode, string> = {
+  dots: 'bg-blue-500/50 text-blue-200',
+  lines: 'bg-blue-500 text-white',
+  none: 'bg-transparent text-slate-300 hover:bg-slate-700 hover:text-slate-100',
+};
+
 export default function ToggleGrid() {
   const t = useTranslations("tooltips");
-  const [isVisible, setVisible] = useAtom(gridVisibilityAtom);
+  const [gridMode, setGridMode] = useAtom(gridVisibilityAtom);
 
   return (
     <div className="pointer-events-auto sm:hidden md:block">
@@ -18,14 +31,14 @@ export default function ToggleGrid() {
         <TooltipTrigger asChild>
           <button
             type="button"
-            className={`p-2 w-[2.4em] rounded-full cursor-pointer transition-colors ${isVisible ? "bg-blue-500 text-white" : "bg-transparent text-slate-300 hover:bg-slate-700 hover:text-slate-100"}`}
-            onClick={() => setVisible((isVisible) => !isVisible)}
+            className={`p-2 w-[2.4em] rounded-full cursor-pointer transition-colors ${buttonStyle[gridMode]}`}
+            onClick={() => setGridMode(nextMode[gridMode])}
           >
             <GridIcon />
           </button>
         </TooltipTrigger>
         <TooltipContent side="bottom">
-          {isVisible ? t("hideGrid") : t("showGrid")}
+          {t(`grid_${gridMode}` as any)}
         </TooltipContent>
       </Tooltip>
     </div>

@@ -2,12 +2,12 @@ import {
   defaultBgColor,
   defaultColor,
   defaultSelectedTile,
-  gridIsInitiallyVisible,
+  defaultGridMode,
   initialZoomLevel,
 } from "@/config";
 import { createTile } from "@/factory";
 import { atom } from "jotai";
-import { Action, Tile } from "../types";
+import { Action, GridMode, Tile } from "../types";
 
 const activeTilesAtom = atom<Tile[]>([]);
 
@@ -19,7 +19,7 @@ const zoomLevelAtom = atom(getInitialZoom());
 
 const canvasOffsetAtom = atom({ x: 0, y: 0 });
 
-const gridVisibilityAtom = atom(gridIsInitiallyVisible);
+const gridVisibilityAtom = atom<GridMode>(defaultGridMode as GridMode);
 
 const colorAtom = atom(defaultColor);
 
