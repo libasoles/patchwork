@@ -102,7 +102,7 @@ const ToolBar = () => {
 
         <div
           data-testid="tool-name"
-          className="hidden md:flex items-center pl-2 pr-3 ml-1 border-l border-slate-700/60 text-slate-300 font-mono min-w-[7em]"
+          className="hidden md:flex items-center pl-3 pr-3 ml-2 border-l-2 border-slate-600 text-slate-300 font-mono min-w-[7em]"
         >
           <TypewriterEffect text={t(Action[selectedAction])} speed={20} />
         </div>

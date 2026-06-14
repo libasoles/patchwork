@@ -41,7 +41,7 @@ export default function ColorMenu() {
   return (
     <div
       data-testid="color-panel"
-      className="pointer-events-auto bg-gray-800 border border-slate-700/60 rounded-3xl p-1.5 shadow-xl self-start flex flex-col items-center h-full"
+      className="pointer-events-auto bg-gray-800 border border-slate-700/60 rounded-3xl p-1.5 shadow-xl self-start flex flex-col items-center"
     >
       <div className="flex flex-col items-center gap-1.5">
         <Tooltip>
@@ -85,8 +85,14 @@ export default function ColorMenu() {
           <TooltipContent side="left">{t("bgColor")}</TooltipContent>
         </Tooltip>
       </div>
-      <hr className="border-t border-slate-700/60 w-full my-1.5" />
-      <Scrollbars style={{ width: 56, height: "100%" }} autoHide universal>
+      <hr className="border-t-2 border-slate-600 w-full my-2" />
+      <Scrollbars
+        style={{ width: 56 }}
+        autoHeight
+        autoHeightMax="calc(100vh - 120px)"
+        autoHide
+        universal
+      >
         <div
           data-testid="selectable-colors"
           className="flex flex-col items-center gap-1.5"
