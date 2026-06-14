@@ -6,6 +6,15 @@ import {
 import { getLayerDefaultName } from "@/lib/i18n";
 import { useLayersApi } from "@/store";
 import { Layer } from "@/types";
+import {
+  Eye,
+  EyeOff,
+  Layers,
+  Plus,
+  Sun,
+  SunDim,
+  X,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
 
@@ -50,90 +59,127 @@ const LayerStack = () => {
   };
 
   return (
-    <div className="flex flex-col items-start justify-start p-4 fixed bottom-1.5 left-[14em] z-10 w-[12em]">
-      <div className="space-y-2 w-full ">
-        {layersList
-          .slice()
-          .reverse()
-          .map((layer, index) => {
-            const number = layersList.length - index;
-            const isRemovable = layer.id !== defaultLayerId;
+    <div className="fixed bottom-3 left-[14em] z-10 w-[16em]">
+      <div className="rounded-2xl bg-gray-800 border border-slate-700/60 shadow-xl p-4 backdrop-blur">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-slate-100 text-lg font-bold tracking-tight">
+            {t("title")}
+          </h2>
+          <span className="text-blue-300 text-sm font-semibold">
+            {layersList.length}
+          </span>
+        </div>
 
-            return (
-              <div
-                key={layer.id}
-                className={`flex items-center justify-between px-2 py-2 rounded-md cursor-pointer ${
-                  current().id === layer.id ? "bg-blue-100" : "bg-slate-400"
-                }`}
-                onClick={() => handleLayerClick(layer)}
-              >
-                <div className="flex items-center space-x-2">
-                  <div className="flex items-center justify-between space-x-1.5">
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button
-                          className={`w-5 h-5 rounded-full border border-gray-500 ${
-                            layer.visible ? "bg-green-500" : "bg-slate-300"
-                          }`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleToggleLayer(layer);
-                          }}
-                        />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        {layer.visible ? tt("hideLayer") : tt("showLayer")}
-                      </TooltipContent>
-                    </Tooltip>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button
-                          className={`w-5 h-5 rounded-full border border-gray-500 ${
-                            layer.enabled ? "bg-slate-800" : "bg-slate-300"
-                          }`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDisableLayer(layer);
-                          }}
-                        />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        {layer.enabled
-                          ? tt("grayOutLayer")
-                          : tt("highlightLayer")}
-                      </TooltipContent>
-                    </Tooltip>
-                  </div>
-                  <span className="text-gray-800">
+        <div className="space-y-2">
+          {layersList
+            .slice()
+            .reverse()
+            .map((layer, index) => {
+              const number = layersList.length - index;
+              const isRemovable = layer.id !== defaultLayerId;
+              const isSelected = current().id === layer.id;
+
+              return (
+                <div
+                  key={layer.id}
+                  className={`group flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer border transition-colors ${
+                    isSelected
+                      ? "bg-slate-800/80 border-slate-600"
+                      : "bg-slate-900/40 border-transparent hover:bg-slate-800/50"
+                  }`}
+                  onClick={() => handleLayerClick(layer)}
+                >
+                  <Layers
+                    size={18}
+                    className={
+                      isSelected ? "text-blue-300" : "text-slate-400"
+                    }
+                  />
+                  <span
+                    className={`flex-1 truncate text-sm ${
+                      isSelected ? "text-slate-100" : "text-slate-300"
+                    }`}
+                  >
                     {layer.name} {number}
                   </span>
-                </div>
-                {isRemovable && (
+
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <button
-                        className="text-slate-700 font-bold px-1 py-0.5 text-base leading-none"
+                        className="p-1 rounded text-slate-400 hover:text-slate-100"
                         onClick={(e) => {
                           e.stopPropagation();
-                          handleRemoveLayer(layer.id);
+                          handleDisableLayer(layer);
                         }}
                       >
-                        &times;
+                        {layer.enabled ? (
+                          <Sun size={16} />
+                        ) : (
+                          <SunDim size={16} />
+                        )}
                       </button>
                     </TooltipTrigger>
-                    <TooltipContent>{tt("removeLayer")}</TooltipContent>
+                    <TooltipContent>
+                      {layer.enabled
+                        ? tt("grayOutLayer")
+                        : tt("highlightLayer")}
+                    </TooltipContent>
                   </Tooltip>
-                )}
-              </div>
-            );
-          })}
+
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button
+                        className="p-1 rounded text-slate-400 hover:text-slate-100"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleToggleLayer(layer);
+                        }}
+                      >
+                        {layer.visible ? (
+                          <Eye size={16} />
+                        ) : (
+                          <EyeOff size={16} />
+                        )}
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      {layer.visible ? tt("hideLayer") : tt("showLayer")}
+                    </TooltipContent>
+                  </Tooltip>
+
+                  {isRemovable ? (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button
+                          className="p-1 rounded text-slate-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleRemoveLayer(layer.id);
+                          }}
+                        >
+                          <X size={16} />
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent>{tt("removeLayer")}</TooltipContent>
+                    </Tooltip>
+                  ) : (
+                    <span aria-hidden className="p-1 invisible">
+                      <X size={16} />
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+        </div>
+
+        <button
+          className="mt-3 w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-dashed border-slate-600 text-slate-300 hover:text-slate-100 hover:border-slate-400 hover:bg-slate-800/40 transition-colors"
+          onClick={handleAddLayer}
+        >
+          <Plus size={16} />
+          <span className="text-sm">{t("addLayer")}</span>
+        </button>
       </div>
-      <button
-        className="w-full mt-2 px-4 py-2 text-white bg-blue-500 rounded-md"
-        onClick={handleAddLayer}
-      >
-        {t("addLayer")}
-      </button>
     </div>
   );
 };

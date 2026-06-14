@@ -37,6 +37,7 @@
     "allTiles": "Todos los mosaicos"
   },
   "layers": {
+    "title": "Capas",
     "addLayer": "Agregar capa",
     "defaultName": "Capa"
   },

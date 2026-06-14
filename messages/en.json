@@ -37,6 +37,7 @@
     "allTiles": "All Tiles"
   },
   "layers": {
+    "title": "Layers",
     "addLayer": "Add Layer",
     "defaultName": "Layer"
   },
