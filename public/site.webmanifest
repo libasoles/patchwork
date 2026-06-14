@@ -1,0 +1,16 @@
+{
+  "name": "Patchwork",
+  "short_name": "Patchwork",
+  "description": "Create infinite geometric patterns with modular tiles, inspired by Sébastien Truchet's 1704 tiling system.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}

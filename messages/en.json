@@ -45,7 +45,8 @@
     "defaultName": "Layer"
   },
   "meta": {
-    "title": "Patchwork",
-    "description": "Collaborative patchwork"
+    "title": "Patchwork — Truchet Tile Pattern Creator",
+    "description": "Create infinite geometric patterns with modular tiles, inspired by Sébastien Truchet's 1704 tiling system. Free browser canvas for tile art and collaboration.",
+    "ogImageAlt": "Patchwork canvas showing infinite geometric tile patterns in the style of Truchet tiling"
   }
 }
