@@ -1,8 +1,3 @@
-import CrossIcon from "@/icons/CrossIcon";
-import DrawIcon from "@/icons/DrawIcon";
-import MoveIcon from "@/icons/MoveIcon";
-import PaintIcon from "@/icons/PaintIcon";
-import RotateIcon from "@/icons/RotateIcon";
 import {
   actionAtom,
   colorBarVisibilityAtom,
@@ -11,11 +6,14 @@ import {
 } from "@/store";
 import { Action } from "@/types";
 import { useAtom } from "jotai";
+import { Brush, Eraser, Move, Pencil, RotateCw } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import ActionButton from "./components/ActionButton";
 import TypewriterEffect from "./components/TypewriterEffect";
+
+const ICON_SIZE = 18;
 
 const ToolBar = () => {
   const [, setColorBarVisible] = useAtom(colorBarVisibilityAtom);
@@ -58,31 +56,31 @@ const ToolBar = () => {
   const actions = [
     {
       name: Action.Draw,
-      icon: <DrawIcon />,
+      icon: <Pencil size={ICON_SIZE} />,
       onClick: setSelected,
       shortcut: "1",
     },
     {
       name: Action.Paint,
-      icon: <PaintIcon />,
+      icon: <Brush size={ICON_SIZE} />,
       onClick: selectActionAndDisplayColors,
       shortcut: "2",
     },
     {
       name: Action.Move,
-      icon: <MoveIcon />,
+      icon: <Move size={ICON_SIZE} />,
       onClick: selectActionAndDisableLayers,
       shortcut: "3",
     },
     {
       name: Action.Rotate,
-      icon: <RotateIcon />,
+      icon: <RotateCw size={ICON_SIZE} />,
       onClick: selectActionAndDisableLayers,
       shortcut: "4",
     },
     {
       name: Action.Delete,
-      icon: <CrossIcon />,
+      icon: <Eraser size={ICON_SIZE} />,
       onClick: selectActionAndDisableLayers,
       shortcut: "5",
     },
@@ -93,7 +91,7 @@ const ToolBar = () => {
       data-testid="toolbar"
       className="toolbar flex justify-center items-center fixed top-3 z-10"
     >
-      <div className="flex items-center space-x-3 bg-gray-800 rounded-full p-1">
+      <div className="flex items-center gap-1 bg-gray-800 border border-slate-700/60 shadow-xl backdrop-blur rounded-full px-2 py-1.5">
         {actions.map((action) => (
           <ActionButton
             key={action.name}
@@ -104,9 +102,9 @@ const ToolBar = () => {
 
         <div
           data-testid="tool-name"
-          className="text-slate-300 pr-[1.2em] font-mono hidden md:block min-w-[7em]"
+          className="hidden md:flex items-center pl-2 pr-3 ml-1 border-l border-slate-700/60 text-slate-300 font-mono min-w-[7em]"
         >
-          | <TypewriterEffect text={t(Action[selectedAction])} speed={20} />
+          <TypewriterEffect text={t(Action[selectedAction])} speed={20} />
         </div>
       </div>
     </div>

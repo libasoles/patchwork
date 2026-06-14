@@ -7,6 +7,8 @@ import { getLayerDefaultName } from "@/lib/i18n";
 import { useLayersApi } from "@/store";
 import { Layer } from "@/types";
 import {
+  ChevronDown,
+  ChevronUp,
   Eye,
   EyeOff,
   Layers,
@@ -17,6 +19,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 const createRandomHash = () => Math.random().toString(36).substring(2, 10);
 
@@ -28,6 +31,7 @@ const LayerStack = () => {
   const locale = (router.locale as "en" | "es") || "en";
   const layersList = list();
   const defaultLayerId = layersList[0].id;
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const handleLayerClick = (layer: Layer) => {
     select(layer.id);
@@ -61,16 +65,21 @@ const LayerStack = () => {
   return (
     <div className="fixed bottom-3 left-[14em] z-10 w-[16em]">
       <div className="rounded-2xl bg-gray-800 border border-slate-700/60 shadow-xl p-4 backdrop-blur">
-        <div className="flex items-center justify-between mb-3">
+        <button
+          className="flex items-center justify-between w-full mb-3"
+          onClick={() => setIsExpanded((v) => !v)}
+        >
           <h2 className="text-slate-100 text-lg font-bold tracking-tight">
             {t("title")}
           </h2>
-          <span className="text-blue-300 text-sm font-semibold">
-            {layersList.length}
-          </span>
-        </div>
+          {isExpanded ? (
+            <ChevronUp size={18} className="text-slate-400" />
+          ) : (
+            <ChevronDown size={18} className="text-slate-400" />
+          )}
+        </button>
 
-        <div className="space-y-2">
+        {isExpanded && <div className="space-y-2">
           {layersList
             .slice()
             .reverse()
@@ -170,15 +179,17 @@ const LayerStack = () => {
                 </div>
               );
             })}
-        </div>
+        </div>}
 
-        <button
-          className="mt-3 w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-dashed border-slate-600 text-slate-300 hover:text-slate-100 hover:border-slate-400 hover:bg-slate-800/40 transition-colors"
-          onClick={handleAddLayer}
-        >
-          <Plus size={16} />
-          <span className="text-sm">{t("addLayer")}</span>
-        </button>
+        {isExpanded && (
+          <button
+            className="mt-3 w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-dashed border-slate-600 text-slate-300 hover:text-slate-100 hover:border-slate-400 hover:bg-slate-800/40 transition-colors"
+            onClick={handleAddLayer}
+          >
+            <Plus size={16} />
+            <span className="text-sm">{t("addLayer")}</span>
+          </button>
+        )}
       </div>
     </div>
   );
