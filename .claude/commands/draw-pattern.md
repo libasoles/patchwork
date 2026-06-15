@@ -14,7 +14,7 @@ Read `/tile-families` (or `src/data/tileGroups.ts`) for the full list. Most comm
 | Goal | Family | Tiles to use |
 |---|---|---|
 | Classic diagonal Truchet | `truchet-original` | `›` `œ` `\x9D` `\x9E` |
-| Flowing organic curves (Smith) | `smith-1987` | `–` `—` `˜` `™` |
+| Flowing organic curves (Smith) | `smith-1987` | `\uE000` `\uE001` (2 PUA glyphs) |
 | Wave / scallop | `semi-circle` | `Ù` `Û` `Ú` `Ü` |
 | Maze / road network | `roadway` | `P` `Q` `R` `S` |
 | Arch / vault | `arch` | `Z` `[` `\` `]` |
@@ -23,7 +23,7 @@ Read `/tile-families` (or `src/data/tileGroups.ts`) for the full list. Most comm
 
 **Checkerboard alternation** (simple, regular, shows all 4 rotations):
 ```ts
-const tiles = ['–', '—', '˜', '™']; // smith-1987
+const tiles = ['\uE000', '\uE001']; // smith-1987 (2 double-arc glyphs)
 const grid = Array.from({ length: rows }, (_, r) =>
   Array.from({ length: cols }, (_, c) => tiles[(r + c) % 4])
 );
@@ -85,7 +85,7 @@ import { createTile } from '@/factory';
 import { tilesMap } from '@/config';
 
 // Find a tile by id
-const tileDef = tilesMap.find(t => t.id === 8211)!; // Smith tile 0
+const tileDef = tilesMap.find(t => t.id === 0xE000)!; // Smith S-shape
 const tile = createTile(tileDef);
 
 // Place at row r, col c on a 50-wide canvas
@@ -99,10 +99,10 @@ Use `updateCellInBurst` with a shared `burstId` (e.g. `uuid()`) for undoable str
 ## Worked example — "8×8 random Smith tiling, teal on slate"
 
 ```tsx
-const SMITH = ['–', '—', '˜', '™'];
+const SMITH = ['\uE000', '\uE001'];
 const rand = seeded(2024);
 const pattern = Array.from({ length: 8 }, () =>
-  Array.from({ length: 8 }, () => SMITH[Math.floor(rand() * 4)])
+  Array.from({ length: 8 }, () => SMITH[Math.floor(rand() * 2)])
 );
 
 <div className="inline-grid bg-slate-800 p-2 leading-none"
