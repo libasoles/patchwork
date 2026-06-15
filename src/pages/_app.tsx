@@ -1,11 +1,31 @@
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { ThemeProvider } from 'next-themes'
 import { Toaster } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { NextIntlClientProvider } from 'next-intl'
+import ReactGA from 'react-ga4'
+
+const GA_MEASUREMENT_ID = 'G-NH8E956H7H'
 
 export default function App({ Component, pageProps }: AppProps) {
+  const router = useRouter()
+
+  useEffect(() => {
+    ReactGA.initialize(GA_MEASUREMENT_ID)
+    ReactGA.send({ hitType: 'pageview', page: router.asPath })
+  }, [])
+
+  useEffect(() => {
+    const handleRouteChange = (url: string) => {
+      ReactGA.send({ hitType: 'pageview', page: url })
+    }
+    router.events.on('routeChangeComplete', handleRouteChange)
+    return () => router.events.off('routeChangeComplete', handleRouteChange)
+  }, [router.events])
+
   return (
     <NextIntlClientProvider
       locale={pageProps.locale ?? 'en'}
