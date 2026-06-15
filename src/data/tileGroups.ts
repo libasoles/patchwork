@@ -682,12 +682,14 @@ export const smithTilesFontFamily: TileGroupFamily = {
   sourceFont: "smith-tiles",
   name: "Smith Tiles Font",
   description:
-    "Supplementary Patchwork font with two double-arc Smith (1987) tiles at U+E000–U+E001. " +
-    "Each glyph contains TWO quarter-circle arcs covering all four edge midpoints, so any " +
-    "adjacent pair of tiles always connects — producing the labyrinthine closed regions Smith described. " +
-    "Glyph metrics match BIT BLOCKS so these tiles align with the existing grid.",
+    "Supplementary Patchwork font with four double-connector Smith (1987) tiles at U+E000–U+E003. " +
+    "Each glyph carries TWO connectors covering all four edge midpoints, so any adjacent pair of " +
+    "tiles always connects — producing the labyrinthine closed regions Smith described. " +
+    "U+E000–E001 are the quarter-circle arc tiles; U+E002–E003 swap the arcs for straight diagonal " +
+    "bands (double-line variant). All connectors cross each edge on the same 300–400 band, so arc and " +
+    "straight tiles interconnect. Glyph metrics match BIT BLOCKS so these tiles align with the existing grid.",
   historicReference: "Cyril Stanley Smith arc tile family, supplementary Patchwork font",
-  patchworkGroups: [],
+  patchworkGroups: ["diagonal lines"],
   tiles: [
     {
       id: 0xe000,
@@ -700,6 +702,20 @@ export const smithTilesFontFamily: TileGroupFamily = {
       symbol: String.fromCodePoint(0xe001),
       orientation: 1,
       description: "Reverse-S: arc at top-left corner + arc at bottom-right corner.",
+    },
+    {
+      id: 0xe002,
+      symbol: String.fromCodePoint(0xe002),
+      orientation: 0,
+      description:
+        "Straight S: diagonal band top↔right + diagonal band bottom↔left (double-line variant).",
+    },
+    {
+      id: 0xe003,
+      symbol: String.fromCodePoint(0xe003),
+      orientation: 1,
+      description:
+        "Straight reverse-S: diagonal band top↔left + diagonal band bottom↔right (double-line variant).",
     },
   ],
 };
