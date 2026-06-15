@@ -16,7 +16,7 @@ const jsonLd = {
     "Create infinite geometric patterns with modular tiles, inspired by Sébastien Truchet's 1704 tiling system.",
   applicationCategory: "DesignApplication",
   operatingSystem: "Web",
-  inLanguage: ["en", "es"],
+  inLanguage: ["en", "es", "fr"],
   isAccessibleForFree: true,
   offers: {
     "@type": "Offer",
@@ -36,8 +36,9 @@ export default function Home({ siteUrl }: HomeProps) {
   const { locale } = useRouter();
 
   const canonicalUrl = locale === "en" ? siteUrl : `${siteUrl}/${locale}`;
-  const ogLocale = locale === "es" ? "es_ES" : "en_US";
-  const altLocale = locale === "es" ? "en_US" : "es_ES";
+  const ogLocaleMap: Record<string, string> = { en: "en_US", es: "es_ES", fr: "fr_FR" };
+  const ogLocale = ogLocaleMap[locale ?? "en"] ?? "en_US";
+  const altLocales = Object.entries(ogLocaleMap).filter(([l]) => l !== locale).map(([, v]) => v);
 
   return (
     <>
@@ -53,6 +54,7 @@ export default function Home({ siteUrl }: HomeProps) {
             <link rel="canonical" href={canonicalUrl} />
             <link rel="alternate" hrefLang="en" href={siteUrl} />
             <link rel="alternate" hrefLang="es" href={`${siteUrl}/es`} />
+            <link rel="alternate" hrefLang="fr" href={`${siteUrl}/fr`} />
             <link rel="alternate" hrefLang="x-default" href={siteUrl} />
           </>
         )}
@@ -62,7 +64,9 @@ export default function Home({ siteUrl }: HomeProps) {
         <meta property="og:description" content={t("description")} />
         <meta property="og:site_name" content="Patchwork" />
         <meta property="og:locale" content={ogLocale} />
-        <meta property="og:locale:alternate" content={altLocale} />
+        {altLocales.map((alt) => (
+          <meta key={alt} property="og:locale:alternate" content={alt} />
+        ))}
         {siteUrl && (
           <>
             <meta property="og:url" content={canonicalUrl} />

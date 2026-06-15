@@ -16,6 +16,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     <loc>${siteUrl}/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="${siteUrl}/"/>
     <xhtml:link rel="alternate" hreflang="es" href="${siteUrl}/es"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="${siteUrl}/fr"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="${siteUrl}/"/>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
@@ -24,9 +25,37 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     <loc>${siteUrl}/es</loc>
     <xhtml:link rel="alternate" hreflang="en" href="${siteUrl}/"/>
     <xhtml:link rel="alternate" hreflang="es" href="${siteUrl}/es"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="${siteUrl}/fr"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="${siteUrl}/"/>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>${siteUrl}/fr</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="${siteUrl}/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="${siteUrl}/es"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="${siteUrl}/fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="${siteUrl}/"/>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>${siteUrl}/articles</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="${siteUrl}/articles"/>
+    <xhtml:link rel="alternate" hreflang="es" href="${siteUrl}/es/articles"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="${siteUrl}/fr/articles"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="${siteUrl}/articles"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${siteUrl}/articles/truchet-tiling</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="${siteUrl}/articles/truchet-tiling"/>
+    <xhtml:link rel="alternate" hreflang="es" href="${siteUrl}/es/articles/truchet-tiling"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="${siteUrl}/fr/articles/truchet-tiling"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="${siteUrl}/articles/truchet-tiling"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>`
 

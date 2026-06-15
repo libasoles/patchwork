@@ -1,0 +1,58 @@
+{
+  "toasts": {
+    "paintEmpty": "Vous ne pouvez pas peindre une cellule vide",
+    "moveEmpty": "Il n'y a aucun élément dans cette cellule",
+    "rotateEmpty": "Il n'y a aucun élément dans cette cellule",
+    "hiddenLayer": "Le calque est masqué. Rendez-le visible pour dessiner",
+    "disabledLayer": "Activez le calque pour dessiner"
+  },
+  "toolbar": {
+    "Draw": "Dessiner",
+    "Paint": "Peindre",
+    "Move": "Déplacer",
+    "Rotate": "Pivoter",
+    "Delete": "Supprimer"
+  },
+  "tooltips": {
+    "newCanvas": "Nouveau canevas",
+    "bgColor": "Couleur de fond",
+    "downloadImage": "Télécharger l'image",
+    "tileColor": "Couleur du carreau",
+    "hideGrid": "Masquer la grille",
+    "showGrid": "Afficher la grille",
+    "grid_dots": "Grille : Points",
+    "grid_lines": "Grille : Lignes",
+    "grid_none": "Grille : Désactivée",
+    "hideLayer": "Masquer",
+    "showLayer": "Afficher",
+    "grayOutLayer": "Atténuer",
+    "highlightLayer": "Rétablir",
+    "removeLayer": "Supprimer le calque"
+  },
+  "newCanvas": {
+    "title": "Nouveau canevas",
+    "description": "Tous les calques et leurs carreaux seront supprimés. Cette action est irréversible.",
+    "cancel": "Annuler",
+    "confirm": "Continuer"
+  },
+  "panels": {
+    "usedTiles": "Carreaux utilisés",
+    "allTiles": "Tous les carreaux"
+  },
+  "layers": {
+    "title": "Calques",
+    "addLayer": "Ajouter un calque",
+    "defaultName": "Calque"
+  },
+  "export": {
+    "title": "Télécharger l'image",
+    "offset": "Marge",
+    "cancel": "Annuler",
+    "download": "Télécharger"
+  },
+  "meta": {
+    "title": "Patchwork — Créateur de Motifs en Carreaux",
+    "description": "Créez des motifs géométriques infinis avec des carreaux modulaires, inspirés du système de pavage de Sébastien Truchet (1704). Canevas gratuit pour l'art et la collaboration.",
+    "ogImageAlt": "Canevas Patchwork avec des motifs géométriques infinis dans le style du pavage Truchet"
+  }
+}
