@@ -51,6 +51,8 @@ const grid = Array.from({ length: rows }, () =>
 
 ## Step 3 — Render in JSX
 
+> **Tiles never have rounded corners.** Do not add `rounded-*` to tile wrappers or individual tile cells — tiles must look like a continuous grid, not card UI.
+
 ```tsx
 import { truchetFamilies } from '@/data/tileGroups';
 
@@ -64,7 +66,7 @@ const grid = Array.from({ length: 6 }, (_, r) =>
 
 // Render
 <div
-  className="inline-grid bg-slate-800 rounded-lg p-2 leading-none"
+  className="inline-grid bg-slate-800 p-2 leading-none"
   style={{ gridTemplateColumns: `repeat(8, 1fr)` }}
 >
   {grid.flat().map((ch, i) => (
@@ -103,7 +105,7 @@ const pattern = Array.from({ length: 8 }, () =>
   Array.from({ length: 8 }, () => SMITH[Math.floor(rand() * 4)])
 );
 
-<div className="inline-grid bg-slate-800 rounded-lg p-2 leading-none"
+<div className="inline-grid bg-slate-800 p-2 leading-none"
      style={{ gridTemplateColumns: 'repeat(8, 1fr)' }}>
   {pattern.flat().map((ch, i) => (
     <span key={i} className="tile text-teal-400 text-2xl">{ch}</span>

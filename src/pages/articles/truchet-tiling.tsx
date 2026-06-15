@@ -76,7 +76,7 @@ function TileGrid({
 }) {
   return (
     <div
-      className={`inline-grid ${bg} rounded-lg p-1 select-none`}
+      className={`inline-grid ${bg} p-1 select-none`}
       style={{
         gridTemplateColumns: `repeat(${grid[0].length}, ${cellPx}px)`,
         gridAutoRows: `${cellPx}px`,
@@ -105,7 +105,7 @@ function TileShowcase({
   return (
     <div className="flex gap-2">
       {tiles.map((ch, i) => (
-        <div key={i} className={`${bg} rounded-lg p-2`}>
+        <div key={i} className={`${bg} p-2`}>
           <TileCell ch={ch} color={color} cellPx={cellPx} />
         </div>
       ))}

@@ -113,7 +113,7 @@ function TilePreview({
 
   return (
     <div
-      className="grid h-14 w-14 shrink-0 place-items-center overflow-hidden rounded-md bg-slate-900 p-0 text-teal-300"
+      className="grid h-14 w-14 shrink-0 place-items-center overflow-hidden bg-slate-900 p-0 text-teal-300"
       style={{ containerType: "inline-size" } as CSSProperties}
     >
       <span
