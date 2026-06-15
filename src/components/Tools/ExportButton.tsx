@@ -22,6 +22,7 @@ import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 
 const cellSize = 40;
+const EXPORT_SCALE = 4;
 const PREVIEW_MAX_PX = 240;
 // Measured empirically: the blocks font glyphs overflow their 40px cell by at most 3px on top.
 // This minimal padding prevents edge clipping without adding visible background margin.
@@ -204,13 +205,16 @@ export default function ExportButton() {
   }, [open, offset, bgColor]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleDownload = async () => {
-    await document.fonts.load("57px blocks");
+    await document.fonts.load(`${57 * EXPORT_SCALE}px blocks`);
     const layers = list();
     const bbox = computeBoundingBox(layers, canvasDimension);
-    const canvas = renderLayersToCanvas(layers, bgColor, canvasDimension, {
-      ...bbox,
-      offset,
-    });
+    const canvas = renderLayersToCanvas(
+      layers,
+      bgColor,
+      canvasDimension,
+      { ...bbox, offset },
+      EXPORT_SCALE,
+    );
     const link = document.createElement("a");
     link.download = "patchwork.png";
     link.href = canvas.toDataURL("image/png");
