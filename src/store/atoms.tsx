@@ -8,6 +8,7 @@ import {
 import { createTile } from "@/factory";
 import { atom } from "jotai";
 import { Action, ColorTarget, GridMode, Tile } from "../types";
+import { TileRegion } from "@/lib/patternProjection";
 
 const activeTilesAtom = atom<Tile[]>([]);
 
@@ -31,6 +32,14 @@ const colorMenuTargetAtom = atom<ColorTarget>("tile");
 
 const actionAtom = atom(Action.Draw);
 
+const patternProjectionAtom = atom<{
+  enabled: boolean;
+  sourceRegion: TileRegion | null;
+}>({
+  enabled: false,
+  sourceRegion: null,
+});
+
 export {
   actionAtom,
   activeTilesAtom,
@@ -40,6 +49,7 @@ export {
   colorMenuTargetAtom,
   gridVisibilityAtom,
   mouseDownAtom,
+  patternProjectionAtom,
   selectedTileAtom,
   zoomLevelAtom,
 };

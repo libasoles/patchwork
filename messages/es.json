@@ -4,7 +4,9 @@
     "moveEmpty": "No hay ningún elemento en esta casilla",
     "rotateEmpty": "No hay ningún elemento en esta casilla",
     "hiddenLayer": "La capa está oculta. Hazla visible para poder dibujar",
-    "disabledLayer": "Activa la capa para poder dibujar"
+    "disabledLayer": "Activa la capa para poder dibujar",
+    "repeatPatternEmpty": "No hay mosaicos visibles para repetir",
+    "repeatPatternOriginalOnly": "Edita la región original para cambiar la trama"
   },
   "toolbar": {
     "Draw": "Dibujar",
@@ -27,7 +29,8 @@
     "showLayer": "Mostrar",
     "grayOutLayer": "Atenuar",
     "highlightLayer": "Restablecer",
-    "removeLayer": "Eliminar capa"
+    "removeLayer": "Eliminar capa",
+    "repeatPattern": "Repetir trama"
   },
   "newCanvas": {
     "title": "Nuevo lienzo",

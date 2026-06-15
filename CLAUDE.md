@@ -14,6 +14,26 @@ npx jest --testPathPattern="ComponentName" --watchAll=false  # Run a single test
 
 Node version is pinned via `.nvmrc` (Node 22 LTS).
 
+## Agent Git Workflow
+
+Agents must work from Git worktrees, not directly in the main checkout. Create all worktrees under the sibling directory `../patchwork-worktrees/`:
+
+```bash
+mkdir -p ../patchwork-worktrees
+git worktree add ../patchwork-worktrees/<branch-name> -b <branch-name> main
+```
+
+When the task is complete, verify the change, commit it in the worktree, merge it back into `main` from the main checkout, then remove the worktree:
+
+```bash
+git checkout main
+git merge --no-ff <branch-name>
+git worktree remove ../patchwork-worktrees/<branch-name>
+git branch -d <branch-name>
+```
+
+Do not delete or overwrite user changes in the main checkout. If the main checkout is dirty, leave it untouched and perform the agent's work in a separate worktree branch.
+
 ## Architecture
 
 **Patchwork** is a collaborative tile-based drawing app built with Next.js 13 (Pages Router), React 18, and TypeScript. The path alias `@/...` maps to `src/...`.

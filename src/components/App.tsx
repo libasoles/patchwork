@@ -1,5 +1,6 @@
 import ExportButton from "@/components/Tools/ExportButton";
 import NewCanvasButton from "@/components/Tools/NewCanvasButton";
+import RepeatPatternButton from "@/components/Tools/RepeatPatternButton";
 import ToolBar from "@/components/Tools/ToolBar";
 import Zoom from "@/components/Tools/Zoom";
 import { tilesMap } from "@/config";
@@ -53,6 +54,7 @@ export default function App({ tileSet = tiles }: Props) {
         <div className="fixed top-0 right-[16px] z-10 flex flex-col h-screen items-end py-3 gap-3 pointer-events-none">
           <div className="pointer-events-auto flex items-center gap-1 bg-gray-800 border border-slate-700/60 rounded-full p-1 shadow-xl">
             <ToggleGrid />
+            <RepeatPatternButton />
             <ExportButton />
             <NewCanvasButton />
           </div>

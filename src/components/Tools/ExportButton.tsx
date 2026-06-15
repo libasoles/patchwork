@@ -16,8 +16,13 @@ import {
 } from "@/components/ui/tooltip";
 import { canvasDimension } from "@/config";
 import DownloadIcon from "@/icons/DownloadIcon";
-import { bgColorAtom, useLayersApi } from "@/store";
-import { Layer } from "@/types";
+import {
+  computeVisibleTilesBoundingBox,
+  projectCanvasToRegion,
+  TileRegion,
+} from "@/lib/patternProjection";
+import { bgColorAtom, patternProjectionAtom, useLayersApi } from "@/store";
+import { Dimension, Layer } from "@/types";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 
@@ -64,42 +69,10 @@ const tailwindColors: Record<string, string> = {
   "violet-500": "#8b5cf6",
 };
 
-function computeBoundingBox(
-  layers: Layer[],
-  dimension: { x: number; y: number },
-) {
-  let minCol = dimension.x,
-    maxCol = -1;
-  let minRow = dimension.y,
-    maxRow = -1;
-
-  for (const layer of layers.filter((l) => l.visible)) {
-    for (let i = 0; i < layer.canvas.cells.length; i++) {
-      if (layer.canvas.cells[i].isEmpty()) continue;
-      const col = i % dimension.x;
-      const row = Math.floor(i / dimension.x);
-      minCol = Math.min(minCol, col);
-      maxCol = Math.max(maxCol, col);
-      minRow = Math.min(minRow, row);
-      maxRow = Math.max(maxRow, row);
-    }
-  }
-
-  if (maxCol === -1) {
-    return {
-      minCol: 0,
-      maxCol: dimension.x - 1,
-      minRow: 0,
-      maxRow: dimension.y - 1,
-    };
-  }
-  return { minCol, maxCol, minRow, maxRow };
-}
-
 function renderLayersToCanvas(
   layers: Layer[],
   bgColor: string,
-  dimension: { x: number; y: number },
+  dimension: Dimension,
   cropRegion?: {
     minCol: number;
     maxCol: number;
@@ -167,19 +140,51 @@ function renderLayersToCanvas(
   return canvas;
 }
 
+function getExportLayers(
+  layers: Layer[],
+  dimension: Dimension,
+  projection: { enabled: boolean; sourceRegion: TileRegion | null },
+): Layer[] {
+  if (!projection.enabled || !projection.sourceRegion) return layers;
+
+  return layers.map((layer) => ({
+    ...layer,
+    canvas: {
+      ...layer.canvas,
+      cells: projectCanvasToRegion(
+        layer.canvas.cells,
+        dimension,
+        projection.sourceRegion!,
+      ),
+    },
+  }));
+}
+
+function getExportRegion(layers: Layer[], dimension: Dimension) {
+  return (
+    computeVisibleTilesBoundingBox(layers, dimension) ?? {
+      minCol: 0,
+      maxCol: dimension.x - 1,
+      minRow: 0,
+      maxRow: dimension.y - 1,
+    }
+  );
+}
+
 export default function ExportButton() {
   const t = useTranslations("export");
   const tt = useTranslations("tooltips");
   const { list } = useLayersApi();
   const [bgColor] = useAtom(bgColorAtom);
+  const [projection] = useAtom(patternProjectionAtom);
   const [open, setOpen] = useState(false);
   const [offset, setOffset] = useState(1);
   const [previewUrl, setPreviewUrl] = useState("");
 
   useEffect(() => {
     if (!open) return;
-    const layers = list();
-    const bbox = computeBoundingBox(layers, canvasDimension);
+    const layers = getExportLayers(list(), canvasDimension, projection);
+    const bbox = getExportRegion(layers, canvasDimension);
     document.fonts.load("57px blocks").then(() => {
       const clampedCols = Math.min(
         canvasDimension.x,
@@ -202,12 +207,12 @@ export default function ExportButton() {
       );
       setPreviewUrl(preview.toDataURL("image/png"));
     });
-  }, [open, offset, bgColor]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [open, offset, bgColor, projection]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleDownload = async () => {
     await document.fonts.load(`${57 * EXPORT_SCALE}px blocks`);
-    const layers = list();
-    const bbox = computeBoundingBox(layers, canvasDimension);
+    const layers = getExportLayers(list(), canvasDimension, projection);
+    const bbox = getExportRegion(layers, canvasDimension);
     const canvas = renderLayersToCanvas(
       layers,
       bgColor,

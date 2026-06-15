@@ -1,6 +1,6 @@
 import { canvasDimension, initialZoomLevel } from "@/config";
 import { emptyCanvas } from "@/factory";
-import { canvasOffsetAtom, zoomLevelAtom } from "@/store";
+import { canvasOffsetAtom, patternProjectionAtom, zoomLevelAtom } from "@/store";
 import { useStore } from "@/store/store";
 import { useSetAtom } from "jotai";
 // useStore is used as a static object (useStore.setState) for the reset
@@ -45,6 +45,7 @@ export default function NewCanvasButton() {
   const tl = useTranslations("layers");
   const setZoom = useSetAtom(zoomLevelAtom);
   const setOffset = useSetAtom(canvasOffsetAtom);
+  const setProjection = useSetAtom(patternProjectionAtom);
 
   const handleConfirm = () => {
     useStore.setState((draft) => {
@@ -70,6 +71,7 @@ export default function NewCanvasButton() {
 
     setZoom(initialZoomLevel);
     setOffset({ x: 0, y: 0 });
+    setProjection({ enabled: false, sourceRegion: null });
   };
 
   return (

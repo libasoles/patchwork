@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import { bgColorAtom, canvasOffsetAtom, gridVisibilityAtom, useLayersApi, useHistoryApi, zoomLevelAtom } from '@/store';
+import { bgColorAtom, canvasOffsetAtom, gridVisibilityAtom, patternProjectionAtom, useLayersApi, useHistoryApi, zoomLevelAtom } from '@/store';
 import Layer from './components/Layer';
 import ActiveLayer from './components/ActiveLayer';
 import { useCanvasScale } from './hooks/useCanvasScale';
@@ -10,6 +10,7 @@ import { toastOnce } from '@/lib/toastOnce';
 import { useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { clamp } from '@/utils';
+import { projectCanvasToRegion, TileRegion } from '@/lib/patternProjection';
 
 const zoomMin = 1
 const zoomMax = 50
@@ -29,6 +30,7 @@ export default function Canvas() {
     const canvasScale = useCanvasScale()
 
     const [gridMode] = useAtom(gridVisibilityAtom);
+    const [projection] = useAtom(patternProjectionAtom);
     const [bgColor] = useAtom(bgColorAtom);
     const [zoomLevel, setZoomLevel] = useAtom(zoomLevelAtom);
     const [offset, setOffset] = useAtom(canvasOffsetAtom);
@@ -123,6 +125,16 @@ export default function Canvas() {
                 gridMode={gridMode}
             />
 
+            {projection.enabled && projection.sourceRegion && layersList.map(layer => {
+                if (!layer.visible) return null
+
+                return <Layer key={`projection-${layer.id}`}
+                    canvas={projectCanvasToRegion(layer.canvas.cells, layer.canvas.dimension, projection.sourceRegion!)}
+                    dimension={layer.canvas.dimension}
+                    isDisabled={!layer.enabled}
+                />
+            })}
+
             {isCurrentLayerHidden && (
                 <div
                     className="absolute top-0 bottom-0 left-0 right-0 z-10"
@@ -140,6 +152,7 @@ export default function Canvas() {
                         canvas={layer.canvas.cells}
                         dimension={layer.canvas.dimension}
                         isDisabled={!layer.enabled}
+                        editableRegion={projection.enabled ? projection.sourceRegion : null}
                     />
                     : <Layer key={layer.id}
                         canvas={layer.canvas.cells}
@@ -147,6 +160,28 @@ export default function Canvas() {
                         isDisabled={!layer.enabled}
                     />
             })}
+
+            {projection.enabled && projection.sourceRegion && (
+                <PatternSourceOutline region={projection.sourceRegion} />
+            )}
         </div>
     </div>
+}
+
+function PatternSourceOutline({ region }: { region: TileRegion }) {
+    const width = (region.maxCol - region.minCol + 1) * cellSize
+    const height = (region.maxRow - region.minRow + 1) * cellSize
+
+    return (
+        <div
+            data-testid="pattern-source-outline"
+            className="absolute pointer-events-none z-20 border-2 border-blue-300 shadow-[0_0_0_2px_rgba(59,130,246,0.35)]"
+            style={{
+                left: region.minCol * cellSize,
+                top: region.minRow * cellSize,
+                width,
+                height,
+            }}
+        />
+    )
 }

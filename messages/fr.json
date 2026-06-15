@@ -4,7 +4,9 @@
     "moveEmpty": "Il n'y a aucun élément dans cette cellule",
     "rotateEmpty": "Il n'y a aucun élément dans cette cellule",
     "hiddenLayer": "Le calque est masqué. Rendez-le visible pour dessiner",
-    "disabledLayer": "Activez le calque pour dessiner"
+    "disabledLayer": "Activez le calque pour dessiner",
+    "repeatPatternEmpty": "Il n'y a aucun carreau visible à répéter",
+    "repeatPatternOriginalOnly": "Modifiez la région originale pour changer le motif"
   },
   "toolbar": {
     "Draw": "Dessiner",
@@ -27,7 +29,8 @@
     "showLayer": "Afficher",
     "grayOutLayer": "Atténuer",
     "highlightLayer": "Rétablir",
-    "removeLayer": "Supprimer le calque"
+    "removeLayer": "Supprimer le calque",
+    "repeatPattern": "Répéter le motif"
   },
   "newCanvas": {
     "title": "Nouveau canevas",

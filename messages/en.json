@@ -4,7 +4,9 @@
     "moveEmpty": "There is no element in this cell",
     "rotateEmpty": "There is no element in this cell",
     "hiddenLayer": "The layer is hidden. Make it visible to draw",
-    "disabledLayer": "Enable the layer to draw"
+    "disabledLayer": "Enable the layer to draw",
+    "repeatPatternEmpty": "There are no visible tiles to repeat",
+    "repeatPatternOriginalOnly": "Edit the original region to change the pattern"
   },
   "toolbar": {
     "Draw": "Draw",
@@ -27,7 +29,8 @@
     "showLayer": "Show",
     "grayOutLayer": "Gray out",
     "highlightLayer": "Highlight",
-    "removeLayer": "Remove layer"
+    "removeLayer": "Remove layer",
+    "repeatPattern": "Repeat pattern"
   },
   "newCanvas": {
     "title": "New Canvas",

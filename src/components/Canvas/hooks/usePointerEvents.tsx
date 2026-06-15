@@ -1,13 +1,14 @@
 import { useAtom } from 'jotai';
 import { actionAtom, useCanvasApi } from '@/store';
 import { Action, Tile } from '@/types';
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { isHotkeyPressed } from 'react-hotkeys-hook'
 import useTransformers, { Transformers } from './useTransformers';
-import { emptyTile } from '@/config';
+import { canvasDimension, emptyTile } from '@/config';
 import { createTile } from '@/factory';
 import { toastOnce } from '@/lib/toastOnce';
 import { useTranslations } from 'next-intl';
+import { isIndexInRegion, TileRegion } from '@/lib/patternProjection';
 
 const leftButton = 1
 
@@ -234,13 +235,22 @@ const useDeleteBehavior = () => {
     return { onMouseDown, onMouseEnter }
 }
 
-export function usePointerEvents() {
+export function usePointerEvents(editableRegion: TileRegion | null = null) {
+    const t = useTranslations('toasts');
     const drawBehavior = useDrawAndPaintBehavoirs()
     const moveBehavior = useMoveBehavior()
     const rotateBehavior = useRotateBehavior()
     const deleteBehavior = useDeleteBehavior()
 
+    const canEdit = (index: number) => !editableRegion || isIndexInRegion(index, canvasDimension, editableRegion)
+
     const onMouseDown: Callback = (...args) => {
+        const [, index] = args
+        if (!canEdit(index)) {
+            toastOnce('repeat-pattern-original-only', t('repeatPatternOriginalOnly'))
+            return
+        }
+
         drawBehavior.onMouseDown(...args);
         rotateBehavior.onMouseDown(...args);
         deleteBehavior.onMouseDown(...args);
@@ -248,6 +258,9 @@ export function usePointerEvents() {
     }
 
     const onMouseEnter: Callback = (...args) => {
+        const [, index] = args
+        if (!canEdit(index)) return
+
         drawBehavior.onMouseEnter(...args);
         rotateBehavior.onMouseEnter(...args);
         deleteBehavior.onMouseEnter(...args);

@@ -8,14 +8,16 @@ import { useCallback, useState } from 'react';
 import { useHotkeys, isHotkeyPressed } from 'react-hotkeys-hook';
 import { toastOnce } from '@/lib/toastOnce';
 import { useTranslations } from 'next-intl';
+import { TileRegion } from '@/lib/patternProjection';
 
 export default function ActiveLayer({
     canvas,
     dimension,
     isDisabled = false,
-}: LayerProps) {
+    editableRegion = null,
+}: LayerProps & { editableRegion?: TileRegion | null }) {
     const t = useTranslations('toasts');
-    const { onMouseDown, onMouseEnter, onContextMenu, onMouseUp } = usePointerEvents();
+    const { onMouseDown, onMouseEnter, onContextMenu, onMouseUp } = usePointerEvents(editableRegion);
 
     const [activeAction] = useAtom(actionAtom)
     let cursor = useMouseIcon(activeAction)
