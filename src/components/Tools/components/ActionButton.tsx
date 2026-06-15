@@ -47,6 +47,7 @@ export default function ActionButton({
             onChange={() => onClick(name)}
             className={`${styles.overlap} opacity-0 cursor-pointer`}
             checked={isSelected}
+            tabIndex={-1}
           />
           <div className={`${styles.overlap} grid place-items-center`}>
             {icon ?? children}
