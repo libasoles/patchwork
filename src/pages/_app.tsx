@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
       ReactGA.initialize(GA_MEASUREMENT_ID)
       ReactGA.send({ hitType: 'pageview', page: router.asPath })
     })
-  }, [])
+  }, [router.asPath])
 
   useEffect(() => {
     const handleRouteChange = (url: string) => {
