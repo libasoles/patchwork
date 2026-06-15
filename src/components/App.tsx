@@ -56,7 +56,7 @@ export default function App({ tileSet = tiles }: Props) {
             <ExportButton />
             <NewCanvasButton />
           </div>
-          <div className="flex-1 flex items-center">
+          <div className="flex-1 flex items-start">
             <ColorMenu />
           </div>
         </div>

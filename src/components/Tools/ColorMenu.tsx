@@ -14,7 +14,7 @@ import styles from "@/styles/utils.module.css";
 import { Action, ColorTarget, EventCallback } from "@/types";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
-import { SyntheticEvent } from "react";
+import { SyntheticEvent, useEffect, useRef } from "react";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { isHotkeyPressed } from "react-hotkeys-hook";
 
@@ -27,6 +27,30 @@ export default function ColorMenu() {
 
   const isTile = target === "tile";
   const activeColors = isTile ? colors : bgColors;
+
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = panelRef.current;
+    if (!el || !el.parentElement) return;
+
+    if (!isTile) {
+      el.style.marginTop = (el.dataset.savedTop ?? "0") + "px";
+      return;
+    }
+
+    const applyCenter = () => {
+      if (!el.parentElement) return;
+      const top = Math.max(0, (el.parentElement.clientHeight - el.clientHeight) / 2);
+      el.style.marginTop = `${top}px`;
+      el.dataset.savedTop = String(top);
+    };
+
+    applyCenter();
+    const ro = new ResizeObserver(applyCenter);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [isTile]);
   const currentColor = isTile ? color : bgColor;
   const setCurrent = isTile ? setColor : setBgColor;
 
@@ -40,6 +64,7 @@ export default function ColorMenu() {
 
   return (
     <div
+      ref={panelRef}
       data-testid="color-panel"
       className="pointer-events-auto bg-gray-800 border border-slate-700/60 rounded-3xl p-1.5 shadow-xl flex flex-col items-center"
     >
