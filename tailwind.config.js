@@ -54,6 +54,7 @@ module.exports = {
 
     "text-gray-800",
     "text-slate-500",
+    "text-indigo-200",
     "text-yellow-400",
     "text-pink-500",
     "text-red-400",
