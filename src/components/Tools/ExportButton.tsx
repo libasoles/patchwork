@@ -185,7 +185,10 @@ export default function ExportButton() {
     if (!open) return;
     const layers = getExportLayers(list(), canvasDimension, projection);
     const bbox = getExportRegion(layers, canvasDimension);
-    document.fonts.load("57px blocks").then(() => {
+    Promise.all([
+      document.fonts.load("57px blocks", '–'),
+      document.fonts.load("57px blocks", ''),
+    ]).then(() => {
       const clampedCols = Math.min(
         canvasDimension.x,
         bbox.maxCol - bbox.minCol + 1 + offset * 2,
@@ -210,7 +213,10 @@ export default function ExportButton() {
   }, [open, offset, bgColor, projection]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleDownload = async () => {
-    await document.fonts.load(`${57 * EXPORT_SCALE}px blocks`);
+    await Promise.all([
+      document.fonts.load(`${57 * EXPORT_SCALE}px blocks`, '–'),
+      document.fonts.load(`${57 * EXPORT_SCALE}px blocks`, ''),
+    ]);
     const layers = getExportLayers(list(), canvasDimension, projection);
     const bbox = getExportRegion(layers, canvasDimension);
     const canvas = renderLayersToCanvas(

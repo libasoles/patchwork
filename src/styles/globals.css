@@ -9,6 +9,12 @@
   src: url("/BIT BLOCKS TTF BRK.ttf");
 }
 
+@font-face {
+  font-family: blocks;
+  src: url("/smith-tiles.ttf");
+  unicode-range: U+E000-U+E001;
+}
+
 :root {
 }
 
