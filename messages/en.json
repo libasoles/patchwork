@@ -44,6 +44,12 @@
     "addLayer": "Add Layer",
     "defaultName": "Layer"
   },
+  "export": {
+    "title": "Download Image",
+    "offset": "Padding",
+    "cancel": "Cancel",
+    "download": "Download"
+  },
   "meta": {
     "title": "Patchwork — Truchet Tile Pattern Creator",
     "description": "Create infinite geometric patterns with modular tiles, inspired by Sébastien Truchet's 1704 tiling system. Free browser canvas for tile art and collaboration.",

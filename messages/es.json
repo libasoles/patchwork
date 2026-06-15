@@ -44,6 +44,12 @@
     "addLayer": "Agregar capa",
     "defaultName": "Capa"
   },
+  "export": {
+    "title": "Descargar imagen",
+    "offset": "Margen",
+    "cancel": "Cancelar",
+    "download": "Descargar"
+  },
   "meta": {
     "title": "Patchwork — Creador de Patrones con Mosaicos",
     "description": "Crea patrones geométricos infinitos con mosaicos modulares, inspirado en el sistema de Sébastien Truchet (1704). Lienzo gratuito en el navegador para arte y colaboración.",
