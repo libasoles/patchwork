@@ -9,6 +9,11 @@
   src: url("/BIT BLOCKS TTF BRK.ttf");
 }
 
+@font-face {
+  font-family: smith-tiles;
+  src: url("/smith-tiles.ttf");
+}
+
 :root {
 }
 
@@ -19,6 +24,10 @@ body {
 
 .tile {
   font-family: blocks;
+}
+
+.smith-tile {
+  font-family: smith-tiles;
 }
 
 input[type="range"] {
