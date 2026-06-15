@@ -98,6 +98,8 @@ export const tilesMap = [
   { id: 210, symbol: "Ò", group: "rounded corners" },
   { symbol: "", id: 0xE000, group: "circle quarters" },
   { symbol: "", id: 0xE001, group: "circle quarters" },
+  { symbol: "\u{E002}", id: 0xE002, group: "diagonal lines" },
+  { symbol: "\u{E003}", id: 0xE003, group: "diagonal lines" },
   { symbol: "D", id: 68, group: "half rings" },
   { symbol: "F", id: 70, group: "half rings" },
   { symbol: "E", id: 69, group: "half rings" },
