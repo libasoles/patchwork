@@ -1,13 +1,13 @@
-import { actionAtom } from '@/store';
+import { actionAtom } from "@/store";
+import { Action, Tile } from "@/types";
 import { useAtom } from 'jotai';
-import { Action } from "@/types";
 
 export function useCurrectAction() {
-    const [, setCurrentAction] = useAtom(actionAtom);
+  const [, setCurrentAction] = useAtom(actionAtom);
 
-    function onSelect() {
-        setCurrentAction(Action.Draw);
-    }
+  function onSelect(tile: Tile) {
+    setCurrentAction(tile.isEmpty() ? Action.Delete : Action.Draw);
+  }
 
-    return onSelect;
+  return onSelect;
 }

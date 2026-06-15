@@ -3,7 +3,7 @@ import NewCanvasButton from "@/components/Tools/NewCanvasButton";
 import RepeatPatternButton from "@/components/Tools/RepeatPatternButton";
 import ToolBar from "@/components/Tools/ToolBar";
 import Zoom from "@/components/Tools/Zoom";
-import { tilesMap } from "@/config";
+import { emptyTile, tilesMap } from "@/config";
 import useIsMobile from "@/hooks/isMobile";
 import { getLayerDefaultName } from "@/lib/i18n";
 import { bgColorAtom } from "@/store";
@@ -19,7 +19,7 @@ import ColorMenu from "./Tools/ColorMenu";
 import LayerStack from "./Tools/LayerStack";
 import ToggleGrid from "./Tools/ToggleGrid";
 
-const tiles = tilesMap.map((tile) => createTile(tile));
+const tiles = [emptyTile, ...tilesMap].map((tile) => createTile(tile));
 
 type Props = { tileSet?: Tile[] };
 

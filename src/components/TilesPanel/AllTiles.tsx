@@ -1,7 +1,6 @@
 import useIsMobile from "@/hooks/isMobile";
 import type { Tile as TileType } from "@/types";
 import { useTranslations } from "next-intl";
-import { SyntheticEvent } from "react";
 import Panel from "./components/Panel";
 import Tile from "./components/Tile";
 import { useCurrectAction } from "./hooks/useCurrectAction";
@@ -15,7 +14,7 @@ type Props = {
 export default function TileSet({ tiles, isDisabled }: Props) {
   const t = useTranslations("panels");
   const onTileSelect = useCurrectAction();
-  const { selected, onSelect } = useHighlighting(tiles);
+  const { selected, onSelect } = useHighlighting();
   const { isMobile } = useIsMobile();
 
   return (
@@ -31,9 +30,9 @@ export default function TileSet({ tiles, isDisabled }: Props) {
           <Tile
             key={tile.id}
             tile={tile}
-            onSelect={(e: SyntheticEvent) => {
-              onSelect(e);
-              onTileSelect();
+            onSelect={() => {
+              onSelect(tile);
+              onTileSelect(tile);
             }}
             isSelected={isSelected}
             isDisabled={isDisabled}

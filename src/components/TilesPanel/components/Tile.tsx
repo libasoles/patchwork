@@ -1,6 +1,7 @@
 import { colorAtom } from "@/store";
 import type { EventCallback, Tile as TileType } from "@/types";
 import { useAtom } from "jotai";
+import { Eraser } from "lucide-react";
 import styles from "./Tile.module.css";
 
 type Props = {
@@ -17,6 +18,7 @@ export default function Tile({
   onSelect,
 }: Props) {
   const [color] = useAtom(colorAtom);
+  const showEraserIcon = tile.isEmpty() && isSelected;
 
   return (
     <label
@@ -41,13 +43,13 @@ export default function Tile({
       />
       <span
         data-testid={`${isSelected ? "selected-symbol" : "symbol"}`}
-        className={`${styles.overlap} bg-slate-700 text-${isSelected ? color : "slate-500"}`}
+        className={`${styles.overlap} grid place-items-center bg-slate-700 text-${isSelected ? color : "slate-500"}`}
         style={{
           lineHeight: 0.7,
           fontSize: "143cqw",
         }}
       >
-        {tile.symbol}
+        {showEraserIcon ? <Eraser aria-label="Eraser" size={24} /> : tile.symbol}
       </span>
     </label>
   );

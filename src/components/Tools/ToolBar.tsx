@@ -1,9 +1,12 @@
 import {
   actionAtom,
   colorMenuTargetAtom,
+  selectedTileAtom,
   useLayersApi,
   useSelectedLayer,
 } from "@/store";
+import { defaultSelectedTile, emptyTile } from "@/config";
+import { createTile } from "@/factory";
 import { Action } from "@/types";
 import { useAtom } from "jotai";
 import { Brush, Eraser, Move, Pencil, RotateCw } from "lucide-react";
@@ -18,13 +21,30 @@ const ICON_SIZE = 18;
 const ToolBar = () => {
   const [, setColorMenuTarget] = useAtom(colorMenuTargetAtom);
   const [selectedAction, setSelected] = useAtom(actionAtom);
+  const [selectedTile, setSelectedTile] = useAtom(selectedTileAtom);
   const t = useTranslations("toolbar");
 
-  useHotkeys("1", () => setSelected(Action.Draw));
-  useHotkeys("2", () => setSelected(Action.Paint));
-  useHotkeys("3", () => setSelected(Action.Move));
-  useHotkeys("4", () => setSelected(Action.Rotate));
-  useHotkeys("5", () => setSelected(Action.Delete));
+  const selectAction = useCallback(
+    (action: Action) => {
+      setSelected(action);
+
+      if (action === Action.Delete) {
+        setSelectedTile(createTile(emptyTile));
+        return;
+      }
+
+      if (selectedTile.isEmpty()) {
+        setSelectedTile(createTile(defaultSelectedTile));
+      }
+    },
+    [selectedTile, setSelected, setSelectedTile],
+  );
+
+  useHotkeys("1", () => selectAction(Action.Draw));
+  useHotkeys("2", () => selectAction(Action.Paint));
+  useHotkeys("3", () => selectAction(Action.Move));
+  useHotkeys("4", () => selectAction(Action.Rotate));
+  useHotkeys("5", () => selectAction(Action.Delete));
 
   const { list, disable } = useLayersApi();
   const selectedLayer = useSelectedLayer();
@@ -39,25 +59,25 @@ const ToolBar = () => {
 
   const selectActionAndFocusTileColors = useCallback(
     (action: Action) => {
-      setSelected(action);
+      selectAction(action);
       setColorMenuTarget("tile");
     },
-    [setSelected, setColorMenuTarget],
+    [selectAction, setColorMenuTarget],
   );
 
   const selectActionAndDisableLayers = useCallback(
     (action: Action) => {
-      setSelected(action);
+      selectAction(action);
       disableLayers();
     },
-    [setSelected, disableLayers],
+    [selectAction, disableLayers],
   );
 
   const actions = [
     {
       name: Action.Draw,
       icon: <Pencil size={ICON_SIZE} />,
-      onClick: setSelected,
+      onClick: selectAction,
       shortcut: "1",
     },
     {

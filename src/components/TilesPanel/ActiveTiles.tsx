@@ -1,5 +1,4 @@
 import { useTranslations } from "next-intl";
-import { SyntheticEvent } from "react";
 import Panel from "./components/Panel";
 import Tile from "./components/Tile";
 import { useActiveTiles } from "./hooks/useActiveTiles";
@@ -17,7 +16,7 @@ export default function ActiveTiles({ isDisabled }: Props) {
   const sortedList = activeTiles.sort((a, b) => a.id - b.id); // if we don't sort, order is rendom each time
 
   const onTileSelect = useCurrectAction();
-  const { selected, onSelect } = useHighlighting(activeTiles);
+  const { selected, onSelect } = useHighlighting();
 
   return (
     // TODO: adjust height to grow incrementally
@@ -35,9 +34,9 @@ export default function ActiveTiles({ isDisabled }: Props) {
           <Tile
             key={tile.id}
             tile={tile}
-            onSelect={(e: SyntheticEvent) => {
-              onSelect(e);
-              onTileSelect();
+            onSelect={() => {
+              onSelect(tile);
+              onTileSelect(tile);
             }}
             isSelected={isSelected}
             isDisabled={isDisabled}
