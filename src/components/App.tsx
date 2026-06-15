@@ -53,8 +53,8 @@ export default function App({ tileSet = tiles }: Props) {
         <div className="w-auto fixed top-3 right-[16px] z-10 flex gap-3 h-full justify-start pointer-events-none">
           <div className="pointer-events-auto flex items-center gap-1 bg-gray-800 border border-slate-700/60 rounded-full p-1 self-start shadow-xl">
             <ToggleGrid />
-            <NewCanvasButton />
             <ExportButton />
+            <NewCanvasButton />
           </div>
           <ColorMenu />
         </div>
