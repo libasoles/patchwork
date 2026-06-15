@@ -41,7 +41,7 @@ export default function ColorMenu() {
   return (
     <div
       data-testid="color-panel"
-      className="pointer-events-auto bg-gray-800 border border-slate-700/60 rounded-3xl p-1.5 shadow-xl self-start flex flex-col items-center"
+      className="pointer-events-auto bg-gray-800 border border-slate-700/60 rounded-3xl p-1.5 shadow-xl flex flex-col items-center"
     >
       <div className="flex flex-col items-center gap-1.5">
         <Tooltip>
