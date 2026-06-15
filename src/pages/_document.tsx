@@ -16,7 +16,11 @@ export default class MyDocument extends Document {
     const { locale } = this.props.__NEXT_DATA__
     return (
       <Html lang={locale ?? 'en'}>
-        <Head />
+        <Head>
+          <link rel="icon" href="/favicon.ico" sizes="any" />
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+          <link rel="manifest" href="/site.webmanifest" />
+        </Head>
         <body>
           <Main />
           <NextScript />
