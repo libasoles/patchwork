@@ -13,6 +13,21 @@ interface Article {
 
 const articles: Article[] = [
   {
+    slug: "tile-groups",
+    date: "2026-06-15",
+    titles: {
+      en: "Patchwork Tile Groups",
+      es: "Grupos de tiles de Patchwork",
+      fr: "Groupes de carreaux Patchwork",
+    },
+    summaries: {
+      en: "A visual catalog of every selectable Patchwork tile group, with source notes, font previews, IDs, and orientations. Unmapped font glyphs are excluded.",
+      es: "Catalogo visual de todos los grupos seleccionables de Patchwork, con notas de fuente, previews, IDs y orientaciones. Excluye los glifos no mapeados.",
+      fr: "Catalogue visuel de tous les groupes selectionnables de Patchwork, avec notes de source, apercus, IDs et orientations. Les glyphes non mappes sont exclus.",
+    },
+    tags: ["tiles", "catalog", "reference"],
+  },
+  {
     slug: "truchet-tiling",
     date: "2026-06-15",
     titles: {

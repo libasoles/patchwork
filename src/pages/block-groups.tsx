@@ -35,12 +35,24 @@ function TilePreview({
   );
 }
 
-function GroupCard({ family, index }: { family: TileGroupFamily; index: number }) {
+function GroupCard({
+  family,
+  index,
+}: {
+  family: TileGroupFamily;
+  index: number;
+}) {
   const tileCount = family.tiles.length;
   const sourceLabel =
-    family.source === "font-catalog" ? "Font catalog" : "Historic family";
+    family.source === "font-catalog"
+      ? "Font catalog"
+      : family.source === "patchwork-family"
+        ? "Patchwork family"
+        : "Historic family";
   const sourceFontLabel =
-    family.sourceFont === "smith-tiles" ? "smith-tiles.ttf" : "BIT BLOCKS TTF BRK.ttf";
+    family.sourceFont === "smith-tiles"
+      ? "smith-tiles.ttf"
+      : "BIT BLOCKS TTF BRK.ttf";
 
   return (
     <article
@@ -129,12 +141,17 @@ function GroupCard({ family, index }: { family: TileGroupFamily; index: number }
 export default function BlockGroups() {
   const tileTotal = allTileGroupFamilies.reduce(
     (total, family) => total + family.tiles.length,
-    0
+    0,
   );
   const historicTotal = allTileGroupFamilies.filter(
-    (family) => family.source !== "font-catalog"
+    (family) => family.source === "historic",
   ).length;
-  const fontCatalogTotal = allTileGroupFamilies.length - historicTotal;
+  const patchworkFamilyTotal = allTileGroupFamilies.filter(
+    (family) => family.source === "patchwork-family",
+  ).length;
+  const fontCatalogTotal = allTileGroupFamilies.filter(
+    (family) => family.source === "font-catalog",
+  ).length;
 
   return (
     <>
@@ -167,8 +184,8 @@ export default function BlockGroups() {
                     src/data/tileGroups.ts
                   </code>
                   , including historical Truchet families plus the remaining
-                  groups cataloged from the BIT BLOCKS font through Patchwork&apos;s
-                  tile config.
+                  groups cataloged from the BIT BLOCKS font through
+                  Patchwork&apos;s tile config.
                 </p>
               </div>
 
@@ -187,15 +204,20 @@ export default function BlockGroups() {
                 </div>
                 <div className="col-span-2 rounded-lg border border-zinc-200 bg-stone-50 px-4 py-3 sm:col-span-1">
                   <p className="text-2xl font-semibold text-zinc-950">
-                    {new Set(allTileGroupFamilies.flatMap((f) => f.patchworkGroups)).size}
+                    {
+                      new Set(
+                        allTileGroupFamilies.flatMap((f) => f.patchworkGroups),
+                      ).size
+                    }
                   </p>
                   <p className="mt-1 text-zinc-500">groups</p>
                 </div>
               </div>
             </div>
             <p className="mt-6 text-sm text-zinc-500">
-              Coverage: {historicTotal} historic families and {fontCatalogTotal} BIT
-              BLOCKS catalog groups.
+              Coverage: {historicTotal} historic families,{" "}
+              {patchworkFamilyTotal} curated Patchwork families, and{" "}
+              {fontCatalogTotal} font catalog groups.
             </p>
           </div>
         </section>

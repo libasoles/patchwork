@@ -3,16 +3,19 @@ import { emptyTile, tilesMap } from "@/config";
 /**
  * tileGroups.ts
  *
- * Maps Patchwork tile groups to historically significant Truchet tile families.
+ * Maps Patchwork tile groups to historically documented families, curated
+ * Patchwork pattern families, and glyph groups derived from the bundled fonts.
  *
  * Historic references:
  *   - Truchet 1704: Sébastien Truchet, "Mémoire sur les combinaisons" (1704).
  *     Square tiles divided by a diagonal; 4 orientations of one shape.
  *   - Smith 1987: Cyril Stanley Smith, "The tiling patterns of Sebastien Truchet and
  *     the topology of structural hierarchy" (1987). Quarter-circle arcs connecting
- *     midpoints of adjacent sides; 2 tile shapes × 2 placements = 4 variants.
- *   - Extensions documented in the literature: semi-circle tiles, two-arc (S-curve)
- *     tiles, rectilinear (straight-corner) analogs, and road/maze tile families.
+ *     midpoints of adjacent sides.
+ *
+ * Other grouped Patchwork tiles are described visually and by local source font;
+ * they should not be presented as designs by Truchet or Smith unless their
+ * specific historic source is known.
  *
  * Canvas model reminder:
  *   - The canvas is 50×50 cells (canvasDimension from config.tsx).
@@ -24,15 +27,15 @@ import { emptyTile, tilesMap } from "@/config";
 export interface TileGroupFamily {
   /** kebab-case identifier */
   id: string;
-  /** Whether this group is historically documented or cataloged from Patchwork's font */
-  source?: "historic" | "font-catalog";
+  /** Whether this group is historically documented, curated, or cataloged from a font */
+  source?: "historic" | "patchwork-family" | "font-catalog";
   /** CSS font family key used for rendering this group's glyph previews */
   sourceFont?: "blocks" | "smith-tiles";
   /** Human-readable name */
   name: string;
   /** What the tile glyph looks like and how it tiles */
   description: string;
-  /** Primary historic source or family name */
+  /** Primary source note or family name */
   historicReference: string;
   /** The Patchwork config group name(s) that belong to this family */
   patchworkGroups: string[];
@@ -52,8 +55,7 @@ export interface TileGroupFamily {
 }
 
 /**
- * All known tile families in Patchwork, ordered from most historically
- * significant to most decorative/extended.
+ * Historically sourced families in Patchwork.
  */
 export const truchetFamilies: TileGroupFamily[] = [
   {
@@ -99,49 +101,46 @@ export const truchetFamilies: TileGroupFamily[] = [
     id: "smith-1987",
     name: "Smith Arc Tiles (1987)",
     description:
-      "Quarter-circle arc connecting the midpoints of two adjacent sides of the " +
-      "square. The 4 rotations place the arc in each of the 4 corner positions. " +
-      "When tiled randomly these produce the iconic flowing, organic labyrinthine " +
-      "curves — the pattern most commonly associated with 'Truchet tiling' today. " +
-      "Rediscovered and popularized by Cyril Stanley Smith in 1987.",
+      "Each tile carries two quarter-circle arcs, one in each of two diagonally opposite " +
+      "corners, covering all four edge midpoints. Because every edge of every tile has an " +
+      "arc crossing its midpoint, any two adjacent tiles always connect — so even random " +
+      "arrangements produce the iconic closed labyrinthine regions Smith described. " +
+      "Two distinct tile shapes: S-shape (top-right + bottom-left arcs) and reverse-S " +
+      "(top-left + bottom-right arcs). Popularized by Cyril Stanley Smith in 1987.",
     historicReference: "Cyril Stanley Smith, 1987",
     patchworkGroups: ["circle quarters"],
     tiles: [
       {
-        id: 8211,
-        symbol: "–",
+        id: 0xe000,
+        symbol: String.fromCodePoint(0xe000),
         orientation: 0,
-        description: "Quarter-circle arc in the top-left corner",
+        description: "S-shape: arc at top-right corner + arc at bottom-left corner",
       },
       {
-        id: 8212,
-        symbol: "—",
+        id: 0xe001,
+        symbol: String.fromCodePoint(0xe001),
         orientation: 1,
-        description: "Quarter-circle arc in the top-right corner (90° CW)",
-      },
-      {
-        id: 732,
-        symbol: "˜",
-        orientation: 2,
-        description: "Quarter-circle arc in the bottom-right corner (180°)",
-      },
-      {
-        id: 8482,
-        symbol: "™",
-        orientation: 3,
-        description: "Quarter-circle arc in the bottom-left corner (270° CW)",
+        description: "Reverse-S: arc at top-left corner + arc at bottom-right corner",
       },
     ],
   },
+];
 
+/**
+ * Curated Patchwork families with hand-written descriptions. These groups are
+ * useful relatives of Truchet-style modular tiling, but are not attributed to a
+ * specific historical designer unless noted in the description.
+ */
+export const patchworkPatternFamilies: TileGroupFamily[] = [
   {
     id: "semi-circle",
     name: "Semi-circle Tiles",
     description:
       "Half-circle arc anchored at the midpoint of one side, bulging toward the " +
       "center. 4 rotations cover all four sides. Produces wave and scallop patterns " +
-      "when tiled. A natural extension of the Truchet arc family.",
-    historicReference: "Arc family extension",
+      "when tiled. Patchwork treats this as a modular arc family, not as a documented " +
+      "tile designed by Truchet or Smith.",
+    historicReference: "Patchwork modular arc family",
     patchworkGroups: ["semi circles"],
     tiles: [
       {
@@ -178,8 +177,9 @@ export const truchetFamilies: TileGroupFamily[] = [
       "Two half-circle arcs on opposite sides of the tile, creating S-shapes " +
       "and Z-shapes. Only 2 distinct tiles needed (horizontal and vertical " +
       "orientations). When mixed, produces flowing S-curve meander patterns. " +
-      "Documented in Truchet literature as a 'two-arc' variant.",
-    historicReference: "Two-arc Truchet variant",
+      "This is cataloged as a Patchwork arc connector family rather than a direct " +
+      "Truchet or Smith source tile.",
+    historicReference: "Patchwork modular arc family",
     patchworkGroups: ["two half circles"],
     tiles: [
       {
@@ -199,13 +199,13 @@ export const truchetFamilies: TileGroupFamily[] = [
 
   {
     id: "straight-corner",
-    name: "Straight Corner (Rectilinear Smith Analog)",
+    name: "Straight Corner Tiles",
     description:
       "Right-angle (L-shaped) line connecting the midpoints of two adjacent " +
-      "sides, passing through the corner of the tile. The rectilinear analog of " +
-      "the Smith arc tile — same topological family but with sharp 90° bends " +
-      "instead of smooth curves. 4 rotations cover all corners.",
-    historicReference: "Rectilinear Truchet variant",
+      "sides, passing through the corner of the tile. It behaves like a rectilinear " +
+      "connector with sharp 90° bends and 4 rotations, but Patchwork does not " +
+      "attribute this glyph group to Smith.",
+    historicReference: "Patchwork rectilinear connector family",
     patchworkGroups: ["straight corners"],
     tiles: [
       {
@@ -241,8 +241,8 @@ export const truchetFamilies: TileGroupFamily[] = [
     description:
       "Large arc spanning the full width of one side of the tile, creating a " +
       "tall arch shape. 4 rotations. When combined, produces interlocking arch " +
-      "and vault patterns reminiscent of Islamic geometric art.",
-    historicReference: "Arc family extension",
+      "and vault patterns.",
+    historicReference: "Patchwork modular arc family",
     patchworkGroups: ["archs"],
     tiles: [
       {
@@ -276,12 +276,11 @@ export const truchetFamilies: TileGroupFamily[] = [
     id: "rounded-corner",
     name: "Rounded Corner Tiles",
     description:
-      "Quarter-circle arc filling the corner of the tile (the 'negative' " +
-      "of the Smith arc — where Smith draws the arc connecting adjacent-side " +
-      "midpoints, this tile fills the corner region with a rounded shape). " +
-      "4 rotations. The TODO comment in config.tsx calls these out as the " +
-      "negatives of Smith tiles.",
-    historicReference: "Smith 1987 complement",
+      "Rounded corner fills in small and large variants. Their rotations place " +
+      "the filled corner in each quadrant, making them useful as complements to " +
+      "arc and corner patterns. They are Patchwork font glyphs, not documented " +
+      "Smith tiles.",
+    historicReference: "Patchwork rounded corner family",
     patchworkGroups: ["rounded corners", "little rounded corners"],
     tiles: [
       {
@@ -341,9 +340,8 @@ export const truchetFamilies: TileGroupFamily[] = [
     description:
       "Parallel double-line paths through the tile: either straight through " +
       "(horizontal or vertical) or turning at a corner. Creates connected road " +
-      "network and maze patterns. Related to Wang tiles and maze-generation " +
-      "algorithms; each tile represents a path segment.",
-    historicReference: "Maze / road network family",
+      "network and maze patterns; each tile represents a local path segment.",
+    historicReference: "Patchwork path connector family",
     patchworkGroups: ["roadway"],
     tiles: [
       {
@@ -380,7 +378,7 @@ export const truchetFamilies: TileGroupFamily[] = [
       "Curved version of the roadway tiles: parallel double-line paths with " +
       "smooth curved corners instead of sharp bends. Same topological family " +
       "as roadway tiles, producing organic-looking connected networks.",
-    historicReference: "Maze / road network family (curved variant)",
+    historicReference: "Patchwork path connector family",
     patchworkGroups: ["rounded roadways"],
     tiles: [
       {
@@ -595,7 +593,9 @@ const catalogGroupMetadata: Record<string, Pick<TileGroupFamily, "name" | "descr
 };
 
 const documentedPatchworkGroups = new Set(
-  truchetFamilies.flatMap((family) => family.patchworkGroups)
+  [...truchetFamilies, ...patchworkPatternFamilies].flatMap(
+    (family) => family.patchworkGroups
+  )
 );
 
 function slugifyGroupName(groupName: string): string {
@@ -682,33 +682,24 @@ export const smithTilesFontFamily: TileGroupFamily = {
   sourceFont: "smith-tiles",
   name: "Smith Tiles Font",
   description:
-    "Supplementary Patchwork font containing four Smith-style quarter-circle arc tiles at Private Use Area codepoints U+E000 through U+E003. The glyph metrics match BIT BLOCKS so these tiles align with the existing grid.",
+    "Supplementary Patchwork font with two double-arc Smith (1987) tiles at U+E000–U+E001. " +
+    "Each glyph contains TWO quarter-circle arcs covering all four edge midpoints, so any " +
+    "adjacent pair of tiles always connects — producing the labyrinthine closed regions Smith described. " +
+    "Glyph metrics match BIT BLOCKS so these tiles align with the existing grid.",
   historicReference: "Cyril Stanley Smith arc tile family, supplementary Patchwork font",
-  patchworkGroups: ["smith tiles font"],
+  patchworkGroups: [],
   tiles: [
     {
       id: 0xe000,
       symbol: String.fromCodePoint(0xe000),
       orientation: 0,
-      description: "Quarter-circle arc in the top-left corner from smith-tiles.ttf.",
+      description: "S-shape: arc at top-right corner + arc at bottom-left corner.",
     },
     {
       id: 0xe001,
       symbol: String.fromCodePoint(0xe001),
       orientation: 1,
-      description: "Quarter-circle arc in the top-right corner from smith-tiles.ttf.",
-    },
-    {
-      id: 0xe002,
-      symbol: String.fromCodePoint(0xe002),
-      orientation: 2,
-      description: "Quarter-circle arc in the bottom-right corner from smith-tiles.ttf.",
-    },
-    {
-      id: 0xe003,
-      symbol: String.fromCodePoint(0xe003),
-      orientation: 3,
-      description: "Quarter-circle arc in the bottom-left corner from smith-tiles.ttf.",
+      description: "Reverse-S: arc at top-left corner + arc at bottom-right corner.",
     },
   ],
 };
@@ -717,6 +708,11 @@ export const allTileGroupFamilies: TileGroupFamily[] = [
   ...truchetFamilies.map((family) => ({
     ...family,
     source: "historic" as const,
+    sourceFont: "blocks" as const,
+  })),
+  ...patchworkPatternFamilies.map((family) => ({
+    ...family,
+    source: "patchwork-family" as const,
     sourceFont: "blocks" as const,
   })),
   ...fontCatalogFamilies,
