@@ -246,17 +246,32 @@ export function usePointerEvents(editableRegion: TileRegion | null = null) {
 
     const canEdit = (index: number) => !editableRegion || isIndexInRegion(index, canvasDimension, editableRegion)
 
-    const onMouseDown: Callback = (...args) => {
-        const [, index] = args
+    // Shared pointer-down logic used by both the real mousedown handler and the
+    // touch handler. Kept separate so the touch path can call it directly without
+    // going through the ghost-suppression guard below.
+    const handlePointerDown = (e: React.MouseEvent<HTMLButtonElement>, index: number) => {
         if (!canEdit(index)) {
             toastOnce('repeat-pattern-original-only', t('repeatPatternOriginalOnly'))
             return
         }
+        drawBehavior.onMouseDown(e, index);
+        rotateBehavior.onMouseDown(e, index);
+        deleteBehavior.onMouseDown(e, index);
+        moveBehavior.onMouseDown(e, index);
+    }
 
-        drawBehavior.onMouseDown(...args);
-        rotateBehavior.onMouseDown(...args);
-        deleteBehavior.onMouseDown(...args);
-        moveBehavior.onMouseDown(...args);
+    // After a touch, mobile browsers fire a ghost mousedown/mouseup/click sequence
+    // for backward compatibility. React 18 registers touch listeners as passive, so
+    // event.preventDefault() can't suppress them. Instead we set this flag right
+    // after handling the touchstart and clear it in the guard below.
+    const suppressGhostMouseDown = useRef(false)
+
+    const onMouseDown: Callback = (e, index) => {
+        if (suppressGhostMouseDown.current) {
+            suppressGhostMouseDown.current = false
+            return
+        }
+        handlePointerDown(e, index)
     }
 
     const onMouseEnter: Callback = (...args) => {
@@ -292,9 +307,10 @@ export function usePointerEvents(editableRegion: TileRegion | null = null) {
         }
         const index = indexUnderTouch(event.touches[0])
         if (index === null) return
-        event.preventDefault() // prevent ghost mousedown/click compatibility events
         lastTouchIndex.current = index
-        onMouseDown(touchAsMouse, index)
+        handlePointerDown(touchAsMouse, index)
+        // Suppress the ghost mousedown that mobile browsers fire after touchend.
+        suppressGhostMouseDown.current = true
     }
 
     const onTouchMove: TouchCallback = (event) => {
