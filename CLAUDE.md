@@ -36,7 +36,7 @@ Do not delete or overwrite user changes in the main checkout. If the main checko
 
 ## Architecture
 
-**Patchwork** is a collaborative tile-based drawing app built with Next.js 13 (Pages Router), React 18, and TypeScript. The path alias `@/...` maps to `src/...`.
+**Patchwork** is a collaborative tile-based drawing app built with Next.js 15 (Pages Router), React 18, and TypeScript. The path alias `@/...` maps to `src/...`.
 
 ### Routes (`src/pages/`)
 
