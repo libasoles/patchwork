@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 import { Dices, Shuffle, Repeat } from "lucide-react";
 
 import { allTileGroupFamilies, type TileGroupFamily } from "@/data/tileGroups";
+import { bgColors, colors, defaultBgColor, defaultColor } from "@/config";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -48,6 +49,8 @@ const labels = {
   en: {
     tiles: "Tiles",
     mode: "Mode",
+    color: "Tile color",
+    background: "Background",
     selectPlaceholder: "Select a tile group",
     patternLabel: "Generated tile pattern",
     dimensions: (columns: number, rows: number) =>
@@ -58,6 +61,8 @@ const labels = {
   es: {
     tiles: "Grupo de mosaicos",
     mode: "Modo",
+    color: "Color del mosaico",
+    background: "Fondo",
     selectPlaceholder: "Elegir grupo de mosaicos",
     patternLabel: "Patron de mosaicos generado",
     dimensions: (columns: number, rows: number) =>
@@ -68,6 +73,8 @@ const labels = {
   fr: {
     tiles: "Carreaux",
     mode: "Mode",
+    color: "Couleur du carreau",
+    background: "Fond",
     selectPlaceholder: "Choisir un groupe",
     patternLabel: "Motif de carreaux genere",
     dimensions: (columns: number, rows: number) =>
@@ -92,6 +99,8 @@ export function TileCombinationWidget({
   const [familyId, setFamilyId] = useState(defaultFamilyId);
   const [mode, setMode] = useState<TileCombinationMode>("regular");
   const [patternVersion, setPatternVersion] = useState(0);
+  const [tileColor, setTileColor] = useState(defaultColor);
+  const [backgroundColor, setBackgroundColor] = useState(defaultBgColor);
   const selectedFamily =
     families.find((family) => family.id === familyId) ?? families[0];
   const patternSeed = `${selectedFamily.id}:${mode}:${patternVersion}`;
@@ -175,13 +184,29 @@ export function TileCombinationWidget({
             </Button>
           </div>
         </div>
+
+        <ColorSwatchGroup
+          label={t.color}
+          colors={colors}
+          selectedColor={tileColor}
+          onSelect={setTileColor}
+          shape="circle"
+        />
+
+        <ColorSwatchGroup
+          label={t.background}
+          colors={bgColors}
+          selectedColor={backgroundColor}
+          onSelect={setBackgroundColor}
+          shape="square"
+        />
       </div>
 
-      <div className="overflow-x-auto">
+      <div className={cn("overflow-x-auto", `bg-${backgroundColor}`)}>
         <div
           role="img"
           aria-label={t.patternLabel}
-          className="inline-grid bg-slate-900"
+          className="inline-grid"
           style={{
             gridTemplateColumns: `repeat(${gridColumns}, minmax(35px, 1fr))`,
             gridAutoRows: "minmax(35px, 1fr)",
@@ -196,6 +221,7 @@ export function TileCombinationWidget({
                 key={`${rowIndex}-${colIndex}`}
                 symbol={tile.symbol}
                 sourceFont={selectedFamily.sourceFont}
+                color={tileColor}
               />
             )),
           )}
@@ -301,15 +327,20 @@ function MiniTileStrip({
 function TileGlyph({
   symbol,
   sourceFont = "blocks",
+  color = defaultColor,
 }: {
   symbol: string;
   sourceFont?: TileGroupFamily["sourceFont"];
+  color?: string;
 }) {
   const fontClass = sourceFont === "smith-tiles" ? "smith-tile" : "tile";
 
   return (
     <span
-      className="grid h-full w-full place-items-center overflow-hidden text-teal-300"
+      className={cn(
+        "grid h-full w-full place-items-center overflow-hidden",
+        `text-${color}`,
+      )}
       style={{ containerType: "inline-size" } as CSSProperties}
     >
       <span
@@ -319,5 +350,54 @@ function TileGlyph({
         {symbol}
       </span>
     </span>
+  );
+}
+
+function ColorSwatchGroup({
+  label,
+  colors,
+  selectedColor,
+  onSelect,
+  shape,
+}: {
+  label: string;
+  colors: string[];
+  selectedColor: string;
+  onSelect: (color: string) => void;
+  shape: "circle" | "square";
+}) {
+  return (
+    <div className="min-w-0">
+      <p className="mb-2 text-sm font-medium text-zinc-700 dark:text-zinc-300">
+        {label}
+      </p>
+      <div className="flex flex-wrap gap-2">
+        {colors.map((color) => {
+          const selected = color === selectedColor;
+          const radius = shape === "circle" ? "rounded-full" : "rounded-md";
+
+          return (
+            <button
+              key={color}
+              type="button"
+              aria-label={`${label}: ${color}`}
+              aria-pressed={selected}
+              onClick={() => onSelect(color)}
+              className={cn(
+                "grid h-8 w-8 place-items-center border-2 bg-zinc-950/5 p-1 transition hover:scale-[1.03] dark:bg-zinc-950",
+                radius,
+                selected
+                  ? "border-zinc-950 dark:border-zinc-50"
+                  : "border-zinc-300 dark:border-zinc-700",
+              )}
+            >
+              <span
+                className={cn("block h-full w-full", radius, `bg-${color}`)}
+              />
+            </button>
+          );
+        })}
+      </div>
+    </div>
   );
 }
