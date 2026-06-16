@@ -91,14 +91,14 @@ export default function Home({ siteUrl }: HomeProps) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
 
-        <link rel="preload" href="/default.png" as="image" />
-        <link rel="preload" href="/pointer.png" as="image" />
-        <link rel="preload" href="/draw.png" as="image" />
-        <link rel="preload" href="/paint.png" as="image" />
-        <link rel="preload" href="/move.png" as="image" />
-        <link rel="preload" href="/rotate.png" as="image" />
-        <link rel="preload" href="/delete.png" as="image" />
-        <link rel="preload" href="/forbiden.png" as="image" />
+        <link rel="preload" href="/icons/default.png" as="image" />
+        <link rel="preload" href="/icons/pointer.png" as="image" />
+        <link rel="preload" href="/icons/draw.png" as="image" />
+        <link rel="preload" href="/icons/paint.png" as="image" />
+        <link rel="preload" href="/icons/move.png" as="image" />
+        <link rel="preload" href="/icons/rotate.png" as="image" />
+        <link rel="preload" href="/icons/delete.png" as="image" />
+        <link rel="preload" href="/icons/forbiden.png" as="image" />
       </Head>
       <App />
     </>
