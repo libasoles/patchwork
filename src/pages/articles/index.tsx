@@ -14,6 +14,21 @@ interface Article {
 
 const articles: Article[] = [
   {
+    slug: "truchet-in-practice",
+    date: "2026-06-16",
+    titles: {
+      en: "Truchet in Practice: Multiscale, Quilts, and Code",
+      es: "Truchet en la práctica: multiescala, mantas y código",
+      fr: "Truchet en pratique : multi-échelle, courtepointes et code",
+    },
+    summaries: {
+      en: "Beyond the classic square: recursive multiscale patterns, Truchet quilting, the 'Hello World' of generative art in p5.js, and fluid hexagonal mazes.",
+      es: "Más allá del cuadrado clásico: patrones multiescala recursivos, quilting Truchet, el 'Hola Mundo' del arte generativo en p5.js y laberintos hexagonales fluidos.",
+      fr: "Au-delà du carré classique : motifs multi-échelles récursifs, courtepointes Truchet, le 'Hello World' de l'art génératif en p5.js et labyrinthes hexagonaux fluides.",
+    },
+    tags: ["tiles", "generative", "patterns"],
+  },
+  {
     slug: "tile-combinations",
     date: "2026-06-16",
     titles: {

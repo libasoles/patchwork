@@ -75,6 +75,15 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>${siteUrl}/articles/truchet-in-practice</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="${siteUrl}/articles/truchet-in-practice"/>
+    <xhtml:link rel="alternate" hreflang="es" href="${siteUrl}/es/articles/truchet-in-practice"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="${siteUrl}/fr/articles/truchet-in-practice"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="${siteUrl}/articles/truchet-in-practice"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>`
 
   res.setHeader('Content-Type', 'text/xml; charset=utf-8')
