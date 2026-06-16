@@ -40,11 +40,14 @@ const ToolBar = () => {
     [selectedTile, setSelected, setSelectedTile],
   );
 
-  useHotkeys("1", () => selectAction(Action.Draw));
-  useHotkeys("2", () => selectAction(Action.Paint));
-  useHotkeys("3", () => selectAction(Action.Move));
-  useHotkeys("4", () => selectAction(Action.Rotate));
-  useHotkeys("5", () => selectAction(Action.Delete));
+  // enableOnFormTags: the visual tool/tile/color controls are <input type="radio">
+  // elements that take focus on click, which would otherwise suppress these hotkeys.
+  const hotkeyOptions = { enableOnFormTags: true };
+  useHotkeys("1", () => selectAction(Action.Draw), hotkeyOptions, [selectAction]);
+  useHotkeys("2", () => selectAction(Action.Paint), hotkeyOptions, [selectAction]);
+  useHotkeys("3", () => selectAction(Action.Move), hotkeyOptions, [selectAction]);
+  useHotkeys("4", () => selectAction(Action.Rotate), hotkeyOptions, [selectAction]);
+  useHotkeys("5", () => selectAction(Action.Delete), hotkeyOptions, [selectAction]);
 
   const { list, disable } = useLayersApi();
   const selectedLayer = useSelectedLayer();
