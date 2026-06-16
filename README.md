@@ -8,9 +8,13 @@ It's a collaborative drawing app.
 
 ## Demo
 
-https://alpha-patchwork.netlify.app/
+http://patchwork.com.ar/
 
-![Demo](https://github.com/libasoles/patchwork/blob/main/public/Screenshot.png)
+![Demo](https://github.com/libasoles/patchwork/blob/main/public/screenshots/Screenshot.png)
+
+![Curved tile pattern](https://github.com/libasoles/patchwork/blob/main/public/screenshots/screenshot-curves.png)
+
+![Triangle tile pattern](https://github.com/libasoles/patchwork/blob/main/public/screenshots/screenshot-triangles.png)
 
 ## Develop
 
