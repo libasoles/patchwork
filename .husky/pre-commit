@@ -1,2 +1,10 @@
+# Skip when dependencies aren't installed locally (e.g. a fresh git worktree
+# without its own node_modules). Otherwise npx would fetch a placeholder `tsc`
+# package and fail commits that don't touch TypeScript at all.
+if [ ! -d node_modules ]; then
+  echo "pre-commit: node_modules not found, skipping lint-staged + tsc"
+  exit 0
+fi
+
 npx lint-staged
 npx tsc --noEmit
