@@ -2,6 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { GetStaticProps } from "next";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import ArticleHeader from "@/components/ArticleHeader";
 import enMessages from "../../../messages/en.json";
@@ -168,6 +169,9 @@ function HexTruchet({
   );
 }
 
+const P5_URL = "https://p5js.org/";
+const P5_CDN_URL = "https://cdn.jsdelivr.net/npm/p5@1.11.9/lib/p5.min.js";
+
 // p5.js example shown verbatim in every locale (only the surrounding prose
 // is translated). Demonstrates the core "if random > 0.5, rotate" logic.
 const CODE_P5 = `function setup() {
@@ -193,6 +197,134 @@ const CODE_P5 = `function setup() {
     }
   }
 }`;
+
+function p5SketchDocument(code: string) {
+  return `<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: #0f172a;
+        color: #e4e4e7;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+        padding: 16px;
+        box-sizing: border-box;
+      }
+
+      main {
+        width: min(100%, 600px);
+      }
+
+      canvas {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        border-radius: 8px;
+      }
+
+      #error {
+        display: none;
+        white-space: pre-wrap;
+        overflow: auto;
+        margin: 0;
+        padding: 16px;
+        border: 1px solid #f87171;
+        border-radius: 8px;
+        background: #450a0a;
+        color: #fecaca;
+        font-size: 12px;
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="sketch"></main>
+    <pre id="error"></pre>
+    <script>
+      function showError(error) {
+        var el = document.getElementById("error");
+        el.style.display = "block";
+        el.textContent = error && (error.stack || error.message) ? (error.stack || error.message) : String(error);
+      }
+
+      window.addEventListener("error", function(event) {
+        showError(event.error || event.message);
+      });
+    </script>
+    <script src="${P5_CDN_URL}"></script>
+    <script>
+      try {
+        var userCode = ${JSON.stringify(code)};
+        var wrappedCode = "with (window) {\\n" + userCode + "\\n" +
+          ";[\\\"setup\\\",\\\"draw\\\",\\\"preload\\\",\\\"mousePressed\\\",\\\"mouseDragged\\\",\\\"mouseReleased\\\",\\\"keyPressed\\\",\\\"keyReleased\\\"].forEach(function(name) { try { var fn = eval(name); if (typeof fn === \\\"function\\\") window[name] = fn; } catch (_) {} });\\n" +
+          "}";
+        new Function(wrappedCode).call(window);
+      } catch (error) {
+        showError(error);
+      }
+    </script>
+  </body>
+</html>`;
+}
+
+function P5LiveSketch({
+  caption,
+  editorLabel,
+  previewTitle,
+}: {
+  caption: string;
+  editorLabel: string;
+  previewTitle: string;
+}) {
+  const [code, setCode] = useState(CODE_P5);
+  const srcDoc = useMemo(() => p5SketchDocument(code), [code]);
+
+  return (
+    <figure className="my-4">
+      <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(260px,0.9fr)]">
+        <div>
+          <label
+            htmlFor="p5-truchet-code"
+            className="mb-2 block text-xs font-medium text-zinc-500 dark:text-zinc-400"
+          >
+            {editorLabel}
+          </label>
+          <textarea
+            id="p5-truchet-code"
+            value={code}
+            onChange={(event) => setCode(event.target.value)}
+            spellCheck={false}
+            className="min-h-[420px] w-full resize-y rounded-lg border border-zinc-200 bg-slate-900 p-4 font-mono text-sm leading-relaxed text-zinc-100 shadow-sm outline-none transition-colors focus:border-teal-400 focus:ring-2 focus:ring-teal-400/30 dark:border-zinc-700"
+          />
+        </div>
+        <div>
+          <div className="mb-2 text-xs font-medium text-zinc-500 dark:text-zinc-400">
+            {previewTitle}
+          </div>
+          <iframe
+            key={srcDoc}
+            title={previewTitle}
+            sandbox="allow-scripts"
+            srcDoc={srcDoc}
+            className="h-[420px] w-full rounded-lg border border-zinc-200 bg-slate-900 shadow-sm dark:border-zinc-700"
+          />
+        </div>
+      </div>
+      <figcaption className="text-xs text-zinc-400 mt-3">
+        {caption}
+      </figcaption>
+    </figure>
+  );
+}
 
 const content = {
   en: {
@@ -238,11 +370,17 @@ const content = {
       "The same half-square-triangle logic carried into a tactile blanket: a small set of colours, repeated with random rotations",
 
     s3h: "The 'Hello World' of generative art",
+    s3IntroPre:
+      "For programmers, Truchet tiling is the canonical first sketch — the 'Hello World' of generative art. The entire idea fits in a double loop: walk a grid, and at each cell flip a coin to decide the tile's rotation. It is a few lines in ",
+    s3IntroLink: "p5.js",
+    s3IntroPost:
+      ", Processing, or Python, and it rewards you immediately with a pattern you would never draw by hand.",
     s3: [
-      "For programmers, Truchet tiling is the canonical first sketch — the 'Hello World' of generative art. The entire idea fits in a double loop: walk a grid, and at each cell flip a coin to decide the tile's rotation. It is a few lines in p5.js, Processing, or Python, and it rewards you immediately with a pattern you would never draw by hand.",
       "The whole trick is the single line if (random() > 0.5) rotate(90°). Everything interesting — the winding paths, the emergent labyrinth — falls out of that one random choice repeated across the grid:",
     ],
     s3cap: "A minimal Smith-arc Truchet generator in p5.js",
+    s3EditorLabel: "Editable p5.js sketch",
+    s3PreviewTitle: "Live p5.js output",
     s3after:
       "Swap the two arcs for a single diagonal and you get the classic angular labyrinth; raise the grid resolution and the pattern grows denser without a single extra rule.",
 
@@ -310,11 +448,17 @@ const content = {
       "La misma lógica de medio cuadrado-triángulo llevada a una manta real: pocos colores, repetidos con rotaciones al azar",
 
     s3h: "El 'Hola Mundo' del arte generativo",
+    s3IntroPre:
+      "Para quien programa, el mosaico Truchet es el primer boceto canónico — el 'Hola Mundo' del arte generativo. Toda la idea cabe en un doble bucle: recorre una cuadrícula y, en cada celda, lanza una moneda para decidir la rotación del mosaico. Son unas pocas líneas en ",
+    s3IntroLink: "p5.js",
+    s3IntroPost:
+      ", Processing o Python, y te recompensa al instante con un patrón que jamás dibujarías a mano.",
     s3: [
-      "Para quien programa, el mosaico Truchet es el primer boceto canónico — el 'Hola Mundo' del arte generativo. Toda la idea cabe en un doble bucle: recorre una cuadrícula y, en cada celda, lanza una moneda para decidir la rotación del mosaico. Son unas pocas líneas en p5.js, Processing o Python, y te recompensa al instante con un patrón que jamás dibujarías a mano.",
       "Todo el truco es la única línea if (random() > 0.5) rotate(90°). Todo lo interesante — los caminos serpenteantes, el laberinto emergente — surge de esa sola elección aleatoria repetida por toda la cuadrícula:",
     ],
     s3cap: "Un generador Truchet mínimo con arcos de Smith en p5.js",
+    s3EditorLabel: "Sketch p5.js editable",
+    s3PreviewTitle: "Resultado p5.js en vivo",
     s3after:
       "Cambia los dos arcos por una sola diagonal y obtienes el laberinto angular clásico; sube la resolución de la cuadrícula y el patrón se densifica sin una sola regla extra.",
 
@@ -382,11 +526,17 @@ const content = {
       "La même logique demi-carré-triangle transposée dans une couverture tactile : quelques couleurs, répétées avec des rotations aléatoires",
 
     s3h: "Le 'Hello World' de l'art génératif",
+    s3IntroPre:
+      "Pour les programmeurs, le pavage Truchet est le premier croquis canonique — le 'Hello World' de l'art génératif. Toute l'idée tient dans une double boucle : parcourir une grille et, à chaque cellule, tirer à pile ou face la rotation du carreau. C'est quelques lignes en ",
+    s3IntroLink: "p5.js",
+    s3IntroPost:
+      ", Processing ou Python, et la récompense est immédiate : un motif que vous ne dessineriez jamais à la main.",
     s3: [
-      "Pour les programmeurs, le pavage Truchet est le premier croquis canonique — le 'Hello World' de l'art génératif. Toute l'idée tient dans une double boucle : parcourir une grille et, à chaque cellule, tirer à pile ou face la rotation du carreau. C'est quelques lignes en p5.js, Processing ou Python, et la récompense est immédiate : un motif que vous ne dessineriez jamais à la main.",
       "Toute l'astuce tient dans la seule ligne if (random() > 0.5) rotate(90°). Tout l'intéressant — les chemins sinueux, le labyrinthe émergent — découle de ce seul choix aléatoire répété sur la grille :",
     ],
     s3cap: "Un générateur Truchet minimal à arcs de Smith en p5.js",
+    s3EditorLabel: "Croquis p5.js modifiable",
+    s3PreviewTitle: "Résultat p5.js en direct",
     s3after:
       "Remplacez les deux arcs par une seule diagonale et vous obtenez le labyrinthe angulaire classique ; augmentez la résolution de la grille et le motif se densifie sans une seule règle de plus.",
 
@@ -561,19 +711,26 @@ export default function TruchetInPractice() {
             {/* C — Code */}
             <section>
               <h2 className="text-2xl font-semibold mb-4">{c.s3h}</h2>
+              <p className={paragraph}>
+                {c.s3IntroPre}
+                <a
+                  href={P5_URL}
+                  className="text-teal-600 dark:text-teal-400 hover:underline"
+                >
+                  {c.s3IntroLink}
+                </a>
+                {c.s3IntroPost}
+              </p>
               {c.s3.map((p, i) => (
                 <p key={i} className={paragraph}>
                   {p}
                 </p>
               ))}
-              <figure className="my-4">
-                <pre className="overflow-x-auto rounded-lg bg-slate-900 p-5 text-sm leading-relaxed text-zinc-100">
-                  <code className="font-mono">{CODE_P5}</code>
-                </pre>
-                <figcaption className="text-xs text-zinc-400 mt-3">
-                  {c.s3cap}
-                </figcaption>
-              </figure>
+              <P5LiveSketch
+                caption={c.s3cap}
+                editorLabel={c.s3EditorLabel}
+                previewTitle={c.s3PreviewTitle}
+              />
               <p className={paragraph}>{c.s3after}</p>
             </section>
 
