@@ -146,20 +146,32 @@ def draw_straight_reverse_s(pen, OR, IR):
 # along an edge from the diagonal; perpendicular stroke width = a·√2.
 
 def draw_single_slash(pen, a):
-    """Single "/" diagonal along y = x (bottom-left ↔ top-right corners)."""
+    """Single "/" diagonal along y = x (bottom-left ↔ top-right corners).
+
+    The band |y - x| <= a contains the (0,0) and (S,S) corners, so the strip
+    runs corner-to-corner: include those corners instead of chamfering them.
+    """
     pen.moveTo((a, 0))
     pen.lineTo((S, S - a))
+    pen.lineTo((S, S))
     pen.lineTo((S - a, S))
     pen.lineTo((0, a))
+    pen.lineTo((0, 0))
     pen.closePath()
 
 
 def draw_single_backslash(pen, a):
-    """Single "\\" diagonal along x + y = S (top-left ↔ bottom-right corners)."""
+    """Single "\\" diagonal along x + y = S (top-left ↔ bottom-right corners).
+
+    The band |x + y - S| <= a contains the (S,0) and (0,S) corners, so the strip
+    runs corner-to-corner: include those corners instead of chamfering them.
+    """
     pen.moveTo((0, S - a))
     pen.lineTo((S - a, 0))
+    pen.lineTo((S, 0))
     pen.lineTo((S, a))
     pen.lineTo((a, S))
+    pen.lineTo((0, S))
     pen.closePath()
 
 
