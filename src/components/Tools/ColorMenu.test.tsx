@@ -73,20 +73,20 @@ describe("ColorMenu", () => {
     });
   });
 
-  it("should start collapsed on mobile and expand on click", async () => {
+  it("should start collapsed on mobile and expand when a current swatch is clicked", async () => {
     cleanup();
     renderColorMenu({ isMobile: true });
 
-    const toggle = screen.getByTestId("color-menu-toggle");
-    expect(toggle).toHaveAttribute("aria-expanded", "false");
     expect(screen.getByTestId("selectable-colors").parentElement).toHaveAttribute(
       "hidden",
     );
 
-    await userEvent.click(toggle);
+    await userEvent.click(screen.getByTestId("tile-target"));
 
     await waitFor(() => {
-      expect(toggle).toHaveAttribute("aria-expanded", "true");
+      expect(screen.getByTestId("selectable-colors").parentElement).not.toHaveAttribute(
+        "hidden",
+      );
     });
   });
 });

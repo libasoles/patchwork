@@ -54,17 +54,17 @@ export default function App({ tileSet = tiles }: Props) {
         <div
           className={`fixed z-10 flex pointer-events-none ${
             isMobile
-              ? "left-1/2 bottom-16 w-[calc(100vw-1rem)] -translate-x-1/2 flex-col items-center gap-2"
+              ? "top-3 right-[16px] flex-col items-end gap-2"
               : "top-0 right-[16px] h-screen flex-col items-end py-3 gap-3"
           }`}
         >
           <div className="pointer-events-auto flex items-center gap-1 bg-gray-800 border border-slate-700/60 rounded-full p-1 shadow-xl">
-            <ToggleGrid />
+            {!isMobile && <ToggleGrid />}
             <RepeatPatternButton />
             <ExportButton />
             <NewCanvasButton />
           </div>
-          <div className={isMobile ? "w-full" : "flex-1 flex items-start"}>
+          <div className={isMobile ? "" : "flex-1 flex items-start"}>
             <ColorMenu isMobile={isMobile} />
           </div>
         </div>

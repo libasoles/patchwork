@@ -13,7 +13,6 @@ import {
 import styles from "@/styles/utils.module.css";
 import { Action, ColorTarget, EventCallback } from "@/types";
 import { useAtom } from "jotai";
-import { ChevronUp, Palette } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import { Scrollbars } from "react-custom-scrollbars-2";
@@ -79,32 +78,11 @@ export default function ColorMenu({ isMobile = false }: ColorMenuProps) {
       ref={panelRef}
       data-testid="color-panel"
       className={`pointer-events-auto bg-gray-800 border border-slate-700/60 shadow-xl flex flex-col items-center ${
-        isMobile ? "w-full max-w-[calc(100vw-2rem)] rounded-2xl p-1.5" : "rounded-3xl p-1.5"
+        isMobile ? "max-w-[calc(100vw-2rem)] rounded-2xl p-1.5" : "rounded-3xl p-1.5"
       }`}
     >
-      {isMobile && (
-        <button
-          type="button"
-          data-testid="color-menu-toggle"
-          aria-expanded={isExpanded}
-          aria-controls="mobile-color-menu-content"
-          onClick={() => setIsExpanded((value) => !value)}
-          className="flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2 text-slate-100"
-        >
-          <span className="flex items-center gap-2 text-sm font-medium">
-            <Palette size={16} />
-            {isTile ? t("tileColor") : t("bgColor")}
-          </span>
-          <ChevronUp
-            size={16}
-            className={`transition-transform ${isExpanded ? "" : "rotate-180"}`}
-          />
-        </button>
-      )}
       <div
-        id="mobile-color-menu-content"
-        className={`flex items-center gap-1.5 ${isMobile ? "w-full justify-center border-t border-slate-600/80 pt-2" : "flex-col"}`}
-        hidden={isMobile && !isExpanded}
+        className={`flex items-center gap-1.5 ${isMobile ? "justify-center" : "flex-col"}`}
       >
         <Tooltip>
           <TooltipTrigger asChild>
@@ -113,7 +91,10 @@ export default function ColorMenu({ isMobile = false }: ColorMenuProps) {
               data-testid="tile-target"
               aria-label={t("tileColor")}
               aria-pressed={isTile}
-              onClick={() => setTarget("tile")}
+              onClick={() => {
+                setTarget("tile");
+                if (isMobile) setIsExpanded((value) => !value || !isTile);
+              }}
               className={`grid items-center rounded-full w-[38px] h-[38px] overflow-hidden border-2 shadow-md transition-colors ${
                 isTile ? "border-white" : "border-slate-700/60 hover:border-slate-500"
               }`}
@@ -133,7 +114,10 @@ export default function ColorMenu({ isMobile = false }: ColorMenuProps) {
               data-testid="bg-target"
               aria-label={t("bgColor")}
               aria-pressed={!isTile}
-              onClick={() => setTarget("bg")}
+              onClick={() => {
+                setTarget("bg");
+                if (isMobile) setIsExpanded((value) => !value || isTile);
+              }}
               className={`grid items-center rounded-lg w-[38px] h-[38px] overflow-hidden border-2 shadow-md transition-colors ${
                 !isTile ? "border-white" : "border-slate-700/60 hover:border-slate-500"
               }`}
@@ -152,7 +136,7 @@ export default function ColorMenu({ isMobile = false }: ColorMenuProps) {
         {isMobile ? (
           <div
             data-testid="selectable-colors"
-            className="flex max-h-[min(40vh,16rem)] flex-wrap justify-center gap-1.5 overflow-y-auto px-1 pb-1"
+            className="flex max-h-[min(34vh,12rem)] w-[min(13rem,calc(100vw-2.5rem))] flex-wrap justify-center gap-1.5 overflow-y-auto px-1 pb-1"
           >
             {activeColors.map((aColor) => {
               const isSelected = aColor === currentColor;
@@ -163,7 +147,10 @@ export default function ColorMenu({ isMobile = false }: ColorMenuProps) {
                   shape={isTile ? "circle" : "square"}
                   target={target}
                   isSelected={isSelected}
-                  onSelect={() => setCurrent(aColor)}
+                  onSelect={() => {
+                    setCurrent(aColor);
+                    setIsExpanded(false);
+                  }}
                   onControlClick={
                     isTile ? (e) => onTileColorContext(e, aColor) : undefined
                   }
