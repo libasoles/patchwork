@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:en.wikipedia.org)",
+      "Bash(npm view *)",
+      "Bash(npx next *)",
+      "Bash(npm ls *)"
+    ]
+  }
+}
