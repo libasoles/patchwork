@@ -27,6 +27,8 @@ All families are defined in `src/data/tileGroups.ts` with full TypeScript types.
 | `roadway` | `roadway` | 80 P 81 Q 82 R 83 S | Double-line path; maze/road networks |
 | `rounded-roadway` | `rounded roadways` | 64 @ 65 A 66 B 67 C | Curved version of roadway |
 
+> **Supplementary `smith-tiles-font`** (`smithTilesFontFamily`, groups `smith arcs` + `diagonal lines`): four double-connector glyphs at U+E000–U+E003 from `smith-tiles.ttf` (E000/E001 arcs, E002/E003 straight). Each glyph carries two connectors so any adjacent pair always connects — a guaranteed-maze enhancement, not Smith's original single-arc tile. Added groups, they do not replace the historic `circle quarters` tiles above.
+
 ## Pattern character quick-ref (copy-paste)
 
 ```
