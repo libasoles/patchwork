@@ -20,7 +20,7 @@ const content = {
     readingTime: "2 min read",
     title: "Tile combinations",
     lead: "Choose a Patchwork tile group and compare periodic schemes with deterministic irregular placements.",
-    note: "Regular patterns repeat a finite motif across the square grid. Irregular patterns choose each tile with a stable coordinate hash, so the composition stays reproducible while losing translational symmetry.",
+    note: "Regular patterns repeat a finite motif across the square grid, drawing on the periodic schemes catalogued by Truchet and Douat. Irregular patterns place each tile with a seeded random sequence, so the composition stays reproducible while losing translational symmetry.",
     footer:
       "Patterns are generated in the browser from the selectable Patchwork tile groups.",
   },
@@ -34,7 +34,7 @@ const content = {
     readingTime: "2 min de lectura",
     title: "Combinaciones de mosaicos",
     lead: "Elige un grupo de mosaicos de Patchwork y compara esquemas periodicos con colocaciones irregulares deterministicas.",
-    note: "Los patrones regulares repiten un motivo finito sobre la grilla cuadrada. Los irregulares eligen cada mosaico con un hash estable de coordenadas, de modo que la composicion es reproducible aunque pierda simetria de traslacion.",
+    note: "Los patrones regulares repiten un motivo finito sobre la grilla cuadrada, siguiendo los esquemas periodicos catalogados por Truchet y Douat. Los irregulares colocan cada mosaico con una secuencia aleatoria con semilla, de modo que la composicion es reproducible aunque pierda simetria de traslacion.",
     footer:
       "Los patrones se generan en el navegador desde los grupos seleccionables de Patchwork.",
   },
@@ -48,7 +48,7 @@ const content = {
     readingTime: "2 min de lecture",
     title: "Combinaisons de carreaux",
     lead: "Choisissez un groupe de carreaux Patchwork et comparez des schemas periodiques avec des placements irreguliers deterministes.",
-    note: "Les motifs reguliers repetent un motif fini sur la grille carree. Les motifs irreguliers choisissent chaque carreau avec un hash stable des coordonnees, ce qui garde la composition reproductible sans symetrie de translation.",
+    note: "Les motifs reguliers repetent un motif fini sur la grille carree, en suivant les schemas periodiques catalogues par Truchet et Douat. Les motifs irreguliers placent chaque carreau avec une sequence aleatoire a graine, ce qui garde la composition reproductible sans symetrie de translation.",
     footer:
       "Les motifs sont generes dans le navigateur a partir des groupes selectionnables Patchwork.",
   },
