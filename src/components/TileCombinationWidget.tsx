@@ -183,10 +183,10 @@ export function TileCombinationWidget({
           aria-label={t.patternLabel}
           className="inline-grid bg-slate-900"
           style={{
-            gridTemplateColumns: `repeat(${gridColumns}, minmax(28px, 1fr))`,
-            gridAutoRows: "minmax(28px, 1fr)",
+            gridTemplateColumns: `repeat(${gridColumns}, minmax(35px, 1fr))`,
+            gridAutoRows: "minmax(35px, 1fr)",
             width: "min(100%, 912px)",
-            minWidth: Math.min(gridColumns * 28, 728),
+            minWidth: Math.min(gridColumns * 35, 728),
             aspectRatio: `${gridColumns} / ${gridRows}`,
           }}
         >
@@ -281,7 +281,9 @@ function MiniTileStrip({
     <span className="flex shrink-0 gap-1">
       {tiles.map((tile, index) => (
         <span
-          key={tile ? `${tile.id}-${tile.orientation}-${index}` : `empty-${index}`}
+          key={
+            tile ? `${tile.id}-${tile.orientation}-${index}` : `empty-${index}`
+          }
           className={cn(
             "block h-8 w-8 overflow-hidden rounded bg-slate-900 ring-1 ring-slate-700/80",
             !tile && "invisible",
