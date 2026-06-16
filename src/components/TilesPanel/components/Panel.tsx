@@ -1,3 +1,4 @@
+import useIsMobile from "@/hooks/isMobile";
 import { ChevronDown } from "lucide-react";
 import { ReactElement, useState } from "react";
 import { Scrollbars } from "react-custom-scrollbars-2";
@@ -20,6 +21,11 @@ export default function Panel({
   ...rest
 }: Props) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
+  const { isMobile } = useIsMobile();
+
+  // Fill the panel on mobile so the scroller never overflows onto the canvas
+  // and steals touches; keep a fixed width on desktop.
+  const scrollbarWidth = isMobile ? "100%" : 200;
 
   if (!collapsible) {
     return (
@@ -32,7 +38,7 @@ export default function Panel({
             {title}
           </h2>
         )}
-        <Scrollbars style={{ width: 200 }} autoHide universal>
+        <Scrollbars style={{ width: scrollbarWidth }} autoHide universal>
           <div
             data-testid="panel-content"
             className="panel-content flex flex-wrap content-baseline gap-0.5 p-px text-slate-200 h-auto"
@@ -59,7 +65,7 @@ export default function Panel({
         />
       </h2>
       {isOpen && (
-        <Scrollbars style={{ width: 200 }} autoHide universal>
+        <Scrollbars style={{ width: scrollbarWidth }} autoHide universal>
           <div
             data-testid="panel-content"
             className="panel-content flex flex-wrap content-baseline gap-0.5 p-px text-slate-200 h-auto"

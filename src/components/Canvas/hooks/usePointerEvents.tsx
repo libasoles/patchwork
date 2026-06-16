@@ -275,22 +275,68 @@ export function usePointerEvents(editableRegion: TileRegion | null = null) {
         drawBehavior.onContextMenu(...args);
     }
 
+    // Touch devices don't fire mouseenter while dragging a finger (the touch is
+    // captured by the element where it started). So we resolve the cell under the
+    // finger on every touchmove via elementFromPoint and drive the same handlers.
+    const lastTouchIndex = useRef<number | null>(null)
+
+    const onTouchStart: TouchCallback = (event) => {
+        if (event.touches.length !== 1) return // let multi-touch (pinch/pan) through
+        const index = indexUnderTouch(event.touches[0])
+        if (index === null) return
+        lastTouchIndex.current = index
+        onMouseDown(touchAsMouse, index)
+    }
+
+    const onTouchMove: TouchCallback = (event) => {
+        if (event.touches.length !== 1) return
+        const index = indexUnderTouch(event.touches[0])
+        if (index === null || index === lastTouchIndex.current) return
+        lastTouchIndex.current = index
+        onMouseEnter(touchAsMouse, index)
+    }
+
+    const onTouchEnd: TouchCallback = () => {
+        if (lastTouchIndex.current !== null) onMouseUp(touchAsMouse, lastTouchIndex.current)
+        lastTouchIndex.current = null
+    }
+
     return {
         onMouseDown,
         onMouseEnter,
         onMouseUp,
-        onContextMenu
+        onContextMenu,
+        onTouchStart,
+        onTouchMove,
+        onTouchEnd,
     } as Api
 }
+
+// Resolve the cell index under a touch point via its `data-index` attribute.
+function indexUnderTouch(touch: React.Touch): number | null {
+    const target = document.elementFromPoint(touch.clientX, touch.clientY)
+    const cell = target?.closest<HTMLElement>('[data-index]')
+    if (!cell) return null
+    const index = Number(cell.dataset.index)
+    return Number.isNaN(index) ? null : index
+}
+
+// The cell handlers only read `event.buttons` (to detect a held drag) and
+// `event.preventDefault`; touch drags are always "pressed", so we fake both.
+const touchAsMouse = { buttons: leftButton, preventDefault() {} } as unknown as React.MouseEvent<HTMLButtonElement>
 
 type Api = {
     onMouseDown: Callback,
     onMouseEnter: Callback,
     onMouseUp: Callback,
     onContextMenu: Callback,
+    onTouchStart: TouchCallback,
+    onTouchMove: TouchCallback,
+    onTouchEnd: TouchCallback,
 }
 
 type Callback = (e: React.MouseEvent<HTMLButtonElement>, index: number) => void
+type TouchCallback = (e: React.TouchEvent<HTMLElement>) => void
 
 export type onMouseEnter = Callback
 export type OnMouseDown = Callback
