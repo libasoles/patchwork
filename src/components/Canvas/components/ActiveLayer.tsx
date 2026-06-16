@@ -17,7 +17,7 @@ export default function ActiveLayer({
     editableRegion = null,
 }: LayerProps & { editableRegion?: TileRegion | null }) {
     const t = useTranslations('toasts');
-    const { onMouseDown, onMouseEnter, onContextMenu, onMouseUp } = usePointerEvents(editableRegion);
+    const { onMouseDown, onMouseEnter, onContextMenu, onMouseUp, onTouchStart, onTouchMove, onTouchEnd } = usePointerEvents(editableRegion);
 
     const [activeAction] = useAtom(actionAtom)
     let cursor = useMouseIcon(activeAction)
@@ -26,6 +26,9 @@ export default function ActiveLayer({
         <div
             data-testid='selected-canvas'
             onMouseDown={isDisabled ? () => toastOnce('disabled-layer', t('disabledLayer')) : undefined}
+            onTouchStart={isDisabled ? undefined : onTouchStart}
+            onTouchMove={isDisabled ? undefined : onTouchMove}
+            onTouchEnd={isDisabled ? undefined : onTouchEnd}
             className={`grid justify-center content-center select-none ${isDisabled && 'opacity-20'} absolute top-0 bottom-0 left-0 right-0`}
             style={{
                 gridTemplateColumns: `repeat(${dimension.x}, 40px)`,
