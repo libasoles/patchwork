@@ -69,7 +69,7 @@ const LayerStack = () => {
           className={`flex items-center justify-between w-full ${isExpanded ? "mb-3" : ""}`}
           onClick={() => setIsExpanded((v) => !v)}
         >
-          <h2 className="text-slate-100 text-base font-bold tracking-tight">
+          <h2 className="text-slate-300 text-base font-bold tracking-tight">
             {t("title")}
           </h2>
           {isExpanded ? (
