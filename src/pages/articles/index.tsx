@@ -14,6 +14,21 @@ interface Article {
 
 const articles: Article[] = [
   {
+    slug: "tile-combinations",
+    date: "2026-06-16",
+    titles: {
+      en: "Tile Combinations",
+      es: "Combinaciones de mosaicos",
+      fr: "Combinaisons de carreaux",
+    },
+    summaries: {
+      en: "An interactive generator for regular and irregular combinations of every selectable Patchwork tile group.",
+      es: "Un generador interactivo de combinaciones regulares e irregulares para cada grupo seleccionable de mosaicos Patchwork.",
+      fr: "Un generateur interactif de combinaisons regulieres et irregulieres pour chaque groupe de carreaux Patchwork selectionnable.",
+    },
+    tags: ["tiles", "generator", "patterns"],
+  },
+  {
     slug: "tile-groups",
     date: "2026-06-15",
     titles: {

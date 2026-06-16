@@ -36,6 +36,67 @@ body {
   font-family: smith-tiles;
 }
 
+html.dark [data-slot="select-trigger"],
+html.dark [data-slot="select-content"] {
+  border-color: #3f3f46;
+  background: #18181b;
+  color: #fafafa;
+}
+
+html.dark [data-slot="select-item"] {
+  color: #f4f4f5;
+}
+
+html.dark [data-slot="select-item"]:focus,
+html.dark [data-slot="select-item"][data-highlighted] {
+  background: #27272a;
+  color: #fafafa;
+}
+
+html.dark [data-slot="select-item"] .text-zinc-500 {
+  color: #a1a1aa;
+}
+
+html.dark [data-slot="tile-combination-mode"] {
+  border-color: #3f3f46;
+  background: #18181b;
+}
+
+html.dark [data-slot="tile-combination-mode"] button {
+  color: #e4e4e7;
+}
+
+html.dark [data-slot="tile-combination-mode"] button[aria-pressed="true"] {
+  background: #f4f4f5;
+  color: #18181b;
+}
+
+html.dark [data-slot="tile-combination-mode"] button[aria-pressed="false"]:hover {
+  background: #27272a;
+  color: #fafafa;
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-slot="tile-combination-mode"] {
+    border-color: #3f3f46;
+    background: #18181b;
+  }
+
+  [data-slot="tile-combination-mode"] button {
+    color: #e4e4e7;
+  }
+
+  [data-slot="tile-combination-mode"] button[aria-pressed="true"] {
+    background: #f4f4f5;
+    color: #18181b;
+  }
+
+  [data-slot="tile-combination-mode"] button[aria-pressed="false"]:hover {
+    background: #27272a;
+    color: #fafafa;
+  }
+}
+
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
