@@ -101,26 +101,37 @@ export const truchetFamilies: TileGroupFamily[] = [
     id: "smith-1987",
     name: "Smith Arc Tiles (1987)",
     description:
-      "Each tile carries two quarter-circle arcs, one in each of two diagonally opposite " +
-      "corners, covering all four edge midpoints. Because every edge of every tile has an " +
-      "arc crossing its midpoint, any two adjacent tiles always connect — so even random " +
-      "arrangements produce the iconic closed labyrinthine regions Smith described. " +
-      "Two distinct tile shapes: S-shape (top-right + bottom-left arcs) and reverse-S " +
-      "(top-left + bottom-right arcs). Popularized by Cyril Stanley Smith in 1987.",
+      "Quarter-circle arc connecting the midpoints of two adjacent sides of the " +
+      "square. The 4 rotations place the arc in each of the 4 corner positions. " +
+      "When tiled randomly these produce the iconic flowing, organic labyrinthine " +
+      "curves — the pattern most commonly associated with 'Truchet tiling' today. " +
+      "Rediscovered and popularized by Cyril Stanley Smith in 1987.",
     historicReference: "Cyril Stanley Smith, 1987",
     patchworkGroups: ["circle quarters"],
     tiles: [
       {
-        id: 0xe000,
-        symbol: String.fromCodePoint(0xe000),
+        id: 8211,
+        symbol: "–",
         orientation: 0,
-        description: "S-shape: arc at top-right corner + arc at bottom-left corner",
+        description: "Quarter-circle arc in the top-left corner",
       },
       {
-        id: 0xe001,
-        symbol: String.fromCodePoint(0xe001),
+        id: 8212,
+        symbol: "—",
         orientation: 1,
-        description: "Reverse-S: arc at top-left corner + arc at bottom-right corner",
+        description: "Quarter-circle arc in the top-right corner (90° CW)",
+      },
+      {
+        id: 732,
+        symbol: "˜",
+        orientation: 2,
+        description: "Quarter-circle arc in the bottom-right corner (180°)",
+      },
+      {
+        id: 8482,
+        symbol: "™",
+        orientation: 3,
+        description: "Quarter-circle arc in the bottom-left corner (270° CW)",
       },
     ],
   },
@@ -689,7 +700,7 @@ export const smithTilesFontFamily: TileGroupFamily = {
     "bands (double-line variant). All connectors cross each edge on the same 300–400 band, so arc and " +
     "straight tiles interconnect. Glyph metrics match BIT BLOCKS so these tiles align with the existing grid.",
   historicReference: "Cyril Stanley Smith arc tile family, supplementary Patchwork font",
-  patchworkGroups: ["diagonal lines"],
+  patchworkGroups: ["smith arcs", "diagonal lines"],
   tiles: [
     {
       id: 0xe000,

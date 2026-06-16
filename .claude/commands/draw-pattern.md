@@ -14,7 +14,8 @@ Read `/tile-families` (or `src/data/tileGroups.ts`) for the full list. Most comm
 | Goal | Family | Tiles to use |
 |---|---|---|
 | Classic diagonal Truchet | `truchet-original` | `›` `œ` `\x9D` `\x9E` |
-| Flowing organic curves (Smith) | `smith-1987` | `\uE000` `\uE001` (2 PUA glyphs) |
+| Flowing organic curves (Smith) | `smith-1987` | `–` `—` `˜` `™` (4 quarter-arcs) |
+| Guaranteed-connect maze (Smith font) | `smith-tiles-font` | `\uE000` `\uE001` arcs · `\uE002` `\uE003` straight |
 | Wave / scallop | `semi-circle` | `Ù` `Û` `Ú` `Ü` |
 | Maze / road network | `roadway` | `P` `Q` `R` `S` |
 | Arch / vault | `arch` | `Z` `[` `\` `]` |
@@ -23,7 +24,7 @@ Read `/tile-families` (or `src/data/tileGroups.ts`) for the full list. Most comm
 
 **Checkerboard alternation** (simple, regular, shows all 4 rotations):
 ```ts
-const tiles = ['\uE000', '\uE001']; // smith-1987 (2 double-arc glyphs)
+const tiles = ['–', '—', '˜', '™']; // smith-1987 (4 quarter-arc glyphs)
 const grid = Array.from({ length: rows }, (_, r) =>
   Array.from({ length: cols }, (_, c) => tiles[(r + c) % 4])
 );
@@ -85,7 +86,7 @@ import { createTile } from '@/factory';
 import { tilesMap } from '@/config';
 
 // Find a tile by id
-const tileDef = tilesMap.find(t => t.id === 0xE000)!; // Smith S-shape
+const tileDef = tilesMap.find(t => t.id === 0xE000)!; // smith-tiles-font S-shape
 const tile = createTile(tileDef);
 
 // Place at row r, col c on a 50-wide canvas
@@ -96,7 +97,7 @@ useStore.getState().canvasApi.updateCellInBurst(index, tile, burstId);
 Use `updateCellNotReversible` for preview/temp draws that shouldn't appear in undo history.
 Use `updateCellInBurst` with a shared `burstId` (e.g. `uuid()`) for undoable strokes.
 
-## Worked example — "8×8 random Smith tiling, teal on slate"
+## Worked example — "8×8 random Smith tiling, teal on slate" (smith-tiles-font glyphs)
 
 ```tsx
 const SMITH = ['\uE000', '\uE001'];
