@@ -171,6 +171,8 @@ function HexTruchet({
 
 const P5_URL = "https://p5js.org/";
 const P5_CDN_URL = "https://cdn.jsdelivr.net/npm/p5@1.11.9/lib/p5.min.js";
+const P5_COLLECTION_URL =
+  "https://editor.p5js.org/StevesMakerspace/collections/Yqck5LnRD";
 
 // p5.js example shown verbatim in every locale (only the surrounding prose
 // is translated). Demonstrates the core "if random > 0.5, rotate" logic.
@@ -356,6 +358,13 @@ const content = {
       "Multi-Scale Truchet Patterns by Christopher Carlson. Image source: christophercarlson.com",
     s1Alt:
       "A black and white multiscale Truchet pattern by Christopher Carlson with nested curved domains at multiple square sizes",
+    s1GeneratorPre:
+      "For a more playful multiscale example with coloured dots and nested arcs, see ",
+    s1GeneratorLink: "Roni Kaufman's OpenProcessing generator",
+    s1GeneratorPost: ", which is what this script produces:",
+    s1GenCap: "Multiscale Truchet generator by Roni Kaufman (OpenProcessing)",
+    s1GenAlt:
+      "A colourful multiscale Truchet pattern with nested arcs and small coloured dots, generated in OpenProcessing",
 
     s2h: "From canvas to cloth: Truchet quilting",
     s2: [
@@ -368,6 +377,14 @@ const content = {
       "A knitted Truchet blanket with teal, blue, and charcoal half-square triangle blocks draped over an armchair",
     s2photoCap:
       "The same half-square-triangle logic carried into a tactile blanket: a small set of colours, repeated with random rotations",
+    s2crochetDetailAlt:
+      "A close-up crochet Truchet blanket made of triangular blocks in teal, cream, gold, and burgundy",
+    s2crochetDetailCap:
+      "Crochet pushes the same Truchet geometry toward texture: repeated triangular modules, rotated into larger motifs",
+    s2crochetBedAlt:
+      "A multicolored crochet Truchet blanket spread across a bed",
+    s2crochetBedCap:
+      "Another crochet interpretation: a full bedspread built from rotated half-square-triangle units",
 
     s3h: "The 'Hello World' of generative art",
     s3IntroPre:
@@ -381,6 +398,9 @@ const content = {
     s3cap: "A minimal Smith-arc Truchet generator in p5.js",
     s3EditorLabel: "Editable p5.js sketch",
     s3PreviewTitle: "Live p5.js output",
+    s3CollectionPre: "If you want more Truchet sketches, browse this ",
+    s3CollectionLink: "p5.js collection of scripts",
+    s3CollectionPost: ".",
     s3after:
       "Swap the two arcs for a single diagonal and you get the classic angular labyrinth; raise the grid resolution and the pattern grows denser without a single extra rule.",
 
@@ -391,6 +411,14 @@ const content = {
     ],
     s4cap:
       "A hexagonal Truchet tiling: edge-midpoint gates joined by arcs, each hexagon randomly rotated",
+    s4BrowneIntro:
+      "Cameron Browne has explored these duotone hexagonal tilings in depth — two prototiles tiled together yield endlessly varied flowing mazes:",
+    s4BrowneCap: "Duotone hexagonal Truchet tiles and tiling by Cameron Browne",
+    s4BrowneAlt1:
+      "Two blue and cream hexagonal Truchet prototiles and a rectangular tiling assembled from them",
+    s4BrowneCap2: "Duotone hexagonal Truchet maze by Cameron Browne",
+    s4BrowneAlt2:
+      "A dense blue and cream maze pattern made from hexagonal Truchet tiles",
 
     s5h: "Try it yourself",
     s5: [
@@ -434,6 +462,13 @@ const content = {
       "Multi-Scale Truchet Patterns, de Christopher Carlson. Fuente de la imagen: christophercarlson.com",
     s1Alt:
       "Un patrón Truchet multiescala en blanco y negro de Christopher Carlson con dominios curvos anidados en varios tamaños de cuadrado",
+    s1GeneratorPre:
+      "Para un ejemplo multiescala más lúdico, con puntos de color y arcos anidados, mira ",
+    s1GeneratorLink: "el generador de OpenProcessing de Roni Kaufman",
+    s1GeneratorPost: ", que es lo que produce este script:",
+    s1GenCap: "Generador Truchet multiescala de Roni Kaufman (OpenProcessing)",
+    s1GenAlt:
+      "Un patrón Truchet multiescala colorido con arcos anidados y pequeños puntos de color, generado en OpenProcessing",
 
     s2h: "Del lienzo a la tela: el quilting Truchet",
     s2: [
@@ -446,6 +481,14 @@ const content = {
       "Una manta Truchet tejida con bloques de medio cuadrado-triángulo en verde, azul y gris oscuro sobre un sillón",
     s2photoCap:
       "La misma lógica de medio cuadrado-triángulo llevada a una manta real: pocos colores, repetidos con rotaciones al azar",
+    s2crochetDetailAlt:
+      "Un primer plano de una manta Truchet al crochet hecha con bloques triangulares en turquesa, crema, mostaza y bordó",
+    s2crochetDetailCap:
+      "El crochet lleva la misma geometría Truchet hacia la textura: módulos triangulares repetidos y rotados para formar motivos mayores",
+    s2crochetBedAlt:
+      "Una manta Truchet multicolor al crochet extendida sobre una cama",
+    s2crochetBedCap:
+      "Otra interpretación en crochet: una colcha completa construida a partir de unidades de medio cuadrado-triángulo rotadas",
 
     s3h: "El 'Hola Mundo' del arte generativo",
     s3IntroPre:
@@ -459,6 +502,9 @@ const content = {
     s3cap: "Un generador Truchet mínimo con arcos de Smith en p5.js",
     s3EditorLabel: "Sketch p5.js editable",
     s3PreviewTitle: "Resultado p5.js en vivo",
+    s3CollectionPre: "Si quieres más ejemplos, mira esta ",
+    s3CollectionLink: "colección de scripts en p5.js",
+    s3CollectionPost: ".",
     s3after:
       "Cambia los dos arcos por una sola diagonal y obtienes el laberinto angular clásico; sube la resolución de la cuadrícula y el patrón se densifica sin una sola regla extra.",
 
@@ -469,6 +515,14 @@ const content = {
     ],
     s4cap:
       "Un teselado Truchet hexagonal: puertas en los puntos medios unidas por arcos, con cada hexágono rotado al azar",
+    s4BrowneIntro:
+      "Cameron Browne ha explorado a fondo estos teselados hexagonales en duotono — dos mosaicos base teselados juntos generan laberintos fluidos infinitamente variados:",
+    s4BrowneCap: "Mosaicos y teselado Truchet hexagonal en duotono, de Cameron Browne",
+    s4BrowneAlt1:
+      "Dos mosaicos base Truchet hexagonales azul y crema y un teselado rectangular formado con ellos",
+    s4BrowneCap2: "Laberinto Truchet hexagonal en duotono, de Cameron Browne",
+    s4BrowneAlt2:
+      "Un denso patrón de laberinto azul y crema hecho con mosaicos Truchet hexagonales",
 
     s5h: "Pruébalo tú mismo",
     s5: [
@@ -512,6 +566,13 @@ const content = {
       "Multi-Scale Truchet Patterns, de Christopher Carlson. Source de l'image : christophercarlson.com",
     s1Alt:
       "Un motif Truchet multi-échelle noir et blanc de Christopher Carlson avec des domaines courbes imbriqués à plusieurs tailles de carré",
+    s1GeneratorPre:
+      "Pour un exemple multi-échelle plus ludique, avec points colorés et arcs imbriqués, voir ",
+    s1GeneratorLink: "le générateur OpenProcessing de Roni Kaufman",
+    s1GeneratorPost: ", c'est ce que produit ce script :",
+    s1GenCap: "Générateur Truchet multi-échelle de Roni Kaufman (OpenProcessing)",
+    s1GenAlt:
+      "Un motif Truchet multi-échelle coloré avec des arcs imbriqués et de petits points colorés, généré dans OpenProcessing",
 
     s2h: "De la toile au tissu : la courtepointe Truchet",
     s2: [
@@ -524,6 +585,14 @@ const content = {
       "Une couverture Truchet tricotée avec des blocs demi-carré-triangle vert, bleu et gris foncé sur un fauteuil",
     s2photoCap:
       "La même logique demi-carré-triangle transposée dans une couverture tactile : quelques couleurs, répétées avec des rotations aléatoires",
+    s2crochetDetailAlt:
+      "Un gros plan d'une couverture Truchet au crochet faite de blocs triangulaires turquoise, crème, or et bordeaux",
+    s2crochetDetailCap:
+      "Le crochet pousse la même géométrie Truchet vers la texture : des modules triangulaires répétés, tournés pour former des motifs plus vastes",
+    s2crochetBedAlt:
+      "Une couverture Truchet multicolore au crochet étalée sur un lit",
+    s2crochetBedCap:
+      "Autre interprétation au crochet : un couvre-lit complet construit à partir d'unités demi-carré-triangle pivotées",
 
     s3h: "Le 'Hello World' de l'art génératif",
     s3IntroPre:
@@ -537,6 +606,9 @@ const content = {
     s3cap: "Un générateur Truchet minimal à arcs de Smith en p5.js",
     s3EditorLabel: "Croquis p5.js modifiable",
     s3PreviewTitle: "Résultat p5.js en direct",
+    s3CollectionPre: "Si vous voulez plus d'exemples, parcourez cette ",
+    s3CollectionLink: "collection de scripts p5.js",
+    s3CollectionPost: ".",
     s3after:
       "Remplacez les deux arcs par une seule diagonale et vous obtenez le labyrinthe angulaire classique ; augmentez la résolution de la grille et le motif se densifie sans une seule règle de plus.",
 
@@ -547,6 +619,14 @@ const content = {
     ],
     s4cap:
       "Un pavage Truchet hexagonal : des portes aux milieux des côtés reliées par des arcs, chaque hexagone tourné au hasard",
+    s4BrowneIntro:
+      "Cameron Browne a exploré en profondeur ces pavages hexagonaux duotone — deux carreaux de base pavés ensemble produisent des labyrinthes fluides à la variété infinie :",
+    s4BrowneCap: "Carreaux et pavage Truchet hexagonal duotone, de Cameron Browne",
+    s4BrowneAlt1:
+      "Deux carreaux de base Truchet hexagonaux bleu et crème et un pavage rectangulaire assemblé à partir d'eux",
+    s4BrowneCap2: "Labyrinthe Truchet hexagonal duotone, de Cameron Browne",
+    s4BrowneAlt2:
+      "Un motif de labyrinthe dense bleu et crème fait de carreaux Truchet hexagonaux",
 
     s5h: "Essayez vous-même",
     s5: [
@@ -641,7 +721,62 @@ export default function TruchetInPractice() {
               </p>
             </section>
 
-            {/* A — Multiscale */}
+            {/* A — Quilting */}
+            <section>
+              <h2 className="text-2xl font-semibold mb-4">{c.s2h}</h2>
+              {c.s2.map((p, i) => (
+                <p key={i} className={paragraph}>
+                  {p}
+                </p>
+              ))}
+              <figure className="my-4">
+                <SquareTruchetQuilt />
+                <figcaption className="text-xs text-zinc-400 mt-3">
+                  {c.s2cap}
+                </figcaption>
+              </figure>
+              <figure className="my-6">
+                <Image
+                  src="/articles/truchet-blanket.png"
+                  alt={c.s2photoAlt}
+                  width={2230}
+                  height={1888}
+                  sizes="(min-width: 768px) 720px, calc(100vw - 48px)"
+                  className="h-auto w-full rounded-lg"
+                />
+                <figcaption className="text-xs text-zinc-400 mt-3">
+                  {c.s2photoCap}
+                </figcaption>
+              </figure>
+              <figure className="my-6">
+                <Image
+                  src="/articles/truchet-crochet-detail.jpg"
+                  alt={c.s2crochetDetailAlt}
+                  width={1600}
+                  height={1583}
+                  sizes="(min-width: 768px) 720px, calc(100vw - 48px)"
+                  className="h-auto w-full rounded-lg"
+                />
+                <figcaption className="text-xs text-zinc-400 mt-3">
+                  {c.s2crochetDetailCap}
+                </figcaption>
+              </figure>
+              <figure className="my-6">
+                <Image
+                  src="/articles/truchet-crochet-bedspread.jpg"
+                  alt={c.s2crochetBedAlt}
+                  width={1600}
+                  height={1403}
+                  sizes="(min-width: 768px) 720px, calc(100vw - 48px)"
+                  className="h-auto w-full rounded-lg"
+                />
+                <figcaption className="text-xs text-zinc-400 mt-3">
+                  {c.s2crochetBedCap}
+                </figcaption>
+              </figure>
+            </section>
+
+            {/* B — Multiscale */}
             <section>
               <h2 className="text-2xl font-semibold mb-4">{c.s1h}</h2>
               <p className={paragraph}>
@@ -677,33 +812,32 @@ export default function TruchetInPractice() {
                   </a>
                 </figcaption>
               </figure>
-            </section>
-
-            {/* B — Quilting */}
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">{c.s2h}</h2>
-              {c.s2.map((p, i) => (
-                <p key={i} className={paragraph}>
-                  {p}
-                </p>
-              ))}
-              <figure className="my-4">
-                <SquareTruchetQuilt />
-                <figcaption className="text-xs text-zinc-400 mt-3">
-                  {c.s2cap}
-                </figcaption>
-              </figure>
+              <p className={paragraph}>
+                {c.s1GeneratorPre}
+                <a
+                  href="https://openprocessing.org/@ronikaufman/1715681"
+                  className="text-teal-600 dark:text-teal-400 hover:underline"
+                >
+                  {c.s1GeneratorLink}
+                </a>
+                {c.s1GeneratorPost}
+              </p>
               <figure className="my-6">
                 <Image
-                  src="/articles/truchet-blanket.png"
-                  alt={c.s2photoAlt}
-                  width={2230}
-                  height={1888}
-                  sizes="(min-width: 768px) 720px, calc(100vw - 48px)"
-                  className="h-auto w-full rounded-lg"
+                  src="/articles/openprocessing-multiscale-truchet.png"
+                  alt={c.s1GenAlt}
+                  width={980}
+                  height={986}
+                  sizes="(min-width: 768px) 419px, calc(100vw - 48px)"
+                  className="h-auto w-full max-w-[419px] rounded-lg"
                 />
                 <figcaption className="text-xs text-zinc-400 mt-3">
-                  {c.s2photoCap}
+                  <a
+                    href="https://openprocessing.org/@ronikaufman/1715681"
+                    className="hover:text-zinc-600 hover:underline dark:hover:text-zinc-300"
+                  >
+                    {c.s1GenCap}
+                  </a>
                 </figcaption>
               </figure>
             </section>
@@ -731,6 +865,16 @@ export default function TruchetInPractice() {
                 editorLabel={c.s3EditorLabel}
                 previewTitle={c.s3PreviewTitle}
               />
+              <p className={paragraph}>
+                {c.s3CollectionPre}
+                <a
+                  href={P5_COLLECTION_URL}
+                  className="text-teal-600 dark:text-teal-400 hover:underline"
+                >
+                  {c.s3CollectionLink}
+                </a>
+                {c.s3CollectionPost}
+              </p>
               <p className={paragraph}>{c.s3after}</p>
             </section>
 
@@ -746,6 +890,43 @@ export default function TruchetInPractice() {
                 <HexTruchet />
                 <figcaption className="text-xs text-zinc-400 mt-3">
                   {c.s4cap}
+                </figcaption>
+              </figure>
+              <p className={paragraph}>{c.s4BrowneIntro}</p>
+              <figure className="my-6">
+                <Image
+                  src="/articles/browne-hexagonal-truchet-tiles.png"
+                  alt={c.s4BrowneAlt1}
+                  width={640}
+                  height={227}
+                  sizes="(min-width: 768px) 640px, calc(100vw - 48px)"
+                  className="h-auto w-full max-w-[640px] rounded-lg"
+                />
+                <figcaption className="text-xs text-zinc-400 mt-3">
+                  <a
+                    href="https://cambolbro.com/graphics/duotone/"
+                    className="hover:text-zinc-600 hover:underline dark:hover:text-zinc-300"
+                  >
+                    {c.s4BrowneCap}
+                  </a>
+                </figcaption>
+              </figure>
+              <figure className="my-6">
+                <Image
+                  src="/articles/browne-hexagonal-truchet-maze.png"
+                  alt={c.s4BrowneAlt2}
+                  width={640}
+                  height={370}
+                  sizes="(min-width: 768px) 640px, calc(100vw - 48px)"
+                  className="h-auto w-full max-w-[640px] rounded-lg"
+                />
+                <figcaption className="text-xs text-zinc-400 mt-3">
+                  <a
+                    href="https://cambolbro.com/graphics/duotone/"
+                    className="hover:text-zinc-600 hover:underline dark:hover:text-zinc-300"
+                  >
+                    {c.s4BrowneCap2}
+                  </a>
                 </figcaption>
               </figure>
             </section>

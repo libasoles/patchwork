@@ -5,7 +5,11 @@
       "WebFetch(domain:en.wikipedia.org)",
       "Bash(npm view *)",
       "Bash(npx next *)",
-      "Bash(npm ls *)"
+      "Bash(npm ls *)",
+      "Bash(osascript -e 'clipboard info')",
+      "Bash(osascript -e 'set p to \\(POSIX file \"/tmp/clip-test.png\"\\)' -e 'set f to open for access p with write permission' -e 'set eof f to 0' -e 'write \\(the clipboard as «class PNGf»\\) to f' -e 'close access f')",
+      "Read(//private/tmp/**)",
+      "Bash(sips -g pixelWidth -g pixelHeight /tmp/clip-test.png)"
     ]
   }
 }

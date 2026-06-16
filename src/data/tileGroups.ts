@@ -15,7 +15,7 @@ import { emptyTile, tilesMap } from "@/config";
  *     curved variant and is NOT attributed to a specific designer here.
  *   - Smith 1987: Cyril Stanley Smith, "The tiling patterns of Sebastien Truchet and
  *     the topology of structural hierarchy" (1987), describes a tile bearing TWO
- *     quarter-circles at opposite corners — see smithTilesFontFamily / the "smith
+ *     quarter-circles at opposite corners — see smithTileFontFamilies / the "smith
  *     arcs" font group, not the single-arc "circle quarters" family below.
  *
  * Other grouped Patchwork tiles are described visually and by local source font;
@@ -609,7 +609,7 @@ const catalogGroupMetadata: Record<string, Pick<TileGroupFamily, "name" | "descr
   },
 };
 
-// Groups owned by the hand-authored supplementary-font family (smithTilesFontFamily,
+// Groups owned by the hand-authored supplementary-font families (smithTileFontFamilies,
 // declared below). Listed here so they are excluded from the auto font catalog and
 // therefore not duplicated on /block-groups and /articles/tile-groups.
 export const supplementaryFontGroups = [
@@ -702,101 +702,153 @@ export const unmappedFontFamily: TileGroupFamily = {
   })),
 };
 
-export const smithTilesFontFamily: TileGroupFamily = {
-  id: "smith-tiles-font",
-  source: "font-catalog",
-  sourceFont: "smith-tiles",
-  name: "Smith Tiles Font",
-  description:
-    "Supplementary Patchwork font with twelve Smith (1987) Truchet tiles at U+E000–U+E015, in three " +
-    "styles — quarter-circle arcs, straight double-band lines, and single corner-to-corner diagonals — " +
-    "each provided in two stroke weights. The arc and double-band tiles carry TWO connectors covering " +
-    "all four edge midpoints, so any adjacent pair always connects, producing the labyrinthine closed " +
-    "regions Smith described; the single-diagonal tiles are the classic two-orientation diagonal Truchet " +
-    "tile (the paper's Figure 3). U+E000–E005 are the thin weight (the original ~50-unit band); " +
-    "U+E010–E015 are the thick weight, a 175-unit stroke matching the BIT BLOCKS glyphs for visual " +
-    "cohesion. Glyph metrics match BIT BLOCKS so these tiles align with the existing grid.",
-  historicReference: "Cyril Stanley Smith Truchet tile family, supplementary Patchwork font",
-  patchworkGroups: supplementaryFontGroups,
-  tiles: [
-    {
-      id: 0xe000,
-      symbol: String.fromCodePoint(0xe000),
-      orientation: 0,
-      description: "Thin S-shape: arc at top-right corner + arc at bottom-left corner.",
-    },
-    {
-      id: 0xe001,
-      symbol: String.fromCodePoint(0xe001),
-      orientation: 1,
-      description: "Thin reverse-S: arc at top-left corner + arc at bottom-right corner.",
-    },
-    {
-      id: 0xe010,
-      symbol: String.fromCodePoint(0xe010),
-      orientation: 0,
-      description: "Thick S-shape: arc at top-right corner + arc at bottom-left corner.",
-    },
-    {
-      id: 0xe011,
-      symbol: String.fromCodePoint(0xe011),
-      orientation: 1,
-      description: "Thick reverse-S: arc at top-left corner + arc at bottom-right corner.",
-    },
-    {
-      id: 0xe002,
-      symbol: String.fromCodePoint(0xe002),
-      orientation: 0,
-      description:
-        "Thin straight S: diagonal band top↔right + diagonal band bottom↔left (double-line variant).",
-    },
-    {
-      id: 0xe003,
-      symbol: String.fromCodePoint(0xe003),
-      orientation: 1,
-      description:
-        "Thin straight reverse-S: diagonal band top↔left + diagonal band bottom↔right (double-line variant).",
-    },
-    {
-      id: 0xe012,
-      symbol: String.fromCodePoint(0xe012),
-      orientation: 0,
-      description:
-        "Thick straight S: diagonal band top↔right + diagonal band bottom↔left (double-line variant).",
-    },
-    {
-      id: 0xe013,
-      symbol: String.fromCodePoint(0xe013),
-      orientation: 1,
-      description:
-        "Thick straight reverse-S: diagonal band top↔left + diagonal band bottom↔right (double-line variant).",
-    },
-    {
-      id: 0xe004,
-      symbol: String.fromCodePoint(0xe004),
-      orientation: 0,
-      description: "Thin single diagonal '/': bottom-left ↔ top-right corner-to-corner line.",
-    },
-    {
-      id: 0xe005,
-      symbol: String.fromCodePoint(0xe005),
-      orientation: 1,
-      description: "Thin single diagonal '\\': top-left ↔ bottom-right corner-to-corner line.",
-    },
-    {
-      id: 0xe014,
-      symbol: String.fromCodePoint(0xe014),
-      orientation: 0,
-      description: "Thick single diagonal '/': bottom-left ↔ top-right corner-to-corner line.",
-    },
-    {
-      id: 0xe015,
-      symbol: String.fromCodePoint(0xe015),
-      orientation: 1,
-      description: "Thick single diagonal '\\': top-left ↔ bottom-right corner-to-corner line.",
-    },
-  ],
+const smithHistoricReference =
+  "Cyril Stanley Smith Truchet tile family, supplementary Patchwork font";
+
+const smithFamilyBase = {
+  source: "font-catalog" as const,
+  sourceFont: "smith-tiles" as const,
+  historicReference: smithHistoricReference,
 };
+
+export const smithTileFontFamilies: TileGroupFamily[] = [
+  {
+    ...smithFamilyBase,
+    id: "smith-arcs-thin",
+    name: "Smith Arc Tiles - Thin",
+    description:
+      "Thin-weight Smith (1987) quarter-circle arc tiles from U+E000-U+E001. Each tile carries two quarter-circle arcs at opposite corners, covering all four edge midpoints and producing continuous labyrinthine curves.",
+    patchworkGroups: ["smith arcs"],
+    tiles: [
+      {
+        id: 0xe000,
+        symbol: String.fromCodePoint(0xe000),
+        orientation: 0,
+        description: "Thin S-shape: arc at top-right corner + arc at bottom-left corner.",
+      },
+      {
+        id: 0xe001,
+        symbol: String.fromCodePoint(0xe001),
+        orientation: 1,
+        description: "Thin reverse-S: arc at top-left corner + arc at bottom-right corner.",
+      },
+    ],
+  },
+  {
+    ...smithFamilyBase,
+    id: "smith-diagonal-lines-thin",
+    name: "Smith Diagonal Line Tiles - Thin",
+    description:
+      "Thin-weight Smith straight double-band variant from U+E002-U+E003. Each tile connects all four edge midpoints with paired diagonal bands, mirroring the routing of the Smith arc tiles.",
+    patchworkGroups: ["diagonal lines"],
+    tiles: [
+      {
+        id: 0xe002,
+        symbol: String.fromCodePoint(0xe002),
+        orientation: 0,
+        description:
+          "Thin straight S: diagonal band top↔right + diagonal band bottom↔left (double-line variant).",
+      },
+      {
+        id: 0xe003,
+        symbol: String.fromCodePoint(0xe003),
+        orientation: 1,
+        description:
+          "Thin straight reverse-S: diagonal band top↔left + diagonal band bottom↔right (double-line variant).",
+      },
+    ],
+  },
+  {
+    ...smithFamilyBase,
+    id: "smith-single-diagonal-thin",
+    name: "Smith Single Diagonal Tiles - Thin",
+    description:
+      "Thin-weight Smith single corner-to-corner diagonal tiles from U+E004-U+E005. This is the classic two-orientation diagonal Truchet labyrinth form in the supplementary Smith font.",
+    patchworkGroups: ["single diagonal"],
+    tiles: [
+      {
+        id: 0xe004,
+        symbol: String.fromCodePoint(0xe004),
+        orientation: 0,
+        description: "Thin single diagonal '/': bottom-left ↔ top-right corner-to-corner line.",
+      },
+      {
+        id: 0xe005,
+        symbol: String.fromCodePoint(0xe005),
+        orientation: 1,
+        description: "Thin single diagonal '\\': top-left ↔ bottom-right corner-to-corner line.",
+      },
+    ],
+  },
+  {
+    ...smithFamilyBase,
+    id: "smith-arcs-thick",
+    name: "Smith Arc Tiles - Thick",
+    description:
+      "Thick-weight Smith (1987) quarter-circle arc tiles from U+E010-U+E011. They use a 175-unit stroke for visual cohesion with BIT BLOCKS while preserving the two-arc Smith topology.",
+    patchworkGroups: ["smith arcs"],
+    tiles: [
+      {
+        id: 0xe010,
+        symbol: String.fromCodePoint(0xe010),
+        orientation: 0,
+        description: "Thick S-shape: arc at top-right corner + arc at bottom-left corner.",
+      },
+      {
+        id: 0xe011,
+        symbol: String.fromCodePoint(0xe011),
+        orientation: 1,
+        description: "Thick reverse-S: arc at top-left corner + arc at bottom-right corner.",
+      },
+    ],
+  },
+  {
+    ...smithFamilyBase,
+    id: "smith-diagonal-lines-thick",
+    name: "Smith Diagonal Line Tiles - Thick",
+    description:
+      "Thick-weight Smith straight double-band variant from U+E012-U+E013, using the heavier 175-unit stroke while keeping the same paired diagonal connectivity.",
+    patchworkGroups: ["diagonal lines"],
+    tiles: [
+      {
+        id: 0xe012,
+        symbol: String.fromCodePoint(0xe012),
+        orientation: 0,
+        description:
+          "Thick straight S: diagonal band top↔right + diagonal band bottom↔left (double-line variant).",
+      },
+      {
+        id: 0xe013,
+        symbol: String.fromCodePoint(0xe013),
+        orientation: 1,
+        description:
+          "Thick straight reverse-S: diagonal band top↔left + diagonal band bottom↔right (double-line variant).",
+      },
+    ],
+  },
+  {
+    ...smithFamilyBase,
+    id: "smith-single-diagonal-thick",
+    name: "Smith Single Diagonal Tiles - Thick",
+    description:
+      "Thick-weight Smith single corner-to-corner diagonal tiles from U+E014-U+E015, matching the heavier BIT BLOCKS stroke while retaining the two diagonal orientations.",
+    patchworkGroups: ["single diagonal"],
+    tiles: [
+      {
+        id: 0xe014,
+        symbol: String.fromCodePoint(0xe014),
+        orientation: 0,
+        description: "Thick single diagonal '/': bottom-left ↔ top-right corner-to-corner line.",
+      },
+      {
+        id: 0xe015,
+        symbol: String.fromCodePoint(0xe015),
+        orientation: 1,
+        description: "Thick single diagonal '\\': top-left ↔ bottom-right corner-to-corner line.",
+      },
+    ],
+  },
+];
 
 export const allTileGroupFamilies: TileGroupFamily[] = [
   ...truchetFamilies.map((family) => ({
@@ -811,7 +863,7 @@ export const allTileGroupFamilies: TileGroupFamily[] = [
   })),
   ...fontCatalogFamilies,
   unmappedFontFamily,
-  smithTilesFontFamily,
+  ...smithTileFontFamilies,
 ];
 
 /**
