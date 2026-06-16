@@ -102,6 +102,85 @@ export default function Canvas() {
         return () => el.removeEventListener('wheel', handleWheel);
     }, [setZoomLevel, setOffset]);
 
+    // Two-finger pinch-to-zoom + pan on touch devices. Single-finger touches
+    // are left to the per-cell drawing handlers in usePointerEvents.
+    useEffect(() => {
+        const el = containerRef.current;
+        if (!el) return;
+
+        let startDist = 0;
+        let startZoom = 0;
+        let startOffset = { x: 0, y: 0 };
+        let startCenter = { x: 0, y: 0 };
+        let active = false;
+
+        const centerAndDistance = (t0: Touch, t1: Touch) => {
+            const cx = (t0.clientX + t1.clientX) / 2;
+            const cy = (t0.clientY + t1.clientY) / 2;
+            const dist = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
+            return { cx, cy, dist };
+        };
+
+        const onTouchStart = (e: TouchEvent) => {
+            if (e.touches.length !== 2) {
+                active = false;
+                return;
+            }
+            e.preventDefault();
+            const { cx, cy, dist } = centerAndDistance(e.touches[0], e.touches[1]);
+            startDist = dist || 1;
+            startZoom = zoomRef.current;
+            startOffset = offsetRef.current;
+            startCenter = { x: cx, y: cy };
+            active = true;
+        };
+
+        const onTouchMove = (e: TouchEvent) => {
+            if (!active || e.touches.length !== 2) return;
+            e.preventDefault();
+
+            const { cx, cy, dist } = centerAndDistance(e.touches[0], e.touches[1]);
+            const oldScale = (4 + startZoom) / 10;
+            const ratio = (dist || 1) / startDist;
+            const newZoom = clamp((4 + startZoom) * ratio - 4, zoomMin, zoomMax);
+            const newScale = (4 + newZoom) / 10;
+
+            const rect = el.getBoundingClientRect();
+            // Anchor: where the pinch began on screen, in container-local coords.
+            const ax = startCenter.x - rect.left;
+            const ay = startCenter.y - rect.top;
+            const { x: ox, y: oy } = startOffset;
+
+            // Zoom around the anchor; add centroid drift as pan.
+            const panX = cx - startCenter.x;
+            const panY = cy - startCenter.y;
+            const newOx = ax - rect.width / 2 - (ax - rect.width / 2 - ox) * newScale / oldScale + panX;
+            const newOy = ay - rect.height / 2 - (ay - rect.height / 2 - oy) * newScale / oldScale + panY;
+
+            const newOffset = { x: newOx, y: newOy };
+            offsetRef.current = newOffset;
+            zoomRef.current = newZoom;
+
+            setZoomLevel(newZoom);
+            setOffset(newOffset);
+        };
+
+        const onTouchEnd = (e: TouchEvent) => {
+            if (e.touches.length < 2) active = false;
+        };
+
+        el.addEventListener('touchstart', onTouchStart, { passive: false });
+        el.addEventListener('touchmove', onTouchMove, { passive: false });
+        el.addEventListener('touchend', onTouchEnd);
+        el.addEventListener('touchcancel', onTouchEnd);
+        return () => {
+            el.removeEventListener('touchstart', onTouchStart);
+            el.removeEventListener('touchmove', onTouchMove);
+            el.removeEventListener('touchend', onTouchEnd);
+            el.removeEventListener('touchcancel', onTouchEnd);
+        };
+    }, [setZoomLevel, setOffset]);
+
     // const { offset, canvasRef } = useMoveCanvas()
 
     const { pop } = useHistoryApi()
