@@ -7,10 +7,6 @@ interface LocaleLink {
 }
 
 interface ArticleHeaderProps {
-  backLink?: {
-    href: string;
-    label: string;
-  };
   currentHref: string;
   lang: string;
   localeLinks: LocaleLink[];
@@ -18,7 +14,6 @@ interface ArticleHeaderProps {
 }
 
 export default function ArticleHeader({
-  backLink,
   currentHref,
   lang,
   localeLinks,
@@ -44,21 +39,6 @@ export default function ArticleHeader({
             />
             <span className="text-lg font-bold tracking-tight">patchwork</span>
           </Link>
-
-          {backLink ? (
-            <>
-              <span
-                aria-hidden="true"
-                className="h-5 w-px bg-zinc-200 dark:bg-zinc-800"
-              />
-              <Link
-                href={backLink.href}
-                className="truncate text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:hover:text-zinc-100"
-              >
-                {backLink.label}
-              </Link>
-            </>
-          ) : null}
         </div>
 
         <div className="flex shrink-0 gap-3 text-xs text-zinc-400">

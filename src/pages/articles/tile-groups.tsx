@@ -228,7 +228,6 @@ export default function TileGroupsArticle() {
 
       <div className="min-h-screen bg-white text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100">
         <ArticleHeader
-          backLink={{ href: "/articles", label: c.backToArticles }}
           currentHref="/articles/tile-groups"
           lang={lang}
           localeLinks={localeLinks}
@@ -236,6 +235,13 @@ export default function TileGroupsArticle() {
         />
 
         <main className="mx-auto max-w-5xl px-6 py-16">
+          <Link
+            href="/articles"
+            className="mb-10 inline-flex text-sm font-medium text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+          >
+            {c.backToArticles}
+          </Link>
+
           <div className="mb-10 max-w-3xl">
             <div className="mb-4 flex items-center gap-4 font-mono text-xs text-zinc-400 dark:text-zinc-500">
               <time>{c.date}</time>
