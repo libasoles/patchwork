@@ -56,7 +56,7 @@ const labels = {
     randomizeAria: "Generate a new pattern",
   },
   es: {
-    tiles: "Mosaicos",
+    tiles: "Grupo de mosaicos",
     mode: "Modo",
     selectPlaceholder: "Elegir grupo de mosaicos",
     patternLabel: "Patron de mosaicos generado",

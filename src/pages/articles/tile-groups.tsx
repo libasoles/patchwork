@@ -46,6 +46,7 @@ const content = {
     statsTiles: "tiles",
     statsGroups: "Patchwork groups",
     patchworkGroups: "Patchwork groups",
+    groupIndexLabel: "Tile group index",
     sourcesTitle: "Source notes",
     sources: [
       "Sébastien Truchet's 1704 memoir describes the original diagonally divided square tile.",
@@ -56,23 +57,24 @@ const content = {
       "Unmapped BIT BLOCKS font codepoints are intentionally excluded from this article.",
   },
   es: {
-    metaTitle: "Grupos de tiles de Patchwork - Patchwork",
+    metaTitle: "Grupos de mosaicos de Patchwork - Patchwork",
     metaDescription:
-      "Catalogo visual completo de los grupos de tiles de Patchwork, sin los glifos no mapeados de la fuente.",
+      "Catalogo visual completo de los grupos de mosaicos de Patchwork, sin los glifos no mapeados de la fuente.",
     backToArticles: "← Articulos",
     backToApp: "Abrir Patchwork →",
     date: "15 de junio de 2026",
     readingTime: "8 min de lectura",
-    title: "Grupos de tiles de Patchwork",
+    title: "Grupos de mosaicos de Patchwork",
     lead: "Un catalogo visual de todos los grupos seleccionables de Patchwork: familias historicas de Truchet, familias conectoras curadas de Patchwork y el resto de glifos agrupados de las fuentes incluidas.",
     statsFamilies: "familias",
-    statsTiles: "tiles",
+    statsTiles: "mosaicos",
     statsGroups: "grupos Patchwork",
     patchworkGroups: "Grupos Patchwork",
+    groupIndexLabel: "Indice de grupos de mosaicos",
     sourcesTitle: "Notas de fuente",
     sources: [
-      "La memoria de 1704 de Sébastien Truchet describe el tile cuadrado original dividido por una diagonal.",
-      "La familia de un solo arco de cuarto de circulo es la forma curva generica del mosaico Truchet y no se atribuye a un disenador concreto. El articulo de Cyril Stanley Smith (Leonardo, 1987) describe un tile distinto, con dos cuartos de circulo en esquinas opuestas (el grupo de fuente 'smith arcs').",
+      "La memoria de 1704 de Sébastien Truchet describe el mosaico cuadrado original dividido por una diagonal.",
+      "La familia de un solo arco de cuarto de circulo es la forma curva generica del mosaico Truchet y no se atribuye a un disenador concreto. El articulo de Cyril Stanley Smith (Leonardo, 1987) describe un mosaico distinto, con dos cuartos de circulo en esquinas opuestas (el grupo de fuente 'smith arcs').",
       "Los demas grupos se describen como familias Patchwork o catalogos de fuente salvo que exista una atribucion historica especifica.",
     ],
     footer:
@@ -92,6 +94,7 @@ const content = {
     statsTiles: "carreaux",
     statsGroups: "groupes Patchwork",
     patchworkGroups: "Groupes Patchwork",
+    groupIndexLabel: "Index des groupes de carreaux",
     sourcesTitle: "Notes de source",
     sources: [
       "Le memoire de 1704 de Sébastien Truchet decrit le carreau carre original divise par une diagonale.",
@@ -132,6 +135,19 @@ function sourceLabel(family: TileGroupFamily, lang: string) {
   return labels[lang] ?? labels.en;
 }
 
+function articleText(text: string, lang: string) {
+  if (lang !== "es") {
+    return text;
+  }
+
+  return text
+    .replace(/\bSmith Tiles Font\b/g, "fuente Smith Tiles")
+    .replace(/\bTiles\b/g, "Mosaicos")
+    .replace(/\bTile\b/g, "Mosaico")
+    .replace(/\btiles\b/g, "mosaicos")
+    .replace(/\btile\b/g, "mosaico");
+}
+
 function GroupSection({
   family,
   index,
@@ -155,16 +171,16 @@ function GroupSection({
             {sourceLabel(family, lang)}
           </p>
           <h2 className="text-2xl font-semibold leading-tight text-zinc-950 dark:text-zinc-50">
-            {family.name}
+            {articleText(family.name, lang)}
           </h2>
           <p className="mt-3 text-sm leading-6 text-zinc-500">
-            {family.historicReference}
+            {articleText(family.historicReference, lang)}
           </p>
         </div>
 
         <div className="min-w-0">
           <p className="max-w-3xl text-base leading-7 text-zinc-700 dark:text-zinc-300">
-            {family.description}
+            {articleText(family.description, lang)}
           </p>
 
           <div className="mt-4 flex flex-wrap gap-2">
@@ -272,7 +288,7 @@ export default function TileGroupsArticle() {
           </div>
 
           <nav
-            aria-label="Tile group index"
+            aria-label={c.groupIndexLabel}
             className="mb-8 flex gap-2 overflow-x-auto pb-2"
           >
             {articleFamilies.map((family) => (
@@ -281,7 +297,7 @@ export default function TileGroupsArticle() {
                 href={`#${family.id}`}
                 className="shrink-0 rounded-full border border-zinc-300 px-3 py-1.5 text-sm font-medium text-zinc-600 hover:border-zinc-500 hover:text-zinc-950 dark:border-zinc-700 dark:text-zinc-300 dark:hover:text-zinc-50"
               >
-                {family.name}
+                {articleText(family.name, lang)}
               </a>
             ))}
           </nav>

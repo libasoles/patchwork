@@ -86,6 +86,8 @@ The `Tile` class has methods: `clone`, `equals`, `isEmpty`, `looksLike`, `paint`
 
 `next-intl` with locales `en` and `es` under `messages/`. Locale-derived strings (e.g. the initial layer name via `getLayerDefaultName` in `src/lib/i18n.ts`) are written into the Zustand store from `App.tsx` once `router.isReady`.
 
+Spanish article copy must use "mosaico" / "mosaicos" for user-facing references to tiles. Keep "tile" only in code identifiers, routes, CSS classes, file names, or proper technical names where changing it would be incorrect.
+
 ### Key Config (`src/config.tsx`)
 
 Canvas is 50×50 cells by default. Colors are Tailwind classes — they must also live in the safelist in `tailwind.config.js`, because the app composes class names dynamically (`bg-${color}`) and Tailwind cannot statically detect them. Custom cursor classes per action are defined in the same Tailwind config.

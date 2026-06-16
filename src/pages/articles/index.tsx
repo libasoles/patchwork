@@ -33,7 +33,7 @@ const articles: Article[] = [
     date: "2026-06-15",
     titles: {
       en: "Patchwork Tile Groups",
-      es: "Grupos de tiles de Patchwork",
+      es: "Grupos de mosaicos de Patchwork",
       fr: "Groupes de carreaux Patchwork",
     },
     summaries: {
@@ -78,6 +78,13 @@ const ui: Record<string, Record<string, string>> = {
     heading: "Articles",
     subtitle: "Motifs, histoire et mathématiques derrière les carreaux.",
     readMore: "Lire l'article",
+  },
+};
+
+const tagLabels: Record<string, Record<string, string>> = {
+  tiles: {
+    es: "mosaicos",
+    fr: "carreaux",
   },
 };
 
@@ -144,7 +151,7 @@ export default function ArticlesIndex() {
                           key={tag}
                           className="text-xs px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400"
                         >
-                          {tag}
+                          {tagLabels[tag]?.[lang] ?? tag}
                         </span>
                       ))}
                     </div>

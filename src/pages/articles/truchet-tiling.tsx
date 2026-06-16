@@ -283,9 +283,9 @@ const content = {
     s3arcPatternCaption:
       "Colocación al azar 10×10 con los arcos Smith emparejados",
     s3linePatternCaption:
-      "La misma colocación con los tiles Smith gruesos de doble banda recta",
+      "La misma colocación con los mosaicos Smith gruesos de doble banda recta",
     s3diagonalPatternCaption:
-      "La misma colocación con los tiles Smith finos de laberinto diagonal simple",
+      "La misma colocación con los mosaicos Smith finos de laberinto diagonal simple",
 
     s4h: "Por qué funciona el azar",
     s4: "Las formas Smith de arco y doble banda tienen solo dos estados, pero cada estado conecta los cuatro puntos medios de los bordes: arriba con un lado y abajo con el otro, en emparejamientos opuestos. Como cada punto medio sigue encontrando un punto medio en el cuadrado vecino, las elecciones aleatorias no rompen el dibujo. Cambian el recorrido de las curvas continuas. La versión de diagonal simple funciona de otra manera: deja muros y pasillos separados, produciendo el laberinto diagonal clásico de Truchet.",
