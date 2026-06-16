@@ -603,10 +603,15 @@ const catalogGroupMetadata: Record<string, Pick<TileGroupFamily, "name" | "descr
   },
 };
 
+// Groups owned by the hand-authored supplementary-font family (smithTilesFontFamily,
+// declared below). Listed here so they are excluded from the auto font catalog and
+// therefore not duplicated on /block-groups and /articles/tile-groups.
+export const supplementaryFontGroups = ["smith arcs", "diagonal lines"];
+
 const documentedPatchworkGroups = new Set(
-  [...truchetFamilies, ...patchworkPatternFamilies].flatMap(
-    (family) => family.patchworkGroups
-  )
+  [...truchetFamilies, ...patchworkPatternFamilies]
+    .flatMap((family) => family.patchworkGroups)
+    .concat(supplementaryFontGroups)
 );
 
 function slugifyGroupName(groupName: string): string {
@@ -700,7 +705,7 @@ export const smithTilesFontFamily: TileGroupFamily = {
     "bands (double-line variant). All connectors cross each edge on the same 300–400 band, so arc and " +
     "straight tiles interconnect. Glyph metrics match BIT BLOCKS so these tiles align with the existing grid.",
   historicReference: "Cyril Stanley Smith arc tile family, supplementary Patchwork font",
-  patchworkGroups: ["smith arcs", "diagonal lines"],
+  patchworkGroups: supplementaryFontGroups,
   tiles: [
     {
       id: 0xe000,
