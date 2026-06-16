@@ -36,7 +36,7 @@ export default function Tile({
         name="tile"
         value={tile.id}
         onChange={onSelect}
-        className={styles.overlap}
+        className={`${styles.overlap} appearance-none outline-none`}
         disabled={isDisabled}
         checked={isSelected}
         role="radio"
