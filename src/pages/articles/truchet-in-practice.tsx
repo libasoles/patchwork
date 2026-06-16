@@ -14,7 +14,6 @@ const ACCENT = {
   teal: "#2dd4bf",
   emerald: "#34d399",
   sky: "#38bdf8",
-  yellow: "#facc15",
 };
 const SLATE_700 = "#334155";
 
@@ -35,74 +34,6 @@ function FigureFrame({ children }: { children: React.ReactNode }) {
     <div className="inline-block rounded-lg bg-slate-800 p-3 select-none">
       {children}
     </div>
-  );
-}
-
-// ── A. Multiscale Truchet ─────────────────────────────────────────────
-// A square recursively subdivided into quadrants; each leaf carries a
-// Smith-style two-arc Truchet tile. Arc colour tracks the subdivision
-// depth, so the different scales read as foreground/background layers.
-function leafArcs(
-  x: number,
-  y: number,
-  s: number,
-  orient: number,
-  color: string,
-  key: string,
-) {
-  const r = s / 2;
-  const sw = Math.max(1.5, s * 0.16);
-  const d =
-    orient === 0
-      ? [
-          `M ${x + r} ${y} A ${r} ${r} 0 0 0 ${x} ${y + r}`,
-          `M ${x + s} ${y + r} A ${r} ${r} 0 0 0 ${x + r} ${y + s}`,
-        ]
-      : [
-          `M ${x + r} ${y} A ${r} ${r} 0 0 0 ${x + s} ${y + r}`,
-          `M ${x} ${y + r} A ${r} ${r} 0 0 0 ${x + r} ${y + s}`,
-        ];
-  return d.map((path, i) => (
-    <path
-      key={`${key}-${i}`}
-      d={path}
-      fill="none"
-      stroke={color}
-      strokeWidth={sw}
-      strokeLinecap="round"
-    />
-  ));
-}
-
-function MultiscaleTruchet({ seed = 7, size = 360 }: { seed?: number; size?: number }) {
-  const rand = mulberry32(seed);
-  const depthColors = [ACCENT.teal, ACCENT.emerald, ACCENT.sky, ACCENT.yellow];
-  const nodes: React.ReactNode[] = [];
-
-  const build = (x: number, y: number, s: number, depth: number) => {
-    // Always split the first level; deeper levels split with decreasing odds.
-    const split = depth < 1 || (depth < 3 && rand() < 0.62 - depth * 0.12);
-    if (split) {
-      const h = s / 2;
-      build(x, y, h, depth + 1);
-      build(x + h, y, h, depth + 1);
-      build(x, y + h, h, depth + 1);
-      build(x + h, y + h, h, depth + 1);
-    } else {
-      const orient = rand() > 0.5 ? 1 : 0;
-      const color = depthColors[Math.min(depth, depthColors.length - 1)];
-      nodes.push(...leafArcs(x, y, s, orient, color, `${x}-${y}-${s}`));
-    }
-  };
-
-  build(0, 0, size, 0);
-
-  return (
-    <FigureFrame>
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-        {nodes}
-      </svg>
-    </FigureFrame>
   );
 }
 
@@ -281,12 +212,18 @@ const content = {
       ". If you want the story of the 1704 friar and Cyril Stanley Smith's curved tiles first, start there — here we pick up where simple rules start producing surprisingly rich results.",
 
     s1h: "Multiscale Truchet: patterns within patterns",
+    s1IntroPre:
+      "Modern generative artists rarely stop at a single grid size. In multiscale Truchet patterns — popularized by ",
+    s1IntroLink: "Christopher Carlson",
+    s1IntroPost:
+      " in his 2018 Bridges paper — each square can be recursively subdivided into smaller sub-squares, and each of those can subdivide again. Tiles exist at every scale, related by powers of one half.",
     s1: [
-      "Modern generative artists rarely stop at a single grid size. In multiscale Truchet patterns — popularized by Christopher Carlson in his 2018 Bridges paper — each square can be recursively subdivided into smaller sub-squares, and each of those can subdivide again. Tiles exist at every scale, related by powers of one half.",
       "The result feels organic, almost fractal: dense knots of small arcs sit beside large sweeping curves, and because the tiles are coloured by parity, each scale reads as foreground for the scale above it and background for the scale below. A handful of rules produces something that looks hand-composed.",
     ],
     s1cap:
-      "A multiscale Truchet pattern: each square may subdivide into four, with arc colour tracking the subdivision depth",
+      "Multi-Scale Truchet Patterns by Christopher Carlson. Image source: christophercarlson.com",
+    s1Alt:
+      "A black and white multiscale Truchet pattern by Christopher Carlson with nested curved domains at multiple square sizes",
 
     s2h: "From canvas to cloth: Truchet quilting",
     s2: [
@@ -326,7 +263,7 @@ const content = {
     cta: "Open Patchwork and start tiling",
 
     footer:
-      "Illustrated with SVG figures generated in the browser from a seeded random layout.",
+      "Illustrated with credited source imagery and SVG figures generated in the browser from seeded layouts.",
   },
 
   es: {
@@ -347,12 +284,18 @@ const content = {
       ". Si prefieres primero la historia del fraile de 1704 y los mosaicos curvos de Cyril Stanley Smith, empieza por ahí — aquí retomamos donde las reglas simples empiezan a producir resultados sorprendentemente ricos.",
 
     s1h: "Truchet multiescala: patrones dentro de patrones",
+    s1IntroPre:
+      "Los artistas generativos de hoy rara vez se quedan en un único tamaño de cuadrícula. En los patrones Truchet multiescala — popularizados por ",
+    s1IntroLink: "Christopher Carlson",
+    s1IntroPost:
+      " en su artículo de Bridges de 2018 — cada cuadrado puede subdividirse recursivamente en subcuadrados más pequeños, y cada uno de ellos volver a subdividirse. Los mosaicos existen a todas las escalas, relacionadas por potencias de un medio.",
     s1: [
-      "Los artistas generativos de hoy rara vez se quedan en un único tamaño de cuadrícula. En los patrones Truchet multiescala — popularizados por Christopher Carlson en su artículo de Bridges de 2018 — cada cuadrado puede subdividirse recursivamente en subcuadrados más pequeños, y cada uno de ellos volver a subdividirse. Los mosaicos existen a todas las escalas, relacionadas por potencias de un medio.",
       "El resultado se siente orgánico, casi fractal: nudos densos de arcos pequeños conviven con grandes curvas amplias, y como los mosaicos se colorean por paridad, cada escala se lee como figura respecto de la escala mayor y como fondo respecto de la menor. Un puñado de reglas produce algo que parece compuesto a mano.",
     ],
     s1cap:
-      "Un patrón Truchet multiescala: cada cuadrado puede subdividirse en cuatro, con el color del arco según la profundidad de subdivisión",
+      "Multi-Scale Truchet Patterns, de Christopher Carlson. Fuente de la imagen: christophercarlson.com",
+    s1Alt:
+      "Un patrón Truchet multiescala en blanco y negro de Christopher Carlson con dominios curvos anidados en varios tamaños de cuadrado",
 
     s2h: "Del lienzo a la tela: el quilting Truchet",
     s2: [
@@ -392,7 +335,7 @@ const content = {
     cta: "Abrir Patchwork y empezar a crear",
 
     footer:
-      "Ilustrado con figuras SVG generadas en el navegador a partir de una disposición aleatoria con semilla.",
+      "Ilustrado con imágenes de fuente acreditada y figuras SVG generadas en el navegador a partir de disposiciones aleatorias con semilla.",
   },
 
   fr: {
@@ -413,12 +356,18 @@ const content = {
       ". Si vous préférez d'abord l'histoire du frère de 1704 et des carreaux courbes de Cyril Stanley Smith, commencez par là — ici nous reprenons là où des règles simples se mettent à produire des résultats étonnamment riches.",
 
     s1h: "Truchet multi-échelle : des motifs dans les motifs",
+    s1IntroPre:
+      "Les artistes génératifs d'aujourd'hui s'arrêtent rarement à une seule taille de grille. Dans les motifs Truchet multi-échelles — popularisés par ",
+    s1IntroLink: "Christopher Carlson",
+    s1IntroPost:
+      " dans son article de Bridges 2018 — chaque carré peut être subdivisé récursivement en sous-carrés plus petits, qui peuvent à leur tour se subdiviser. Les carreaux existent à toutes les échelles, reliées par des puissances d'un demi.",
     s1: [
-      "Les artistes génératifs d'aujourd'hui s'arrêtent rarement à une seule taille de grille. Dans les motifs Truchet multi-échelles — popularisés par Christopher Carlson dans son article de Bridges 2018 — chaque carré peut être subdivisé récursivement en sous-carrés plus petits, qui peuvent à leur tour se subdiviser. Les carreaux existent à toutes les échelles, reliées par des puissances d'un demi.",
       "Le résultat semble organique, presque fractal : des nœuds denses de petits arcs côtoient de grandes courbes amples, et comme les carreaux sont colorés par parité, chaque échelle se lit comme figure par rapport à l'échelle supérieure et comme fond par rapport à l'inférieure. Une poignée de règles produit quelque chose qui paraît composé à la main.",
     ],
     s1cap:
-      "Un motif Truchet multi-échelle : chaque carré peut se subdiviser en quatre, la couleur de l'arc suivant la profondeur de subdivision",
+      "Multi-Scale Truchet Patterns, de Christopher Carlson. Source de l'image : christophercarlson.com",
+    s1Alt:
+      "Un motif Truchet multi-échelle noir et blanc de Christopher Carlson avec des domaines courbes imbriqués à plusieurs tailles de carré",
 
     s2h: "De la toile au tissu : la courtepointe Truchet",
     s2: [
@@ -458,7 +407,7 @@ const content = {
     cta: "Ouvrir Patchwork et commencer à paver",
 
     footer:
-      "Illustré avec des figures SVG générées dans le navigateur à partir d'une disposition aléatoire à graine.",
+      "Illustré avec des images de source créditée et des figures SVG générées dans le navigateur à partir de dispositions aléatoires à graine.",
   },
 };
 
@@ -545,15 +494,37 @@ export default function TruchetInPractice() {
             {/* A — Multiscale */}
             <section>
               <h2 className="text-2xl font-semibold mb-4">{c.s1h}</h2>
+              <p className={paragraph}>
+                {c.s1IntroPre}
+                <a
+                  href="https://christophercarlson.com/"
+                  className="text-teal-600 dark:text-teal-400 hover:underline"
+                >
+                  {c.s1IntroLink}
+                </a>
+                {c.s1IntroPost}
+              </p>
               {c.s1.map((p, i) => (
                 <p key={i} className={paragraph}>
                   {p}
                 </p>
               ))}
-              <figure className="my-4">
-                <MultiscaleTruchet />
+              <figure className="my-6">
+                <Image
+                  src="/articles/carlson-multiscale-truchet.png"
+                  alt={c.s1Alt}
+                  width={419}
+                  height={419}
+                  sizes="(min-width: 768px) 419px, calc(100vw - 48px)"
+                  className="h-auto w-full max-w-[419px] rounded-lg"
+                />
                 <figcaption className="text-xs text-zinc-400 mt-3">
-                  {c.s1cap}
+                  <a
+                    href="https://christophercarlson.com/portfolio/multi-scale-truchet-patterns/"
+                    className="hover:text-zinc-600 hover:underline dark:hover:text-zinc-300"
+                  >
+                    {c.s1cap}
+                  </a>
                 </figcaption>
               </figure>
             </section>
