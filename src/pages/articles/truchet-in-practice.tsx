@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
@@ -294,6 +295,10 @@ const content = {
     ],
     s2cap:
       "A Truchet quilt: half-square-triangle blocks in two or three 'fabrics', laid out at random",
+    s2photoAlt:
+      "A knitted Truchet blanket with teal, blue, and charcoal half-square triangle blocks draped over an armchair",
+    s2photoCap:
+      "The same half-square-triangle logic carried into a tactile blanket: a small set of colours, repeated with random rotations",
 
     s3h: "The 'Hello World' of generative art",
     s3: [
@@ -356,6 +361,10 @@ const content = {
     ],
     s2cap:
       "Una manta Truchet: bloques de medio cuadrado-triángulo en dos o tres 'telas', colocados al azar",
+    s2photoAlt:
+      "Una manta Truchet tejida con bloques de medio cuadrado-triángulo en verde, azul y gris oscuro sobre un sillón",
+    s2photoCap:
+      "La misma lógica de medio cuadrado-triángulo llevada a una manta real: pocos colores, repetidos con rotaciones al azar",
 
     s3h: "El 'Hola Mundo' del arte generativo",
     s3: [
@@ -418,6 +427,10 @@ const content = {
     ],
     s2cap:
       "Une courtepointe Truchet : des blocs demi-carré-triangle en deux ou trois 'tissus', disposés au hasard",
+    s2photoAlt:
+      "Une couverture Truchet tricotée avec des blocs demi-carré-triangle vert, bleu et gris foncé sur un fauteuil",
+    s2photoCap:
+      "La même logique demi-carré-triangle transposée dans une couverture tactile : quelques couleurs, répétées avec des rotations aléatoires",
 
     s3h: "Le 'Hello World' de l'art génératif",
     s3: [
@@ -557,6 +570,19 @@ export default function TruchetInPractice() {
                 <SquareTruchetQuilt />
                 <figcaption className="text-xs text-zinc-400 mt-3">
                   {c.s2cap}
+                </figcaption>
+              </figure>
+              <figure className="my-6">
+                <Image
+                  src="/articles/truchet-blanket.png"
+                  alt={c.s2photoAlt}
+                  width={2230}
+                  height={1888}
+                  sizes="(min-width: 768px) 720px, calc(100vw - 48px)"
+                  className="h-auto w-full rounded-lg"
+                />
+                <figcaption className="text-xs text-zinc-400 mt-3">
+                  {c.s2photoCap}
                 </figcaption>
               </figure>
             </section>
