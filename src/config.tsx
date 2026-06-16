@@ -1,6 +1,6 @@
 export const canvasDimension = { x: 50, y: 50 };
 
-export const initialZoomLevel = 15;
+export const initialZoomLevel = 12;
 
 export const defaultGridMode = 'dots';
 

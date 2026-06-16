@@ -112,7 +112,7 @@ const ToolBar = () => {
   return (
     <div
       data-testid="toolbar"
-      className="toolbar flex justify-center items-center fixed top-3 z-10"
+      className="toolbar fixed left-1/2 top-auto bottom-3 z-10 flex -translate-x-1/2 items-center justify-center md:top-3 md:bottom-auto"
     >
       <div className="flex items-center gap-1 bg-gray-800 border border-slate-700/60 shadow-xl backdrop-blur rounded-full px-2 py-1.5">
         {actions.map((action) => (

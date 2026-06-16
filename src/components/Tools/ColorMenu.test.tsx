@@ -1,23 +1,36 @@
 import "@testing-library/jest-dom";
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { cleanup, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "jotai";
 import { NextIntlClientProvider } from "next-intl";
+import type { ComponentProps } from "react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import messages from "../../../messages/en.json";
 import ColorMenu from "./ColorMenu";
 
+class ResizeObserverStub {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+(global as unknown as { ResizeObserver: unknown }).ResizeObserver =
+  ResizeObserverStub;
+
+const renderColorMenu = (props: ComponentProps<typeof ColorMenu> = {}) =>
+  render(
+    <NextIntlClientProvider locale="en" messages={messages}>
+      <TooltipProvider>
+        <Provider>
+          <ColorMenu {...props} />
+        </Provider>
+      </TooltipProvider>
+    </NextIntlClientProvider>,
+  );
+
 describe("ColorMenu", () => {
   beforeEach(() => {
-    render(
-      <NextIntlClientProvider locale="en" messages={messages}>
-        <TooltipProvider>
-          <Provider>
-            <ColorMenu />
-          </Provider>
-        </TooltipProvider>
-      </NextIntlClientProvider>,
-    );
+    renderColorMenu();
   });
 
   it("should display both target swatches and the selected tile color", () => {
@@ -57,6 +70,23 @@ describe("ColorMenu", () => {
         "aria-pressed",
         "false",
       );
+    });
+  });
+
+  it("should start collapsed on mobile and expand on click", async () => {
+    cleanup();
+    renderColorMenu({ isMobile: true });
+
+    const toggle = screen.getByTestId("color-menu-toggle");
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    expect(screen.getByTestId("selectable-colors").parentElement).toHaveAttribute(
+      "hidden",
+    );
+
+    await userEvent.click(toggle);
+
+    await waitFor(() => {
+      expect(toggle).toHaveAttribute("aria-expanded", "true");
     });
   });
 });

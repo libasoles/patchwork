@@ -35,7 +35,7 @@ export default function RepeatPatternButton() {
   };
 
   return (
-    <div className="pointer-events-auto">
+    <div className="pointer-events-auto hidden md:block">
       <Tooltip>
         <TooltipTrigger asChild>
           <button

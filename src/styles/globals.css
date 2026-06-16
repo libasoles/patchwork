@@ -156,7 +156,8 @@ input[type="range"]::-moz-range-thumb {
   .toolbar {
     top: auto;
     bottom: 10px;
-    left: 10px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 
