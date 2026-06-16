@@ -3,6 +3,7 @@ import Link from "next/link";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import type { CSSProperties } from "react";
+import ArticleHeader from "@/components/ArticleHeader";
 import { allTileGroupFamilies, type TileGroupFamily } from "@/data/tileGroups";
 
 const articleFamilies = allTileGroupFamilies.filter(
@@ -226,32 +227,13 @@ export default function TileGroupsArticle() {
       </Head>
 
       <div className="min-h-screen bg-white text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100">
-        <header className="border-b border-zinc-200 dark:border-zinc-800">
-          <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
-            <Link
-              href="/articles"
-              className="text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:hover:text-zinc-100"
-            >
-              {c.backToArticles}
-            </Link>
-            <div className="flex gap-3 text-xs text-zinc-400">
-              {localeLinks.map(({ code, label }) => (
-                <Link
-                  key={code}
-                  href="/articles/tile-groups"
-                  locale={code}
-                  className={`transition-colors ${
-                    lang === code
-                      ? "font-semibold text-teal-500"
-                      : "hover:text-zinc-700 dark:hover:text-zinc-200"
-                  }`}
-                >
-                  {label}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </header>
+        <ArticleHeader
+          backLink={{ href: "/articles", label: c.backToArticles }}
+          currentHref="/articles/tile-groups"
+          lang={lang}
+          localeLinks={localeLinks}
+          maxWidthClass="max-w-5xl"
+        />
 
         <main className="mx-auto max-w-5xl px-6 py-16">
           <div className="mb-10 max-w-3xl">

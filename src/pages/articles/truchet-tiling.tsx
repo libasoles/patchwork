@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
+import ArticleHeader from "@/components/ArticleHeader";
 
 // Tile characters from the Patchwork blocks font
 const T = {
@@ -290,32 +291,12 @@ export default function TruchetTiling() {
       </Head>
 
       <div className="min-h-screen bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100">
-        <header className="border-b border-zinc-200 dark:border-zinc-800">
-          <div className="max-w-3xl mx-auto px-6 py-5 flex items-center justify-between">
-            <Link
-              href="/articles"
-              className="text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
-            >
-              {c.backToArticles}
-            </Link>
-            <div className="flex gap-3 text-xs text-zinc-400">
-              {localeLinks.map(({ code, label }) => (
-                <Link
-                  key={code}
-                  href="/articles/truchet-tiling"
-                  locale={code}
-                  className={`transition-colors ${
-                    lang === code
-                      ? "text-teal-500 font-semibold"
-                      : "hover:text-zinc-700 dark:hover:text-zinc-200"
-                  }`}
-                >
-                  {label}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </header>
+        <ArticleHeader
+          backLink={{ href: "/articles", label: c.backToArticles }}
+          currentHref="/articles/truchet-tiling"
+          lang={lang}
+          localeLinks={localeLinks}
+        />
 
         <main className="max-w-3xl mx-auto px-6 py-16">
           <div className="mb-8">

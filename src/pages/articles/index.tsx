@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
+import ArticleHeader from "@/components/ArticleHeader";
 
 interface Article {
   slug: string;
@@ -50,21 +51,18 @@ const ui: Record<string, Record<string, string>> = {
     heading: "Articles",
     subtitle: "Patterns, history, and mathematics behind the tiles.",
     readMore: "Read article",
-    backToApp: "← Open Patchwork",
   },
   es: {
     siteTitle: "Patchwork — Artículos",
     heading: "Artículos",
     subtitle: "Patrones, historia y matemáticas detrás de los mosaicos.",
     readMore: "Leer artículo",
-    backToApp: "← Abrir Patchwork",
   },
   fr: {
     siteTitle: "Patchwork — Articles",
     heading: "Articles",
     subtitle: "Motifs, histoire et mathématiques derrière les carreaux.",
     readMore: "Lire l'article",
-    backToApp: "← Ouvrir Patchwork",
   },
 };
 
@@ -72,6 +70,11 @@ export default function ArticlesIndex() {
   const { locale } = useRouter();
   const lang = (locale ?? "en") as string;
   const t = ui[lang] ?? ui.en;
+  const localeLinks = [
+    { code: "en", label: "EN" },
+    { code: "es", label: "ES" },
+    { code: "fr", label: "FR" },
+  ];
 
   return (
     <>
@@ -82,21 +85,11 @@ export default function ArticlesIndex() {
       </Head>
 
       <div className="min-h-screen bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100">
-        <header className="border-b border-zinc-200 dark:border-zinc-800">
-          <div className="max-w-3xl mx-auto px-6 py-5 flex items-center justify-between">
-            <Link
-              href="/"
-              className="text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
-            >
-              {t.backToApp}
-            </Link>
-            <div className="flex gap-3 text-xs text-zinc-400">
-              <Link href="/" locale="en" className="hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors">EN</Link>
-              <Link href="/" locale="es" className="hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors">ES</Link>
-              <Link href="/" locale="fr" className="hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors">FR</Link>
-            </div>
-          </div>
-        </header>
+        <ArticleHeader
+          currentHref="/articles"
+          lang={lang}
+          localeLinks={localeLinks}
+        />
 
         <main className="max-w-3xl mx-auto px-6 py-16">
           <h1 className="text-4xl font-bold tracking-tight mb-3">{t.heading}</h1>
