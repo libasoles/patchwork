@@ -49,6 +49,15 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>${siteUrl}/articles/layers-and-pattern-repeat</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="${siteUrl}/articles/layers-and-pattern-repeat"/>
+    <xhtml:link rel="alternate" hreflang="es" href="${siteUrl}/es/articles/layers-and-pattern-repeat"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="${siteUrl}/fr/articles/layers-and-pattern-repeat"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="${siteUrl}/articles/layers-and-pattern-repeat"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>${siteUrl}/articles/truchet-tiling</loc>
     <xhtml:link rel="alternate" hreflang="en" href="${siteUrl}/articles/truchet-tiling"/>
     <xhtml:link rel="alternate" hreflang="es" href="${siteUrl}/es/articles/truchet-tiling"/>

@@ -14,6 +14,21 @@ interface Article {
 
 const articles: Article[] = [
   {
+    slug: "layers-and-pattern-repeat",
+    date: "2026-06-16",
+    titles: {
+      en: "Layers and Pattern Repeat",
+      es: "Capas y repeticion de trama",
+      fr: "Calques et repetition de motif",
+    },
+    summaries: {
+      en: "A visual walkthrough of building a motif in layers, repeating it across the grid, and hiding layers to inspect the composition.",
+      es: "Un recorrido visual para construir un motivo en capas, repetirlo sobre la grilla y ocultar capas para inspeccionar la composicion.",
+      fr: "Un parcours visuel pour construire un motif en calques, le repeter sur la grille et verifier la composition.",
+    },
+    tags: ["layers", "patterns", "workflow"],
+  },
+  {
     slug: "truchet-in-practice",
     date: "2026-06-16",
     titles: {
@@ -97,9 +112,17 @@ const ui: Record<string, Record<string, string>> = {
 };
 
 const tagLabels: Record<string, Record<string, string>> = {
+  layers: {
+    es: "capas",
+    fr: "calques",
+  },
   tiles: {
     es: "mosaicos",
     fr: "carreaux",
+  },
+  workflow: {
+    es: "flujo",
+    fr: "flux",
   },
 };
 
