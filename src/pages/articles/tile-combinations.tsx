@@ -21,6 +21,10 @@ const content = {
     title: "Tile combinations",
     lead: "Choose a Patchwork tile group and compare periodic schemes with deterministic irregular placements.",
     note: "Regular patterns repeat a finite motif across the square grid, drawing on the periodic schemes catalogued by Truchet and Douat. Irregular patterns place each tile with a seeded random sequence, so the composition stays reproducible while losing translational symmetry.",
+    ctaTitle: "Create your own patterns",
+    ctaBody:
+      "When a group clicks, take it into the app and build your own composition with the same mosaics, colors, and rotations.",
+    ctaAction: "Open the app and start creating",
     footer:
       "Patterns are generated in the browser from the selectable Patchwork tile groups.",
   },
@@ -35,6 +39,10 @@ const content = {
     title: "Combinaciones de mosaicos",
     lead: "Elige un grupo de mosaicos de Patchwork y compara esquemas periodicos con colocaciones irregulares deterministicas.",
     note: "Los patrones regulares repiten un motivo finito sobre la grilla cuadrada, siguiendo los esquemas periodicos catalogados por Truchet y Douat. Los irregulares colocan cada mosaico con una secuencia aleatoria con semilla, de modo que la composicion es reproducible aunque pierda simetria de traslacion.",
+    ctaTitle: "Crea tus propios patrones",
+    ctaBody:
+      "Si un grupo te interesa, llevalo a la app y arma tu propia composicion con los mismos mosaicos, colores y rotaciones.",
+    ctaAction: "Abrir la app y empezar a crear",
     footer:
       "Los patrones se generan en el navegador desde los grupos seleccionables de Patchwork.",
   },
@@ -49,6 +57,10 @@ const content = {
     title: "Combinaisons de carreaux",
     lead: "Choisissez un groupe de carreaux Patchwork et comparez des schemas periodiques avec des placements irreguliers deterministes.",
     note: "Les motifs reguliers repetent un motif fini sur la grille carree, en suivant les schemas periodiques catalogues par Truchet et Douat. Les motifs irreguliers placent chaque carreau avec une sequence aleatoire a graine, ce qui garde la composition reproductible sans symetrie de translation.",
+    ctaTitle: "Creez vos propres motifs",
+    ctaBody:
+      "Si un groupe vous parle, ouvrez l'application et composez votre propre image avec les memes carreaux, couleurs et rotations.",
+    ctaAction: "Ouvrir l'app et commencer",
     footer:
       "Les motifs sont generes dans le navigateur a partir des groupes selectionnables Patchwork.",
   },
@@ -121,6 +133,17 @@ export default function TileCombinationsArticle() {
           <p className="mt-8 max-w-3xl text-sm leading-6 text-zinc-600 dark:text-zinc-400">
             {c.note}
           </p>
+
+          <section className="my-10 max-w-3xl rounded-xl bg-slate-800 p-8">
+            <h2 className="text-2xl font-semibold text-white">{c.ctaTitle}</h2>
+            <p className="mt-4 leading-relaxed text-zinc-300">{c.ctaBody}</p>
+            <Link
+              href="/"
+              className="mt-6 inline-block rounded-lg bg-teal-500 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-teal-400"
+            >
+              {c.ctaAction}
+            </Link>
+          </section>
         </main>
 
         <footer className="mt-16 border-t border-zinc-200 dark:border-zinc-800">
