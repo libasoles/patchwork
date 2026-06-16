@@ -12,7 +12,7 @@
 @font-face {
   font-family: blocks;
   src: url("/smith-tiles.ttf");
-  unicode-range: U+E000-U+E003;
+  unicode-range: U+E000-U+E0FF;
 }
 
 @font-face {

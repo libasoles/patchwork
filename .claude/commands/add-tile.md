@@ -21,7 +21,9 @@ Add a new tile glyph ($ARGUMENTS) to Patchwork:
      To give it a proper name + description instead of the default, add an entry to
      `catalogGroupMetadata` keyed by the group name. Nothing else is required.
    - Do **not** add a tile to a `supplementaryFontGroups` group unless it is a real
-     `smith-tiles.ttf` PUA glyph (U+E000–U+E003).
+     `smith-tiles.ttf` PUA glyph (U+E000–U+E015). New PUA glyphs must first be drawn in
+     `scripts/generate-smith-font.py` and the font regenerated, and the `blocks`
+     `@font-face` `unicode-range` in `globals.css` must cover the codepoint.
 4. Verify the tile renders correctly:
    - `/blocks` — glyph lookup (`npm run dev`, then http://localhost:3000/blocks)
    - the palette sidebar — the tile is selectable in its group

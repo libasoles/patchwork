@@ -606,7 +606,11 @@ const catalogGroupMetadata: Record<string, Pick<TileGroupFamily, "name" | "descr
 // Groups owned by the hand-authored supplementary-font family (smithTilesFontFamily,
 // declared below). Listed here so they are excluded from the auto font catalog and
 // therefore not duplicated on /block-groups and /articles/tile-groups.
-export const supplementaryFontGroups = ["smith arcs", "diagonal lines"];
+export const supplementaryFontGroups = [
+  "smith arcs",
+  "diagonal lines",
+  "single diagonal",
+];
 
 const documentedPatchworkGroups = new Set(
   [...truchetFamilies, ...patchworkPatternFamilies]
@@ -698,40 +702,92 @@ export const smithTilesFontFamily: TileGroupFamily = {
   sourceFont: "smith-tiles",
   name: "Smith Tiles Font",
   description:
-    "Supplementary Patchwork font with four double-connector Smith (1987) tiles at U+E000–U+E003. " +
-    "Each glyph carries TWO connectors covering all four edge midpoints, so any adjacent pair of " +
-    "tiles always connects — producing the labyrinthine closed regions Smith described. " +
-    "U+E000–E001 are the quarter-circle arc tiles; U+E002–E003 swap the arcs for straight diagonal " +
-    "bands (double-line variant). All connectors cross each edge on the same 300–400 band, so arc and " +
-    "straight tiles interconnect. Glyph metrics match BIT BLOCKS so these tiles align with the existing grid.",
-  historicReference: "Cyril Stanley Smith arc tile family, supplementary Patchwork font",
+    "Supplementary Patchwork font with twelve Smith (1987) Truchet tiles at U+E000–U+E015, in three " +
+    "styles — quarter-circle arcs, straight double-band lines, and single corner-to-corner diagonals — " +
+    "each provided in two stroke weights. The arc and double-band tiles carry TWO connectors covering " +
+    "all four edge midpoints, so any adjacent pair always connects, producing the labyrinthine closed " +
+    "regions Smith described; the single-diagonal tiles are the classic two-orientation diagonal Truchet " +
+    "tile (the paper's Figure 3). U+E000–E005 are the thin weight (the original ~50-unit band); " +
+    "U+E010–E015 are the thick weight, a 175-unit stroke matching the BIT BLOCKS glyphs for visual " +
+    "cohesion. Glyph metrics match BIT BLOCKS so these tiles align with the existing grid.",
+  historicReference: "Cyril Stanley Smith Truchet tile family, supplementary Patchwork font",
   patchworkGroups: supplementaryFontGroups,
   tiles: [
     {
       id: 0xe000,
       symbol: String.fromCodePoint(0xe000),
       orientation: 0,
-      description: "S-shape: arc at top-right corner + arc at bottom-left corner.",
+      description: "Thin S-shape: arc at top-right corner + arc at bottom-left corner.",
     },
     {
       id: 0xe001,
       symbol: String.fromCodePoint(0xe001),
       orientation: 1,
-      description: "Reverse-S: arc at top-left corner + arc at bottom-right corner.",
+      description: "Thin reverse-S: arc at top-left corner + arc at bottom-right corner.",
+    },
+    {
+      id: 0xe010,
+      symbol: String.fromCodePoint(0xe010),
+      orientation: 0,
+      description: "Thick S-shape: arc at top-right corner + arc at bottom-left corner.",
+    },
+    {
+      id: 0xe011,
+      symbol: String.fromCodePoint(0xe011),
+      orientation: 1,
+      description: "Thick reverse-S: arc at top-left corner + arc at bottom-right corner.",
     },
     {
       id: 0xe002,
       symbol: String.fromCodePoint(0xe002),
       orientation: 0,
       description:
-        "Straight S: diagonal band top↔right + diagonal band bottom↔left (double-line variant).",
+        "Thin straight S: diagonal band top↔right + diagonal band bottom↔left (double-line variant).",
     },
     {
       id: 0xe003,
       symbol: String.fromCodePoint(0xe003),
       orientation: 1,
       description:
-        "Straight reverse-S: diagonal band top↔left + diagonal band bottom↔right (double-line variant).",
+        "Thin straight reverse-S: diagonal band top↔left + diagonal band bottom↔right (double-line variant).",
+    },
+    {
+      id: 0xe012,
+      symbol: String.fromCodePoint(0xe012),
+      orientation: 0,
+      description:
+        "Thick straight S: diagonal band top↔right + diagonal band bottom↔left (double-line variant).",
+    },
+    {
+      id: 0xe013,
+      symbol: String.fromCodePoint(0xe013),
+      orientation: 1,
+      description:
+        "Thick straight reverse-S: diagonal band top↔left + diagonal band bottom↔right (double-line variant).",
+    },
+    {
+      id: 0xe004,
+      symbol: String.fromCodePoint(0xe004),
+      orientation: 0,
+      description: "Thin single diagonal '/': bottom-left ↔ top-right corner-to-corner line.",
+    },
+    {
+      id: 0xe005,
+      symbol: String.fromCodePoint(0xe005),
+      orientation: 1,
+      description: "Thin single diagonal '\\': top-left ↔ bottom-right corner-to-corner line.",
+    },
+    {
+      id: 0xe014,
+      symbol: String.fromCodePoint(0xe014),
+      orientation: 0,
+      description: "Thick single diagonal '/': bottom-left ↔ top-right corner-to-corner line.",
+    },
+    {
+      id: 0xe015,
+      symbol: String.fromCodePoint(0xe015),
+      orientation: 1,
+      description: "Thick single diagonal '\\': top-left ↔ bottom-right corner-to-corner line.",
     },
   ],
 };
