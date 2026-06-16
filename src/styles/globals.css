@@ -142,11 +142,14 @@ input[type="range"]::-moz-range-thumb {
     position: fixed;
     z-index: 2;
     top: 0;
+    bottom: 0;
     left: 0;
+    height: 100vh;
   }
 
   aside > div {
-    max-height: calc(100vh - 75px);
+    height: 100vh;
+    max-height: 100vh;
   }
 
   .panel-content {

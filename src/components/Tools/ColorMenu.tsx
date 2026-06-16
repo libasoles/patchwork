@@ -77,12 +77,18 @@ export default function ColorMenu({ isMobile = false }: ColorMenuProps) {
     <div
       ref={panelRef}
       data-testid="color-panel"
-      className={`pointer-events-auto bg-gray-800 border border-slate-700/60 shadow-xl flex flex-col items-center ${
-        isMobile ? "max-w-[calc(100vw-2rem)] rounded-2xl p-1.5" : "rounded-3xl p-1.5"
+      className={`pointer-events-auto shadow-xl flex items-start ${
+        isMobile
+          ? "relative"
+          : "bg-gray-800 border border-slate-700/60 rounded-3xl p-1.5 flex-col items-center"
       }`}
     >
       <div
-        className={`flex items-center gap-1.5 ${isMobile ? "justify-center" : "flex-col"}`}
+        className={`flex gap-1.5 ${
+          isMobile
+            ? "flex-col rounded-2xl border border-slate-700/60 bg-gray-800 p-1.5"
+            : "flex-col items-center"
+        }`}
       >
         <Tooltip>
           <TooltipTrigger asChild>
@@ -131,12 +137,19 @@ export default function ColorMenu({ isMobile = false }: ColorMenuProps) {
           <TooltipContent side="left">{t("bgColor")}</TooltipContent>
         </Tooltip>
       </div>
-      <div hidden={isMobile && !isExpanded} className="w-full">
-        <hr className="border-t-2 border-slate-600 w-full my-2" />
+      <div
+        hidden={isMobile && !isExpanded}
+        className={`w-full ${
+          isMobile
+            ? "absolute right-[calc(100%+0.5rem)] top-0 w-[4.5rem] rounded-2xl border border-slate-700/60 bg-gray-800 p-1.5"
+            : ""
+        }`}
+      >
+        {!isMobile && <hr className="border-t-2 border-slate-600 w-full my-2" />}
         {isMobile ? (
           <div
             data-testid="selectable-colors"
-            className="flex max-h-[min(34vh,12rem)] w-[min(13rem,calc(100vw-2.5rem))] flex-wrap justify-center gap-1.5 overflow-y-auto px-1 pb-1"
+            className="flex max-h-[min(34vh,12rem)] w-full flex-wrap justify-center gap-1.5 overflow-y-auto px-1 pb-1"
           >
             {activeColors.map((aColor) => {
               const isSelected = aColor === currentColor;
@@ -216,7 +229,7 @@ function Swatch({
   return (
     <label
       data-testid="color-container"
-      className={`grid items-center ${outer} w-[38px] h-[38px] border-2 ${
+      className={`grid shrink-0 items-center ${outer} w-[38px] h-[38px] border-2 ${
         isSelected ? "border-white" : "border-slate-700/60"
       } bg-gray-800 overflow-hidden shadow-md cursor-pointer`}
       style={{
