@@ -3,6 +3,9 @@ import Link from "next/link";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import ArticleHeader from "@/components/ArticleHeader";
+import enMessages from "../../../messages/en.json";
+import esMessages from "../../../messages/es.json";
+import frMessages from "../../../messages/fr.json";
 
 // Tile characters from the Patchwork blocks font
 const T = {
@@ -11,52 +14,96 @@ const T = {
   d1: "œ", // id 339  — diagonal NE→SW orientation 1
   d2: "", // id 157  — diagonal SE→NW orientation 2
   d3: "", // id 158  — diagonal SW→NE orientation 3
-  // "smith arcs" group — Smith (1987) curved Truchet (smith-tiles.ttf, U+E000–E001)
-  c0: "", // S-shape: top-right arc + bottom-left arc
-  c1: "", // reverse-S: top-left arc + bottom-right arc
-  // "archs" group — half-arch variant
-  a0: "\\",    // id 92
-  a1: "]",     // id 93
-  a2: "Z",     // id 90
-  a3: "[",     // id 91
+  // "smith arcs" group — Smith (1987) curved Truchet (smith-tiles.ttf, thin U+E000–E001)
+  c0: "\u{E000}", // S-shape: top-right arc + bottom-left arc
+  c1: "\u{E001}", // reverse-S: top-left arc + bottom-right arc
+  // Smith straight double-band variant (smith-tiles.ttf, thick U+E012–E013)
+  l0: "\u{E012}", // straight S: top-right band + bottom-left band
+  l1: "\u{E013}", // straight reverse-S: top-left band + bottom-right band
+  // Smith single-diagonal variant (smith-tiles.ttf, thin U+E004–E005)
+  s0: "\u{E004}", // slash diagonal
+  s1: "\u{E005}", // backslash diagonal
 };
 
 // Static patterns for article illustrations
-const TRUCHET_SAMPLE = [
-  [T.d0, T.d1, T.d0, T.d1, T.d0, T.d1, T.d0, T.d1],
-  [T.d1, T.d0, T.d1, T.d0, T.d1, T.d0, T.d1, T.d0],
-  [T.d2, T.d3, T.d2, T.d3, T.d2, T.d3, T.d2, T.d3],
-  [T.d3, T.d2, T.d3, T.d2, T.d3, T.d2, T.d3, T.d2],
-  [T.d0, T.d1, T.d0, T.d1, T.d0, T.d1, T.d0, T.d1],
-  [T.d1, T.d0, T.d1, T.d0, T.d1, T.d0, T.d1, T.d0],
+const TRUCHET_REGULAR_SAMPLE = [
+  [T.d3, T.d2, T.d0, T.d1, T.d3, T.d2, T.d0, T.d1, T.d3, T.d2],
+  [T.d1, T.d0, T.d2, T.d3, T.d1, T.d0, T.d2, T.d3, T.d1, T.d0],
+  [T.d0, T.d1, T.d3, T.d2, T.d0, T.d1, T.d3, T.d2, T.d0, T.d1],
+  [T.d2, T.d3, T.d1, T.d0, T.d2, T.d3, T.d1, T.d0, T.d2, T.d3],
+  [T.d3, T.d2, T.d0, T.d1, T.d3, T.d2, T.d0, T.d1, T.d3, T.d2],
+  [T.d1, T.d0, T.d2, T.d3, T.d1, T.d0, T.d2, T.d3, T.d1, T.d0],
+  [T.d0, T.d1, T.d3, T.d2, T.d0, T.d1, T.d3, T.d2, T.d0, T.d1],
+  [T.d2, T.d3, T.d1, T.d0, T.d2, T.d3, T.d1, T.d0, T.d2, T.d3],
+  [T.d3, T.d2, T.d0, T.d1, T.d3, T.d2, T.d0, T.d1, T.d3, T.d2],
+  [T.d1, T.d0, T.d2, T.d3, T.d1, T.d0, T.d2, T.d3, T.d1, T.d0],
 ];
 
-const SMITH_SAMPLE = [
-  [T.c0, T.c1, T.c1, T.c0, T.c0, T.c1, T.c0, T.c1],
-  [T.c1, T.c0, T.c0, T.c1, T.c1, T.c0, T.c1, T.c0],
-  [T.c0, T.c0, T.c1, T.c0, T.c0, T.c1, T.c0, T.c0],
-  [T.c1, T.c0, T.c0, T.c1, T.c0, T.c0, T.c1, T.c1],
-  [T.c0, T.c1, T.c0, T.c0, T.c1, T.c0, T.c0, T.c1],
-  [T.c1, T.c0, T.c1, T.c0, T.c0, T.c1, T.c0, T.c0],
+const TRUCHET_DIAMOND_SAMPLE = [
+  [T.d0, T.d1, T.d1, T.d0, T.d0, T.d1, T.d1, T.d0, T.d0, T.d1],
+  [T.d2, T.d3, T.d3, T.d2, T.d2, T.d3, T.d3, T.d2, T.d2, T.d3],
+  [T.d2, T.d3, T.d3, T.d2, T.d2, T.d3, T.d3, T.d2, T.d2, T.d3],
+  [T.d0, T.d1, T.d1, T.d0, T.d0, T.d1, T.d1, T.d0, T.d0, T.d1],
+  [T.d0, T.d1, T.d1, T.d0, T.d0, T.d1, T.d1, T.d0, T.d0, T.d1],
+  [T.d2, T.d3, T.d3, T.d2, T.d2, T.d3, T.d3, T.d2, T.d2, T.d3],
+  [T.d2, T.d3, T.d3, T.d2, T.d2, T.d3, T.d3, T.d2, T.d2, T.d3],
+  [T.d0, T.d1, T.d1, T.d0, T.d0, T.d1, T.d1, T.d0, T.d0, T.d1],
+  [T.d0, T.d1, T.d1, T.d0, T.d0, T.d1, T.d1, T.d0, T.d0, T.d1],
+  [T.d2, T.d3, T.d3, T.d2, T.d2, T.d3, T.d3, T.d2, T.d2, T.d3],
 ];
 
-const ARCH_SAMPLE = [
-  [T.a0, T.a1, T.a0, T.a1, T.a0, T.a1, T.a0, T.a1],
-  [T.a2, T.a3, T.a2, T.a3, T.a2, T.a3, T.a2, T.a3],
-  [T.a0, T.a1, T.a0, T.a1, T.a0, T.a1, T.a0, T.a1],
-  [T.a2, T.a3, T.a2, T.a3, T.a2, T.a3, T.a2, T.a3],
-  [T.a0, T.a1, T.a0, T.a1, T.a0, T.a1, T.a0, T.a1],
-  [T.a2, T.a3, T.a2, T.a3, T.a2, T.a3, T.a2, T.a3],
+const TRUCHET_RANDOM_SAMPLE = [
+  [T.d0, T.d3, T.d1, T.d0, T.d2, T.d1, T.d3, T.d0, T.d2, T.d1],
+  [T.d2, T.d0, T.d3, T.d1, T.d1, T.d2, T.d0, T.d3, T.d0, T.d2],
+  [T.d1, T.d2, T.d0, T.d3, T.d0, T.d3, T.d2, T.d1, T.d3, T.d0],
+  [T.d3, T.d1, T.d2, T.d0, T.d3, T.d0, T.d1, T.d2, T.d1, T.d3],
+  [T.d0, T.d2, T.d3, T.d1, T.d2, T.d1, T.d0, T.d3, T.d2, T.d0],
+  [T.d1, T.d0, T.d2, T.d3, T.d0, T.d2, T.d3, T.d1, T.d0, T.d2],
+  [T.d2, T.d3, T.d0, T.d1, T.d3, T.d1, T.d2, T.d0, T.d3, T.d1],
+  [T.d3, T.d0, T.d1, T.d2, T.d1, T.d3, T.d0, T.d2, T.d1, T.d0],
+  [T.d0, T.d1, T.d3, T.d0, T.d2, T.d0, T.d1, T.d3, T.d2, T.d1],
+  [T.d2, T.d0, T.d1, T.d3, T.d1, T.d2, T.d0, T.d1, T.d3, T.d0],
 ];
+
+const SMITH_BITS = [
+  [0, 1, 1, 0, 1, 0, 0, 1, 1, 0],
+  [1, 0, 1, 1, 0, 0, 1, 0, 1, 0],
+  [0, 0, 1, 0, 1, 1, 0, 1, 0, 1],
+  [1, 1, 0, 0, 1, 0, 1, 1, 0, 0],
+  [0, 1, 0, 1, 0, 1, 1, 0, 0, 1],
+  [1, 0, 0, 1, 1, 0, 0, 1, 1, 0],
+  [0, 1, 1, 0, 0, 1, 0, 0, 1, 1],
+  [1, 0, 1, 0, 1, 0, 1, 1, 0, 1],
+  [0, 0, 1, 1, 0, 1, 1, 0, 1, 0],
+  [1, 1, 0, 0, 1, 0, 0, 1, 0, 1],
+];
+
+function mapBitsToTiles(bits: number[][], zeroTile: string, oneTile: string) {
+  return bits.map((row) => row.map((bit) => (bit === 0 ? zeroTile : oneTile)));
+}
+
+const SMITH_ARCS_SAMPLE = mapBitsToTiles(SMITH_BITS, T.c0, T.c1);
+const SMITH_LINES_SAMPLE = mapBitsToTiles(SMITH_BITS, T.l0, T.l1);
+const SMITH_DIAGONAL_SAMPLE = mapBitsToTiles(SMITH_BITS, T.s0, T.s1);
 
 // Same rendering technique as Canvas/components/Cell.tsx:
 // outer div resets font-size to 1px; inner span uses fontSize = cellPx * (57/40)
 // so the glyph fills the cell exactly, clipped by overflow-hidden.
-function TileCell({ ch, color, cellPx }: { ch: string; color: string; cellPx: number }) {
-  const fontPx = Math.round(cellPx * 57 / 40);
+function TileCell({
+  ch,
+  color,
+  cellPx,
+  fontClass = "tile",
+}: {
+  ch: string;
+  color: string;
+  cellPx: number;
+  fontClass?: "tile" | "smith-tile";
+}) {
+  const fontPx = Math.round((cellPx * 57) / 40);
   return (
     <div
-      className={`tile ${color} flex items-center justify-center overflow-hidden`}
+      className={`${fontClass} ${color} flex items-center justify-center overflow-hidden`}
       style={{ width: cellPx, height: cellPx, fontSize: "1px" }}
     >
       <span style={{ fontSize: fontPx, lineHeight: 1 }}>{ch}</span>
@@ -69,15 +116,17 @@ function TileGrid({
   color = "text-teal-400",
   bg = "bg-slate-800",
   cellPx = 32,
+  fontClass = "tile",
 }: {
   grid: string[][];
   color?: string;
   bg?: string;
   cellPx?: number;
+  fontClass?: "tile" | "smith-tile";
 }) {
   return (
     <div
-      className={`inline-grid ${bg} p-1 select-none`}
+      className={`inline-grid ${bg} select-none`}
       style={{
         gridTemplateColumns: `repeat(${grid[0].length}, ${cellPx}px)`,
         gridAutoRows: `${cellPx}px`,
@@ -85,8 +134,14 @@ function TileGrid({
     >
       {grid.map((row, r) =>
         row.map((ch, c) => (
-          <TileCell key={`${r}-${c}`} ch={ch} color={color} cellPx={cellPx} />
-        ))
+          <TileCell
+            key={`${r}-${c}`}
+            ch={ch}
+            color={color}
+            cellPx={cellPx}
+            fontClass={fontClass}
+          />
+        )),
       )}
     </div>
   );
@@ -97,17 +152,24 @@ function TileShowcase({
   color = "text-teal-400",
   bg = "bg-slate-800",
   cellPx = 56,
+  fontClass = "tile",
 }: {
   tiles: string[];
   color?: string;
   bg?: string;
   cellPx?: number;
+  fontClass?: "tile" | "smith-tile";
 }) {
   return (
     <div className="flex gap-2">
       {tiles.map((ch, i) => (
-        <div key={i} className={`${bg} p-2`}>
-          <TileCell ch={ch} color={color} cellPx={cellPx} />
+        <div key={i} className={bg}>
+          <TileCell
+            ch={ch}
+            color={color}
+            cellPx={cellPx}
+            fontClass={fontClass}
+          />
         </div>
       ))}
     </div>
@@ -134,38 +196,53 @@ const content = {
 
     s2h: "The four original tiles",
     s2: "Truchet's system rests on a single tile with four possible orientations — rotations of 90° each. The diagonal divides the square into a dark triangle and a light triangle. From this single shape, all the complexity emerges:",
-    s2caption: "The four orientations of the original Truchet tile (diagonals group in Patchwork)",
-    s2pattern: "An alternating pattern of all four orientations creates a geometric rhythm:",
-    s2patternCaption: "6×8 pattern using Truchet's diagonal tiles",
+    s2caption:
+      "The four orientations of the original Truchet tile (diagonals group in Patchwork)",
+    s2pattern:
+      "Like the classic examples, the same tile can produce an orderly scheme or a random placement:",
+    s2regularPatternCaption:
+      "10×10 radial scheme using Truchet's diagonal tiles",
+    s2diamondPatternCaption:
+      "10×10 diamond scheme using Truchet's diagonal tiles",
+    s2randomPatternCaption:
+      "10×10 random placement using Truchet's diagonal tiles",
 
     s3h: "Smith's curved simplification (1987)",
     s3: [
-      "Nearly three centuries later, historian of materials science Cyril Stanley Smith revisited Truchet tiling in his 1987 article 'The tiling patterns of Sebastien Truchet and the topology of structural hierarchy.' Smith introduced a crucial variant: instead of diagonal lines, each tile carries a quarter-circle arc connecting the midpoints of two adjacent sides.",
-      "This small change has a dramatic visual effect. Where the original Truchet tiles produce angular geometric patterns, Smith's curved tiles generate flowing labyrinthine forms — paths that wind continuously across the plane without ever crossing themselves. Mathematically, the two systems are equivalent (both are generated by a single tile in four orientations), but they evoke entirely different aesthetics.",
+      "Nearly three centuries later, historian of materials science Cyril Stanley Smith revisited Truchet tiling in his 1987 article 'The tiling patterns of Sebastien Truchet and the topology of structural hierarchy.' Smith's curved tile is not the generic one-corner quarter-circle often shown in Truchet examples: it carries two quarter-circle arcs at opposite corners, so all four edge midpoints are connected.",
+      "This small change has a dramatic visual effect. Where the original Truchet tiles produce angular geometric patterns, Smith's paired arcs generate flowing labyrinthine forms — paths that wind continuously across the plane without ever crossing themselves. Patchwork uses the two true Smith arc orientations from its supplementary Smith Tiles font.",
     ],
-    s3caption: "The two orientations of Smith's curved tile (smith arcs group in Patchwork)",
-    s3pattern: "The same alternating arrangement with Smith tiles produces maze-like curves:",
-    s3patternCaption: "6×8 pattern using Smith's quarter-circle tiles",
+    s3caption:
+      "The two true Smith arc tiles: paired quarter-circles at opposite corners",
+    s3pattern:
+      "In random placement, the two orientations create continuous maze-like curves. The same placement can be rendered as curved arcs, as Smith's straight double-band variant, or as the single-diagonal labyrinth form:",
+    s3arcPatternCaption:
+      "10×10 random placement using Smith's paired-arc tiles",
+    s3linePatternCaption:
+      "The same placement using Smith's thick straight double-band tiles",
+    s3diagonalPatternCaption:
+      "The same placement using Smith's thin single-diagonal labyrinth tiles",
 
-    s4h: "The arch variant",
-    s4: "Patchwork also includes a half-arch variant — a tile family where each piece carries a semicircular arch along one edge. When placed in alternating orientations, these create cathedral-like arcades or interlocked S-curves, another example of how a small change in a tile's shape opens a new visual vocabulary:",
-    s4patternCaption: "6×8 pattern using the arch tile family",
+    s4h: "Why the randomness works",
+    s4: "The Smith arc and double-band forms have only two states, but each state connects all four edge midpoints: top to one side and bottom to the other, in opposite pairings. Because every edge midpoint still meets a midpoint in the neighboring square, random choices do not break the drawing. They change the routing of the continuous curves. The single-diagonal version works differently: it leaves separated walls and corridors, producing the classic diagonal Truchet labyrinth.",
 
     s5h: "Create your own patterns",
     s5: [
       "One of the remarkable properties of Truchet tiling is that even a random arrangement of tiles (each orientation chosen by coin-flip) produces a visually coherent pattern. There is no 'wrong' placement — every configuration is interesting. This makes it an ideal generative design system: the rules are minimal, but the output space is vast.",
-      "Patchwork gives you all of Truchet's tile families plus many more, with full control over color, layering, and composition. Open the app and explore — pick the diagonals, circle quarters, or archs from the tile panel and start placing them on the canvas.",
+      "Patchwork gives you Truchet's diagonal tiles and Smith's paired arc tiles, plus many more related block families, with full control over color, layering, and composition. Open the app and explore: pick the diagonals or the Smith arcs from the tile panel and start placing them on the canvas.",
     ],
     cta: "Open Patchwork and start tiling",
 
     s6h: "Mathematical properties",
     s6: "Truchet tilings belong to a class of aperiodic-capable tilings — configurations that can fill the plane without repeating in a strict periodic pattern. Unlike a regular grid, a random Truchet tiling has no translational symmetry: you cannot shift the entire pattern by any fixed vector and have it look the same. This makes Truchet tilings useful in cryptography, texture generation, and generative art, where non-repetition is a virtue.",
 
-    footer: "Illustrated with Patchwork tiles rendered in the browser using a custom block font.",
+    footer:
+      "Illustrated with Patchwork tiles rendered in the browser using a custom block font.",
   },
 
   es: {
-    metaTitle: "El mosaico Truchet: de 1704 a los patrones infinitos — Patchwork",
+    metaTitle:
+      "El mosaico Truchet: de 1704 a los patrones infinitos — Patchwork",
     metaDescription:
       "La historia y la matemática del mosaico Truchet, desde los azulejos de 1704 de Sébastien Truchet hasta la simplificación curva de Cyril Stanley Smith, ilustrado con Patchwork.",
     backToArticles: "← Artículos",
@@ -183,34 +260,48 @@ const content = {
 
     s2h: "Los cuatro mosaicos originales",
     s2: "El sistema de Truchet se basa en un único mosaico con cuatro orientaciones posibles — rotaciones de 90° cada una. La diagonal divide el cuadrado en un triángulo oscuro y uno claro. De esta única forma surge toda la complejidad:",
-    s2caption: "Las cuatro orientaciones del mosaico Truchet original (grupo 'diagonals' en Patchwork)",
-    s2pattern: "Un patrón alternando las cuatro orientaciones crea un ritmo geométrico:",
-    s2patternCaption: "Patrón 6×8 con los mosaicos diagonales de Truchet",
+    s2caption:
+      "Las cuatro orientaciones del mosaico Truchet original (grupo 'diagonals' en Patchwork)",
+    s2pattern:
+      "Como en los ejemplos clásicos, el mismo mosaico puede producir un esquema ordenado o una colocación al azar:",
+    s2regularPatternCaption:
+      "Esquema radial 10×10 con los mosaicos diagonales de Truchet",
+    s2diamondPatternCaption:
+      "Esquema de diamantes 10×10 con los mosaicos diagonales de Truchet",
+    s2randomPatternCaption:
+      "Colocación al azar 10×10 con los mosaicos diagonales de Truchet",
 
     s3h: "La simplificación curva de Smith (1987)",
     s3: [
-      "Casi tres siglos después, el historiador de ciencia de materiales Cyril Stanley Smith revisó el mosaico Truchet en su artículo de 1987 'The tiling patterns of Sebastien Truchet and the topology of structural hierarchy'. Smith introdujo una variante fundamental: en lugar de líneas diagonales, cada mosaico lleva un arco de cuarto de círculo que conecta los puntos medios de dos lados adyacentes.",
-      "Este pequeño cambio tiene un efecto visual dramático. Mientras los mosaicos originales de Truchet producen patrones geométricos angulares, los mosaicos curvos de Smith generan formas laberínticas fluidas — caminos que serpentean continuamente por el plano sin cruzarse nunca. Matemáticamente, los dos sistemas son equivalentes (ambos se generan a partir de un único mosaico en cuatro orientaciones), pero evocan estéticas completamente diferentes.",
+      "Casi tres siglos después, el historiador de ciencia de materiales Cyril Stanley Smith revisó el mosaico Truchet en su artículo de 1987 'The tiling patterns of Sebastien Truchet and the topology of structural hierarchy'. El mosaico curvo de Smith no es el cuarto de círculo genérico de una sola esquina que suele aparecer en ejemplos de Truchet: lleva dos arcos de cuarto de círculo en esquinas opuestas, de modo que conecta los cuatro puntos medios de los bordes.",
+      "Este pequeño cambio tiene un efecto visual dramático. Mientras los mosaicos originales de Truchet producen patrones geométricos angulares, los arcos emparejados de Smith generan formas laberínticas fluidas — caminos que serpentean continuamente por el plano sin cruzarse nunca. Patchwork usa las dos orientaciones verdaderas de los arcos de Smith desde su fuente suplementaria Smith Tiles.",
     ],
-    s3caption: "Las dos orientaciones del mosaico curvo de Smith (grupo 'smith arcs' en Patchwork)",
-    s3pattern: "La misma disposición alternada con los mosaicos de Smith produce curvas laberínticas:",
-    s3patternCaption: "Patrón 6×8 con los mosaicos de cuarto de círculo de Smith",
+    s3caption:
+      "Los dos mosaicos verdaderos de Smith: cuartos de círculo emparejados en esquinas opuestas",
+    s3pattern:
+      "En una colocación aleatoria, las dos orientaciones crean curvas continuas con aspecto de laberinto. La misma colocación puede verse como arcos curvos, como la variante Smith de doble banda recta o como el laberinto de diagonales simples:",
+    s3arcPatternCaption:
+      "Colocación al azar 10×10 con los arcos Smith emparejados",
+    s3linePatternCaption:
+      "La misma colocación con los tiles Smith gruesos de doble banda recta",
+    s3diagonalPatternCaption:
+      "La misma colocación con los tiles Smith finos de laberinto diagonal simple",
 
-    s4h: "La variante de arcos",
-    s4: "Patchwork también incluye una variante de medio arco — una familia de mosaicos donde cada pieza lleva un arco semicircular a lo largo de un borde. Colocados en orientaciones alternadas, crean arcadas de estilo catedralicio o curvas S entrelazadas, otro ejemplo de cómo un pequeño cambio en la forma de un mosaico abre un nuevo vocabulario visual:",
-    s4patternCaption: "Patrón 6×8 con la familia de mosaicos de arco",
+    s4h: "Por qué funciona el azar",
+    s4: "Las formas Smith de arco y doble banda tienen solo dos estados, pero cada estado conecta los cuatro puntos medios de los bordes: arriba con un lado y abajo con el otro, en emparejamientos opuestos. Como cada punto medio sigue encontrando un punto medio en el cuadrado vecino, las elecciones aleatorias no rompen el dibujo. Cambian el recorrido de las curvas continuas. La versión de diagonal simple funciona de otra manera: deja muros y pasillos separados, produciendo el laberinto diagonal clásico de Truchet.",
 
     s5h: "Crea tus propios patrones",
     s5: [
       "Una de las propiedades notables del mosaico Truchet es que incluso una disposición aleatoria de mosaicos (con cada orientación elegida al azar) produce un patrón visualmente coherente. No existe una 'mala' colocación: toda configuración es interesante. Esto lo convierte en un sistema de diseño generativo ideal: las reglas son mínimas, pero el espacio de resultados es enorme.",
-      "Patchwork te ofrece todas las familias de mosaicos de Truchet y muchas más, con control total sobre el color, las capas y la composición. Abre la aplicación y explora: elige las diagonales, los cuartos de círculo o los arcos del panel de mosaicos y empieza a colocarlos en el lienzo.",
+      "Patchwork te ofrece los mosaicos diagonales de Truchet y los arcos emparejados de Smith, además de muchas familias de bloques relacionadas, con control total sobre el color, las capas y la composición. Abre la aplicación y explora: elige las diagonales o los arcos Smith del panel de mosaicos y empieza a colocarlos en el lienzo.",
     ],
     cta: "Abrir Patchwork y empezar a crear",
 
     s6h: "Propiedades matemáticas",
     s6: "Los mosaicos Truchet pertenecen a una clase de pavimentos con capacidad aperiódica — configuraciones que pueden cubrir el plano sin repetirse con un patrón periódico estricto. A diferencia de una cuadrícula regular, un mosaico Truchet aleatorio no tiene simetría traslacional: no puedes desplazar todo el patrón por ningún vector fijo y obtener el mismo aspecto. Esto hace que los mosaicos Truchet sean útiles en criptografía, generación de texturas y arte generativo, donde la no repetición es una virtud.",
 
-    footer: "Ilustrado con mosaicos de Patchwork renderizados en el navegador usando una fuente de bloques personalizada.",
+    footer:
+      "Ilustrado con mosaicos de Patchwork renderizados en el navegador usando una fuente de bloques personalizada.",
   },
 
   fr: {
@@ -232,35 +323,55 @@ const content = {
 
     s2h: "Les quatre carreaux originaux",
     s2: "Le système de Truchet repose sur un seul carreau avec quatre orientations possibles — des rotations de 90° chacune. La diagonale divise le carré en un triangle foncé et un triangle clair. De cette seule forme naît toute la complexité :",
-    s2caption: "Les quatre orientations du carreau Truchet original (groupe 'diagonals' dans Patchwork)",
-    s2pattern: "Un motif alternant les quatre orientations crée un rythme géométrique :",
-    s2patternCaption: "Motif 6×8 avec les carreaux diagonaux de Truchet",
+    s2caption:
+      "Les quatre orientations du carreau Truchet original (groupe 'diagonals' dans Patchwork)",
+    s2pattern:
+      "Comme dans les exemples classiques, le même carreau peut produire un schéma ordonné ou un placement aléatoire :",
+    s2regularPatternCaption:
+      "Schéma radial 10×10 avec les carreaux diagonaux de Truchet",
+    s2diamondPatternCaption:
+      "Schéma en losanges 10×10 avec les carreaux diagonaux de Truchet",
+    s2randomPatternCaption:
+      "Placement aléatoire 10×10 avec les carreaux diagonaux de Truchet",
 
     s3h: "La simplification courbe de Smith (1987)",
     s3: [
-      "Près de trois siècles plus tard, l'historien des sciences des matériaux Cyril Stanley Smith revisita le pavage Truchet dans son article de 1987 'The tiling patterns of Sebastien Truchet and the topology of structural hierarchy'. Smith introduisit une variante cruciale : au lieu de lignes diagonales, chaque carreau porte un arc de quart de cercle reliant les milieux de deux côtés adjacents.",
-      "Ce petit changement a un effet visuel dramatique. Là où les carreaux Truchet originaux produisent des motifs géométriques angulaires, les carreaux courbés de Smith génèrent des formes labyrinthiques fluides — des chemins qui serpentent continuellement sur le plan sans jamais se croiser. Mathématiquement, les deux systèmes sont équivalents (tous deux sont générés par un seul carreau en quatre orientations), mais ils évoquent des esthétiques entièrement différentes.",
+      "Près de trois siècles plus tard, l'historien des sciences des matériaux Cyril Stanley Smith revisita le pavage Truchet dans son article de 1987 'The tiling patterns of Sebastien Truchet and the topology of structural hierarchy'. Le carreau courbe de Smith n'est pas le quart de cercle générique à un seul coin que l'on voit souvent dans les exemples Truchet : il porte deux quarts de cercle dans des coins opposés, reliant ainsi les quatre milieux des côtés.",
+      "Ce petit changement a un effet visuel dramatique. Là où les carreaux Truchet originaux produisent des motifs géométriques angulaires, les arcs appariés de Smith génèrent des formes labyrinthiques fluides — des chemins qui serpentent continuellement sur le plan sans jamais se croiser. Patchwork utilise les deux vraies orientations des arcs de Smith depuis sa police supplémentaire Smith Tiles.",
     ],
-    s3caption: "Les deux orientations du carreau courbé de Smith (groupe 'smith arcs' dans Patchwork)",
-    s3pattern: "Le même arrangement alterné avec les carreaux de Smith produit des courbes labyrinthiques :",
-    s3patternCaption: "Motif 6×8 avec les carreaux en quart de cercle de Smith",
+    s3caption:
+      "Les deux vrais carreaux de Smith : quarts de cercle appariés dans des coins opposés",
+    s3pattern:
+      "Dans un placement aléatoire, les deux orientations créent des courbes continues d'allure labyrinthique. Le même placement peut être rendu en arcs courbes, avec la variante Smith à double bande droite, ou avec la forme labyrinthique à diagonale simple :",
+    s3arcPatternCaption:
+      "Placement aléatoire 10×10 avec les arcs Smith appariés",
+    s3linePatternCaption:
+      "Le même placement avec les carreaux Smith épais à double bande droite",
+    s3diagonalPatternCaption:
+      "Le même placement avec les carreaux Smith fins du labyrinthe à diagonale simple",
 
-    s4h: "La variante en arche",
-    s4: "Patchwork inclut également une variante en demi-arche — une famille de carreaux où chaque pièce porte une arche semi-circulaire le long d'un bord. Placés en orientations alternées, ils créent des arcades de style cathédrale ou des courbes en S entrelacées, un autre exemple de la façon dont un petit changement dans la forme d'un carreau ouvre un nouveau vocabulaire visuel :",
-    s4patternCaption: "Motif 6×8 avec la famille de carreaux en arche",
+    s4h: "Pourquoi le hasard fonctionne",
+    s4: "Les formes Smith en arc et à double bande n'ont que deux états, mais chaque état relie les quatre milieux des côtés : le haut avec un côté et le bas avec l'autre, selon des appariements opposés. Comme chaque milieu rencontre toujours un milieu dans le carré voisin, les choix aléatoires ne cassent pas le dessin. Ils changent le cheminement des courbes continues. La version à diagonale simple fonctionne autrement : elle laisse des murs et des couloirs séparés, produisant le labyrinthe diagonal classique de Truchet.",
 
     s5h: "Créez vos propres motifs",
     s5: [
       "L'une des propriétés remarquables du pavage Truchet est que même un arrangement aléatoire de carreaux (chaque orientation choisie par tirage au sort) produit un motif visuellement cohérent. Il n'y a pas de 'mauvais' placement — chaque configuration est intéressante. Cela en fait un système de design génératif idéal : les règles sont minimales, mais l'espace des résultats est vaste.",
-      "Patchwork vous offre toutes les familles de carreaux de Truchet et bien d'autres encore, avec un contrôle total sur la couleur, les calques et la composition. Ouvrez l'application et explorez — choisissez les diagonales, les quarts de cercle ou les arches dans le panneau de carreaux et commencez à les placer sur le canevas.",
+      "Patchwork vous offre les carreaux diagonaux de Truchet et les arcs appariés de Smith, ainsi que de nombreuses familles de blocs apparentées, avec un contrôle total sur la couleur, les calques et la composition. Ouvrez l'application et explorez : choisissez les diagonales ou les arcs Smith dans le panneau de carreaux et commencez à les placer sur le canevas.",
     ],
     cta: "Ouvrir Patchwork et commencer à paver",
 
     s6h: "Propriétés mathématiques",
     s6: "Les pavages Truchet appartiennent à une classe de pavages à capacité apériodique — des configurations qui peuvent couvrir le plan sans se répéter selon un motif périodique strict. Contrairement à une grille régulière, un pavage Truchet aléatoire n'a pas de symétrie de translation : vous ne pouvez pas déplacer tout le motif d'un vecteur fixe quelconque et obtenir le même aspect. Cela rend les pavages Truchet utiles en cryptographie, en génération de textures et en art génératif, où la non-répétition est une vertu.",
 
-    footer: "Illustré avec des carreaux Patchwork rendus dans le navigateur à l'aide d'une police de blocs personnalisée.",
+    footer:
+      "Illustré avec des carreaux Patchwork rendus dans le navigateur à l'aide d'une police de blocs personnalisée.",
   },
+};
+
+const messagesByLocale = {
+  en: enMessages,
+  es: esMessages,
+  fr: frMessages,
 };
 
 export default function TruchetTiling() {
@@ -320,30 +431,59 @@ export default function TruchetTiling() {
           </div>
 
           <div className="prose dark:prose-invert max-w-none space-y-10">
-
             {/* Section 1 */}
             <section>
               <h2 className="text-2xl font-semibold mb-4">{c.s1h}</h2>
               {c.s1.map((p, i) => (
-                <p key={i} className="text-zinc-700 dark:text-zinc-300 leading-relaxed mb-4">{p}</p>
+                <p
+                  key={i}
+                  className="text-zinc-700 dark:text-zinc-300 leading-relaxed mb-4"
+                >
+                  {p}
+                </p>
               ))}
             </section>
 
             {/* Section 2 — Original 4 tiles */}
             <section>
               <h2 className="text-2xl font-semibold mb-4">{c.s2h}</h2>
-              <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed mb-6">{c.s2}</p>
+              <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed mb-6">
+                {c.s2}
+              </p>
 
               <figure className="my-4">
                 <TileShowcase tiles={[T.d0, T.d1, T.d2, T.d3]} />
-                <figcaption className="text-xs text-zinc-400 mt-3">{c.s2caption}</figcaption>
+                <figcaption className="text-xs text-zinc-400 mt-3">
+                  {c.s2caption}
+                </figcaption>
               </figure>
 
-              <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed mb-6">{c.s2pattern}</p>
+              <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed mb-6">
+                {c.s2pattern}
+              </p>
 
               <figure className="my-4">
-                <TileGrid grid={TRUCHET_SAMPLE} />
-                <figcaption className="text-xs text-zinc-400 mt-3">{c.s2patternCaption}</figcaption>
+                <TileGrid grid={TRUCHET_REGULAR_SAMPLE} />
+                <figcaption className="text-xs text-zinc-400 mt-3">
+                  {c.s2regularPatternCaption}
+                </figcaption>
+              </figure>
+
+              <figure className="my-4">
+                <TileGrid
+                  grid={TRUCHET_DIAMOND_SAMPLE}
+                  color="text-emerald-400"
+                />
+                <figcaption className="text-xs text-zinc-400 mt-3">
+                  {c.s2diamondPatternCaption}
+                </figcaption>
+              </figure>
+
+              <figure className="my-4">
+                <TileGrid grid={TRUCHET_RANDOM_SAMPLE} color="text-sky-400" />
+                <figcaption className="text-xs text-zinc-400 mt-3">
+                  {c.s2randomPatternCaption}
+                </figcaption>
               </figure>
             </section>
 
@@ -351,37 +491,72 @@ export default function TruchetTiling() {
             <section>
               <h2 className="text-2xl font-semibold mb-4">{c.s3h}</h2>
               {c.s3.map((p, i) => (
-                <p key={i} className="text-zinc-700 dark:text-zinc-300 leading-relaxed mb-4">{p}</p>
+                <p
+                  key={i}
+                  className="text-zinc-700 dark:text-zinc-300 leading-relaxed mb-4"
+                >
+                  {p}
+                </p>
               ))}
 
               <figure className="my-4">
-                <TileShowcase tiles={[T.c0, T.c1]} />
-                <figcaption className="text-xs text-zinc-400 mt-3">{c.s3caption}</figcaption>
+                <TileShowcase tiles={[T.c0, T.c1]} fontClass="smith-tile" />
+                <figcaption className="text-xs text-zinc-400 mt-3">
+                  {c.s3caption}
+                </figcaption>
               </figure>
 
-              <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed mb-6">{c.s3pattern}</p>
+              <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed mb-6">
+                {c.s3pattern}
+              </p>
 
               <figure className="my-4">
-                <TileGrid grid={SMITH_SAMPLE} />
-                <figcaption className="text-xs text-zinc-400 mt-3">{c.s3patternCaption}</figcaption>
+                <TileGrid grid={SMITH_ARCS_SAMPLE} fontClass="smith-tile" />
+                <figcaption className="text-xs text-zinc-400 mt-3">
+                  {c.s3arcPatternCaption}
+                </figcaption>
+              </figure>
+
+              <figure className="my-4">
+                <TileGrid
+                  grid={SMITH_LINES_SAMPLE}
+                  fontClass="smith-tile"
+                  color="text-sky-400"
+                />
+                <figcaption className="text-xs text-zinc-400 mt-3">
+                  {c.s3linePatternCaption}
+                </figcaption>
+              </figure>
+
+              <figure className="my-4">
+                <TileGrid
+                  grid={SMITH_DIAGONAL_SAMPLE}
+                  fontClass="smith-tile"
+                  color="text-yellow-400"
+                />
+                <figcaption className="text-xs text-zinc-400 mt-3">
+                  {c.s3diagonalPatternCaption}
+                </figcaption>
               </figure>
             </section>
 
-            {/* Section 4 — Arch variant */}
+            {/* Section 4 — Random placement */}
             <section>
               <h2 className="text-2xl font-semibold mb-4">{c.s4h}</h2>
-              <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed mb-6">{c.s4}</p>
-              <figure className="my-4">
-                <TileGrid grid={ARCH_SAMPLE} color="text-yellow-400" />
-                <figcaption className="text-xs text-zinc-400 mt-3">{c.s4patternCaption}</figcaption>
-              </figure>
+              <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                {c.s4}
+              </p>
             </section>
 
             {/* Section 5 — CTA */}
             <section className="rounded-xl bg-slate-800 p-8 my-10">
-              <h2 className="text-2xl font-semibold mb-4 text-white">{c.s5h}</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-white">
+                {c.s5h}
+              </h2>
               {c.s5.map((p, i) => (
-                <p key={i} className="text-zinc-300 leading-relaxed mb-4">{p}</p>
+                <p key={i} className="text-zinc-300 leading-relaxed mb-4">
+                  {p}
+                </p>
               ))}
               <Link
                 href="/"
@@ -394,9 +569,10 @@ export default function TruchetTiling() {
             {/* Section 6 — Math properties */}
             <section>
               <h2 className="text-2xl font-semibold mb-4">{c.s6h}</h2>
-              <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">{c.s6}</p>
+              <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                {c.s6}
+              </p>
             </section>
-
           </div>
         </main>
 
@@ -419,6 +595,8 @@ export default function TruchetTiling() {
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
     locale: locale ?? "en",
-    messages: (await import(`../../../messages/${locale ?? "en"}.json`)).default,
+    messages:
+      messagesByLocale[(locale ?? "en") as keyof typeof messagesByLocale] ??
+      enMessages,
   },
 });
