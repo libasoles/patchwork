@@ -88,6 +88,8 @@ The `Tile` class has methods: `clone`, `equals`, `isEmpty`, `looksLike`, `paint`
 
 Spanish article copy must use "mosaico" / "mosaicos" for user-facing references to tiles. Keep "tile" only in code identifiers, routes, CSS classes, file names, or proper technical names where changing it would be incorrect.
 
+Whenever adding, renaming, or removing an article route under `src/pages/articles/`, update `src/pages/sitemap.xml.tsx` in the same change so the sitemap stays complete.
+
 ### Key Config (`src/config.tsx`)
 
 Canvas is 50×50 cells by default. Colors are Tailwind classes — they must also live in the safelist in `tailwind.config.js`, because the app composes class names dynamically (`bg-${color}`) and Tailwind cannot statically detect them. Custom cursor classes per action are defined in the same Tailwind config.
