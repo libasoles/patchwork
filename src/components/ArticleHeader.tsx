@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 interface LocaleLink {
@@ -34,15 +35,13 @@ export default function ArticleHeader({
             aria-label="Patchwork"
             className="inline-flex shrink-0 items-center gap-2 text-zinc-950 transition-colors hover:text-teal-600 dark:text-zinc-50 dark:hover:text-teal-400"
           >
-            <span
-              aria-hidden="true"
-              className="grid h-7 w-7 grid-cols-2 overflow-hidden rounded-sm bg-slate-900 p-0.5"
-            >
-              <span className="bg-teal-400" />
-              <span className="bg-zinc-100" />
-              <span className="bg-zinc-100" />
-              <span className="bg-indigo-300" />
-            </span>
+            <Image
+              src="/icon-192.png"
+              alt=""
+              width={28}
+              height={28}
+              className="h-7 w-7"
+            />
             <span className="text-lg font-bold tracking-tight">patchwork</span>
           </Link>
 
