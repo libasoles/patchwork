@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import { actionAtom, useCanvasApi } from '@/store';
+import { actionAtom, useCanvasApi, useHistoryApi } from '@/store';
 import { Action, Tile } from '@/types';
 import { useCallback, useRef } from 'react';
 import { isHotkeyPressed } from 'react-hotkeys-hook'
@@ -237,6 +237,8 @@ const useDeleteBehavior = () => {
 
 export function usePointerEvents(editableRegion: TileRegion | null = null) {
     const t = useTranslations('toasts');
+    const [activeAction] = useAtom(actionAtom);
+    const { pop } = useHistoryApi()
     const drawBehavior = useDrawAndPaintBehavoirs()
     const moveBehavior = useMoveBehavior()
     const rotateBehavior = useRotateBehavior()
@@ -281,15 +283,22 @@ export function usePointerEvents(editableRegion: TileRegion | null = null) {
     const lastTouchIndex = useRef<number | null>(null)
 
     const onTouchStart: TouchCallback = (event) => {
-        if (event.touches.length !== 1) return // let multi-touch (pinch/pan) through
+        if (event.touches.length > 1) {
+            // Second finger landed mid-stroke: cancel the in-progress single-finger
+            // draw so the two-finger gesture only pans/zooms, never paints.
+            if (lastTouchIndex.current !== null && isBurstAction(activeAction)) pop()
+            lastTouchIndex.current = null
+            return
+        }
         const index = indexUnderTouch(event.touches[0])
         if (index === null) return
+        event.preventDefault() // prevent ghost mousedown/click compatibility events
         lastTouchIndex.current = index
         onMouseDown(touchAsMouse, index)
     }
 
     const onTouchMove: TouchCallback = (event) => {
-        if (event.touches.length !== 1) return
+        if (event.touches.length !== 1 || lastTouchIndex.current === null) return
         const index = indexUnderTouch(event.touches[0])
         if (index === null || index === lastTouchIndex.current) return
         lastTouchIndex.current = index
@@ -311,6 +320,9 @@ export function usePointerEvents(editableRegion: TileRegion | null = null) {
         onTouchEnd,
     } as Api
 }
+
+const isBurstAction = (action: Action) =>
+    action === Action.Draw || action === Action.Paint || action === Action.Rotate || action === Action.Delete
 
 // Resolve the cell index under a touch point via its `data-index` attribute.
 function indexUnderTouch(touch: React.Touch): number | null {
