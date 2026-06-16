@@ -12,7 +12,7 @@ const tiles = [
 ];
 
 describe("tileCombinationPatterns", () => {
-  it("generates the expected 26x12 regular grid", () => {
+  it("generates the expected 30x15 regular grid", () => {
     const grid = generateTileCombinationGrid({ tiles, mode: "regular" });
 
     expect(grid).toHaveLength(TILE_COMBINATION_ROWS);
