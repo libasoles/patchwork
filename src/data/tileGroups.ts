@@ -9,9 +9,14 @@ import { emptyTile, tilesMap } from "@/config";
  * Historic references:
  *   - Truchet 1704: Sébastien Truchet, "Mémoire sur les combinaisons" (1704).
  *     Square tiles divided by a diagonal; 4 orientations of one shape.
+ *   - Quarter-circle arc variant: the curved form of Truchet tiling — a single
+ *     quarter-circle arc connecting the midpoints of two adjacent sides, in 4
+ *     rotations. This is the iconic modern "Truchet tiling" look. It is a generic
+ *     curved variant and is NOT attributed to a specific designer here.
  *   - Smith 1987: Cyril Stanley Smith, "The tiling patterns of Sebastien Truchet and
- *     the topology of structural hierarchy" (1987). Quarter-circle arcs connecting
- *     midpoints of adjacent sides.
+ *     the topology of structural hierarchy" (1987), describes a tile bearing TWO
+ *     quarter-circles at opposite corners — see smithTilesFontFamily / the "smith
+ *     arcs" font group, not the single-arc "circle quarters" family below.
  *
  * Other grouped Patchwork tiles are described visually and by local source font;
  * they should not be presented as designs by Truchet or Smith unless their
@@ -98,15 +103,16 @@ export const truchetFamilies: TileGroupFamily[] = [
   },
 
   {
-    id: "smith-1987",
-    name: "Smith Arc Tiles (1987)",
+    id: "quarter-circle-arc",
+    name: "Quarter-circle Arc Tiles",
     description:
       "Quarter-circle arc connecting the midpoints of two adjacent sides of the " +
       "square. The 4 rotations place the arc in each of the 4 corner positions. " +
       "When tiled randomly these produce the iconic flowing, organic labyrinthine " +
-      "curves — the pattern most commonly associated with 'Truchet tiling' today. " +
-      "Rediscovered and popularized by Cyril Stanley Smith in 1987.",
-    historicReference: "Cyril Stanley Smith, 1987",
+      "curves — the curved form most commonly associated with 'Truchet tiling' " +
+      "today. This is a generic curved Truchet variant, not the work of a specific " +
+      "named designer.",
+    historicReference: "Curved Truchet variant",
     patchworkGroups: ["circle quarters"],
     tiles: [
       {

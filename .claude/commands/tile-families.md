@@ -18,22 +18,22 @@ All families are defined in `src/data/tileGroups.ts` with full TypeScript types.
 | Family id | Patchwork group(s) | Tiles (id) | Notes |
 |---|---|---|---|
 | `truchet-original` | `diagonals` | 8250 › 339 œ 157 \x9D 158 \x9E | Sébastien Truchet 1704 — diagonal line, 4 rotations |
-| `smith-1987` | `circle quarters` | 8211 – 8212 — 732 ˜ 8482 ™ | Cyril Stanley Smith 1987 — quarter-circle arc, 4 rotations |
+| `quarter-circle-arc` | `circle quarters` | 8211 – 8212 — 732 ˜ 8482 ™ | Generic curved Truchet variant — single quarter-circle arc, 4 rotations (not attributed to Smith) |
 | `semi-circle` | `semi circles` | 217 Ù 219 Û 218 Ú 220 Ü | Half-circle arc, wave/scallop patterns |
 | `two-arc-s-curve` | `two half circles` | 225 á 226 â | S/Z curve, only 2 tiles needed |
-| `straight-corner` | `straight corners` | 94 ^ 95 _ 96 ` 97 a | Rectilinear analog of Smith; right-angle L-path |
+| `straight-corner` | `straight corners` | 94 ^ 95 _ 96 ` 97 a | Rectilinear analog of the quarter-circle arc; right-angle L-path |
 | `arch` | `archs` | 90 Z 91 [ 92 \ 93 ] | Large arch; Islamic vault patterns |
-| `rounded-corner` | `rounded corners`, `little rounded corners` | 207 Ï 208 Ð 209 Ñ 210 Ò | Negative/complement of Smith tiles (fills corner, not arc) |
+| `rounded-corner` | `rounded corners`, `little rounded corners` | 207 Ï 208 Ð 209 Ñ 210 Ò | Negative/complement of the quarter-circle arc tiles (fills corner, not arc) |
 | `roadway` | `roadway` | 80 P 81 Q 82 R 83 S | Double-line path; maze/road networks |
 | `rounded-roadway` | `rounded roadways` | 64 @ 65 A 66 B 67 C | Curved version of roadway |
 
-> **Supplementary `smith-tiles-font`** (`smithTilesFontFamily`, groups `smith arcs` + `diagonal lines`): four double-connector glyphs at U+E000–U+E003 from `smith-tiles.ttf` (E000/E001 arcs, E002/E003 straight). Each glyph carries two connectors so any adjacent pair always connects — a guaranteed-maze enhancement, not Smith's original single-arc tile. Added groups, they do not replace the historic `circle quarters` tiles above.
+> **Supplementary `smith-tiles-font`** (`smithTilesFontFamily`, groups `smith arcs` + `diagonal lines`): four double-connector glyphs at U+E000–U+E003 from `smith-tiles.ttf` (E000/E001 arcs, E002/E003 straight). Each glyph carries two connectors so any adjacent pair always connects. The two-arc arc glyphs match the tile Cyril Stanley Smith actually described in 1987 (two quarter-circles at opposite corners) — unlike the single-arc `circle quarters` family above, which is a generic curved variant.
 
 ## Pattern character quick-ref (copy-paste)
 
 ```
 Truchet original:  ›  œ  [ctrl-9D]  [ctrl-9E]
-Smith 1987:        –  —  ˜  ™
+Quarter-circle arc:  –  —  ˜  ™
 Semi-circle:       Ù  Û  Ú  Ü
 S-curve:           á  â
 Straight corner:   ^  _  `  a

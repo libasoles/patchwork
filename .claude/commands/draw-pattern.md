@@ -14,7 +14,7 @@ Read `/tile-families` (or `src/data/tileGroups.ts`) for the full list. Most comm
 | Goal | Family | Tiles to use |
 |---|---|---|
 | Classic diagonal Truchet | `truchet-original` | `›` `œ` `\x9D` `\x9E` |
-| Flowing organic curves (Smith) | `smith-1987` | `–` `—` `˜` `™` (4 quarter-arcs) |
+| Flowing organic curves (curved Truchet) | `quarter-circle-arc` | `–` `—` `˜` `™` (4 quarter-arcs) |
 | Guaranteed-connect maze (Smith font) | `smith-tiles-font` | `\uE000` `\uE001` arcs · `\uE002` `\uE003` straight |
 | Wave / scallop | `semi-circle` | `Ù` `Û` `Ú` `Ü` |
 | Maze / road network | `roadway` | `P` `Q` `R` `S` |
@@ -24,7 +24,7 @@ Read `/tile-families` (or `src/data/tileGroups.ts`) for the full list. Most comm
 
 **Checkerboard alternation** (simple, regular, shows all 4 rotations):
 ```ts
-const tiles = ['–', '—', '˜', '™']; // smith-1987 (4 quarter-arc glyphs)
+const tiles = ['–', '—', '˜', '™']; // quarter-circle-arc (4 quarter-arc glyphs)
 const grid = Array.from({ length: rows }, (_, r) =>
   Array.from({ length: cols }, (_, c) => tiles[(r + c) % 4])
 );
@@ -57,7 +57,7 @@ const grid = Array.from({ length: rows }, () =>
 ```tsx
 import { truchetFamilies } from '@/data/tileGroups';
 
-const family = truchetFamilies.find(f => f.id === 'smith-1987')!;
+const family = truchetFamilies.find(f => f.id === 'quarter-circle-arc')!;
 const tileChars = family.tiles.map(t => t.symbol);
 
 // Build grid (8 cols, 6 rows, checkerboard)

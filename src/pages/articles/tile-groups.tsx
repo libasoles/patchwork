@@ -40,7 +40,7 @@ const content = {
     date: "June 15, 2026",
     readingTime: "8 min read",
     title: "Patchwork tile groups",
-    lead: "A visual catalog of every selectable Patchwork tile group: historic Truchet and Smith families, curated Patchwork connector families, and the remaining grouped glyphs from the bundled fonts.",
+    lead: "A visual catalog of every selectable Patchwork tile group: historic Truchet families, curated Patchwork connector families, and the remaining grouped glyphs from the bundled fonts.",
     statsFamilies: "families",
     statsTiles: "tiles",
     statsGroups: "Patchwork groups",
@@ -48,7 +48,7 @@ const content = {
     sourcesTitle: "Source notes",
     sources: [
       "Sébastien Truchet's 1704 memoir describes the original diagonally divided square tile.",
-      "Cyril Stanley Smith's 1987 Leonardo article popularized quarter-circle arc Truchet tiles.",
+      "The single quarter-circle arc family is the generic curved form of Truchet tiling and is not attributed to a specific designer. Cyril Stanley Smith's 1987 Leonardo article describes a separate tile bearing two quarter-circles at opposite corners (the 'smith arcs' font group).",
       "Other groups here are described as Patchwork or font-catalog families unless a specific historical attribution is known.",
     ],
     footer:
@@ -63,7 +63,7 @@ const content = {
     date: "15 de junio de 2026",
     readingTime: "8 min de lectura",
     title: "Grupos de tiles de Patchwork",
-    lead: "Un catalogo visual de todos los grupos seleccionables de Patchwork: familias historicas Truchet y Smith, familias conectoras curadas de Patchwork y el resto de glifos agrupados de las fuentes incluidas.",
+    lead: "Un catalogo visual de todos los grupos seleccionables de Patchwork: familias historicas de Truchet, familias conectoras curadas de Patchwork y el resto de glifos agrupados de las fuentes incluidas.",
     statsFamilies: "familias",
     statsTiles: "tiles",
     statsGroups: "grupos Patchwork",
@@ -71,7 +71,7 @@ const content = {
     sourcesTitle: "Notas de fuente",
     sources: [
       "La memoria de 1704 de Sébastien Truchet describe el tile cuadrado original dividido por una diagonal.",
-      "El articulo de Cyril Stanley Smith publicado en Leonardo en 1987 popularizo los tiles Truchet con arcos de cuarto de circulo.",
+      "La familia de un solo arco de cuarto de circulo es la forma curva generica del mosaico Truchet y no se atribuye a un disenador concreto. El articulo de Cyril Stanley Smith (Leonardo, 1987) describe un tile distinto, con dos cuartos de circulo en esquinas opuestas (el grupo de fuente 'smith arcs').",
       "Los demas grupos se describen como familias Patchwork o catalogos de fuente salvo que exista una atribucion historica especifica.",
     ],
     footer:
@@ -86,7 +86,7 @@ const content = {
     date: "15 juin 2026",
     readingTime: "8 min de lecture",
     title: "Groupes de carreaux Patchwork",
-    lead: "Un catalogue visuel de tous les groupes selectionnables de Patchwork : familles historiques Truchet et Smith, familles de connecteurs Patchwork et autres glyphes groupes des polices incluses.",
+    lead: "Un catalogue visuel de tous les groupes selectionnables de Patchwork : familles historiques Truchet, familles de connecteurs Patchwork et autres glyphes groupes des polices incluses.",
     statsFamilies: "familles",
     statsTiles: "carreaux",
     statsGroups: "groupes Patchwork",
@@ -94,7 +94,7 @@ const content = {
     sourcesTitle: "Notes de source",
     sources: [
       "Le memoire de 1704 de Sébastien Truchet decrit le carreau carre original divise par une diagonale.",
-      "L'article de Cyril Stanley Smith publie dans Leonardo en 1987 a popularise les carreaux Truchet a arcs de quart de cercle.",
+      "La famille a un seul arc de quart de cercle est la forme courbe generique du pavage Truchet et n'est pas attribuee a un concepteur precis. L'article de Cyril Stanley Smith (Leonardo, 1987) decrit un carreau distinct portant deux quarts de cercle aux coins opposes (le groupe de police 'smith arcs').",
       "Les autres groupes sont decrits comme familles Patchwork ou catalogues de police sauf attribution historique specifique connue.",
     ],
     footer:
