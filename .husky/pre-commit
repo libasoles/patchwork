@@ -1,10 +1,12 @@
 # Skip when dependencies aren't installed locally (e.g. a fresh git worktree
-# without its own node_modules). Otherwise npx would fetch a placeholder `tsc`
-# package and fail commits that don't touch TypeScript at all.
-if [ ! -d node_modules ]; then
-  echo "pre-commit: node_modules not found, skipping lint-staged + tsc"
+# without its own node_modules). We invoke the local binaries directly instead
+# of `npx`, because `npx tsc` fetches an unrelated placeholder `tsc` package
+# when TypeScript isn't resolvable locally, failing commits that don't even
+# touch TypeScript.
+if [ ! -x node_modules/.bin/lint-staged ] || [ ! -x node_modules/.bin/tsc ]; then
+  echo "pre-commit: local node_modules/.bin not found, skipping lint-staged + tsc"
   exit 0
 fi
 
-npx lint-staged
-npx tsc --noEmit
+node_modules/.bin/lint-staged
+node_modules/.bin/tsc --noEmit
