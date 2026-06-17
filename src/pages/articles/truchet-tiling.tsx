@@ -7,20 +7,19 @@ import enMessages from "../../../messages/en.json";
 import esMessages from "../../../messages/es.json";
 import frMessages from "../../../messages/fr.json";
 
-// Tile characters from the Patchwork blocks font
 const T = {
   // "diagonals" group — Truchet original (1704)
   d0: "›", // id 8250 — diagonal NW→SE orientation 0
   d1: "œ", // id 339  — diagonal NE→SW orientation 1
   d2: "", // id 157  — diagonal SE→NW orientation 2
   d3: "", // id 158  — diagonal SW→NE orientation 3
-  // "smith arcs" group — Smith (1987) curved Truchet (smith-tiles.ttf, thin U+E000–E001)
+  // "smith arcs" group — Smith (1987) curved Truchet
   c0: "\u{E000}", // S-shape: top-right arc + bottom-left arc
   c1: "\u{E001}", // reverse-S: top-left arc + bottom-right arc
-  // Smith straight double-band variant (smith-tiles.ttf, thick U+E012–E013)
+  // Smith straight double-band variant
   l0: "\u{E012}", // straight S: top-right band + bottom-left band
   l1: "\u{E013}", // straight reverse-S: top-left band + bottom-right band
-  // Smith single-diagonal variant (smith-tiles.ttf, thin U+E004–E005)
+  // Smith single-diagonal variant
   s0: "\u{E004}", // slash diagonal
   s1: "\u{E005}", // backslash diagonal
 };
@@ -210,7 +209,7 @@ const content = {
     s3h: "Smith's curved simplification (1987)",
     s3: [
       "Nearly three centuries later, historian of materials science Cyril Stanley Smith revisited Truchet tiling in his 1987 article 'The tiling patterns of Sebastien Truchet and the topology of structural hierarchy.' Smith's curved tile is not the generic one-corner quarter-circle often shown in Truchet examples: it carries two quarter-circle arcs at opposite corners, so all four edge midpoints are connected.",
-      "This small change has a dramatic visual effect. Where the original Truchet tiles produce angular geometric patterns, Smith's paired arcs generate flowing labyrinthine forms — paths that wind continuously across the plane without ever crossing themselves. Patchwork uses the two true Smith arc orientations from its supplementary Smith Tiles font.",
+      "This small change has a dramatic visual effect. Where the original Truchet tiles produce angular geometric patterns, Smith's paired arcs generate flowing labyrinthine forms — paths that wind continuously across the plane without ever crossing themselves. Patchwork uses the two true Smith arc orientations.",
     ],
     s3caption:
       "The two true Smith arc tiles: paired quarter-circles at opposite corners",
@@ -236,8 +235,7 @@ const content = {
     s6h: "Mathematical properties",
     s6: "Truchet tilings belong to a class of aperiodic-capable tilings — configurations that can fill the plane without repeating in a strict periodic pattern. Unlike a regular grid, a random Truchet tiling has no translational symmetry: you cannot shift the entire pattern by any fixed vector and have it look the same. This makes Truchet tilings useful in cryptography, texture generation, and generative art, where non-repetition is a virtue.",
 
-    footer:
-      "Illustrated with Patchwork tiles rendered in the browser using a custom block font.",
+    footer: "Illustrated with Patchwork tiles.",
   },
 
   es: {
@@ -274,7 +272,7 @@ const content = {
     s3h: "La simplificación curva de Smith (1987)",
     s3: [
       "Casi tres siglos después, el historiador de ciencia de materiales Cyril Stanley Smith revisó el mosaico Truchet en su artículo de 1987 'The tiling patterns of Sebastien Truchet and the topology of structural hierarchy'. El mosaico curvo de Smith no es el cuarto de círculo genérico de una sola esquina que suele aparecer en ejemplos de Truchet: lleva dos arcos de cuarto de círculo en esquinas opuestas, de modo que conecta los cuatro puntos medios de los bordes.",
-      "Este pequeño cambio tiene un efecto visual dramático. Mientras los mosaicos originales de Truchet producen patrones geométricos angulares, los arcos emparejados de Smith generan formas laberínticas fluidas — caminos que serpentean continuamente por el plano sin cruzarse nunca. Patchwork usa las dos orientaciones verdaderas de los arcos de Smith desde su fuente suplementaria Smith Tiles.",
+      "Este pequeño cambio tiene un efecto visual dramático. Mientras los mosaicos originales de Truchet producen patrones geométricos angulares, los arcos emparejados de Smith generan formas laberínticas fluidas — caminos que serpentean continuamente por el plano sin cruzarse nunca. Patchwork usa las dos orientaciones verdaderas de los arcos de Smith.",
     ],
     s3caption:
       "Los dos mosaicos verdaderos de Smith: cuartos de círculo emparejados en esquinas opuestas",
@@ -300,8 +298,7 @@ const content = {
     s6h: "Propiedades matemáticas",
     s6: "Los mosaicos Truchet pertenecen a una clase de pavimentos con capacidad aperiódica — configuraciones que pueden cubrir el plano sin repetirse con un patrón periódico estricto. A diferencia de una cuadrícula regular, un mosaico Truchet aleatorio no tiene simetría traslacional: no puedes desplazar todo el patrón por ningún vector fijo y obtener el mismo aspecto. Esto hace que los mosaicos Truchet sean útiles en criptografía, generación de texturas y arte generativo, donde la no repetición es una virtud.",
 
-    footer:
-      "Ilustrado con mosaicos de Patchwork renderizados en el navegador usando una fuente de bloques personalizada.",
+    footer: "Ilustrado con mosaicos de Patchwork.",
   },
 
   fr: {
@@ -337,7 +334,7 @@ const content = {
     s3h: "La simplification courbe de Smith (1987)",
     s3: [
       "Près de trois siècles plus tard, l'historien des sciences des matériaux Cyril Stanley Smith revisita le pavage Truchet dans son article de 1987 'The tiling patterns of Sebastien Truchet and the topology of structural hierarchy'. Le carreau courbe de Smith n'est pas le quart de cercle générique à un seul coin que l'on voit souvent dans les exemples Truchet : il porte deux quarts de cercle dans des coins opposés, reliant ainsi les quatre milieux des côtés.",
-      "Ce petit changement a un effet visuel dramatique. Là où les carreaux Truchet originaux produisent des motifs géométriques angulaires, les arcs appariés de Smith génèrent des formes labyrinthiques fluides — des chemins qui serpentent continuellement sur le plan sans jamais se croiser. Patchwork utilise les deux vraies orientations des arcs de Smith depuis sa police supplémentaire Smith Tiles.",
+      "Ce petit changement a un effet visuel dramatique. Là où les carreaux Truchet originaux produisent des motifs géométriques angulaires, les arcs appariés de Smith génèrent des formes labyrinthiques fluides — des chemins qui serpentent continuellement sur le plan sans jamais se croiser. Patchwork utilise les deux vraies orientations des arcs de Smith.",
     ],
     s3caption:
       "Les deux vrais carreaux de Smith : quarts de cercle appariés dans des coins opposés",
@@ -363,8 +360,7 @@ const content = {
     s6h: "Propriétés mathématiques",
     s6: "Les pavages Truchet appartiennent à une classe de pavages à capacité apériodique — des configurations qui peuvent couvrir le plan sans se répéter selon un motif périodique strict. Contrairement à une grille régulière, un pavage Truchet aléatoire n'a pas de symétrie de translation : vous ne pouvez pas déplacer tout le motif d'un vecteur fixe quelconque et obtenir le même aspect. Cela rend les pavages Truchet utiles en cryptographie, en génération de textures et en art génératif, où la non-répétition est une vertu.",
 
-    footer:
-      "Illustré avec des carreaux Patchwork rendus dans le navigateur à l'aide d'une police de blocs personnalisée.",
+    footer: "Illustré avec des carreaux Patchwork.",
   },
 };
 
