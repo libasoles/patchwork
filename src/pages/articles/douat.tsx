@@ -3,6 +3,9 @@ import Link from "next/link";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import ArticleHeader from "@/components/ArticleHeader";
+import DouatAlphabetFigure, {
+  douatAlphabetLegendCopy,
+} from "@/components/DouatAlphabetFigure";
 import DouatCarousel from "@/components/DouatCarousel";
 import DouatPatternSVG from "@/components/DouatPatternSVG";
 import { douatPlates, type DouatLetter } from "@/data/douatPatterns";
@@ -15,8 +18,6 @@ const DEMO_GRID: DouatLetter[][] = [
   ["C", "C", "B", "B"],
   ["C", "C", "B", "B"],
 ];
-
-const LETTERS: DouatLetter[] = ["A", "B", "C", "D"];
 
 type Lang = "en" | "es" | "fr";
 
@@ -36,8 +37,6 @@ const content: Record<
     pHistory: string[];
     hTile: string;
     pTile: string[];
-    legendCaption: string;
-    legendLabels: Record<DouatLetter, string>;
     hAlphabet: string;
     pAlphabet: string[];
     demoIntro: string;
@@ -80,19 +79,11 @@ const content: Record<
       "Everything is built from a single square tile, mi-parti — split in half by a diagonal — one half colored, one half white. Because a square has four corners, the colored right-angle can point to any of them. Douat gives each of these four orientations a letter, named by the corner where the colored angle sits:",
       "That is the entire alphabet. A is the colored corner at bottom-left, B at top-left, C at top-right, D at bottom-right. Once you can tell A, B, C and D apart, you can read — and write — every design in the book without ever looking at a drawing.",
     ],
-    legendCaption:
-      "The four orientations of the tile and the letter Douat assigns to each.",
-    legendLabels: {
-      A: "A — bottom-left",
-      B: "B — top-left",
-      C: "C — top-right",
-      D: "D — bottom-right",
-    },
     hAlphabet: "An alphabet of patterns",
     pAlphabet: [
       "Douat's insight is that the letters are a notation. Take the four tiles four at a time, allowing repeats, and you get 4 × 4 × 4 × 4 = 256 little two-by-two arrangements — his fourth table. Repeat and combine those, row after row, and the count explodes: he patiently works out the number of designs you can make taking the 256 two, three, four… at a time, and the totals run to dozens of digits.",
       "He loved that disproportion between tiny means and limitless results, and reached for analogies: mathematics grows from a single point, arithmetic from nine digits, music from seven notes, and the twenty-four letters of the alphabet spell more words than there are moments since the creation of the world. Four tiles, he argues, are no different — they spell an infinity of designs.",
-      "And because the patterns are written in letters, you don't need the engravings at all. Knowing only A, B, C and D, you can lay out cardboard tiles and reproduce any design — \"sans étude\", without study, as he puts it.",
+      'And because the patterns are written in letters, you don\'t need the engravings at all. Knowing only A, B, C and D, you can lay out cardboard tiles and reproduce any design — "sans étude", without study, as he puts it.',
     ],
     demoIntro:
       "Read the grid of letters on the left; build the tiles it names; and you get the picture on the right. This is design 1 of his final table:",
@@ -141,14 +132,6 @@ const content: Record<
       "Todo se construye a partir de un único mosaico cuadrado, mi-parti — partido por la mitad mediante una diagonal — una mitad de color, la otra blanca. Como el cuadrado tiene cuatro esquinas, el ángulo coloreado puede apuntar a cualquiera de ellas. Douat asigna a cada una de esas cuatro orientaciones una letra, según la esquina donde se sitúa el ángulo de color:",
       "Ese es todo el alfabeto. A es el ángulo de color abajo a la izquierda, B arriba a la izquierda, C arriba a la derecha, D abajo a la derecha. Una vez que distingues A, B, C y D, puedes leer — y escribir — cada diseño del libro sin mirar jamás un dibujo.",
     ],
-    legendCaption:
-      "Las cuatro orientaciones del mosaico y la letra que Douat asigna a cada una.",
-    legendLabels: {
-      A: "A — abajo izquierda",
-      B: "B — arriba izquierda",
-      C: "C — arriba derecha",
-      D: "D — abajo derecha",
-    },
     hAlphabet: "Un alfabeto de patrones",
     pAlphabet: [
       "La idea de Douat es que las letras son una notación. Toma los cuatro mosaicos de cuatro en cuatro, permitiendo repeticiones, y obtienes 4 × 4 × 4 × 4 = 256 pequeñas disposiciones de dos por dos — su cuarta tabla. Repite y combina esas, fila tras fila, y la cuenta estalla: calcula con paciencia cuántos diseños se pueden hacer tomando las 256 de dos en dos, de tres en tres, de cuatro en cuatro… y los totales llegan a decenas de cifras.",
@@ -203,14 +186,6 @@ const content: Record<
       "Tout se construit à partir d'un seul carreau carré, mi-parti — partagé en deux par une diagonale — une moitié colorée, l'autre blanche. Comme un carré a quatre coins, l'angle coloré peut pointer vers n'importe lequel d'entre eux. Douat donne à chacune de ces quatre orientations une lettre, nommée d'après le coin où se trouve l'angle coloré :",
       "Voilà tout l'alphabet. A, c'est l'angle coloré en bas à gauche, B en haut à gauche, C en haut à droite, D en bas à droite. Une fois que l'on distingue A, B, C et D, on peut lire — et écrire — chaque dessein du livre sans jamais regarder un dessin.",
     ],
-    legendCaption:
-      "Les quatre orientations du carreau et la lettre que Douat attribue à chacune.",
-    legendLabels: {
-      A: "A — bas gauche",
-      B: "B — haut gauche",
-      C: "C — haut droite",
-      D: "D — bas droite",
-    },
     hAlphabet: "Un alphabet de motifs",
     pAlphabet: [
       "L'intuition de Douat, c'est que les lettres sont une notation. Prenez les quatre carreaux quatre à quatre, répétitions permises, et vous obtenez 4 × 4 × 4 × 4 = 256 petits arrangements de deux sur deux — sa quatrième table. Répétez et combinez ceux-là, rangée après rangée, et le compte explose : il calcule patiemment le nombre de desseins réalisables en prenant les 256 deux à deux, trois à trois, quatre à quatre… et les totaux atteignent des dizaines de chiffres.",
@@ -244,33 +219,6 @@ const content: Record<
     cta: "Ouvrir Patchwork →",
   },
 };
-
-function OrientationLegend({
-  labels,
-}: {
-  labels: Record<DouatLetter, string>;
-}) {
-  return (
-    <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-      {LETTERS.map((letter) => (
-        <div
-          key={letter}
-          className="flex flex-col items-center gap-2 rounded-lg bg-slate-800 p-4"
-        >
-          <DouatPatternSVG
-            grid={[[letter]]}
-            cellPx={64}
-            title={`Tile ${letter}`}
-            className="w-16 rounded-sm"
-          />
-          <span className="text-center text-xs text-zinc-300">
-            {labels[letter]}
-          </span>
-        </div>
-      ))}
-    </div>
-  );
-}
 
 export default function DouatArticle() {
   const { locale } = useRouter();
@@ -345,12 +293,7 @@ export default function DouatArticle() {
             <section>
               <h2 className="text-2xl font-semibold mb-4">{c.hTile}</h2>
               <p className={paragraph}>{c.pTile[0]}</p>
-              <figure className="my-6">
-                <OrientationLegend labels={c.legendLabels} />
-                <figcaption className="text-xs text-zinc-400 mt-3">
-                  {c.legendCaption}
-                </figcaption>
-              </figure>
+              <DouatAlphabetFigure {...douatAlphabetLegendCopy[lang]} />
               <p className={paragraph}>{c.pTile[1]}</p>
             </section>
 
@@ -472,6 +415,7 @@ export default function DouatArticle() {
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
     locale: locale ?? "en",
-    messages: (await import(`../../../messages/${locale ?? "en"}.json`)).default,
+    messages: (await import(`../../../messages/${locale ?? "en"}.json`))
+      .default,
   },
 });

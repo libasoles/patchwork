@@ -3,6 +3,9 @@ import Link from "next/link";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import ArticleHeader from "@/components/ArticleHeader";
+import DouatAlphabetFigure, {
+  douatAlphabetLegendCopy,
+} from "@/components/DouatAlphabetFigure";
 import DouatDesignTable from "@/components/DouatDesignTable";
 import { douatTable256 } from "@/data/douatPatterns";
 
@@ -47,10 +50,12 @@ const content: Record<
     ],
     tableCaption:
       "Douat's 256 designs, each rendered from its four-letter code (numbering as printed, 1–256).",
-    tableEmpty: "Designs are being transcribed from the book; check back shortly.",
+    tableEmpty:
+      "Designs are being transcribed from the book; check back shortly.",
     relatedPre: "This is a companion to ",
     relatedLink: "Douat: An Alphabet of Tiles",
-    relatedPost: ", which tells the story and shows the seventy-two full designs.",
+    relatedPost:
+      ", which tells the story and shows the seventy-two full designs.",
     cta: "Open Patchwork →",
   },
   es: {
@@ -165,6 +170,10 @@ export default function DouatTable256Article() {
             </p>
           </div>
 
+          <section>
+            <DouatAlphabetFigure {...douatAlphabetLegendCopy[lang]} />
+          </section>
+
           <div className="prose dark:prose-invert max-w-none space-y-8">
             <section>
               {c.intro.map((p, i) => (
@@ -231,6 +240,7 @@ export default function DouatTable256Article() {
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
     locale: locale ?? "en",
-    messages: (await import(`../../../messages/${locale ?? "en"}.json`)).default,
+    messages: (await import(`../../../messages/${locale ?? "en"}.json`))
+      .default,
   },
 });
