@@ -12,7 +12,7 @@ interface DouatCarouselProps {
 export default function DouatCarousel({
   patterns,
   title,
-  cellPx = 18,
+  cellPx = 22,
 }: DouatCarouselProps) {
   const [index, setIndex] = useState(0);
   const total = patterns.length;
@@ -47,7 +47,7 @@ export default function DouatCarousel({
         </p>
       ) : null}
 
-      <div className="mx-auto flex max-w-sm items-center justify-center gap-3">
+      <div className="mx-auto flex w-full max-w-2xl items-center justify-center gap-3 sm:gap-4">
         <button
           type="button"
           aria-label="Previous design"
@@ -63,7 +63,7 @@ export default function DouatCarousel({
             grid={current.grid}
             cellPx={cellPx}
             title={current.name}
-            className="mx-auto w-full max-w-[280px] rounded-md"
+            className="mx-auto w-full max-w-[420px] rounded-md"
           />
         </div>
 

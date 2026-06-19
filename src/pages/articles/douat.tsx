@@ -351,7 +351,7 @@ export default function DouatArticle() {
                   <DouatCarousel
                     patterns={douatPlates}
                     title={c.carouselTitle}
-                    cellPx={14}
+                    cellPx={20}
                   />
                 ) : (
                   <div className="rounded-xl bg-slate-800 p-8 text-center text-sm text-zinc-400">
