@@ -93,6 +93,24 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>${siteUrl}/articles/douat</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="${siteUrl}/articles/douat"/>
+    <xhtml:link rel="alternate" hreflang="es" href="${siteUrl}/es/articles/douat"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="${siteUrl}/fr/articles/douat"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="${siteUrl}/articles/douat"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>${siteUrl}/articles/douat-256-designs</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="${siteUrl}/articles/douat-256-designs"/>
+    <xhtml:link rel="alternate" hreflang="es" href="${siteUrl}/es/articles/douat-256-designs"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="${siteUrl}/fr/articles/douat-256-designs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="${siteUrl}/articles/douat-256-designs"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>`
 
   res.setHeader('Content-Type', 'text/xml; charset=utf-8')
