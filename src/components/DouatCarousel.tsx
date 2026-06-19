@@ -8,13 +8,15 @@ import {
   defaultColor,
 } from "@/config";
 import { ColorSwatchGroup } from "@/components/ColorSwatchGroup";
-import DouatPatternSVG from "@/components/DouatPatternSVG";
+import DouatFlipCard from "@/components/DouatFlipCard";
 
 interface DouatCarouselProps {
   patterns: DouatPattern[];
   title?: string;
   cellPx?: number;
   initialPatternId?: number;
+  flipHint: string;
+  flipLabel: string;
   colorLabels: {
     color: string;
     background: string;
@@ -26,6 +28,8 @@ export default function DouatCarousel({
   title,
   cellPx = 22,
   initialPatternId,
+  flipHint,
+  flipLabel,
   colorLabels,
 }: DouatCarouselProps) {
   const initialIndex = Math.max(
@@ -95,14 +99,15 @@ export default function DouatCarousel({
         </button>
 
         <div className="min-w-0 flex-1">
-          <DouatPatternSVG
+          <DouatFlipCard
             key={current.id}
             grid={current.grid}
             cellPx={cellPx}
             fabric={fabric}
             bg={bg}
             title={current.name}
-            className="mx-auto w-full max-w-[680px] rounded-md"
+            flipLabel={flipLabel}
+            className="mx-auto w-full max-w-[680px]"
           />
         </div>
 
@@ -122,6 +127,8 @@ export default function DouatCarousel({
         </span>
         <span className="truncate text-zinc-300">{current.name}</span>
       </div>
+
+      <p className="mt-2 text-center text-xs text-zinc-400">{flipHint}</p>
     </div>
   );
 }

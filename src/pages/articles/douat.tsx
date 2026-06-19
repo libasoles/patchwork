@@ -47,6 +47,8 @@ const content: Record<
     pCarousel: string[];
     carouselTitle: string;
     carouselEmpty: string;
+    flipHint: string;
+    flipLabel: string;
     colorLabel: string;
     backgroundLabel: string;
     hMore: string;
@@ -102,6 +104,8 @@ const content: Record<
     carouselTitle: "Douat's Desseins — rendered from their letters",
     carouselEmpty:
       "Designs are being transcribed from the book; check back shortly.",
+    flipHint: "Click the design to flip it and read its letters.",
+    flipLabel: "Flip the design to see its letters",
     colorLabel: "Tile color",
     backgroundLabel: "Background",
     hMore: "The table of 256",
@@ -158,6 +162,8 @@ const content: Record<
     carouselTitle: "Los Desseins de Douat — renderizados desde sus letras",
     carouselEmpty:
       "Los diseños se están transcribiendo del libro; vuelve en un momento.",
+    flipHint: "Haz clic en el diseño para girarlo y leer sus letras.",
+    flipLabel: "Girar el diseño para ver sus letras",
     colorLabel: "Color del mosaico",
     backgroundLabel: "Fondo",
     hMore: "La tabla de los 256",
@@ -214,6 +220,8 @@ const content: Record<
     carouselTitle: "Les Desseins de Douat — rendus à partir de leurs lettres",
     carouselEmpty:
       "Les desseins sont en cours de transcription depuis le livre ; revenez bientôt.",
+    flipHint: "Cliquez sur le dessein pour le retourner et lire ses lettres.",
+    flipLabel: "Retourner le dessein pour voir ses lettres",
     colorLabel: "Couleur du carreau",
     backgroundLabel: "Fond",
     hMore: "La table des 256",
@@ -361,6 +369,8 @@ export default function DouatArticle() {
                     title={c.carouselTitle}
                     cellPx={24}
                     initialPatternId={38}
+                    flipHint={c.flipHint}
+                    flipLabel={c.flipLabel}
                     colorLabels={{
                       color: c.colorLabel,
                       background: c.backgroundLabel,
