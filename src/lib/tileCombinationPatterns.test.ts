@@ -1,4 +1,5 @@
 import {
+  REGULAR_PATTERN_PERIOD,
   TILE_COMBINATION_COLS,
   TILE_COMBINATION_ROWS,
   generateTileCombinationGrid,
@@ -20,15 +21,27 @@ describe("tileCombinationPatterns", () => {
   });
 
   it("keeps regular patterns periodic", () => {
-    const grid = generateTileCombinationGrid({
-      tiles,
-      mode: "regular",
-      seed: "periodic",
-    });
+    ["periodic", "regular-1", "regular-2", "douat-blocks", "striped"].forEach(
+      (seed) => {
+        const grid = generateTileCombinationGrid({
+          tiles,
+          mode: "regular",
+          seed,
+          rows: REGULAR_PATTERN_PERIOD * 2,
+          cols: REGULAR_PATTERN_PERIOD * 2,
+        });
 
-    expect(grid[0][0]).toBe(grid[4][4]);
-    expect(grid[1][2]).toBe(grid[5][6]);
-    expect(grid[3][3]).toBe(grid[7][7]);
+        expect(grid[0][0]).toBe(
+          grid[REGULAR_PATTERN_PERIOD][REGULAR_PATTERN_PERIOD],
+        );
+        expect(grid[1][2]).toBe(
+          grid[1 + REGULAR_PATTERN_PERIOD][2 + REGULAR_PATTERN_PERIOD],
+        );
+        expect(grid[7][11]).toBe(
+          grid[7 + REGULAR_PATTERN_PERIOD][11 + REGULAR_PATTERN_PERIOD],
+        );
+      },
+    );
   });
 
   it("can vary regular patterns with a different seed", () => {
@@ -44,6 +57,19 @@ describe("tileCombinationPatterns", () => {
     });
 
     expect(second).not.toEqual(first);
+  });
+
+  it("can produce richer regular compositions from Douat's dictionary", () => {
+    const grid = generateTileCombinationGrid({
+      tiles,
+      mode: "regular",
+      seed: "douat-blocks",
+      rows: 12,
+      cols: 12,
+    });
+
+    expect(new Set(grid.flat().map((tile) => tile.id)).size).toBeGreaterThan(2);
+    expect(grid[0]).not.toEqual(grid[1]);
   });
 
   it("keeps irregular patterns deterministic for the same seed", () => {

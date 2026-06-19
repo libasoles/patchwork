@@ -1,5 +1,8 @@
+import { douatPlates, douatTable256, type DouatLetter } from "@/data/douatPatterns";
+
 export const TILE_COMBINATION_ROWS = 15;
 export const TILE_COMBINATION_COLS = 30;
+export const REGULAR_PATTERN_PERIOD = 24;
 
 export type TileCombinationMode = "regular" | "irregular";
 
@@ -43,85 +46,15 @@ export function generateTileCombinationGrid<TTile extends TileCombinationTile>({
     );
   }
 
+  const orderedTiles = [...tiles].sort((left, right) => left.id - right.id);
+
   return Array.from({ length: rows }, (_, row) =>
     Array.from(
       { length: cols },
-      (_, col) => tiles[regularTileIndex(row, col, tiles.length, seed)],
+      (_, col) => orderedTiles[regularTileIndex(row, col, orderedTiles.length, seed)],
     ),
   );
 }
-
-// Period-4 fundamental blocks, each capturing a regular arrangement from the
-// Truchet (1704) / Doüat (1722) catalogue: their method builds patterns from
-// small repeating blocks combined by translation, mirroring, row-shifting and
-// diagonal weaving. Values are 0-3 and taken `% tileCount`, so the schemes also
-// work for families with 2 or 3 tiles. Keeping every block period-4 in both
-// axes means a regular pattern is always periodic regardless of the seed.
-const REGULAR_SCHEMES: number[][][] = [
-  // Diagonal weave — Truchet's basic oblique weave (r + c)
-  [
-    [0, 1, 2, 3],
-    [1, 2, 3, 0],
-    [2, 3, 0, 1],
-    [3, 0, 1, 2],
-  ],
-  // Anti-diagonal weave (r - c)
-  [
-    [0, 3, 2, 1],
-    [1, 0, 3, 2],
-    [2, 1, 0, 3],
-    [3, 2, 1, 0],
-  ],
-  // Vertical bands (c)
-  [
-    [0, 1, 2, 3],
-    [0, 1, 2, 3],
-    [0, 1, 2, 3],
-    [0, 1, 2, 3],
-  ],
-  // Horizontal bands (r)
-  [
-    [0, 0, 0, 0],
-    [1, 1, 1, 1],
-    [2, 2, 2, 2],
-    [3, 3, 3, 3],
-  ],
-  // 2x2 pinwheel — the classic quatrefoil block repeated
-  [
-    [0, 1, 0, 1],
-    [3, 2, 3, 2],
-    [0, 1, 0, 1],
-    [3, 2, 3, 2],
-  ],
-  // Mirrored diamonds — a mirror-symmetric block giving concentric quilt motifs
-  [
-    [0, 1, 1, 0],
-    [3, 2, 2, 3],
-    [3, 2, 2, 3],
-    [0, 1, 1, 0],
-  ],
-  // Brick offset — successive row pairs shifted by two
-  [
-    [0, 1, 2, 3],
-    [2, 3, 0, 1],
-    [0, 1, 2, 3],
-    [2, 3, 0, 1],
-  ],
-  // Double-step diagonal (r + 2c)
-  [
-    [0, 2, 0, 2],
-    [1, 3, 1, 3],
-    [2, 0, 2, 0],
-    [3, 1, 3, 1],
-  ],
-  // Original motif
-  [
-    [3, 2, 0, 1],
-    [1, 0, 2, 3],
-    [0, 1, 3, 2],
-    [2, 3, 1, 0],
-  ],
-];
 
 export function regularTileIndex(
   row: number,
@@ -131,15 +64,68 @@ export function regularTileIndex(
 ) {
   if (tileCount <= 1) return 0;
 
-  const scheme =
-    REGULAR_SCHEMES[stableHash(`${seed}:scheme`) % REGULAR_SCHEMES.length];
-  const rowOffset = stableHash(`${seed}:row`) % 4;
-  const colOffset = stableHash(`${seed}:col`) % 4;
-  const phase = stableHash(`${seed}:phase`) % tileCount;
+  return LETTER_TO_INDEX[regularDouatLetter(row, col, seed)] % tileCount;
+}
 
-  const value = scheme[(row + rowOffset) % 4][(col + colOffset) % 4];
+type DouatTransform = "identity" | "rotate" | "horizontal" | "vertical";
 
-  return (value + phase) % tileCount;
+const LETTER_TO_INDEX: Record<DouatLetter, number> = {
+  A: 0,
+  B: 1,
+  C: 2,
+  D: 3,
+};
+
+// Douat builds every design by laying out a single diagonal-split tile (in one
+// of four orientations A-D) and repeating it. Each transform below is a rigid
+// motion of that tile, mapping one orientation to another. They let us reuse a
+// single transcribed design as up to four distinct — but equally regular —
+// patterns, the same way Douat repeats a tile under his four operations.
+//   A = bottom-left  B = top-left  C = top-right  D = bottom-right
+const DOUAT_TRANSFORMS: Record<DouatTransform, Record<DouatLetter, DouatLetter>> = {
+  identity: { A: "A", B: "B", C: "C", D: "D" },
+  rotate: { A: "B", B: "C", C: "D", D: "A" }, // quarter turn
+  horizontal: { A: "D", B: "C", C: "B", D: "A" }, // mirror across vertical axis
+  vertical: { A: "B", B: "A", C: "D", D: "C" }, // mirror across horizontal axis
+};
+
+// The full Douat catalogue: 72 plate "Desseins" plus the 256 four-tile
+// "Designs". Each entry is already a complete, seamless regular pattern (a
+// fundamental block repeated by translation/symmetry), so tiling any of them by
+// translation keeps the result regular. This is the dictionary the regular mode
+// draws from. Every design's dimensions (4, 12 or 24) divide REGULAR_PATTERN_PERIOD.
+const REGULAR_DESIGNS = [...douatPlates, ...douatTable256];
+
+function regularDouatLetter(row: number, col: number, seed: string): DouatLetter {
+  const design =
+    REGULAR_DESIGNS[stableHash(`${seed}:design`) % REGULAR_DESIGNS.length];
+
+  // Translate (one of Douat's repetition operations) and apply a rigid tile
+  // transform. Both preserve regularity and periodicity, and give each seed a
+  // distinct-but-faithful rendering of the chosen design.
+  const rowOffset = stableHash(`${seed}:row`) % design.rows;
+  const colOffset = stableHash(`${seed}:col`) % design.cols;
+  const transform = pickTransform(`${seed}:transform`);
+
+  const letter =
+    design.grid[(row + rowOffset) % design.rows][(col + colOffset) % design.cols];
+
+  return applyTransform(letter, transform);
+}
+
+function pickTransform(seed: string): DouatTransform {
+  const transforms: DouatTransform[] = [
+    "identity",
+    "rotate",
+    "horizontal",
+    "vertical",
+  ];
+
+  return transforms[stableHash(seed) % transforms.length];
+}
+
+function applyTransform(letter: DouatLetter, transform: DouatTransform) {
+  return DOUAT_TRANSFORMS[transform][letter];
 }
 
 // Small, fast seeded PRNG (mulberry32). Returns a function yielding uniform
