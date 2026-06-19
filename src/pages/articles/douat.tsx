@@ -47,6 +47,8 @@ const content: Record<
     pCarousel: string[];
     carouselTitle: string;
     carouselEmpty: string;
+    colorLabel: string;
+    backgroundLabel: string;
     hMore: string;
     pMorePre: string;
     pMoreLink: string;
@@ -100,6 +102,8 @@ const content: Record<
     carouselTitle: "Douat's Desseins — rendered from their letters",
     carouselEmpty:
       "Designs are being transcribed from the book; check back shortly.",
+    colorLabel: "Tile color",
+    backgroundLabel: "Background",
     hMore: "The table of 256",
     pMorePre:
       "The book ends with a dense table of 256 distinct little designs, meant as a dictionary of centers and corners for building bigger ones. We've recreated it as a companion piece — ",
@@ -154,6 +158,8 @@ const content: Record<
     carouselTitle: "Los Desseins de Douat — renderizados desde sus letras",
     carouselEmpty:
       "Los diseños se están transcribiendo del libro; vuelve en un momento.",
+    colorLabel: "Color del mosaico",
+    backgroundLabel: "Fondo",
     hMore: "La tabla de los 256",
     pMorePre:
       "El libro termina con una tabla densa de 256 pequeños diseños distintos, pensada como un diccionario de centros y esquinas para construir otros mayores. La recreamos como pieza acompañante — ",
@@ -208,6 +214,8 @@ const content: Record<
     carouselTitle: "Les Desseins de Douat — rendus à partir de leurs lettres",
     carouselEmpty:
       "Les desseins sont en cours de transcription depuis le livre ; revenez bientôt.",
+    colorLabel: "Couleur du carreau",
+    backgroundLabel: "Fond",
     hMore: "La table des 256",
     pMorePre:
       "Le livre se termine par une table dense de 256 petits desseins distincts, conçue comme un dictionnaire de centres et de coins pour en bâtir de plus grands. Nous l'avons recréée en pièce d'accompagnement — ",
@@ -351,7 +359,12 @@ export default function DouatArticle() {
                   <DouatCarousel
                     patterns={douatPlates}
                     title={c.carouselTitle}
-                    cellPx={20}
+                    cellPx={24}
+                    initialPatternId={38}
+                    colorLabels={{
+                      color: c.colorLabel,
+                      background: c.backgroundLabel,
+                    }}
                   />
                 ) : (
                   <div className="rounded-xl bg-slate-800 p-8 text-center text-sm text-zinc-400">

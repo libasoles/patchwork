@@ -1,20 +1,40 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { DouatPattern } from "@/data/douatPatterns";
+import {
+  bgColors,
+  colors,
+  defaultBgColor,
+  defaultColor,
+} from "@/config";
+import { ColorSwatchGroup } from "@/components/ColorSwatchGroup";
 import DouatPatternSVG from "@/components/DouatPatternSVG";
 
 interface DouatCarouselProps {
   patterns: DouatPattern[];
   title?: string;
   cellPx?: number;
+  initialPatternId?: number;
+  colorLabels: {
+    color: string;
+    background: string;
+  };
 }
 
 export default function DouatCarousel({
   patterns,
   title,
   cellPx = 22,
+  initialPatternId,
+  colorLabels,
 }: DouatCarouselProps) {
-  const [index, setIndex] = useState(0);
+  const initialIndex = Math.max(
+    0,
+    patterns.findIndex((pattern) => pattern.id === initialPatternId),
+  );
+  const [index, setIndex] = useState(initialIndex);
+  const [fabric, setFabric] = useState(defaultColor);
+  const [bg, setBg] = useState(defaultBgColor);
   const total = patterns.length;
 
   if (total === 0) return null;
@@ -41,6 +61,23 @@ export default function DouatCarousel({
       onKeyDown={handleKeyDown}
       className="rounded-xl bg-slate-800 p-4 outline-none focus-visible:ring-2 focus-visible:ring-teal-400/60"
     >
+      <div className="mb-4 flex flex-wrap items-end justify-center gap-4 rounded-lg bg-slate-900/40 p-3">
+        <ColorSwatchGroup
+          label={colorLabels.color}
+          colors={colors}
+          selectedColor={fabric}
+          onSelect={setFabric}
+          shape="circle"
+        />
+        <ColorSwatchGroup
+          label={colorLabels.background}
+          colors={bgColors}
+          selectedColor={bg}
+          onSelect={setBg}
+          shape="square"
+        />
+      </div>
+
       {title ? (
         <p className="mb-3 text-center text-sm font-medium text-zinc-300">
           {title}
@@ -62,8 +99,10 @@ export default function DouatCarousel({
             key={current.id}
             grid={current.grid}
             cellPx={cellPx}
+            fabric={fabric}
+            bg={bg}
             title={current.name}
-            className="mx-auto w-full max-w-[420px] rounded-md"
+            className="mx-auto w-full max-w-[680px] rounded-md"
           />
         </div>
 

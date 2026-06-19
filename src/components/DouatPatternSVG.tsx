@@ -1,5 +1,6 @@
 import { memo } from "react";
 import type { DouatLetter } from "@/data/douatPatterns";
+import { resolveTailwindColor } from "@/lib/tailwindColors";
 
 // Default palette, matching the teal/slate accents used across the articles.
 const DEFAULT_FABRIC = "#2dd4bf"; // teal
@@ -42,6 +43,8 @@ function DouatPatternSVG({
   const s = cellPx;
   const width = cols * s;
   const height = rows * s;
+  const resolvedFabric = resolveTailwindColor(fabric, DEFAULT_FABRIC);
+  const resolvedBg = resolveTailwindColor(bg, DEFAULT_BG);
 
   if (rows === 0 || cols === 0) return null;
 
@@ -53,7 +56,7 @@ function DouatPatternSVG({
         <polygon
           key={`${r}-${c}`}
           points={trianglePoints(letter, c * s, r * s, s)}
-          fill={fabric}
+          fill={resolvedFabric}
         />,
       );
     }
@@ -70,7 +73,7 @@ function DouatPatternSVG({
       style={{ display: "block" }}
     >
       {title ? <title>{title}</title> : null}
-      <rect x={0} y={0} width={width} height={height} fill={bg} />
+      <rect x={0} y={0} width={width} height={height} fill={resolvedBg} />
       {polygons}
     </svg>
   );

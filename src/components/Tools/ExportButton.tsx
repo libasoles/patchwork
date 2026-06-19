@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/tooltip";
 import { canvasDimension } from "@/config";
 import DownloadIcon from "@/icons/DownloadIcon";
+import { tailwindColors } from "@/lib/tailwindColors";
 import {
   computeVisibleTilesBoundingBox,
   projectCanvasToRegion,
@@ -32,42 +33,6 @@ const PREVIEW_MAX_PX = 240;
 // Measured empirically: the blocks font glyphs overflow their 40px cell by at most 3px on top.
 // This minimal padding prevents edge clipping without adding visible background margin.
 const FONT_OVERFLOW_PX = 3;
-
-const tailwindColors: Record<string, string> = {
-  // Background colors
-  "gray-700": "#374151",
-  "gray-800": "#1f2937",
-  "gray-900": "#111827",
-  "slate-700": "#334155",
-  "slate-800": "#1e293b",
-  "slate-900": "#0f172a",
-  "zinc-700": "#3f3f46",
-  "zinc-800": "#27272a",
-  "zinc-900": "#18181b",
-  "neutral-800": "#262626",
-  "neutral-900": "#171717",
-  "stone-800": "#292524",
-  "stone-900": "#1c1917",
-  "indigo-950": "#1e1b4b",
-  "blue-950": "#172554",
-  "violet-950": "#2e1065",
-  // Tile colors
-  "yellow-400": "#facc15",
-  "pink-500": "#ec4899",
-  "red-400": "#f87171",
-  "orange-400": "#fb923c",
-  "rose-600": "#e11d48",
-  "indigo-500": "#6366f1",
-  "blue-400": "#60a5fa",
-  "sky-600": "#0284c7",
-  "cyan-600": "#0891b2",
-  "teal-400": "#2dd4bf",
-  "green-400": "#4ade80",
-  "emerald-400": "#34d399",
-  "fuchsia-500": "#d946ef",
-  "purple-600": "#9333ea",
-  "violet-500": "#8b5cf6",
-};
 
 function renderLayersToCanvas(
   layers: Layer[],
