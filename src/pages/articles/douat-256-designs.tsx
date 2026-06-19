@@ -26,6 +26,8 @@ const content: Record<
     intro: string[];
     tableCaption: string;
     tableEmpty: string;
+    flipHint: string;
+    flipLabel: string;
     relatedPre: string;
     relatedLink: string;
     relatedPost: string;
@@ -52,6 +54,8 @@ const content: Record<
       "Douat's 256 designs, each rendered from its four-letter code (numbering as printed, 1–256).",
     tableEmpty:
       "Designs are being transcribed from the book; check back shortly.",
+    flipHint: "Click any design to flip it and read its letters.",
+    flipLabel: "Flip the design to see its letters",
     relatedPre: "This is a companion to ",
     relatedLink: "Douat: An Alphabet of Tiles",
     relatedPost:
@@ -78,6 +82,8 @@ const content: Record<
       "Los 256 diseños de Douat, cada uno renderizado desde su código de cuatro letras (numeración como en el original, 1–256).",
     tableEmpty:
       "Los diseños se están transcribiendo del libro; vuelve en un momento.",
+    flipHint: "Haz clic en cualquier diseño para girarlo y leer sus letras.",
+    flipLabel: "Girar el diseño para ver sus letras",
     relatedPre: "Esto acompaña a ",
     relatedLink: "Douat: un alfabeto de mosaicos",
     relatedPost:
@@ -104,6 +110,8 @@ const content: Record<
       "Les 256 desseins de Douat, chacun rendu à partir de son code de quatre lettres (numérotation d'origine, 1–256).",
     tableEmpty:
       "Les desseins sont en cours de transcription depuis le livre ; revenez bientôt.",
+    flipHint: "Cliquez sur un dessein pour le retourner et lire ses lettres.",
+    flipLabel: "Retourner le dessein pour voir ses lettres",
     relatedPre: "Ceci accompagne ",
     relatedLink: "Douat : un alphabet de carreaux",
     relatedPost:
@@ -187,7 +195,12 @@ export default function DouatTable256Article() {
               <figure className="my-6">
                 {douatTable256.length > 0 ? (
                   <div className="rounded-xl bg-slate-900 p-4">
-                    <DouatDesignTable patterns={douatTable256} cellPx={12} />
+                    <DouatDesignTable
+                      patterns={douatTable256}
+                      cellPx={12}
+                      flipHint={c.flipHint}
+                      flipLabel={c.flipLabel}
+                    />
                   </div>
                 ) : (
                   <div className="rounded-xl bg-slate-800 p-8 text-center text-sm text-zinc-400">
