@@ -14,6 +14,36 @@ interface Article {
 
 const articles: Article[] = [
   {
+    slug: "douat",
+    date: "2026-06-17",
+    titles: {
+      en: "Douat: An Alphabet of Tiles",
+      es: "Douat: un alfabeto de mosaicos",
+      fr: "Douat : un alphabet de carreaux",
+    },
+    summaries: {
+      en: "In 1722 a Carmelite friar turned Truchet's single diagonal tile into four letters — A, B, C, D — that write an infinity of patterns. All 72 of his designs, rendered live from their letters.",
+      es: "En 1722 un fraile carmelita convirtió el mosaico diagonal de Truchet en cuatro letras — A, B, C, D — que escriben una infinidad de patrones. Sus 72 diseños, renderizados en vivo a partir de sus letras.",
+      fr: "En 1722, un frère carme transforma le carreau diagonal de Truchet en quatre lettres — A, B, C, D — qui écrivent une infinité de motifs. Ses 72 desseins, rendus en direct à partir de leurs lettres.",
+    },
+    tags: ["history", "combinatorics", "patterns"],
+  },
+  {
+    slug: "douat-256-designs",
+    date: "2026-06-17",
+    titles: {
+      en: "Douat's Table of 256 Designs",
+      es: "La tabla de 256 diseños de Douat",
+      fr: "La table des 256 desseins de Douat",
+    },
+    summaries: {
+      en: "A live recreation of the dictionary of 256 little designs that closes Douat's 1722 book — every one rebuilt from its four-letter code.",
+      es: "Una recreación en vivo del diccionario de 256 pequeños diseños que cierra el libro de Douat de 1722 — cada uno reconstruido desde su código de cuatro letras.",
+      fr: "Une recréation en direct du dictionnaire de 256 petits desseins qui clôt le livre de Douat de 1722 — chacun reconstruit à partir de son code de quatre lettres.",
+    },
+    tags: ["combinatorics", "reference", "patterns"],
+  },
+  {
     slug: "layers-and-pattern-repeat",
     date: "2026-06-16",
     titles: {
