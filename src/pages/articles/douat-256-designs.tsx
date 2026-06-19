@@ -65,21 +65,21 @@ const content: Record<
   es: {
     metaTitle: "La tabla de 256 diseños de Douat — Patchwork",
     metaDescription:
-      "Una recreación en vivo del diccionario de 256 pequeños diseños que cierra el libro de Dominique Douat de 1722 — cada uno renderizado a partir de su código de cuatro letras.",
+      "Una recreación en vivo del diccionario de 256 pequeños diseños con el que cierra el libro de Dominique Douat de 1722, cada uno reconstruido a partir de su código de cuatro letras.",
     backToArticles: "← Artículos",
     backToApp: "Abrir Patchwork →",
-    footer: "Patchwork — un juguete de dibujo con mosaicos.",
+    footer: "Patchwork — una aplicación para dibujar con mosaicos.",
     date: "17 de junio de 2026",
     readingTime: "3 min de lectura",
     title: "La tabla de 256 diseños de Douat",
-    lead: "La Méthode de 1722 termina con una tabla densa de 256 pequeños diseños distintos. Aquí está, recreada — cada celda renderizada en vivo a partir de las letras de Douat.",
+    lead: "La Méthode de 1722 termina con una tabla densa de 256 pequeños diseños distintos. Aquí la recreamos: cada celda se reconstruye en vivo a partir de las letras de Douat.",
     intro: [
-      "Toma los cuatro mosaicos A, B, C, D, de dos en dos — arriba izquierda, arriba derecha, abajo izquierda, abajo derecha — y puedes llenar un bloque de 2×2 de 4 × 4 × 4 × 4 = 256 maneras. Douat las tabula todas. Cada entrada de abajo es uno de esos super-mosaicos de 2×2, dibujado al doble de tamaño para que su forma se lea con claridad.",
-      "Ofrece la tabla como un diccionario de trabajo: una manera de buscar el centro y las esquinas de una composición mayor, ya que todo diseño grande es, localmente, uno de estos 256 bloques. Es el corazón combinatorio del libro — el alfabeto completo de disposiciones de dos por dos con el que se deletrean las láminas grabadas.",
-      "Abajo, los 256 se reconstruyen desde sus códigos de letras. Compáralos con los setenta y dos diseños completos del artículo acompañante para ver cómo estos pequeños bloques se ensamblan en las láminas del libro.",
+      "Toma los cuatro mosaicos A, B, C y D de dos en dos, uno para cada posición del bloque — arriba a la izquierda, arriba a la derecha, abajo a la izquierda y abajo a la derecha — y puedes llenar un 2×2 de 4 × 4 × 4 × 4 = 256 maneras. Douat las registra todas. Cada entrada de abajo es uno de esos bloques de 2×2, dibujado al doble de tamaño para que la forma se lea con claridad.",
+      "Presenta la tabla como un diccionario de trabajo: una forma de consultar el centro y las esquinas de una composición mayor, porque todo diseño grande contiene, en pequeño, uno de estos 256 bloques. Ahí está el corazón combinatorio del libro: el alfabeto completo de las disposiciones de dos por dos con el que se construyen las láminas grabadas.",
+      "Abajo, los 256 se reconstruyen a partir de sus códigos de letras. Compáralos con los setenta y dos diseños completos del artículo acompañante para ver cómo estos bloques mínimos se ensamblan en las láminas del libro.",
     ],
     tableCaption:
-      "Los 256 diseños de Douat, cada uno renderizado desde su código de cuatro letras (numeración como en el original, 1–256).",
+      "Los 256 diseños de Douat, cada uno reconstruido a partir de su código de cuatro letras (numeración original, 1–256).",
     tableEmpty:
       "Los diseños se están transcribiendo del libro; vuelve en un momento.",
     flipHint: "Haz clic en cualquier diseño para girarlo y leer sus letras.",

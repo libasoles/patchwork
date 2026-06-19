@@ -23,7 +23,7 @@ const articles: Article[] = [
     },
     summaries: {
       en: "In 1722 a Carmelite friar turned Truchet's single diagonal tile into four letters — A, B, C, D — that write an infinity of patterns. All 72 of his designs, rendered live from their letters.",
-      es: "En 1722 un fraile carmelita convirtió el mosaico diagonal de Truchet en cuatro letras — A, B, C, D — que escriben una infinidad de patrones. Sus 72 diseños, renderizados en vivo a partir de sus letras.",
+      es: "En 1722 un fraile carmelita convirtió el mosaico diagonal de Truchet en cuatro letras — A, B, C y D — capaces de generar una infinidad de patrones. Sus 72 diseños, reconstruidos en vivo a partir de esas letras.",
       fr: "En 1722, un frère carme transforma le carreau diagonal de Truchet en quatre lettres — A, B, C, D — qui écrivent une infinité de motifs. Ses 72 desseins, rendus en direct à partir de leurs lettres.",
     },
     tags: ["history", "combinatorics", "patterns"],
@@ -38,7 +38,7 @@ const articles: Article[] = [
     },
     summaries: {
       en: "A live recreation of the dictionary of 256 little designs that closes Douat's 1722 book — every one rebuilt from its four-letter code.",
-      es: "Una recreación en vivo del diccionario de 256 pequeños diseños que cierra el libro de Douat de 1722 — cada uno reconstruido desde su código de cuatro letras.",
+      es: "Una recreación en vivo del diccionario de 256 pequeños diseños con el que cierra el libro de Douat de 1722, cada uno reconstruido a partir de su código de cuatro letras.",
       fr: "Une recréation en direct du dictionnaire de 256 petits desseins qui clôt le livre de Douat de 1722 — chacun reconstruit à partir de son code de quatre lettres.",
     },
     tags: ["combinatorics", "reference", "patterns"],
@@ -48,12 +48,12 @@ const articles: Article[] = [
     date: "2026-06-16",
     titles: {
       en: "Layers and Pattern Repeat",
-      es: "Capas y repeticion de trama",
+      es: "Capas y repetición de trama",
       fr: "Calques et repetition de motif",
     },
     summaries: {
       en: "A visual walkthrough of building a motif in layers, repeating it across the grid, and hiding layers to inspect the composition.",
-      es: "Un recorrido visual para construir un motivo en capas, repetirlo sobre la grilla y ocultar capas para inspeccionar la composicion.",
+      es: "Un recorrido visual para construir un motivo por capas, repetirlo sobre la grilla y ocultar capas para revisar mejor la composición.",
       fr: "Un parcours visuel pour construire un motif en calques, le repeter sur la grille et verifier la composition.",
     },
     tags: ["layers", "patterns", "workflow"],
@@ -83,7 +83,7 @@ const articles: Article[] = [
     },
     summaries: {
       en: "An interactive generator for regular and irregular combinations of every selectable Patchwork tile group.",
-      es: "Un generador interactivo de combinaciones regulares e irregulares para cada grupo seleccionable de mosaicos Patchwork.",
+      es: "Un generador interactivo de combinaciones regulares e irregulares para cada grupo de mosaicos seleccionable en Patchwork.",
       fr: "Un generateur interactif de combinaisons regulieres et irregulieres pour chaque groupe de carreaux Patchwork selectionnable.",
     },
     tags: ["tiles", "generator", "patterns"],
@@ -98,7 +98,7 @@ const articles: Article[] = [
     },
     summaries: {
       en: "A visual catalog of every selectable Patchwork tile group, with source notes, font previews, IDs, and orientations. Unmapped font glyphs are excluded.",
-      es: "Catalogo visual de todos los grupos seleccionables de Patchwork, con notas de fuente, previews, IDs y orientaciones. Excluye los glifos no mapeados.",
+      es: "Un catálogo visual de todos los grupos seleccionables de Patchwork, con notas de origen, vistas previas, IDs y orientaciones. Excluye los glifos no mapeados.",
       fr: "Catalogue visuel de tous les groupes selectionnables de Patchwork, avec notes de source, apercus, IDs et orientations. Les glyphes non mappes sont exclus.",
     },
     tags: ["tiles", "catalog", "reference"],

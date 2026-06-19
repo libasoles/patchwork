@@ -32,19 +32,19 @@ const content = {
     metaTitle: "Combinaciones de mosaicos - Patchwork",
     metaDescription:
       "Explora combinaciones regulares e irregulares de grupos de mosaicos Patchwork.",
-    backToArticles: "← Articulos",
+    backToArticles: "← Artículos",
     backToApp: "Abrir Patchwork →",
     date: "16 de junio de 2026",
     readingTime: "2 min de lectura",
     title: "Combinaciones de mosaicos",
-    lead: "Elige un grupo de mosaicos de Patchwork y compara esquemas periodicos con colocaciones irregulares deterministicas.",
-    note: "Los patrones regulares repiten un motivo finito sobre la grilla cuadrada, siguiendo los esquemas periodicos catalogados por Truchet y Douat. Los irregulares colocan cada mosaico con una secuencia aleatoria con semilla, de modo que la composicion es reproducible aunque pierda simetria de traslacion.",
+    lead: "Elige un grupo de mosaicos de Patchwork y compara esquemas periódicos con distribuciones irregulares pero reproducibles.",
+    note: "Los patrones regulares repiten un motivo finito sobre la grilla cuadrada, siguiendo los esquemas periódicos catalogados por Truchet y Douat. Los irregulares colocan cada mosaico con una secuencia aleatoria con semilla, así que la composición puede repetirse aunque pierda simetría traslacional.",
     ctaTitle: "Crea tus propios patrones",
     ctaBody:
-      "Si un grupo te interesa, llevalo a la app y arma tu propia composicion con los mismos mosaicos, colores y rotaciones.",
+      "Si un grupo te interesa, llévalo a la app y arma tu propia composición con esos mismos mosaicos, colores y rotaciones.",
     ctaAction: "Abrir la app y empezar a crear",
     footer:
-      "Los patrones se generan en el navegador desde los grupos seleccionables de Patchwork.",
+      "Los patrones se generan en el navegador a partir de los grupos de mosaicos seleccionables de Patchwork.",
   },
   fr: {
     metaTitle: "Combinaisons de carreaux - Patchwork",

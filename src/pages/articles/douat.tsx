@@ -121,14 +121,14 @@ const content: Record<
   es: {
     metaTitle: "Douat: un alfabeto de mosaicos — Patchwork",
     metaDescription:
-      "Cómo el fraile carmelita Dominique Douat convirtió el mosaico diagonal de Sébastien Truchet en un alfabeto de cuatro letras (A, B, C, D) que escribe una infinidad de patrones — con sus 72 diseños renderizados en vivo a partir de sus letras.",
+      "Cómo el fraile carmelita Dominique Douat convirtió el mosaico diagonal de Sébastien Truchet en un alfabeto de cuatro letras (A, B, C, D) capaz de generar una infinidad de patrones, con sus 72 diseños recreados en vivo a partir de esas letras.",
     backToArticles: "← Artículos",
     backToApp: "Abrir Patchwork →",
-    footer: "Patchwork — un juguete de dibujo con mosaicos.",
+    footer: "Patchwork — una aplicación para dibujar con mosaicos.",
     date: "17 de junio de 2026",
     readingTime: "8 min de lectura",
     title: "Douat: un alfabeto de mosaicos",
-    lead: "En 1722 un fraile carmelita escribió un libro de 256 páginas para demostrar que un solo mosaico cuadrado, partido por una diagonal en dos colores, puede convertirse en letras — y que con apenas cuatro letras se puede escribir una infinidad de patrones.",
+    lead: "En 1722 un fraile carmelita escribió un libro de 256 páginas para demostrar que un único mosaico cuadrado, dividido por una diagonal en dos colores, puede convertirse en letras, y que con apenas cuatro letras se puede componer una infinidad de patrones.",
     hHistory: "De Truchet a Douat",
     pHistory: [
       "La historia empieza con Sébastien Truchet, fraile dominico, ingeniero real y miembro de la Académie Royale des Sciences. Hacia 1704, mientras inventariaba azulejos cerámicos, notó que un mosaico cuadrado dividido en diagonal en una mitad oscura y otra clara es mucho más rico de lo que parece: al girarlo se convierte en cuatro mosaicos distintos, y colocados borde con borde producen una variedad asombrosa de patrones. Dejó la observación en una breve memoria para la Academia.",
@@ -142,12 +142,12 @@ const content: Record<
     ],
     hAlphabet: "Un alfabeto de patrones",
     pAlphabet: [
-      "La idea de Douat es que las letras son una notación. Toma los cuatro mosaicos de cuatro en cuatro, permitiendo repeticiones, y obtienes 4 × 4 × 4 × 4 = 256 pequeñas disposiciones de dos por dos — su cuarta tabla. Repite y combina esas, fila tras fila, y la cuenta estalla: calcula con paciencia cuántos diseños se pueden hacer tomando las 256 de dos en dos, de tres en tres, de cuatro en cuatro… y los totales llegan a decenas de cifras.",
-      "Le encantaba esa desproporción entre medios mínimos y resultados sin límite, y recurría a analogías: la matemática crece desde un único punto, la aritmética desde nueve cifras, la música desde siete notas, y las veinticuatro letras del alfabeto deletrean más palabras que instantes ha habido desde la creación del mundo. Cuatro mosaicos, sostiene, no son distintos — deletrean una infinidad de diseños.",
-      "Y como los patrones están escritos en letras, no hacen falta los grabados. Sabiendo solo A, B, C y D puedes disponer mosaicos de cartón y reproducir cualquier diseño — «sans étude», sin estudio, como él dice.",
+      "La idea de Douat es que las letras funcionan como una notación. Toma los cuatro mosaicos de cuatro en cuatro, permitiendo repeticiones, y aparecen 4 × 4 × 4 × 4 = 256 pequeñas disposiciones de dos por dos: su cuarta tabla. Si repites y combinas esas piezas fila tras fila, la cuenta se dispara: calcula con paciencia cuántos diseños pueden formarse tomando esas 256 disposiciones de dos en dos, de tres en tres, de cuatro en cuatro… y los totales llegan a decenas de cifras.",
+      "Le fascinaba esa desproporción entre medios mínimos y resultados casi sin límite, y la explicaba con analogías: la matemática crece desde un único punto, la aritmética desde nueve cifras, la música desde siete notas, y las veinticuatro letras del alfabeto alcanzan para deletrear más palabras que instantes ha habido desde la creación del mundo. Cuatro mosaicos, sostiene, no son una excepción: también permiten escribir una infinidad de diseños.",
+      "Y como los patrones están escritos con letras, ni siquiera hacen falta los grabados. Con solo conocer A, B, C y D puedes disponer mosaicos de cartón y reproducir cualquier diseño, «sans étude», sin estudio, como dice él mismo.",
     ],
     demoIntro:
-      "Lee la grilla de letras de la izquierda; construye los mosaicos que nombra; y obtienes la imagen de la derecha. Este es el diseño 1 de su tabla final:",
+      "Lee la grilla de letras de la izquierda, arma los mosaicos que nombra y aparece la imagen de la derecha. Este es el diseño 1 de su tabla final:",
     demoCaption:
       "Entran letras, sale un patrón — toda la idea en una grilla pequeña.",
     hOpposites: "Opuestos: diagonal, horizontal, perpendicular",
@@ -157,9 +157,9 @@ const content: Record<
     ],
     hCarousel: "Los 72 diseños, escritos en letras",
     pCarousel: [
-      "Abajo están los setenta y dos diseños grabados de Douat — pero no los grabados. Cada uno se transcribió de sus grillas de letras y se renderiza en vivo, en tu navegador, a partir de nada más que A, B, C y D. Usa las flechas (o el teclado) para hojearlos, tal como un lector de 1722 podría haberlos construido mosaico a mosaico.",
+      "Abajo están los setenta y dos diseños grabados de Douat, aunque no verás aquí los grabados originales. Cada uno fue transcrito de sus grillas de letras y se reconstruye en vivo, en tu navegador, a partir de nada más que A, B, C y D. Usa las flechas, o el teclado, para hojearlos como podría haberlo hecho un lector de 1722, mosaico a mosaico.",
     ],
-    carouselTitle: "Los Desseins de Douat — renderizados desde sus letras",
+    carouselTitle: "Los Desseins de Douat — reconstruidos a partir de sus letras",
     carouselEmpty:
       "Los diseños se están transcribiendo del libro; vuelve en un momento.",
     flipHint: "Haz clic en el diseño para girarlo y leer sus letras.",
@@ -168,10 +168,10 @@ const content: Record<
     backgroundLabel: "Fondo",
     hMore: "La tabla de los 256",
     pMorePre:
-      "El libro termina con una tabla densa de 256 pequeños diseños distintos, pensada como un diccionario de centros y esquinas para construir otros mayores. La recreamos como pieza acompañante — ",
+      "El libro termina con una tabla densa de 256 pequeños diseños distintos, pensada como un diccionario de centros y esquinas para construir composiciones mayores. La recreamos en una pieza aparte: ",
     pMoreLink: "la tabla de 256 diseños de Douat",
     pMorePost: ".",
-    relatedPre: "Para la historia más larga del propio mosaico, mira ",
+    relatedPre: "Si quieres la historia más amplia del mosaico en sí, empieza por ",
     relatedLink: "El mosaico Truchet: de 1704 a los patrones infinitos",
     relatedPost: ".",
     cta: "Abrir Patchwork →",
@@ -356,7 +356,12 @@ export default function DouatArticle() {
 
             {/* Carousel */}
             <section>
-              <h2 className="text-2xl font-semibold mb-4">{c.hCarousel}</h2>
+              <h2
+                id="the-72-designs-written-in-letters"
+                className="text-2xl font-semibold mb-4 scroll-mt-24"
+              >
+                {c.hCarousel}
+              </h2>
               {c.pCarousel.map((p, i) => (
                 <p key={i} className={paragraph}>
                   {p}

@@ -9,7 +9,12 @@
       "Bash(osascript -e 'clipboard info')",
       "Bash(osascript -e 'set p to \\(POSIX file \"/tmp/clip-test.png\"\\)' -e 'set f to open for access p with write permission' -e 'set eof f to 0' -e 'write \\(the clipboard as «class PNGf»\\) to f' -e 'close access f')",
       "Read(//private/tmp/**)",
-      "Bash(sips -g pixelWidth -g pixelHeight /tmp/clip-test.png)"
+      "Bash(sips -g pixelWidth -g pixelHeight /tmp/clip-test.png)",
+      "Bash(xargs kill)"
+    ],
+    "additionalDirectories": [
+      "/Users/guillermoperez/Projects/more/patchwork-worktrees/douat-flip/src/components",
+      "/Users/guillermoperez/Projects/more/patchwork-worktrees/douat-flip/src/pages/articles"
     ]
   }
 }

@@ -66,7 +66,7 @@ const content = {
       "Patchwork permite separar un motivo en capas, ocultar o atenuar cada una y escalar esa unidad hasta convertirla en una repetición que ocupa todo el lienzo.",
     intro: [
       "Una trama repetida es más fácil de controlar cuando el dibujo está dividido en partes. En vez de tratar el motivo como un bloque plano, las capas permiten aislar estructura, acentos y fondo para que cada decisión siga siendo editable por separado.",
-      "El menú de capas ofrece dos controles por capa: un ojo para ocultarla por completo y un sol para atenuarla, dejándola en segundo plano sin que desaparezca. Siempre hay una capa activa, y herramientas como Mover, Rotar, Pintar y Borrar solo actúan sobre esa capa, así se puede editar la estructura sin tocar los acentos apilados encima.",
+      "El menú de capas ofrece dos controles por capa: un ojo para ocultarla por completo y un sol para atenuarla, dejándola en segundo plano sin que desaparezca. Siempre hay una capa activa, y herramientas como Mover, Rotar, Pintar y Borrar solo actúan sobre ella, así que puedes ajustar la estructura sin tocar los acentos que van arriba.",
     ],
     panelCaption:
       "El menú de capas: la capa activa aparece resaltada; el sol atenúa una capa y el ojo la oculta.",
@@ -89,8 +89,8 @@ const content = {
       "Con las capas superiores ocultas, la estructura base queda expuesta por sí sola.",
     closingTitle: "Por qué importa",
     closing: [
-      "Las capas convierten el diseño de patrones en un proceso iterativo. Se puede dibujar el esqueleto en una capa, ubicar formas secundarias en otra y reservar una última para acentos de color o correcciones sin colapsar todo en una única superficie irreversible.",
-      "La repetición de trama pasa entonces a ser una prueba y no un salto al vacío. Si el motivo sobrevive a la repetición y además se lee con claridad cuando algunas capas están ocultas o atenuadas, la composición está haciendo trabajo real y no depende solo del adorno.",
+      "Las capas convierten el diseño de patrones en un proceso iterativo. Puedes dibujar el esqueleto en una capa, ubicar formas secundarias en otra y reservar una última para acentos de color o correcciones, sin fundirlo todo en una sola superficie irreversible.",
+      "La repetición de trama pasa entonces a ser una prueba, no un salto al vacío. Si el motivo sobrevive a la repetición y además se lee con claridad cuando algunas capas están ocultas o atenuadas, la composición se sostiene por sí sola y no depende solo del adorno.",
     ],
     cta: "Abrir Patchwork y crear tu propia trama",
     footer:

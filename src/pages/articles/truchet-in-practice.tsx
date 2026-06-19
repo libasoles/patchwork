@@ -442,7 +442,7 @@ const content = {
     date: "16 de junio de 2026",
     readingTime: "7 min de lectura",
     title: "Truchet en la práctica: multiescala, mantas y código",
-    lead: "El mosaico cuadrado clásico es solo el comienzo. Aquí van cuatro direcciones que toma la idea de Truchet cuando sale del libro de texto — patrones multiescala recursivos, mantas de tela, unas pocas líneas de código generativo y laberintos hexagonales.",
+    lead: "El mosaico cuadrado clásico es solo el comienzo. Aquí aparecen cuatro direcciones que toma la idea de Truchet cuando sale del libro de texto: patrones multiescala recursivos, mantas de tela, unas pocas líneas de código generativo y laberintos hexagonales.",
 
     introPre: "Esta es la secuela práctica de ",
     introLink: "nuestra historia del mosaico Truchet",
@@ -472,8 +472,8 @@ const content = {
 
     s2h: "Del lienzo a la tela: el quilting Truchet",
     s2: [
-      "Como este sitio se llama Patchwork, la conexión textil es irresistible — y es real. El bloque de medio cuadrado-triángulo, piedra angular del quilting, no es más que un mosaico Truchet en tela: un cuadrado dividido en diagonal en dos triángulos contrastantes. Cose un montón, colócalos con las rotaciones elegidas al azar y surge un diseño de manta único cada vez.",
-      "Eso es lo que hace a Truchet ideal para el patchwork. Una manta entera puede construirse con solo dos o tres bloques básicos. No existe una colocación 'incorrecta' — toda orientación encaja limpiamente con sus vecinas — así que cualquier principiante puede improvisar una pieza de herencia sin un plan maestro. El azar se encarga de la composición.",
+      "Como este sitio se llama Patchwork, la conexión textil es inevitable, y además es real. El bloque de medio cuadrado-triángulo, una de las piezas básicas del quilting, no es otra cosa que un mosaico Truchet hecho en tela: un cuadrado dividido en diagonal en dos triángulos contrastantes. Cose muchos, gíralos al azar y tendrás un diseño de manta distinto cada vez.",
+      "Eso vuelve a Truchet especialmente apto para el patchwork. Una manta entera puede construirse con apenas dos o tres bloques básicos. No existe una colocación 'incorrecta': cualquier orientación encaja limpiamente con sus vecinas, así que incluso alguien que recién empieza puede improvisar una pieza con carácter sin necesidad de un plan maestro. El azar se ocupa de la composición.",
     ],
     s2cap:
       "Una manta Truchet: bloques de medio cuadrado-triángulo en dos o tres 'telas', colocados al azar",
@@ -497,7 +497,7 @@ const content = {
     s3IntroPost:
       ", Processing o Python, y te recompensa al instante con un patrón que jamás dibujarías a mano.",
     s3: [
-      "Todo el truco es la única línea if (random() > 0.5) rotate(90°). Todo lo interesante — los caminos serpenteantes, el laberinto emergente — surge de esa sola elección aleatoria repetida por toda la cuadrícula:",
+      "Todo el truco cabe en una sola línea: if (random() > 0.5) rotate(90°). Todo lo interesante, desde los caminos serpenteantes hasta el laberinto que aparece de a poco, sale de repetir esa única decisión aleatoria en toda la cuadrícula:",
     ],
     s3cap: "Un generador Truchet mínimo con arcos de Smith en p5.js",
     s3EditorLabel: "Sketch p5.js editable",
@@ -510,7 +510,7 @@ const content = {
 
     s4h: "Más allá del cuadrado: el Truchet hexagonal",
     s4: [
-      "Nada obliga a que los mosaicos sean cuadrados. Los mosaicos Truchet hexagonales colocan 'puertas' en el punto medio de cada uno de los seis bordes y las conectan con arcos. Con seis bordes en lugar de cuatro hay muchas más formas de enrutar las conexiones, así que una cuadrícula hexagonal produce bastante más variación que una cuadrada.",
+      "Nada obliga a que los mosaicos sean cuadrados. Los Truchet hexagonales colocan 'puertas' en el punto medio de cada uno de los seis bordes y las conectan con arcos. Con seis bordes en lugar de cuatro hay muchas más formas de enrutar las conexiones, así que una cuadrícula hexagonal produce bastante más variación que una cuadrada.",
       "La recompensa es la fluidez. Donde los mosaicos cuadrados se encuentran en ángulo recto, los hexágonos se encuentran a 120°, y las curvas continuas se doblan con más suavidad — los laberintos que emergen parecen más fluidos y naturales, más cerca de redes de ríos o papel marmolado que de circuitos impresos.",
     ],
     s4cap:
@@ -526,8 +526,8 @@ const content = {
 
     s5h: "Pruébalo tú mismo",
     s5: [
-      "Patchwork ya incluye los mosaicos diagonales de Truchet y los arcos emparejados de Smith, junto a muchas familias de bloques relacionadas. Colócalos en el lienzo, elige tus colores y deja que la colocación al azar haga el resto — el mismo principio detrás de cada patrón de arriba.",
-      "¿Quieres ver surgir patrones nuevos con un clic?",
+      "Patchwork ya incluye los mosaicos diagonales de Truchet y los arcos emparejados de Smith, junto con muchas familias de bloques relacionadas. Colócalos en el lienzo, elige tus colores y deja que el azar haga el resto: es el mismo principio que está detrás de todos los patrones de arriba.",
+      "¿Quieres ver aparecer patrones nuevos con un clic?",
     ],
     interactiveLink: "Prueba el generador interactivo de combinaciones de mosaicos",
     cta: "Abrir Patchwork y empezar a crear",

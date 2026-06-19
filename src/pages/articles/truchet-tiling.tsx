@@ -252,8 +252,8 @@ const content = {
 
     s1h: "Un fraile en un taller de azulejos",
     s1: [
-      "En 1704, Sébastien Truchet, un fraile dominico francés con un don notable para combinar matemáticas y artesanía, visitó una fábrica en el pueblo de Marly. Allí encontró azulejos cuadrados de cerámica, cada uno dividido en diagonal en dos triángulos de colores contrastantes. Truchet notó algo encantador: colocar solo dos azulejos idénticos uno al lado del otro en diferentes orientaciones podía producir una enorme variedad de figuras geométricas.",
-      "Catalogó todas las formas no equivalentes de combinar pares de estos azulejos, produciendo 64 combinaciones. Su obra, 'Mémoire sur les combinaisons', fue publicada en 1722 por Dominique Douat, quien extendió las observaciones de Truchet y exploró sistemáticamente qué ocurre cuando los azulejos recubren el plano.",
+      "En 1704, Sébastien Truchet, un fraile dominico francés con un talento poco común para mezclar matemáticas y artesanía, visitó una fábrica en el pueblo de Marly. Allí se encontró con azulejos cuadrados de cerámica, cada uno dividido en diagonal en dos triángulos de color contrastante. Truchet advirtió algo tan simple como fértil: bastaba poner dos azulejos iguales uno junto al otro y girarlos para obtener una gran variedad de figuras geométricas.",
+      "Catalogó todas las maneras no equivalentes de combinar pares de estos azulejos, hasta llegar a 64 combinaciones. Su 'Mémoire sur les combinaisons' apareció publicado en 1722 por Dominique Douat, que tomó la observación inicial de Truchet y la llevó a una exploración sistemática de lo que ocurre cuando esos azulejos cubren todo el plano.",
     ],
 
     s2h: "Los cuatro mosaicos originales",
@@ -271,8 +271,8 @@ const content = {
 
     s3h: "La simplificación curva de Smith (1987)",
     s3: [
-      "Casi tres siglos después, el historiador de ciencia de materiales Cyril Stanley Smith revisó el mosaico Truchet en su artículo de 1987 'The tiling patterns of Sebastien Truchet and the topology of structural hierarchy'. El mosaico curvo de Smith no es el cuarto de círculo genérico de una sola esquina que suele aparecer en ejemplos de Truchet: lleva dos arcos de cuarto de círculo en esquinas opuestas, de modo que conecta los cuatro puntos medios de los bordes.",
-      "Este pequeño cambio tiene un efecto visual dramático. Mientras los mosaicos originales de Truchet producen patrones geométricos angulares, los arcos emparejados de Smith generan formas laberínticas fluidas — caminos que serpentean continuamente por el plano sin cruzarse nunca. Patchwork usa las dos orientaciones verdaderas de los arcos de Smith.",
+      "Casi tres siglos después, el historiador de la ciencia de materiales Cyril Stanley Smith volvió sobre el mosaico Truchet en su artículo de 1987 'The tiling patterns of Sebastien Truchet and the topology of structural hierarchy'. Su versión curva no es el cuarto de círculo genérico de una sola esquina que suele verse en muchos ejemplos: lleva dos arcos de cuarto de círculo en esquinas opuestas, de modo que conecta los cuatro puntos medios de los bordes.",
+      "Ese pequeño cambio altera por completo el efecto visual. Mientras los mosaicos originales de Truchet producen patrones geométricos angulares, los arcos emparejados de Smith generan formas laberínticas mucho más fluidas: caminos que serpentean por el plano sin cruzarse. Patchwork usa esas dos orientaciones auténticas de los arcos de Smith.",
     ],
     s3caption:
       "Los dos mosaicos verdaderos de Smith: cuartos de círculo emparejados en esquinas opuestas",
@@ -290,8 +290,8 @@ const content = {
 
     s5h: "Crea tus propios patrones",
     s5: [
-      "Una de las propiedades notables del mosaico Truchet es que incluso una disposición aleatoria de mosaicos (con cada orientación elegida al azar) produce un patrón visualmente coherente. No existe una 'mala' colocación: toda configuración es interesante. Esto lo convierte en un sistema de diseño generativo ideal: las reglas son mínimas, pero el espacio de resultados es enorme.",
-      "Patchwork te ofrece los mosaicos diagonales de Truchet y los arcos emparejados de Smith, además de muchas familias de bloques relacionadas, con control total sobre el color, las capas y la composición. Abre la aplicación y explora: elige las diagonales o los arcos Smith del panel de mosaicos y empieza a colocarlos en el lienzo.",
+      "Una de las propiedades más notables del mosaico Truchet es que incluso una disposición aleatoria, con cada orientación elegida al azar, produce un patrón visualmente coherente. No hay una colocación 'mala': casi cualquier configuración resulta interesante. Por eso funciona tan bien como sistema de diseño generativo; las reglas son mínimas, pero el espacio de resultados es enorme.",
+      "Patchwork te ofrece los mosaicos diagonales de Truchet y los arcos emparejados de Smith, además de muchas familias de bloques relacionadas, con control total sobre color, capas y composición. Abre la aplicación, elige las diagonales o los arcos Smith en el panel de mosaicos y empieza a construir tu propio patrón.",
     ],
     cta: "Abrir Patchwork y empezar a crear",
 
