@@ -1,4 +1,4 @@
-import type { SpriteGrid } from "@/data/arcadeSprites";
+import type { SpriteGrid } from "@/data/spriteGrid";
 
 interface PixelSpriteProps {
   grid: SpriteGrid;
