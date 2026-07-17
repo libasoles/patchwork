@@ -14,6 +14,21 @@ interface Article {
 
 const articles: Article[] = [
   {
+    slug: "arcade-pixel-art",
+    date: "2026-07-14",
+    titles: {
+      en: "Pixelating Arcade Games",
+      es: "Pixelar juegos arcade",
+      fr: "Pixeliser les jeux d'arcade",
+    },
+    summaries: {
+      en: "How 1970s arcade hardware forced games onto a strictly monochrome grid, how a handful of flat colors arrived a few years later, and how a 16-color palette finally turned silhouettes into characters — all reproduced in Patchwork, one filled tile per pixel.",
+      es: "Cómo el hardware de los recreativos de los 70 obligó a los juegos a vivir en una grilla estrictamente monocromática, cómo llegaron unos pocos colores planos años después, y cómo una paleta de 16 colores convirtió por fin las siluetas en personajes — todo reproducido en Patchwork, un mosaico relleno por píxel.",
+      fr: "Comment le matériel des bornes d'arcade des années 70 a forcé les jeux à vivre dans une grille strictement monochrome, comment quelques couleurs plates sont arrivées quelques années plus tard, et comment une palette de 16 couleurs a enfin transformé les silhouettes en personnages — le tout reproduit dans Patchwork, un carreau plein par pixel.",
+    },
+    tags: ["history", "tiles", "patterns"],
+  },
+  {
     slug: "douat",
     date: "2026-06-17",
     titles: {
