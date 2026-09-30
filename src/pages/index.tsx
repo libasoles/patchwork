@@ -70,7 +70,7 @@ export default function Home({ siteUrl }: HomeProps) {
         {siteUrl && (
           <>
             <meta property="og:url" content={canonicalUrl} />
-            <meta property="og:image" content={`${siteUrl}/Screenshot.png`} />
+            <meta property="og:image" content={`${siteUrl}/screenshots/Screenshot.png`} />
             <meta property="og:image:alt" content={t("ogImageAlt")} />
           </>
         )}
@@ -79,7 +79,7 @@ export default function Home({ siteUrl }: HomeProps) {
         <meta name="twitter:title" content={t("title")} />
         <meta name="twitter:description" content={t("description")} />
         {siteUrl && (
-          <meta name="twitter:image" content={`${siteUrl}/Screenshot.png`} />
+          <meta name="twitter:image" content={`${siteUrl}/screenshots/Screenshot.png`} />
         )}
 
         <link rel="icon" href="/favicon.ico" />
