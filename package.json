@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@react-spring/web": "^9.7.2",
+    "@sentry/nextjs": "^11.1.0",
     "@use-gesture/react": "^10.2.26",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
